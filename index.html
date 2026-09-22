@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taarmi Central — Live Dashboards Master Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --bg-base: #0A0E1A;
+      --bg-surface: #12192B;
+      --bg-card: #182238;
+      --bg-card-hover: #202D4A;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(245, 158, 11, 0.4);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --gold-primary: #F59E0B;
+      --gold-light: #FDE68A;
+      --gold-glow: rgba(245, 158, 11, 0.14);
+      --green-accent: #10B981;
+      --green-glow: rgba(16, 185, 129, 0.14);
+      --blue-accent: #38BDF8;
+      --blue-glow: rgba(56, 189, 248, 0.14);
+      --purple-accent: #A855F7;
+      --purple-glow: rgba(168, 85, 247, 0.14);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
+body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: rgba(18, 25, 43, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 36px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-logo {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      color: #0B0F19;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      letter-spacing: 0.08em;
+    }
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .brand-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .header-badge {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--green-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--green-accent);
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 36px auto 0;
+      padding: 0 36px;
+    }
+
+    /* Quick Filter & Search Bar */
+    .search-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .search-input {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 10px;
+      color: var(--text-main);
+      font-size: 14px;
+      width: 380px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .search-input:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px var(--gold-glow);
+    }
+    .quick-stats {
+      font-size: 13px;
+      color: var(--text-dim);
+      display: flex;
+      gap: 20px;
+    }
+    .quick-stats strong {
+      color: var(--text-main);
+      font-family: var(--font-mono);
+    }
+
+    /* Grid of Dashboards */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 24px;
+    }
+    .dash-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+    .dash-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+      background: var(--border);
+      transition: all 0.2s ease;
+    }
+    .dash-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-accent);
+      background: var(--bg-card);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+    .dash-card.gold::before { background: var(--gold-primary); }
+    .dash-card.green::before { background: var(--green-accent); }
+    .dash-card.blue::before { background: var(--blue-accent); }
+    .dash-card.purple::before { background: var(--purple-accent); }
+
+    .card-top {
+      margin-bottom: 20px;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .card-badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .badge-gold { background: var(--gold-glow); color: var(--gold-light); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-green { background: var(--green-glow); color: var(--green-accent); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-blue { background: var(--blue-glow); color: var(--blue-accent); border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-purple { background: var(--purple-glow); color: var(--purple-accent); border: 1px solid rgba(168, 85, 247, 0.3); }
+
+    .card-file {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .card-title {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .launch-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .dash-card:hover .launch-btn {
+      background: var(--gold-primary);
+      color: #0F172A;
+      border-color: var(--gold-primary);
+    }
+    .arrow-icon {
+      transition: transform 0.2s ease;
+    }
+    .dash-card:hover .arrow-icon {
+      transform: translateX(3px);
+    }
+  /* Responsive Overrides */
+@media (max-width: 1024px) {
+  .kpi-grid, .grid-container, .metrics-grid, .kpi-row, .kpi-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .controls, .controls-panel, .filters-container, .table-controls {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+  }
+  .search-box, .search-container, input[type='text'], .search-input {
+    width: 100% !important;
+  }
+  .matrix-grid, .strategic-matrix {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 768px) {
+  header, .top-bar, .app-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  header button, .top-bar button, .header-actions button, .action-btn {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  .kpi-grid, .grid-container, .metrics-grid, .kpi-row, .kpi-container {
+    grid-template-columns: 1fr !important;
+  }
+  .kpi-card, .metric-card, .stat-card {
+    padding: 14px !important;
+  }
+  .table-container, .data-table-wrapper, .table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .tabs, .tab-navigation, .nav-tabs {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+  }
+  table, th, td, .data-table {
+    font-size: 12px !important;
+  }
+}
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand-group">
+        <div class="brand-logo">TAARMI</div>
+        <div>
+          <div class="brand-title">Live Dashboards Master Portal</div>
+          <div class="brand-sub">All interactive workspaces, PPC command centers, and listing suites in one place.</div>
+        </div>
+      </div>
+      <div class="header-badge">
+        <div class="status-dot"></div>
+        <span><strong>12 Active Dashboards</strong> • Ponytail & Caveman Fast AI Online</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Ponytail & Caveman Fast AI HUD -->
+    <div class="search-panel" style="border-color: rgba(56, 189, 248, 0.3); background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(18, 25, 43, 0.9) 100%); flex-direction: column; align-items: stretch;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.2rem;">⚡</span>
+          <span style="font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--blue-accent); letter-spacing: 1px; text-transform: uppercase;">Ponytail & Caveman Fast AI HUD</span>
+          <span style="font-size: 11px; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: var(--green-accent); font-family: var(--font-mono); font-weight: 700;">&lt;400ms • ZERO TOKEN LEAK</span>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); display: flex; gap: 16px;">
+          <span>WHATSAPP: <strong style="color: var(--green-accent);">ACTIVE</strong></span>
+          <span>JARVIS CONSOLE: <strong style="color: #ef4444;">DECOMMISSIONED</strong></span>
+          <span>INSTAGRAM: <strong style="color: #ef4444;">DECOMMISSIONED</strong></span>
+          <span>STANDUP: <strong style="color: var(--gold-light);">4H</strong></span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; margin-top: 12px;">
+        <input type="text" id="quickAiInput" class="search-input" style="flex: 1; width: auto;" placeholder="Ask anything across Taarmi, Amazon PPC, inventory, second brain (e.g. 'What is current ACOS?', 'Taarmi variants', 'Daily ad budget')..." onkeydown="if(event.key==='Enter') executeQuickAi()">
+        <button onclick="executeQuickAi()" style="background: var(--blue-accent); color: #070a12; border: none; border-radius: 10px; padding: 0 24px; font-weight: 800; font-size: 13px; cursor: pointer; font-family: var(--font-mono); transition: all 0.2s;">ASK AI</button>
+      </div>
+      <div id="quickAiResult" style="display: none; margin-top: 14px; padding: 14px 18px; background: rgba(0, 0, 0, 0.5); border-left: 3px solid var(--blue-accent); border-radius: 6px; font-family: var(--font-mono); font-size: 13px; color: var(--text-main); line-height: 1.5;">
+      </div>
+    </div>
+
+    <div class="search-panel">
+      <input type="text" id="filterInput" class="search-input" placeholder="Search dashboards by name, keyword, or purpose..." onkeyup="filterCards()">
+      <div class="quick-stats">
+        <span>Total Dashboards: <strong>11</strong></span>
+        <span>AI Engine: <strong>Ponytail + Caveman</strong></span>
+        <span>Storage: <strong>Offline & Standalone Ready</strong></span>
+      </div>
+    </div>
+
+    <div class="dashboard-grid" id="dashGrid">
+        <a href="ROAS_5_PLUS_MINED_INTELLIGENCE_DASHBOARD.html" class="dash-card blue" style="border-color: rgba(56, 189, 248, 0.7); background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, rgba(18, 25, 43, 0.95) 100%); grid-column: 1 / -1; margin-bottom: 8px;">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-blue" style="background: rgba(56, 189, 248, 0.2); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.5);">🔥 UPGRADED • VOLUME &amp; ROAS INTELLIGENCE CONSOLE</span>
+              <span class="card-file">ROAS_5_PLUS_MINED_INTELLIGENCE_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title" style="color: #38bdf8; font-size: 22px;">🎯 Volume-Centric PPC ROAS 5+ Console (Match Types • Set Bids • Avg CPC • Volume Sorter)</h2>
+            <p class="card-desc" style="font-size: 14.5px; color: #cbd5e1;">Comprehensive volume-sorted console: <strong>117 Customer Search Terms</strong> (₹1.58L sales, 259 orders) and <strong>18 Campaign Target Keywords</strong> (₹1.44L sales, 246 orders). Displays <strong>EXACT / PHRASE / BROAD match types</strong>, <strong>Amazon Set Bids</strong>, <strong>Realized Average CPC</strong>, <strong>Bid vs CPC Gap %</strong>, and primary <strong>1-Click Volume Sorting</strong> (Orders, Sales, Clicks, Impressions). Includes a 4-Quadrant Volume vs ROAS Strategic Matrix and instant CSV exports.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--green-accent); font-family: var(--font-mono); font-weight: 700;">Volume Sorter Active • Orders (246+) • Bids &amp; CPCs • Match Types • 100% Read-Only</span>
+            <div class="launch-btn" style="background: #38bdf8; color: #0b0f19; font-weight: 800;">
+              Launch Volume &amp; ROAS Console <span class="arrow-icon">&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="SELLERMATE_STRATEGY_EXECUTION_DASHBOARD.html" class="dash-card green" style="border-color: rgba(16, 185, 129, 0.7); background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(18, 25, 43, 0.95) 100%); grid-column: 1 / -1; margin-bottom: 8px;">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-green" style="background: rgba(16, 185, 129, 0.2); color: #86efac; border: 1px solid rgba(16, 185, 129, 0.5);">⚡ SELLERMATE LIVE DATA • 5-STEP STRATEGY CONSOLE</span>
+              <span class="card-file">SELLERMATE_STRATEGY_EXECUTION_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title" style="color: #10b981; font-size: 22px;">🛡️ SellerMate AI Strategy &amp; Execution Console (₹95.6k Sales • Read-Only Enforced)</h2>
+            <p class="card-desc" style="font-size: 14.5px; color: #cbd5e1;">Live SellerMate audit across 30 days: <strong>Step 1:</strong> Cut ₹2,110 bleeder drain with 6 negative exact terms. <strong>Step 2:</strong> Harvest 6 super winners (8x–20x ROAS). <strong>Step 3:</strong> Activate 4 hidden organic stars (₹29.2k revenue on ₹0 ad spend). <strong>Step 4:</strong> 20 strictly basket competitor PAT targets. <strong>Step 5:</strong> 24/7 Dayparting &amp; automated rules blueprint. <em>Hard Rule: 100% read-only with double approval sandbox.</em></p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--gold-light); font-family: var(--font-mono); font-weight: 700;">Account: JAIN ENTERPRISES JAIPUR • 162 Orders • 4.97x ROAS</span>
+            <div class="launch-btn" style="background: #10b981; color: #0b0f19; font-weight: 800;">
+              Launch SellerMate Strategy Console <span class="arrow-icon">&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html" class="dash-card gold" style="border-color: rgba(245, 158, 11, 0.7); background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(18, 25, 43, 0.95) 100%); grid-column: 1 / -1;">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-gold" style="background: rgba(245, 158, 11, 0.2); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.5);">🔥 HIGH PRIORITY • ACTION REQUIRED</span>
+              <span class="card-file">AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title" style="color: #f59e0b; font-size: 22px;">⚡ Amazon PPC ROAS Restoration Console (4.42x &rarr; 7.8x+)</h2>
+            <p class="card-desc" style="font-size: 14.5px; color: #cbd5e1;">Step-by-step Seller Central checklist with 1-click copy: <strong>5-Campaign Master Console</strong> (Broad, Phrase, Exact, Festive Broad, and <strong>Competitor PAT with 20 live strictly basket ASINs</strong>), pause ₹2,000 generic bleeders (`gift hamper`), adjust bids on wedding &amp; packing baskets, protect Super Winners (7.36x ROAS), and use real-time simulation.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--green-accent); font-family: var(--font-mono); font-weight: 700;">Recovers ₹3,700+ Wasted Spend • 5 Campaigns + 20 Basket PAT Targets</span>
+            <div class="launch-btn" style="background: #f59e0b; color: #0b0f19; font-weight: 800;">
+              Launch Rebound Console <span class="arrow-icon">&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="KARTIKEY_PORTFOLIO_INTERACTIVE.html" class="dash-card blue" style="border-color: rgba(56, 189, 248, 0.5); background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, rgba(18, 25, 43, 0.9) 100%);">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-blue">PERSONAL PORTFOLIO • PRODUCTION</span>
+              <span class="card-file">KARTIKEY_PORTFOLIO_INTERACTIVE.html</span>
+            </div>
+            <h2 class="card-title" style="color: #38bdf8;">🌐 Kartikey Jain — Personal Portfolio & Selected Works</h2>
+            <p class="card-desc">Production portfolio showcase: High-craft Webflow development, ₹9L+ Amazon e-commerce case study (5+ ROAS), video & camera direction (BTS summit 50+ interviews), responsive viewport inspector, and live proof matrix.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Grid, Table & Inspector</span>
+            <div class="launch-btn" style="background: #38bdf8; color: #0b0f19;">
+              Launch Portfolio App <span class="arrow-icon">&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="AMAZON_CAMPAIGNS_ACTION_DASHBOARD.html" class="dash-card blue" style="border-color: rgba(56, 189, 248, 0.4);">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-blue">LIVE EXECUTION • TODAY</span>
+              <span class="card-file">AMAZON_CAMPAIGNS_ACTION_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title" style="color: #38bdf8;">⚡ Live PPC Targeting & Negatives Console</h2>
+            <p class="card-desc">Interactive, 1-click copy console for Broad, Phrase &amp; Exact campaigns. 8 non-overlapping Broad roots, 13 Negative Exacts to isolate Exact traffic, and unfreezing bids for 7 zero-impression winners.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">1-Click Copy Ready</span>
+            <div class="launch-btn" style="background: #38bdf8; color: #0b0f19;">
+              Launch Action Console <span class="arrow-icon">&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html" class="dash-card gold" style="border-color: rgba(245, 158, 11, 0.4);">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-gold">ACTION ROADMAP • LIVE</span>
+              <span class="card-file">AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title" style="color: #f59e0b;">🎯 Amazon PPC // ROAS Restoration Console</h2>
+            <p class="card-desc">Step-by-step action playbook to rebound from 4.42x to 7.85x+ ROAS. Pause generic leaks (₹1,993 spend), cut wedding basket bids, negate 16 zero-order bleeders, and interactive live simulator.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Interactive Simulator &amp; Playbook</span>
+            <div class="launch-btn" style="background: #f59e0b; color: #0b0f19;">
+              Launch Console <span class="arrow-icon">&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="TAARMI_PPC_EXECUTIVE_DASHBOARD.html" class="dash-card gold">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-gold">NEW • UPDATED TODAY</span>
+              <span class="card-file">TAARMI_PPC_EXECUTIVE_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title">PPC Intelligence & Campaign Architecture</h2>
+            <p class="card-desc">Complete analysis of 45 Amazon ad reports: Volume & longevity strategy, broad umbrella string deconstruction, 47 multi-order anchor terms, and 5 non-repetitive compound broad targets.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Click to open dashboard</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </a>
+      
+
+        <a href="MOCK_LINKEDIN_PROFILE_INTERACTIVE.html" class="dash-card gold">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-gold">POSITIONING & BRAND</span>
+              <span class="card-file">MOCK_LINKEDIN_PROFILE_INTERACTIVE.html</span>
+            </div>
+            <h2 class="card-title">Kartikey Jain — LinkedIn Positioning Studio</h2>
+            <p class="card-desc">Interactive profile transformation: Great website development (Webflow), ₹9L+ Amazon marketplace case study, video production lab, and compliant founder connection notes (&lt;300 chars).</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Click to open dashboard</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="STOREFRONT_INTERACTIVE_DASHBOARD.html" class="dash-card green">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-green">HIGH RESOLUTION</span>
+              <span class="card-file">STOREFRONT_INTERACTIVE_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title">Storefront & 12 Variants Showcase</h2>
+            <p class="card-desc">Interactive 3D/Visual showcase of all 12 Taarmi basket variants, high-res lifestyle imagery, dimensions comparison, package breakdowns, and instant price calculator.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Click to open dashboard</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </a>
+      
+
+        <a href="LISTINGS_COPY_INTERACTIVE_DASHBOARD.html" class="dash-card blue">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-blue">STRICT CHAR LIMITS</span>
+              <span class="card-file">LISTINGS_COPY_INTERACTIVE_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title">Listings Copy & Character Validation</h2>
+            <p class="card-desc">Complete Parent & 12 Children listing copy: Titles strictly <75 chars, bullet highlights ≤125 chars, dimensions, model numbers, and Excel cell synchronization.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Click to open dashboard</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </a>
+      
+
+        <a href="SEARCH_TERMS_INTERACTIVE_PANEL.html" class="dash-card purple">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-purple">249 BYTES COMPLIANT</span>
+              <span class="card-file">SEARCH_TERMS_INTERACTIVE_PANEL.html</span>
+            </div>
+            <h2 class="card-title">Search Terms & Generic Keywords Panel</h2>
+            <p class="card-desc">5-field generic keyword optimizer (strictly ≤249 UTF-8 bytes per field, semicolon delimited), keyword frequency analysis, and search query volume mapping.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Click to open dashboard</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </a>
+      
+
+        <a href="SECOND_BRAIN_OFFICE_DASHBOARD.html" class="dash-card green">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-green">OFFICE TELEMETRY</span>
+              <span class="card-file">SECOND_BRAIN_OFFICE_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title">Second Brain 6-Desk Autonomous System</h2>
+            <p class="card-desc">Multi-agent office command center: Real-time telemetry, desk status (Product, Creative, Copy, Ads, Systems, Outreach), and autonomous queue monitor.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Click to open dashboard</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </a>
+      
+
+        <a href="AMAZON_SELLER_EXECUTIVE_TOOLKIT.html" class="dash-card blue">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-blue">UTILITY & CALCULATORS</span>
+              <span class="card-file">AMAZON_SELLER_EXECUTIVE_TOOLKIT.html</span>
+            </div>
+            <h2 class="card-title">Amazon Seller Executive Toolkit</h2>
+            <p class="card-desc">Interactive ROI simulator, FBA fee calculator, profit margin analyzer, listing audit scorecards, and ad spend efficiency benchmarks.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Click to open dashboard</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </a>
+      
+
+        <a href="AI_MODELS_DASHBOARD.html" class="dash-card purple">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-purple">INFRASTRUCTURE</span>
+              <span class="card-file">AI_MODELS_DASHBOARD.html</span>
+            </div>
+            <h2 class="card-title">AI Models & Telemetry Console</h2>
+            <p class="card-desc">Status, latency, token usage, and capability routing for all active vision, language, and embedding models driving the autonomous office.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">Click to open dashboard</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <span class="arrow-icon">→</span>
+            </div>
+          </div>
+        </a>
+      
+        <a href="WHATSAPP_LINK.html" class="dash-card green" style="border-color: rgba(16, 185, 129, 0.5); background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, rgba(18, 25, 43, 0.9) 100%);">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge badge-green">PONYTAIL FAST AI • ACTIVE</span>
+              <span class="card-file">WHATSAPP_LINK.html</span>
+            </div>
+            <h2 class="card-title" style="color: #10b981;">📱 WhatsApp Executive Remote // Second Brain</h2>
+            <p class="card-desc">Direct mobile control console: Zero-token-waste native HTTP engine, sub-400ms Caveman responses, Edge neural TTS voice notes, and strict personal chat privacy lock.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">&lt;400ms • Zero Subprocess</span>
+            <div class="launch-btn" style="background: #10b981; color: #0b0f19;">
+              Launch WhatsApp Gateway <span class="arrow-icon">&rarr;</span>
+            </div>
+          </div>
+        </a>
+
+        <div class="dash-card" style="border-color: rgba(239, 68, 68, 0.3); opacity: 0.75;">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">DECOMMISSIONED // KILLED</span>
+              <span class="card-file">JARVIS_VOICE_CONSOLE.html</span>
+            </div>
+            <h2 class="card-title" style="color: #ef4444;">🎙️ JARVIS Voice Console (Terminated)</h2>
+            <p class="card-desc">Permanently decommissioned per user directive. Voice recognition loops, audio canvas visualizer, and UI overhead purged. Server AI and WhatsApp bot remain 100% active.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">0 CPU / Terminated</span>
+            <div class="launch-btn" style="border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">
+              Console Inactive
+            </div>
+          </div>
+        </div>
+
+        <a href="INSTAGRAM_LINK.html" class="dash-card" style="border-color: rgba(239, 68, 68, 0.3); opacity: 0.75;">
+          <div class="card-top">
+            <div class="card-meta">
+              <span class="card-badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">DECOMMISSIONED // KILLED</span>
+              <span class="card-file">INSTAGRAM_LINK.html</span>
+            </div>
+            <h2 class="card-title" style="color: #ef4444;">💀 Instagram Bot & Scraper (Terminated)</h2>
+            <p class="card-desc">Permanently decommissioned per executive token optimization directive. Playwright browser automation and scraping loops purged to achieve zero token waste.</p>
+          </div>
+          <div class="card-bottom">
+            <span style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">0 Tokens / 0 CPU</span>
+            <div class="launch-btn" style="border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">
+              View Status Notice <span class="arrow-icon">&rarr;</span>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+
+  </div>
+
+  <script>
+    function filterCards() {
+      const q = document.getElementById('filterInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.dash-card');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(q)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    async function executeQuickAi() {
+      const input = document.getElementById('quickAiInput');
+      const resultBox = document.getElementById('quickAiResult');
+      const query = input.value.trim();
+      if (!query) return;
+
+      resultBox.style.display = 'block';
+      resultBox.innerHTML = '<span style="color:var(--text-dim);">Querying fast AI engine...</span>';
+
+      const t0 = performance.now();
+      try {
+        const res = await fetch('/api/ask?q=' + encodeURIComponent(query));
+        const data = await res.json();
+        const duration = Math.round(performance.now() - t0);
+
+        resultBox.innerHTML = `
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:11px; color:var(--text-dim);">
+            <span style="color:var(--green-accent); font-weight:700;">CAVEMAN RESPONSE</span>
+            <span>⚡ ${duration}ms • Local OmniRoute (0 tok leak)</span>
+          </div>
+          <div style="color:var(--text-main);">${data.reply || 'No response.'}</div>
+        `;
+      } catch(e) {
+        resultBox.innerHTML = `<span style="color:#ef4444;">Fast AI query error: ${e.message}</span>`;
+      }
+    }
+  </script>
+</body>
+</html>

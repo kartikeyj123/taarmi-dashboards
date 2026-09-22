@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Operations Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+        .card { transition: all 0.3s ease; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important; border-color: rgba(99, 102, 241, 0.4) !important; }
+        
+
+        .card, .glass-panel, .glass-card {
+            background: rgba(18, 25, 43, 0.65) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+            border-radius: 16px;
+        }
+        
+        h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
+body { background-color: #07090e; color: #c9d1d9; font-family: 'Inter', 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif; }
+        .card { background-color: rgba(18, 25, 43, 0.65); border: 1px solid #30363d; border-radius: 8px; }
+        .highlight { color: #58a6ff; }
+        .badge-active { background-color: #238636; color: #fff; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+        .badge-pending { background-color: #d29922; color: #fff; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-10 border-b border-gray-700 pb-6">
+            <h1 class="text-3xl font-bold text-white mb-2">AI Operations & Engine Dashboard</h1>
+            <p class="text-gray-400">Live overview of connected APIs, model availability, and optimal use cases.</p>
+        </header>
+
+        <!-- Recommended Model Section -->
+        <section class="mb-10">
+            <div class="card p-6 border-l-4 border-l-blue-500">
+                <h2 class="text-xl font-bold text-white mb-2">🏆 Best Model for Reasoning & Thinking</h2>
+                <p class="mb-4">Based on current engine configurations, the highest-performing model for deep strategy and strict instruction adherence is:</p>
+                <div class="flex items-center gap-4 bg-[#07090e] p-4 rounded-md border border-gray-700">
+                    <div class="text-2xl">🧠</div>
+                    <div>
+                        <h3 class="font-bold text-white text-lg">Anthropic Claude 3.5 Sonnet</h3>
+                        <p class="text-sm text-gray-400">Routed via OpenRouter API</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <h2 class="text-2xl font-bold text-white mb-6">Engine Capabilities & API Status</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- OmniRoute Local Gateway -->
+            <div class="card p-6 flex flex-col border-2 border-emerald-500/40 bg-[#16222f]">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-emerald-400">⚡ OmniRoute Fast Gateway</h3>
+                        <p class="text-xs text-gray-400">127.0.0.1:20128 • Ponytail & Caveman</p>
+                    </div>
+                    <span class="badge-active bg-emerald-600">Active // &lt;400ms</span>
+                </div>
+                <p class="text-sm text-gray-300 mb-4">Ultra-fast, zero-token-leak router powering WhatsApp & Voice Console directly via standard HTTP.</p>
+                <div class="space-y-3 flex-grow">
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">model: "auto"</span>
+                        <span class="text-emerald-400 text-xs">Style: Caveman (1-2 sentences, facts only)</span>
+                    </div>
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">Architecture: Ponytail</span>
+                        <span class="text-gray-400 text-xs">0 child processes, standard library HTTP</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-6 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-white">OpenRouter Hub</h3>
+                    <span class="badge-active">Active</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4">Primary engine for top-tier foundational models.</p>
+                <div class="space-y-3 flex-grow">
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">claude-3.5-sonnet</span>
+                        <span class="text-gray-400 text-xs">Best for: Complex reasoning, SEO strategy</span>
+                    </div>
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">nemotron-3-ultra-550b</span>
+                        <span class="text-gray-400 text-xs">Best for: Massive parameter fallback</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Groq -->
+            <div class="card p-6 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-white">Groq Cloud</h3>
+                    <span class="badge-active">Active</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4">Ultra-high-speed inference engine.</p>
+                <div class="space-y-3 flex-grow">
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">gpt-oss-120b</span>
+                        <span class="text-gray-400 text-xs">Best for: High-speed bulk processing</span>
+                    </div>
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">qwen3.8-27b</span>
+                        <span class="text-gray-400 text-xs">Best for: Rapid data parsing</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Gemini -->
+            <div class="card p-6 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-white">Google Gemini</h3>
+                    <span class="badge-active">Active</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4">Native engine for multimodal analysis.</p>
+                <div class="space-y-3 flex-grow">
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">gemini-3.6-flash</span>
+                        <span class="text-gray-400 text-xs">Best for: Fast multimodal text generation</span>
+                    </div>
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">gemini-3-pro-image</span>
+                        <span class="text-gray-400 text-xs">Best for: Visual generation (Billing req.)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hugging Face -->
+            <div class="card p-6 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-white">Hugging Face</h3>
+                    <span class="badge-active">Active</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4">Serverless inference for open weights.</p>
+                <div class="space-y-3 flex-grow">
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">FLUX.1-schnell</span>
+                        <span class="text-gray-400 text-xs">Best for: High-speed commercial imagery</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cerebras -->
+            <div class="card p-6 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-white">Cerebras</h3>
+                    <span class="badge-pending">Pending Billing</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4">Wafer-scale hardware optimized processing.</p>
+                <div class="space-y-3 flex-grow">
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">gpt-oss-120b</span>
+                        <span class="text-gray-400 text-xs">Best for: Extreme throughput tasks</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Together AI -->
+            <div class="card p-6 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-white">Together.ai</h3>
+                    <span class="badge-pending">Pending Credits</span>
+                </div>
+                <p class="text-sm text-gray-400 mb-4">Enterprise-grade model deployment.</p>
+                <div class="space-y-3 flex-grow">
+                    <div class="bg-[#07090e] p-3 rounded text-sm border border-gray-700">
+                        <span class="text-white font-semibold block">FLUX.1-dev</span>
+                        <span class="text-gray-400 text-xs">Best for: Advanced visual generation</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

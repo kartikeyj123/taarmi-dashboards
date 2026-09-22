@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SellerMate AI Strategy & Execution Console — Taarmi Baskets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --bg-base: #0A0E1A;
+      --bg-surface: #12192B;
+      --bg-card: #182238;
+      --bg-card-hover: #1F2C47;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(245, 158, 11, 0.4);
+      --border-danger: rgba(239, 68, 68, 0.4);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --gold-primary: #F59E0B;
+      --gold-light: #FDE68A;
+      --gold-glow: rgba(245, 158, 11, 0.15);
+      --green-accent: #10B981;
+      --green-glow: rgba(16, 185, 129, 0.15);
+      --blue-accent: #38BDF8;
+      --blue-glow: rgba(56, 189, 248, 0.15);
+      --danger-red: #EF4444;
+      --danger-glow: rgba(239, 68, 68, 0.15);
+      --purple-accent: #A855F7;
+      --purple-glow: rgba(168, 85, 247, 0.15);
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
+body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(18, 25, 43, 0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 36px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+    .brand-text h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+    .brand-text p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+    .header-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+    .pill-green {
+      background: var(--green-glow);
+      color: var(--green-accent);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .pill-gold {
+      background: var(--gold-glow);
+      color: var(--gold-light);
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+    .pill-red {
+      background: var(--danger-glow);
+      color: var(--danger-red);
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px 36px;
+    }
+
+    /* HARD RULE SAFETY BANNER */
+    .safety-banner {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(18, 25, 43, 0.95) 100%);
+      border: 2px solid var(--danger-red);
+      border-radius: 14px;
+      padding: 18px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
+    }
+    .safety-icon {
+      font-size: 30px;
+      line-height: 1;
+      padding-top: 2px;
+    }
+    .safety-content h2 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #FCA5A5;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .safety-content p {
+      font-size: 13.5px;
+      color: #E2E8F0;
+      line-height: 1.5;
+    }
+    .safety-tag {
+      background: rgba(239, 68, 68, 0.25);
+      border: 1px solid var(--danger-red);
+      color: #FEE2E2;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    /* KPI STRIP */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-bar, var(--blue-accent));
+    }
+    .kpi-card.kpi-gold::before { background: var(--gold-primary); }
+    .kpi-card.kpi-green::before { background: var(--green-accent); }
+    .kpi-card.kpi-red::before { background: var(--danger-red); }
+    .kpi-card.kpi-purple::before { background: var(--purple-accent); }
+    .kpi-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .kpi-value {
+      font-size: 26px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+    .kpi-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* TAB NAVIGATION */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .tab-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      color: var(--text-muted);
+      padding: 12px 20px;
+      border-radius: 10px 10px 0 0;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-card);
+    }
+    .tab-btn.active {
+      color: var(--text-main);
+      background: var(--bg-card);
+      border-color: var(--gold-primary);
+      border-bottom: 2px solid var(--gold-primary);
+    }
+    .tab-badge {
+      padding: 2px 7px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .tab-badge-red { background: var(--danger-glow); color: var(--danger-red); }
+    .tab-badge-green { background: var(--green-glow); color: var(--green-accent); }
+    .tab-badge-gold { background: var(--gold-glow); color: var(--gold-light); }
+    .tab-badge-purple { background: var(--purple-glow); color: var(--purple-accent); }
+
+    /* TAB PANELS */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS & PANELS */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title-group h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title-group p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    .btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+    .btn:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      color: #0F172A;
+      border-color: var(--gold-primary);
+    }
+    .btn-gold:hover {
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.4);
+      color: #000;
+    }
+    .btn-green {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #FFFFFF;
+      border-color: var(--green-accent);
+    }
+    .btn-green:hover {
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      color: #FFFFFF;
+      border-color: var(--danger-red);
+    }
+    .btn-danger:hover {
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.4);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* TABLES */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    th {
+      background: #151D30;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .mono {
+      font-family: var(--font-mono);
+    }
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    .tag-red { background: var(--danger-glow); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .tag-green { background: var(--green-glow); color: #86EFAC; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .tag-gold { background: var(--gold-glow); color: #FDE68A; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-blue { background: var(--blue-glow); color: #BAE6FD; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+    /* ASIN LINK */
+    .asin-link {
+      color: var(--blue-accent);
+      text-decoration: none;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    .asin-link:hover {
+      text-decoration: underline;
+    }
+
+    /* GRID FOR CARDS */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 20px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    /* MINI CARD */
+    .mini-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .mini-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: var(--bg-card-hover);
+    }
+    .mini-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .mini-card-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+    .mini-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+    .mini-metric-item span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 10.5px;
+      text-transform: uppercase;
+    }
+    .mini-metric-item strong {
+      color: var(--text-main);
+      font-family: var(--font-mono);
+    }
+
+    /* CODE BOX / BUFFER */
+    .copy-box {
+      background: #0D1322;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: #E2E8F0;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 180px;
+      overflow-y: auto;
+      margin-top: 10px;
+      margin-bottom: 12px;
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10B981;
+      color: #0F172A;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 1000;
+      animation: slideUp 0.2s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 20px;
+    }
+    .modal-box {
+      background: var(--bg-surface);
+      border: 2px solid var(--border-danger);
+      border-radius: 16px;
+      max-width: 640px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #FCA5A5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .modal-body {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .modal-payload {
+      background: #090D18;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #38BDF8;
+      max-height: 160px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+  /* Responsive Overrides */
+@media (max-width: 1024px) {
+  .kpi-grid, .grid-container, .metrics-grid, .kpi-row, .kpi-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .controls, .controls-panel, .filters-container, .table-controls {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+  }
+  .search-box, .search-container, input[type='text'], .search-input {
+    width: 100% !important;
+  }
+  .matrix-grid, .strategic-matrix {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 768px) {
+  header, .top-bar, .app-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  header button, .top-bar button, .header-actions button, .action-btn {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  .kpi-grid, .grid-container, .metrics-grid, .kpi-row, .kpi-container {
+    grid-template-columns: 1fr !important;
+  }
+  .kpi-card, .metric-card, .stat-card {
+    padding: 14px !important;
+  }
+  .table-container, .data-table-wrapper, .table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .tabs, .tab-navigation, .nav-tabs {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+  }
+  table, th, td, .data-table {
+    font-size: 12px !important;
+  }
+}
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="brand-group">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <h1>SellerMate AI Strategy & Execution Console</h1>
+          <p>Account: <strong>JAIN ENTERPRISES JAIPUR</strong> (AOTI1JZV2LFR3) | Marketplace: Amazon India</p>
+        </div>
+      </div>
+      <div class="header-pills">
+        <span class="pill pill-green">● SellerMate Live Synced</span>
+        <span class="pill pill-gold">100% FBM Fulfilled</span>
+        <span class="pill pill-red">🛡️ HARD RULE: Read-Only Mode</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- HARD RULE NOTICE BANNER -->
+    <div class="safety-banner">
+      <div class="safety-icon">🛡️</div>
+      <div class="safety-content">
+        <h2>
+          HARD RULE ENFORCED: READ-ONLY AUDIT & INTELLIGENCE MODE
+          <span class="safety-tag">ZERO MUTATION POLICY</span>
+        </h2>
+        <p>
+          As commanded, <strong>all live Amazon SP-API mutations, campaign changes, target adjustments, and automation rules are locked in Read-Only Mode</strong>. No update or write action will ever be pushed to SellerMate or Seller Central until and unless you explicitly provide <strong>double approval</strong>. All steps below provide 1-click clipboard buffers so you retain 100% manual control.
+        </p>
+      </div>
+    </div>
+
+    <!-- 30-DAY PERFORMANCE KPI STRIP -->
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-gold">
+        <div class="kpi-label">30-Day Ad Spend</div>
+        <div class="kpi-value">₹19,227.99</div>
+        <div class="kpi-sub">7,309 Clicks | Avg CPC ₹2.63</div>
+      </div>
+      <div class="kpi-card kpi-green">
+        <div class="kpi-label">Ad-Attributed Revenue</div>
+        <div class="kpi-value">₹95,616.06</div>
+        <div class="kpi-sub">162 Orders | ROAS <strong>4.97x</strong></div>
+      </div>
+      <div class="kpi-card kpi-purple">
+        <div class="kpi-label">Overall ACoS</div>
+        <div class="kpi-value">20.11%</div>
+        <div class="kpi-sub">Target: &lt; 22% | Healthy</div>
+      </div>
+      <div class="kpi-card kpi-green">
+        <div class="kpi-label">Hidden Organic Sales</div>
+        <div class="kpi-value">₹29,221.84</div>
+        <div class="kpi-sub">4 Top ASINs on ₹0 Ad Spend!</div>
+      </div>
+      <div class="kpi-card kpi-red">
+        <div class="kpi-label">Identified Wasted Bleed</div>
+        <div class="kpi-value">₹2,110.15</div>
+        <div class="kpi-sub">Zero-order search queries to negate</div>
+      </div>
+    </div>
+
+    <!-- TAB NAVIGATION -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('step1')">
+        🛑 Step 1: Bleeder Negation
+        <span class="tab-badge tab-badge-red">-₹2,110 Bleed</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('step2')">
+        🚀 Step 2: Winner Graduation
+        <span class="tab-badge tab-badge-green">6 Super Winners</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('step3')">
+        ⭐ Step 3: Organic Champions
+        <span class="tab-badge tab-badge-gold">₹29.2k Revenue</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('step4')">
+        🎯 Step 4: Competitor PAT
+        <span class="tab-badge tab-badge-purple">20 Pure Baskets</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('step5')">
+        ⚙️ Step 5: Dayparting & Rules
+        <span class="tab-badge tab-badge-gold">24/7 Engine</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('step6')">
+        🔐 Double-Approval Sandbox
+        <span class="tab-badge tab-badge-red">Locked</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: BLEEDER NEGATION -->
+    <div id="tab-step1" class="tab-content active">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>🛑 Step 1: Negative Exact Bleeder Isolation</h3>
+            <p>Immediate savings of <strong>₹2,110.15/month</strong> by cutting queries with 0 orders and non-converting box traffic.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-danger" onclick="copyNegativeKeywords()">📋 Copy 6 Negative Exact Terms</button>
+            <button class="btn btn-secondary" onclick="downloadNegativesCsv()">⬇️ Download Negatives CSV</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('add_negative_keywords', '6 Negative Exact search terms staged')">🔒 Stage for Double Approval</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Search Query</th>
+                <th>MatchType</th>
+                <th>Spend</th>
+                <th>Clicks</th>
+                <th>Orders</th>
+                <th>CPC</th>
+                <th>Diagnosis & Loss Rationale</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>basket for gift hamper</strong></td>
+                <td><span class="tag tag-red">Negative Exact</span></td>
+                <td class="mono">₹418.84</td>
+                <td class="mono">200</td>
+                <td class="mono"><strong>0</strong></td>
+                <td class="mono">₹2.09</td>
+                <td>200 clicks without a single conversion; 100% loss drain.</td>
+              </tr>
+              <tr>
+                <td><strong>gift hamper box with net cover</strong></td>
+                <td><span class="tag tag-red">Negative Exact</span></td>
+                <td class="mono">₹398.94</td>
+                <td class="mono">240</td>
+                <td class="mono"><strong>0</strong></td>
+                <td class="mono">₹1.66</td>
+                <td>Customers searching for paperboard boxes bouncing off wire/MDF baskets.</td>
+              </tr>
+              <tr>
+                <td><strong>packing baskets for hampers</strong></td>
+                <td><span class="tag tag-red">Negative Exact</span></td>
+                <td class="mono">₹321.83</td>
+                <td class="mono">97</td>
+                <td class="mono"><strong>0</strong></td>
+                <td class="mono">₹3.32</td>
+                <td>Industrial/wholesaler search traffic with zero retail basket purchases.</td>
+              </tr>
+              <tr>
+                <td><strong>gift basket</strong> (Broad)</td>
+                <td><span class="tag tag-red">Negative Exact</span></td>
+                <td class="mono">₹791.37</td>
+                <td class="mono">374</td>
+                <td class="mono">2</td>
+                <td class="mono">₹2.12</td>
+                <td>Catastrophic <strong>92.63% ACoS</strong>; overbroad term burning ₹600+ net margin.</td>
+              </tr>
+              <tr>
+                <td><strong>bamboo gift packing baskets</strong></td>
+                <td><span class="tag tag-red">Negative Exact</span></td>
+                <td class="mono">₹178.60</td>
+                <td class="mono">47</td>
+                <td class="mono"><strong>0</strong></td>
+                <td class="mono">₹3.80</td>
+                <td>Mismatched material intent (You manufacture Wire/MDF, not Bamboo).</td>
+              </tr>
+              <tr>
+                <td><strong>gift basket hamper wedding</strong></td>
+                <td><span class="tag tag-red">Negative Exact</span></td>
+                <td class="mono">₹151.06</td>
+                <td class="mono">54</td>
+                <td class="mono"><strong>0</strong></td>
+                <td class="mono">₹2.80</td>
+                <td>54 clicks with zero conversions in festive basket ad group.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <h4 style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 6px;">1-Click Copy-Paste Buffer for Amazon Seller Central Bulk Negation:</h4>
+          <div class="copy-box" id="buffer-negatives">basket for gift hamper
+gift hamper box with net cover
+packing baskets for hampers
+gift basket
+bamboo gift packing baskets
+gift basket hamper wedding</div>
+        </div>
+      </div>
+
+      <!-- NON-BASKET PRODUCT BLEEDERS -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>⚠️ Non-Basket Product Bleeders to Review</h3>
+            <p>Non-basket products in your active campaigns burning budget without conversions.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-secondary" onclick="copyBleederAsins()">📋 Copy Bleeder ASINs</button>
+          </div>
+        </div>
+
+        <div class="grid-4">
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-title">Yellow Gift Box (B0DCK18FKV)</span>
+              <span class="tag tag-red">0 Orders</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric-item"><span>Spend</span><strong>₹130.90</strong></div>
+              <div class="mini-metric-item"><span>Sessions</span><strong>3,783</strong></div>
+              <div class="mini-metric-item"><span>Clicks</span><strong>28</strong></div>
+              <div class="mini-metric-item"><span>CVR</span><strong>0.00%</strong></div>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-title">Plastic Rangoli Mat (B09J8Y7432)</span>
+              <span class="tag tag-red">0 Orders</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric-item"><span>Spend</span><strong>₹168.25</strong></div>
+              <div class="mini-metric-item"><span>Clicks</span><strong>41</strong></div>
+              <div class="mini-metric-item"><span>CPC</span><strong>₹4.10</strong></div>
+              <div class="mini-metric-item"><span>CVR</span><strong>0.00%</strong></div>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-title">Message Glass Bottles (B0GPP6CT8D)</span>
+              <span class="tag tag-red">0 Orders</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric-item"><span>Spend</span><strong>₹113.27</strong></div>
+              <div class="mini-metric-item"><span>Clicks</span><strong>17</strong></div>
+              <div class="mini-metric-item"><span>CPC</span><strong>₹6.66</strong></div>
+              <div class="mini-metric-item"><span>CVR</span><strong>0.00%</strong></div>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-title">Gifting Glass Jar (B08RZF2ZM7)</span>
+              <span class="tag tag-red">₹49.92 CPC!</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric-item"><span>Spend</span><strong>₹99.85</strong></div>
+              <div class="mini-metric-item"><span>Clicks</span><strong>2</strong></div>
+              <div class="mini-metric-item"><span>CPC</span><strong>₹49.92</strong></div>
+              <div class="mini-metric-item"><span>Orders</span><strong>0</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: WINNER GRADUATION -->
+    <div id="tab-step2" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>🚀 Step 2: Super-Winner Exact Match Graduation</h3>
+            <p>These 6 keywords generated <strong>₹27,941.67 in sales (46 orders) at an incredible 8.11x ROAS</strong>. Promote to Exact Match with dedicated budgets.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-green" onclick="copyExactWinners()">📋 Copy Exact Keywords & Bids</button>
+            <button class="btn btn-secondary" onclick="copyExactPureTerms()">📋 Copy Pure Keywords (Seller Central)</button>
+            <button class="btn btn-secondary" onclick="downloadWinnersCsv()">⬇️ Download Winners CSV</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('add_targets', '6 Exact Match targets staged')">🔒 Stage for Double Approval</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Winning Search Term</th>
+                <th>Target Match</th>
+                <th>30D Spend</th>
+                <th>30D Sales</th>
+                <th>Orders</th>
+                <th>Historical ROAS</th>
+                <th>Historical ACoS</th>
+                <th>Recommended Bid</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>hamper basket for gifting</strong></td>
+                <td><span class="tag tag-green">EXACT</span></td>
+                <td class="mono">₹182.83</td>
+                <td class="mono" style="color:#86EFAC;"><strong>₹3,717.79</strong></td>
+                <td class="mono">3</td>
+                <td><span class="tag tag-green">20.33x</span></td>
+                <td class="mono">4.92%</td>
+                <td class="mono"><strong>₹2.80</strong></td>
+              </tr>
+              <tr>
+                <td><strong>fancy basket for gifting</strong></td>
+                <td><span class="tag tag-green">EXACT</span></td>
+                <td class="mono">₹211.85</td>
+                <td class="mono" style="color:#86EFAC;"><strong>₹2,970.48</strong></td>
+                <td class="mono">3</td>
+                <td><span class="tag tag-green">14.02x</span></td>
+                <td class="mono">7.13%</td>
+                <td class="mono"><strong>₹3.10</strong></td>
+              </tr>
+              <tr>
+                <td><strong>gifting basket</strong></td>
+                <td><span class="tag tag-green">EXACT</span></td>
+                <td class="mono">₹283.17</td>
+                <td class="mono" style="color:#86EFAC;"><strong>₹2,748.57</strong></td>
+                <td class="mono">5</td>
+                <td><span class="tag tag-green">9.71x</span></td>
+                <td class="mono">10.30%</td>
+                <td class="mono"><strong>₹3.00</strong></td>
+              </tr>
+              <tr>
+                <td><strong>decorative basket for gift packing</strong></td>
+                <td><span class="tag tag-green">EXACT</span></td>
+                <td class="mono">₹357.25</td>
+                <td class="mono" style="color:#86EFAC;"><strong>₹3,258.09</strong></td>
+                <td class="mono">5</td>
+                <td><span class="tag tag-green">9.12x</span></td>
+                <td class="mono">10.97%</td>
+                <td class="mono"><strong>₹3.10</strong></td>
+              </tr>
+              <tr>
+                <td><strong>fruit basket for wedding</strong></td>
+                <td><span class="tag tag-green">EXACT</span></td>
+                <td class="mono">₹645.11</td>
+                <td class="mono" style="color:#86EFAC;"><strong>₹5,357.23</strong></td>
+                <td class="mono">8</td>
+                <td><span class="tag tag-green">8.30x</span></td>
+                <td class="mono">12.04%</td>
+                <td class="mono"><strong>₹3.30</strong></td>
+              </tr>
+              <tr>
+                <td><strong>baskets for gift packing</strong></td>
+                <td><span class="tag tag-green">EXACT</span></td>
+                <td class="mono">₹1,763.62</td>
+                <td class="mono" style="color:#86EFAC;"><strong>₹9,889.51</strong></td>
+                <td class="mono">22</td>
+                <td><span class="tag tag-green">5.61x</span></td>
+                <td class="mono">17.83%</td>
+                <td class="mono"><strong>₹3.50</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <h4 style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 6px;">1-Click Copy-Paste Buffer for Exact Campaign / Seller Central Bulk Entry:</h4>
+          <div class="copy-box" id="buffer-exact">baskets for gift packing
+fruit basket for wedding
+decorative basket for gift packing
+gifting basket
+fancy basket for gifting
+hamper basket for gifting</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ORGANIC CHAMPIONS -->
+    <div id="tab-step3" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>⭐ Step 3: Activate the 4 "Hidden Organic Stars"</h3>
+            <p>These 4 listings generated <strong>₹29,221.84 in sales with ₹0 ad spend</strong>. Activating low-bid PPC (₹1.90–₹2.30) will scale sales without hurting margins.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-gold" onclick="copyOrganicAsins()">📋 Copy 4 Champion ASINs</button>
+            <button class="btn btn-secondary" onclick="downloadOrganicCsv()">⬇️ Download Organic Stars CSV</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('create_campaign', 'Low-Bid SP campaign for 4 organic stars staged')">🔒 Stage for Double Approval</button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="mini-card" style="border-left: 4px solid var(--gold-primary);">
+            <div class="mini-card-header">
+              <div>
+                <a href="https://www.amazon.in/dp/B0HG7B8XB9" target="_blank" class="asin-link">B0HG7B8XB9 ↗</a>
+                <div class="mini-card-title" style="margin-top:4px;">Fancy Baskets 6 Small Rectangle Dry Fruit Gifting Basket (Pack of 6)</div>
+              </div>
+              <span class="tag tag-gold">₹10,680 Revenue</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric-item"><span>Total Sales</span><strong style="color:#FDE68A;">₹10,680.00</strong></div>
+              <div class="mini-metric-item"><span>Units Ordered</span><strong>24 Units</strong></div>
+              <div class="mini-metric-item"><span>Sessions</span><strong>1,341</strong></div>
+              <div class="mini-metric-item"><span>Ad Spend</span><strong>₹0.00 (100% Organic)</strong></div>
+              <div class="mini-metric-item"><span>Buy Box %</span><strong>100.0%</strong></div>
+              <div class="mini-metric-item"><span>Target PPC Bid</span><strong style="color:#38BDF8;">₹2.20</strong></div>
+            </div>
+          </div>
+
+          <div class="mini-card" style="border-left: 4px solid var(--gold-primary);">
+            <div class="mini-card-header">
+              <div>
+                <a href="https://www.amazon.in/dp/B0GV82N4LN" target="_blank" class="asin-link">B0GV82N4LN ↗</a>
+                <div class="mini-card-title" style="margin-top:4px;">Gift Basket Hamper Basket Set of 2 with Net Cover (Golden Design)</div>
+              </div>
+              <span class="tag tag-gold">₹6,445 Revenue</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric-item"><span>Total Sales</span><strong style="color:#FDE68A;">₹6,444.84</strong></div>
+              <div class="mini-metric-item"><span>Units Ordered</span><strong>26 Units</strong></div>
+              <div class="mini-metric-item"><span>Sessions</span><strong>1,009</strong></div>
+              <div class="mini-metric-item"><span>Ad Spend</span><strong>₹0.00 (100% Organic)</strong></div>
+              <div class="mini-metric-item"><span>Buy Box %</span><strong>100.0%</strong></div>
+              <div class="mini-metric-item"><span>Target PPC Bid</span><strong style="color:#38BDF8;">₹1.90</strong></div>
+            </div>
+          </div>
+
+          <div class="mini-card" style="border-left: 4px solid var(--gold-primary);">
+            <div class="mini-card-header">
+              <div>
+                <a href="https://www.amazon.in/dp/B0HHKVLYL6" target="_blank" class="asin-link">B0HHKVLYL6 ↗</a>
+                <div class="mini-card-title" style="margin-top:4px;">Fancy Baskets Small Rectangle Dry Fruit Basket (Golden Net, Pack of 6)</div>
+              </div>
+              <span class="tag tag-gold">₹6,286 Revenue</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric-item"><span>Total Sales</span><strong style="color:#FDE68A;">₹6,286.00</strong></div>
+              <div class="mini-metric-item"><span>Units Ordered</span><strong>14 Units</strong></div>
+              <div class="mini-metric-item"><span>Sessions</span><strong>816</strong></div>
+              <div class="mini-metric-item"><span>Ad Spend</span><strong>₹0.00 (100% Organic)</strong></div>
+              <div class="mini-metric-item"><span>Buy Box %</span><strong>92.72%</strong></div>
+              <div class="mini-metric-item"><span>Target PPC Bid</span><strong style="color:#38BDF8;">₹2.10</strong></div>
+            </div>
+          </div>
+
+          <div class="mini-card" style="border-left: 4px solid var(--gold-primary);">
+            <div class="mini-card-header">
+              <div>
+                <a href="https://www.amazon.in/dp/B0DHV4WL9L" target="_blank" class="asin-link">B0DHV4WL9L ↗</a>
+                <div class="mini-card-title" style="margin-top:4px;">Fancy Baskets Dry Fruit Gifting Basket, Golden Net (Pack of 6)</div>
+              </div>
+              <span class="tag tag-gold">₹5,811 Revenue</span>
+            </div>
+            <div class="mini-metrics">
+              <div class="mini-metric-item"><span>Total Sales</span><strong style="color:#FDE68A;">₹5,811.00</strong></div>
+              <div class="mini-metric-item"><span>Units Ordered</span><strong>13 Units</strong></div>
+              <div class="mini-metric-item"><span>Sessions</span><strong>824</strong></div>
+              <div class="mini-metric-item"><span>Ad Spend</span><strong>₹0.00 (100% Organic)</strong></div>
+              <div class="mini-metric-item"><span>Buy Box %</span><strong>99.32%</strong></div>
+              <div class="mini-metric-item"><span>Target PPC Bid</span><strong style="color:#38BDF8;">₹2.10</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <h4 style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 6px;">1-Click Copy-Paste Buffer for ASIN Advertising Target List:</h4>
+          <div class="copy-box" id="buffer-organic">B0HG7B8XB9
+B0GV82N4LN
+B0HHKVLYL6
+B0DHV4WL9L</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: COMPETITOR PAT -->
+    <div id="tab-step4" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>🎯 Step 4: Competitor PAT Conquesting (Baskets Only)</h3>
+            <p>Target the 20 live, high-priced physical basket competitors on Amazon India to conquest market share directly on their product pages.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-gold" onclick="copyPatCompetitors()">📋 Copy 20 Competitor ASINs</button>
+            <button class="btn btn-green" onclick="copyDefensiveAsins()">🛡️ Copy 5 Taarmi Defensive ASINs</button>
+            <button class="btn btn-secondary" onclick="downloadPatCsv()">⬇️ Download PAT CSV</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('add_targets', '20 Competitor ASIN PAT targets staged')">🔒 Stage for Double Approval</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Competitor ASIN</th>
+                <th>Listing Title & Brand</th>
+                <th>Live Price</th>
+                <th>Rating</th>
+                <th>Vulnerability / Conquest Angle</th>
+                <th>Suggested Bid</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="https://www.amazon.in/dp/B0DJGSY4FC" target="_blank" class="asin-link">B0DJGSY4FC ↗</a></td>
+                <td>SANWALSA Wooden Hamper Tray with Net</td>
+                <td class="mono">₹799.00</td>
+                <td>⭐ 4.2</td>
+                <td>Extremely expensive (₹799 vs Taarmi ₹399 combo). High conquest conversion.</td>
+                <td class="mono"><strong>₹2.80</strong></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.amazon.in/dp/B0DQT9648X" target="_blank" class="asin-link">B0DQT9648X ↗</a></td>
+                <td>Vayu Art Octagonal Pinewood Basket (Single)</td>
+                <td class="mono">₹396.00</td>
+                <td>⭐ 4.1</td>
+                <td>High price for a single unit. Taarmi offers multipacks (2PK/4PK/6PK) at equal or lower cost.</td>
+                <td class="mono"><strong>₹2.50</strong></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.amazon.in/dp/B0F1MWYYLB" target="_blank" class="asin-link">B0F1MWYYLB ↗</a></td>
+                <td>Wizme Decorative Golden Wire Hamper Basket (6PK)</td>
+                <td class="mono">₹597.00</td>
+                <td>⭐ 3.9</td>
+                <td>Low star rating (3.9). Vulnerable on quality and net finish.</td>
+                <td class="mono"><strong>₹2.60</strong></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.amazon.in/dp/B0DG5QBH28" target="_blank" class="asin-link">B0DG5QBH28 ↗</a></td>
+                <td>Vayu Art Square Pinewood Tray (Single)</td>
+                <td class="mono">₹339.00</td>
+                <td>⭐ 4.3</td>
+                <td>Heavy raw pine finish without festive net cover or gota lace.</td>
+                <td class="mono"><strong>₹2.40</strong></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.amazon.in/dp/B0CT5SZCDF" target="_blank" class="asin-link">B0CT5SZCDF ↗</a></td>
+                <td>Kuber Industries Gold Metal Mesh Hamper Basket</td>
+                <td class="mono">₹349.00</td>
+                <td>⭐ 4.0</td>
+                <td>Plain metallic mesh; lacks festive gota bow and wedding return gift appeal.</td>
+                <td class="mono"><strong>₹2.40</strong></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.amazon.in/dp/B0G1K3LHC1" target="_blank" class="asin-link">B0G1K3LHC1 ↗</a></td>
+                <td>Khojon Net Cover Fruit Hamper Basket (10x10")</td>
+                <td class="mono">₹362.00</td>
+                <td>⭐ 4.2</td>
+                <td>Direct 10" competitor. Conquest with Taarmi's pre-tied rosette bows.</td>
+                <td class="mono"><strong>₹2.60</strong></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.amazon.in/dp/B0HK1B74NH" target="_blank" class="asin-link">B0HK1B74NH ↗</a></td>
+                <td>Khojon Round Hamper Basket with Gold Net (12x12")</td>
+                <td class="mono">₹494.00</td>
+                <td>⭐ 4.1</td>
+                <td>High single unit price. Conquest with Taarmi 6PK multipacks.</td>
+                <td class="mono"><strong>₹2.40</strong></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.amazon.in/dp/B0HHYXGRZ1" target="_blank" class="asin-link">B0HHYXGRZ1 ↗</a></td>
+                <td>Festive Tokri Shagun Hamper Basket (Pack of 4)</td>
+                <td class="mono">₹549.00</td>
+                <td>⭐ 4.0</td>
+                <td>Priced higher than Taarmi's 4PK (₹400).</td>
+                <td class="mono"><strong>₹2.40</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <h4 style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 6px;">1-Click Copy-Paste Buffer of All 20 Competitor ASINs (Sponsored Products PAT):</h4>
+          <div class="copy-box" id="buffer-pat">B0DJGSY4FC
+B0DQT9648X
+B0F1MWYYLB
+B0DG5QBH28
+B0CT5SZCDF
+B0G1K3LHC1
+B0HK1B74NH
+B0HHYXGRZ1
+B0HJHFVFRR
+B0HJHRG6WT
+B0HJHCXLX5
+B0HJHFXVV6
+B0HJHDX1K8
+B0HJHB2844
+B0HJHHCNFW
+B0HJHMZ3KN
+B0HJHGMRSD
+B0HJHP8HK6
+B0HKFYDGDH
+B0HJ9TNMTX</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: DAYPARTING & AUTOMATIONS -->
+    <div id="tab-step5" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>⚙️ Step 5: 24/7 Dayparting & Automated Rules Engine</h3>
+            <p>Current Status: <strong>0 active automations and 0 dayparting schedules</strong> in SellerMate. Here is the blueprint to automate bid boosts and bleeder cuts.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-secondary" onclick="copyAutomationRules()">📋 Copy Rules Blueprint</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('create_automation', '24/7 Automation Rules Staged')">🔒 Stage for Double Approval</button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- AUTOMATION RULES -->
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-title">Rule 1: Autonomous Bleeder Stop</span>
+              <span class="tag tag-red">Waste Protection</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted);">
+              Automatically add search terms as Negative Exact if they burn cash without conversions.
+            </p>
+            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 12px; color: #FCA5A5;">
+              IF Spend &gt; ₹120.00 AND Orders == 0<br>
+              THEN Action: Add as Negative Exact (Campaign Level)
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-title">Rule 2: High ROAS Winner Booster</span>
+              <span class="tag tag-green">Growth Scale</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted);">
+              Automatically boost bids on keywords delivering exceptional profit margins.
+            </p>
+            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 12px; color: #86EFAC;">
+              IF ROAS &gt; 6.5x AND Orders &gt;= 3 AND ACoS &lt; 15%<br>
+              THEN Action: Increase Keyword Bid by +15% (Max Bid ₹4.00)
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-title">Rule 3: Target Fatigue Demotion</span>
+              <span class="tag tag-gold">Margin Guard</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted);">
+              Reduce bids on keyword targets whose ACoS drifts past profitable thresholds.
+            </p>
+            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 12px; color: #FDE68A;">
+              IF ACoS &gt; 30% AND Clicks &gt;= 25<br>
+              THEN Action: Reduce Target Bid by -20% (Floor Bid ₹1.50)
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-title">Rule 4: Peak Hours Dayparting Multipliers</span>
+              <span class="tag tag-blue">Hourly Heatmap</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted);">
+              Concentrate ad budget during evening festive shopping hours in India.
+            </p>
+            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 12px; color: #BAE6FD;">
+              11:00 AM – 04:00 PM: +15% Bid Multiplier (Afternoon Peak)<br>
+              07:00 PM – 11:30 PM: +25% Bid Multiplier (Evening Shoppers)<br>
+              01:00 AM – 07:00 AM: -35% Bid Multiplier (Night Trough)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: DOUBLE APPROVAL SANDBOX -->
+    <div id="tab-step6" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3>🔐 Double-Approval Safety Sandbox & Audit Trail</h3>
+            <p>Verification protocol guaranteeing zero unauthorized mutations across SellerMate or Amazon Seller Central.</p>
+          </div>
+          <div class="card-actions">
+            <span class="tag tag-red">ALL WRITES INTERCEPTED</span>
+          </div>
+        </div>
+
+        <div style="background: #0D1322; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+          <h4 style="font-size: 15px; color: var(--text-main); margin-bottom: 8px;">How the Double-Approval Protocol Works:</h4>
+          <ol style="margin-left: 20px; font-size: 13.5px; color: var(--text-muted); line-height: 1.8;">
+            <li><strong>Audit & Read:</strong> Antigravity reads SellerMate / Amazon reports via read-only tools (`get_user_context`, `get_campaign_performance`, `get_search_term_performance`).</li>
+            <li><strong>Staging:</strong> Proposed optimizations are staged in local dashboards and tables. <strong>Zero live API calls are made</strong>.</li>
+            <li><strong>Approval 1 (Payload Review):</strong> The user reviews the exact changes (negative terms, bid numbers, campaign budgets).</li>
+            <li><strong>Approval 2 (Explicit Authorization):</strong> The user explicitly commands execution in chat (e.g., <em>"I approve pushing the 6 negatives now"</em>).</li>
+            <li><strong>Execution & Receipt:</strong> Only after the 2nd approval is the mutation tool executed, and an immediate confirmation receipt with Amazon mutation IDs is returned.</li>
+          </ol>
+        </div>
+
+        <div style="border: 2px dashed var(--border-danger); border-radius: 12px; padding: 24px; text-align: center;">
+          <div style="font-size: 36px; margin-bottom: 12px;">🔒</div>
+          <h4 style="font-size: 16px; color: #FCA5A5; margin-bottom: 6px;">Current System State: 100% Locked</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted); max-width: 600px; margin: 0 auto 16px auto;">
+            No live changes have been submitted to your Amazon account. You can copy any payload using the 1-click buttons to apply them manually in Seller Central, or request a live execution only when you are completely ready.
+          </p>
+          <button class="btn btn-secondary" onclick="showToast('System is strictly in Read-Only Mode. All mutations locked.')">Test Mutation Lock (Safe)</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">Copied to Clipboard!</div>
+
+  <!-- SAFETY DOUBLE-APPROVAL SIMULATION MODAL -->
+  <div class="modal-overlay" id="safetyModal">
+    <div class="modal-box">
+      <div class="modal-title">
+        <span>🛡️ DOUBLE-APPROVAL REQUIRED</span>
+      </div>
+      <div class="modal-body">
+        <p><strong>HARD RULE SAFETY INTERCEPT:</strong></p>
+        <p style="margin-top: 6px;">
+          You requested to stage the following action: <strong id="modalActionDesc" style="color:var(--text-main);"></strong>.
+        </p>
+        <p style="margin-top: 10px;">
+          Under the Double Approval Rule, Antigravity <strong>will NOT execute this mutation</strong> until you provide explicit two-step authorization in chat.
+        </p>
+      </div>
+      <div class="modal-payload" id="modalPayloadContent">
+        // Staged JSON Payload
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeSafetyModal()">Dismiss</button>
+        <button class="btn btn-danger" onclick="confirmStagedAction()">Acknowledge Read-Only Staging</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('active');
+      
+      const targetPanel = document.getElementById('tab-' + tabId);
+      if (targetPanel) targetPanel.classList.add('active');
+    }
+
+    // Toast
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2200);
+    }
+
+    // Copy helper
+    function copyText(text, successMsg) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMsg || 'Copied to Clipboard!');
+      });
+    }
+
+    // Action 1: Copy Negatives
+    function copyNegativeKeywords() {
+      const text = document.getElementById('buffer-negatives').innerText.trim();
+      copyText(text, 'Copied 6 Negative Exact Keywords!');
+    }
+
+    function copyBleederAsins() {
+      const asins = "B0DCK18FKV
+B09J8Y7432
+B0GPP6CT8D
+B0GP161H26
+B08RZF2ZM7";
+      copyText(asins, 'Copied Bleeder ASINs!');
+    }
+
+    // Action 2: Copy Exact Winners
+    function copyExactWinners() {
+      const tsv = "baskets for gift packing\tEXACT\t3.50
+fruit basket for wedding\tEXACT\t3.30
+decorative basket for gift packing\tEXACT\t3.10
+gifting basket\tEXACT\t3.00
+fancy basket for gifting\tEXACT\t3.10
+hamper basket for gifting\tEXACT\t2.80";
+      copyText(tsv, 'Copied 6 Exact Winners with Bids (Excel / TSV)!');
+    }
+
+    function copyExactPureTerms() {
+      const text = document.getElementById('buffer-exact').innerText.trim();
+      copyText(text, 'Copied Pure Exact Terms for Seller Central!');
+    }
+
+    // Action 3: Copy Organic Champions
+    function copyOrganicAsins() {
+      const text = document.getElementById('buffer-organic').innerText.trim();
+      copyText(text, 'Copied 4 Organic Champion ASINs!');
+    }
+
+    // Action 4: Copy PAT
+    function copyPatCompetitors() {
+      const text = document.getElementById('buffer-pat').innerText.trim();
+      copyText(text, 'Copied 20 Pure Basket Competitor ASINs!');
+    }
+
+    function copyDefensiveAsins() {
+      const asins = "B0HJNBGL3B
+B0HJBDGX56
+B0HJBK841G
+B0HJBK1PLC
+B0DHRXT2BD";
+      copyText(asins, 'Copied 5 Taarmi Defensive ASINs!');
+    }
+
+    function copyAutomationRules() {
+      const rules = "RULE 1: IF Spend > ₹120 AND Orders == 0 THEN Add Negative Exact
+RULE 2: IF ROAS > 6.5x AND Orders >= 3 THEN Boost Bid +15%
+RULE 3: IF ACoS > 30% AND Clicks >= 25 THEN Reduce Bid -20%
+DAYPARTING: 11AM-4PM (+15%), 7PM-11:30PM (+25%), 1AM-7AM (-35%)";
+      copyText(rules, 'Copied Automation Rules Blueprint!');
+    }
+
+    // CSV Downloads
+    function downloadCsvFile(filename, content) {
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Downloaded ' + filename);
+    }
+
+    function downloadNegativesCsv() {
+      const csv = "Search Term,Match Type,Wasted Spend,Clicks,Reason
+" +
+        "basket for gift hamper,NEGATIVE_EXACT,418.84,200,Zero orders in 200 clicks
+" +
+        "gift hamper box with net cover,NEGATIVE_EXACT,398.94,240,Cardboard box search bounce
+" +
+        "packing baskets for hampers,NEGATIVE_EXACT,321.83,97,Zero orders in 97 clicks
+" +
+        "gift basket,NEGATIVE_EXACT,791.37,374,Overbroad generic 92.6% ACoS
+" +
+        "bamboo gift packing baskets,NEGATIVE_EXACT,178.60,47,Wrong material (wire/MDF brand)
+" +
+        "gift basket hamper wedding,NEGATIVE_EXACT,151.06,54,Zero orders in 54 clicks";
+      downloadCsvFile('SELLERMATE_NEGATIVE_EXACT_BLEEDERS.csv', csv);
+    }
+
+    function downloadWinnersCsv() {
+      const csv = "Keyword,Match Type,Suggested Bid,Historical Spend,Historical Sales,Historical Orders,ROAS
+" +
+        "baskets for gift packing,EXACT,3.50,1763.62,9889.51,22,5.61
+" +
+        "fruit basket for wedding,EXACT,3.30,645.11,5357.23,8,8.30
+" +
+        "decorative basket for gift packing,EXACT,3.10,357.25,3258.09,5,9.12
+" +
+        "gifting basket,EXACT,3.00,283.17,2748.57,5,9.71
+" +
+        "fancy basket for gifting,EXACT,3.10,211.85,2970.48,3,14.02
+" +
+        "hamper basket for gifting,EXACT,2.80,182.83,3717.79,3,20.33";
+      downloadCsvFile('SELLERMATE_EXACT_MATCH_SUPER_WINNERS.csv', csv);
+    }
+
+    function downloadOrganicCsv() {
+      const csv = "ASIN,Product Title,Organic Sales,Units,Sessions,BuyBox %,Target Bid
+" +
+        "B0HG7B8XB9,Fancy Baskets 6 Small Rectangle Pack of 6,10680.00,24,1341,100.0%,2.20
+" +
+        "B0GV82N4LN,Hamper Basket Set of 2 Golden Design,6444.84,26,1009,100.0%,1.90
+" +
+        "B0HHKVLYL6,Small Rectangle Golden Net Pack of 6,6286.00,14,816,92.72%,2.10
+" +
+        "B0DHV4WL9L,Fancy Baskets Golden Net Pack of 6,5811.00,13,824,99.32%,2.10";
+      downloadCsvFile('SELLERMATE_ORGANIC_CHAMPIONS_BOOST.csv', csv);
+    }
+
+    function downloadPatCsv() {
+      const csv = "Target ASIN,Brand / Type,Live Price,Star Rating,Conquest Angle,Suggested Bid
+" +
+        "B0DJGSY4FC,SANWALSA Wooden Hamper Tray,799.00,4.2,High Price Conquest,2.80
+" +
+        "B0DQT9648X,Vayu Art Pinewood Basket,396.00,4.1,Single Unit vs Multipack,2.50
+" +
+        "B0F1MWYYLB,Wizme Wire Hamper 6PK,597.00,3.9,Low Rating Conquest (3.9),2.60
+" +
+        "B0DG5QBH28,Vayu Art Square Pinewood,339.00,4.3,Raw Wood vs Festive Net,2.40
+" +
+        "B0CT5SZCDF,Kuber Industries Metal Mesh,349.00,4.0,Plain vs Decorative Gota,2.40
+" +
+        "B0G1K3LHC1,Khojon 10x10 Net Cover Basket,362.00,4.2,Direct Size Rival,2.60
+" +
+        "B0HK1B74NH,Khojon 12x12 Round Hamper,494.00,4.1,High Single Price,2.40
+" +
+        "B0HHYXGRZ1,Festive Tokri Shagun Hamper,549.00,4.0,Price Conquest,2.40
+" +
+        "B0HJHFVFRR,Pinewood Wedding Shagun Tray,385.00,4.2,Direct Gifting Conquest,2.50
+" +
+        "B0HJHRG6WT,MDF Handcrafted Tokri,420.00,4.1,MDF Base Competitor,2.40";
+      downloadCsvFile('BASKET_COMPETITOR_PAT_CAMPAIGN_TARGETS.csv', csv);
+    }
+
+    // Safety Double-Approval Simulation Modal
+    function openSafetyModal(toolName, desc) {
+      document.getElementById('modalActionDesc').innerText = desc;
+      const payload = {
+        tool: toolName,
+        account: "JAIN ENTERPRISES JAIPUR (6ab08e12858c3d8e0aba4b3a)",
+        status: "LOCKED_STAGED_ONLY",
+        hard_rule_enforced: true,
+        approval_state: "PENDING_DOUBLE_APPROVAL",
+        note: "Zero live mutations executed. Requires explicit 2x chat confirmation."
+      };
+      document.getElementById('modalPayloadContent').innerText = JSON.stringify(payload, null, 2);
+      document.getElementById('safetyModal').style.display = 'flex';
+    }
+
+    function closeSafetyModal() {
+      document.getElementById('safetyModal').style.display = 'none';
+    }
+
+    function confirmStagedAction() {
+      closeSafetyModal();
+      showToast('Staged securely! Zero live mutations submitted.');
+    }
+  </script>
+</body>
+</html>
+

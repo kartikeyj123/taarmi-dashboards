@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS Voice Console — Decommissioned</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #070913;
+    --text-main: #f1f5f9;
+    --text-dim: #94a3b8;
+    --neon-red: #ef4444;
+    --border-red: rgba(239, 68, 68, 0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
+body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: rgba(13, 17, 28, 0.95);
+    border: 1px solid var(--border-red);
+    border-radius: 16px;
+    padding: 36px;
+    max-width: 540px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(239, 68, 68, 0.1);
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--neon-red);
+    border: 1px solid var(--border-red);
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.6rem;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .stats-box {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 24px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .stats-row:last-child { border-bottom: none; }
+  .btn-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: #25d366;
+    color: #070a12;
+    border: 1px solid #25d366;
+  }
+  .btn-primary:hover {
+    background: #1eb956;
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="badge">● DECOMMISSIONED // KILLED</div>
+  <h1>JARVIS Voice Console Terminated</h1>
+  <p>Per user directive, the standalone JARVIS browser voice console, Web Speech API recognition loop, canvas audio visualizer, and Stark chimes have been permanently killed.</p>
+
+  <div class="stats-box">
+    <div class="stats-row"><span style="color:var(--text-dim);">Status:</span><span style="color:#ef4444; font-weight:700;">DECOMMISSIONED</span></div>
+    <div class="stats-row"><span style="color:var(--text-dim);">JARVIS Server:</span><span style="color:#10b981; font-weight:700;">ONLINE (PORT 4000)</span></div>
+    <div class="stats-row"><span style="color:var(--text-dim);">WhatsApp Bot:</span><span style="color:#25d366; font-weight:700;">ONLINE &amp; ACTIVE</span></div>
+    <div class="stats-row"><span style="color:var(--text-dim);">AI Engine:</span><span style="color:#00f2fe; font-weight:700;">PONYTAIL + CAVEMAN (&lt;400ms)</span></div>
+  </div>
+
+  <div class="btn-group">
+    <a href="/whatsapp" class="btn btn-primary">Open WhatsApp Gateway</a>
+    <a href="/00_DASHBOARD_PORTAL.html" class="btn btn-secondary">Master Dashboards</a>
+  </div>
+</div>
+
+</body>
+</html>

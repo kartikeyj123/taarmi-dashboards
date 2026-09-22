@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taarmi Baskets — Executive Visual PPC Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --bg-base: #0D111D;
+      --bg-surface: #151C2C;
+      --bg-card: #1C253B;
+      --bg-card-hover: #232F4B;
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-card: rgba(255, 255, 255, 0.12);
+      
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      
+      /* Vibrant Campaign Palette */
+      --c-exact: #10B981;
+      --c-exact-bg: rgba(16, 185, 129, 0.12);
+      --c-exact-glow: rgba(16, 185, 129, 0.25);
+      
+      --c-phrase: #0EA5E9;
+      --c-phrase-bg: rgba(14, 165, 233, 0.12);
+      --c-phrase-glow: rgba(14, 165, 233, 0.25);
+      
+      --c-broad: #F59E0B;
+      --c-broad-bg: rgba(245, 158, 11, 0.12);
+      --c-broad-glow: rgba(245, 158, 11, 0.25);
+      
+      --c-festive: #A855F7;
+      --c-festive-bg: rgba(168, 85, 247, 0.12);
+      --c-festive-glow: rgba(168, 85, 247, 0.25);
+      
+      --c-danger: #F43F5E;
+      --c-danger-bg: rgba(244, 63, 94, 0.12);
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
+body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 100px;
+    }
+
+    /* Top Sticky Header */
+    header {
+      background: rgba(21, 28, 44, 0.94);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 14px 32px;
+    }
+    .header-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      color: #0B0F19;
+      font-weight: 900;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+    .brand-title {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .thought-btn {
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+      color: #FFF;
+      border: none;
+      padding: 9px 18px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+    }
+    .thought-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(139, 92, 246, 0.5);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav-tab-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFF;
+    }
+    .nav-tab-btn.active {
+      background: #F59E0B;
+      color: #0B0F19;
+      border-color: #F59E0B;
+      font-weight: 800;
+    }
+
+    .container {
+      max-width: 1560px;
+      margin: 28px auto 0;
+      padding: 0 32px;
+    }
+
+    /* Colorful Quick Stat Cards */
+    .stat-ribbon {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .ribbon-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 18px 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .ribbon-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0; width: 4px;
+    }
+    .ribbon-card.gold::after { background: #F59E0B; }
+    .ribbon-card.green::after { background: #10B981; }
+    .ribbon-card.blue::after { background: #0EA5E9; }
+    .ribbon-card.purple::after { background: #A855F7; }
+
+    .ribbon-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .ribbon-val {
+      font-size: 26px;
+      font-weight: 900;
+      color: #FFF;
+      font-family: var(--font-mono);
+      letter-spacing: -0.02em;
+    }
+    .ribbon-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    /* Campaign Layout Sections */
+    .campaign-banner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 22px;
+      margin-bottom: 32px;
+    }
+    
+    .camp-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .camp-card:hover {
+      transform: translateY(-3px);
+    }
+    .camp-card.exact-card { border-top: 4px solid var(--c-exact); }
+    .camp-card.phrase-card { border-top: 4px solid var(--c-phrase); }
+    .camp-card.broad-card { border-top: 4px solid var(--c-broad); }
+    .camp-card.festive-card { border-top: 4px solid var(--c-festive); }
+
+    .camp-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .camp-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .tag-exact { background: var(--c-exact-bg); color: var(--c-exact); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .tag-phrase { background: var(--c-phrase-bg); color: var(--c-phrase); border: 1px solid rgba(14, 165, 233, 0.3); }
+    .tag-broad { background: var(--c-broad-bg); color: var(--c-broad); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-festive { background: var(--c-festive-bg); color: var(--c-festive); border: 1px solid rgba(168, 85, 247, 0.3); }
+
+    .camp-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFF;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .camp-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    /* Keyword Pill Cloud - Skimmable! */
+    .kw-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 20px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .kw-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 6px 11px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #FFF;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .kw-pill:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    .kw-pill-sub {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .sub-orders { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+    .sub-modifier { background: rgba(245, 158, 11, 0.2); color: #FDE68A; }
+    .sub-intent { background: rgba(168, 85, 247, 0.2); color: #D8B4FE; }
+
+    /* Action Copy Bar */
+    .copy-bar {
+      display: flex;
+      gap: 8px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+    .btn-copy {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: #FFF;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .btn-copy:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    .btn-copy.gold {
+      background: #F59E0B;
+      color: #0B0F19;
+      border: none;
+      font-weight: 800;
+    }
+    .btn-copy.gold:hover {
+      background: #D97706;
+      color: #FFF;
+    }
+
+    /* Modal / Drawer for Thought Process */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(5, 8, 16, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-content {
+      background: #151C2C;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 960px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      animation: modalSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalSlide {
+      from { transform: translateY(20px) scale(0.98); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .modal-header {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .modal-title-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #FFF;
+    }
+    .btn-close {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-close:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #FFF;
+    }
+    .modal-body {
+      padding: 28px;
+      overflow-y: auto;
+      line-height: 1.7;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .thought-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .thought-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #FFF;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .thought-highlight {
+      color: #FDE68A;
+      font-weight: 700;
+    }
+
+    /* Skimmable Tables */
+    .table-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .table-header-bar {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 12px 18px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border-subtle);
+      font-weight: 700;
+    }
+    td {
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+    tr:hover td { background: rgba(255, 255, 255, 0.03); }
+
+    /* Toast Alert */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10B981;
+      color: #0F172A;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 3000;
+      animation: toastPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes toastPop {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="header-inner">
+      <div class="brand-group">
+        <span class="brand-badge">TAARMI</span>
+        <div>
+          <div class="brand-title">Visual PPC & Campaign Architecture Command Center</div>
+          <div class="brand-subtitle">High-Volume Longevity Framework • Zero-Repetition Broad Harvesting</div>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <button class="thought-btn" onclick="openThoughtModal()">
+          <span>💡 Why Were These Keywords Chosen?</span>
+        </button>
+        <nav class="nav-tabs">
+          <button class="nav-tab-btn active" onclick="showTab('tab-campaigns', this)">3+1 Campaigns</button>
+          <button class="nav-tab-btn" onclick="showTab('tab-anchors', this)">Volume Anchors (47)</button>
+          <button class="nav-tab-btn" onclick="showTab('tab-flukes', this)">1-Order Flukes Exposed</button>
+          <button class="nav-tab-btn" onclick="showTab('tab-bleed', this)">Waste Plug (204)</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Colorful Stat Ribbon -->
+    <div class="stat-ribbon">
+      <div class="ribbon-card gold">
+        <div class="ribbon-label">Verified Ad Sales</div>
+        <div class="ribbon-val">₹1,89,645</div>
+        <div class="ribbon-sub">Total 45 Reports Combined</div>
+      </div>
+      <div class="ribbon-card green">
+        <div class="ribbon-label">Blended ACoS / ROAS</div>
+        <div class="ribbon-val" style="color: #34D399;">12.98% <span style="font-size: 15px; color: var(--text-muted);">(7.70x)</span></div>
+        <div class="ribbon-sub">Highly Profitable Baseline</div>
+      </div>
+      <div class="ribbon-card blue">
+        <div class="ribbon-label">Total Orders Generated</div>
+        <div class="ribbon-val" style="color: #38BDF8;">322</div>
+        <div class="ribbon-sub">47 Multi-Order Terms Drive 78%</div>
+      </div>
+      <div class="ribbon-card purple">
+        <div class="ribbon-label">Ad Spend Invested</div>
+        <div class="ribbon-val" style="color: #C084FC;">₹24,622</div>
+        <div class="ribbon-sub">Avg CPC: ₹2.85</div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 1: 3+1 CAMPAIGNS (SKIMMABLE VISUAL CARDS) ==================== -->
+    <div id="tab-campaigns" class="tab-content active">
+
+      <div class="campaign-banner-grid">
+        
+        <!-- CARD 1: EXACT MATCH -->
+        <div class="camp-card exact-card">
+          <div>
+            <div class="camp-top-meta">
+              <span class="camp-tag tag-exact">Campaign 1: Exact Core</span>
+              <span style="font-size: 12px; color: #34D399; font-weight: 700;">15 High-Volume Targets</span>
+            </div>
+            <h2 class="camp-title">The Cornerstone Volume Engine</h2>
+            <p class="camp-subtitle">Laser-focused on statistically proven, multi-order winners. 100% budget control with zero wasted clicks.</p>
+            
+            <div class="kw-cloud">
+              
+                <div class="kw-pill">
+                  <span>fruit basket for gift</span>
+                  <span class="kw-pill-sub sub-orders">57 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fruit basket for wedding</span>
+                  <span class="kw-pill-sub sub-orders">14 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>decorative basket for gift packing</span>
+                  <span class="kw-pill-sub sub-orders">13 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fruits packing basket</span>
+                  <span class="kw-pill-sub sub-orders">10 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>hamper basket for gifting</span>
+                  <span class="kw-pill-sub sub-orders">7 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>gifting basket</span>
+                  <span class="kw-pill-sub sub-orders">7 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>gift packing box for hamper</span>
+                  <span class="kw-pill-sub sub-orders">6 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>room hamper basket for wedding</span>
+                  <span class="kw-pill-sub sub-orders">6 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>engagement baskets for gift packing</span>
+                  <span class="kw-pill-sub sub-orders">5 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fancy basket for gifting</span>
+                  <span class="kw-pill-sub sub-orders">5 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>tokri basket for gifting</span>
+                  <span class="kw-pill-sub sub-orders">5 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>decorative gift packing baskets</span>
+                  <span class="kw-pill-sub sub-orders">4 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fruit basket gift</span>
+                  <span class="kw-pill-sub sub-orders">4 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fruit gift basket with net cover</span>
+                  <span class="kw-pill-sub sub-orders">2 ord</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>gift packing baskets pack of 3</span>
+                  <span class="kw-pill-sub sub-orders">2 ord</span>
+                </div>
+              
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-weight: 700;">Instant Copy-Paste for Ads Console</div>
+            <div class="copy-bar">
+              <button class="btn-copy gold" onclick="copyText(exactKwsText, '15 Exact Targets')">📋 Copy 15 Targets</button>
+              <button class="btn-copy" onclick="copyText(exactNegExactText, 'Exact Negative Exacts')">Copy Neg Exact (3)</button>
+              <button class="btn-copy" onclick="copyText(universalNegPhraseText, 'Universal Neg Phrases')">Copy Neg Phrase (5)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: PHRASE MATCH -->
+        <div class="camp-card phrase-card">
+          <div>
+            <div class="camp-top-meta">
+              <span class="camp-tag tag-phrase">Campaign 2: Phrase Harvester</span>
+              <span style="font-size: 12px; color: #38BDF8; font-weight: 700;">10 Sequence Harvesters</span>
+            </div>
+            <h2 class="camp-title">Word-Order & Modifier Harvester</h2>
+            <p class="camp-subtitle">Locks in critical buying sequences while harvesting long-tail prefix/suffix search modifier variations.</p>
+            
+            <div class="kw-cloud">
+              
+                <div class="kw-pill">
+                  <span>fruit basket for gift</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>packing basket</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>gift packing basket</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fruit basket for wedding</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>room hamper basket</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fancy basket for gifting</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fruits packing basket</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>tokri basket for gifting</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fruit basket with net cover</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>dry fruit basket</span>
+                  <span class="kw-pill-sub" style="background: rgba(14, 165, 233, 0.2); color: #7DD3FC;">Phrase</span>
+                </div>
+              
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-weight: 700;">Instant Copy-Paste for Ads Console</div>
+            <div class="copy-bar">
+              <button class="btn-copy gold" onclick="copyText(phraseKwsText, '10 Phrase Targets')">📋 Copy 10 Targets</button>
+              <button class="btn-copy" onclick="copyText(exactKwsText, 'Funnel Isolation Neg Exacts')">Copy Neg Exact (15)</button>
+              <button class="btn-copy" onclick="copyText(phraseNegPhraseText, 'Phrase Neg Phrases')">Copy Neg Phrase (7)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: BROAD MATCH (COMPOUND STRINGS) -->
+        <div class="camp-card broad-card">
+          <div>
+            <div class="camp-top-meta">
+              <span class="camp-tag tag-broad">Campaign 3: Broad Umbrella</span>
+              <span style="font-size: 12px; color: #FDE68A; font-weight: 700;">13 Compound Strings</span>
+            </div>
+            <h2 class="camp-title">Zero-Repetition String Harvester</h2>
+            <p class="camp-subtitle">Compound strings of attached keywords. Zero repetition of modifier tokens across strings eliminates cannibalization.</p>
+            
+            <div class="kw-cloud">
+              
+                <div class="kw-pill">
+                  <span>fruit basket with net cover</span>
+                  <span class="kw-pill-sub sub-modifier">net cover</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>wedding return gift basket</span>
+                  <span class="kw-pill-sub sub-modifier">return gift</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>gifting basket for diwali and navratri</span>
+                  <span class="kw-pill-sub sub-modifier">diwali + navratri</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>gift packing basket</span>
+                  <span class="kw-pill-sub sub-modifier">gift packing</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>hamper basket</span>
+                  <span class="kw-pill-sub sub-modifier">hamper</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>dry fruit basket</span>
+                  <span class="kw-pill-sub sub-modifier">dry fruit</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>engagement basket</span>
+                  <span class="kw-pill-sub sub-modifier">engagement</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>basket for wedding</span>
+                  <span class="kw-pill-sub sub-modifier">wedding</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>decorative gift packing basket</span>
+                  <span class="kw-pill-sub sub-modifier">decorative (NEW)</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>gift packing box for hamper</span>
+                  <span class="kw-pill-sub sub-modifier">box (NEW)</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>room hamper basket for wedding</span>
+                  <span class="kw-pill-sub sub-modifier">room (NEW)</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>fancy basket for gifting</span>
+                  <span class="kw-pill-sub sub-modifier">fancy (NEW)</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>tokri basket for gifting</span>
+                  <span class="kw-pill-sub sub-modifier">tokri (NEW)</span>
+                </div>
+              
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-weight: 700;">Instant Copy-Paste for Ads Console</div>
+            <div class="copy-bar">
+              <button class="btn-copy gold" onclick="copyText(broadKwsText, '13 Broad Strings')">📋 Copy 13 Strings</button>
+              <button class="btn-copy" onclick="copyText(exactKwsText, 'Funnel Isolation Neg Exacts')">Copy Neg Exact (13)</button>
+              <button class="btn-copy" onclick="copyText(broadNegPhraseText, '4 Paused Roots + Material Bleed')">Copy Neg Phrase (10)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4: FESTIVE & SHAGUN -->
+        <div class="camp-card festive-card">
+          <div>
+            <div class="camp-top-meta">
+              <span class="camp-tag tag-festive">Campaign 4: Festive & Shagun</span>
+              <span style="font-size: 12px; color: #D8B4FE; font-weight: 700;">Seasonal Monetizer</span>
+            </div>
+            <h2 class="camp-title">Cultural Ceremonies & Gifting</h2>
+            <p class="camp-subtitle">High-AOV ceremonial & festival season monetization (Karwa Chauth Sargi, Diwali Dry Fruit, Roka Shagun).</p>
+            
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+              <button id="festiveBroadBtn" class="btn-copy gold" style="padding: 4px 10px; font-size: 11px;" onclick="toggleFestiveMode('broad')">Broad Strings (8)</button>
+              <button id="festivePhraseBtn" class="btn-copy" style="padding: 4px 10px; font-size: 11px;" onclick="toggleFestiveMode('phrase')">Phrase Targets (10)</button>
+            </div>
+
+            <div class="kw-cloud" id="festiveKwCloud">
+              
+                <div class="kw-pill">
+                  <span>diwali dry fruit hamper basket</span>
+                  <span class="kw-pill-sub sub-intent">diwali + dry fruit</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>gifting basket for diwali and navratri</span>
+                  <span class="kw-pill-sub sub-intent">diwali and navratri</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>karwa chauth sargi gift basket</span>
+                  <span class="kw-pill-sub sub-intent">karwa chauth + sargi</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>pooja festive gifting tokri</span>
+                  <span class="kw-pill-sub sub-intent">pooja + festive + tokri</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>teej inspired gifting baskets square</span>
+                  <span class="kw-pill-sub sub-intent">teej + square</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>shagun ceremony gift hamper basket</span>
+                  <span class="kw-pill-sub sub-intent">shagun + ceremony</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>bhai dooj gift packing basket</span>
+                  <span class="kw-pill-sub sub-intent">bhai dooj</span>
+                </div>
+              
+
+                <div class="kw-pill">
+                  <span>decorative festive dry fruits tray basket</span>
+                  <span class="kw-pill-sub sub-intent">festive tray</span>
+                </div>
+              
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; font-weight: 700;">Instant Copy-Paste for Ads Console</div>
+            <div class="copy-bar">
+              <button class="btn-copy gold" id="festiveCopyMainBtn" onclick="copyFestiveActive()">📋 Copy Active Targets</button>
+              <button class="btn-copy" onclick="copyText(festiveNegPhraseText, 'Food & Sweets Waste Plug')">Copy Neg Phrase (14)</button>
+              <button class="btn-copy" onclick="copyText(festiveNegExactText, 'Broad Non-Converting Gifts')">Copy Neg Exact (5)</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: VOLUME ANCHORS (ORDERS >= 2) ==================== -->
+    <div id="tab-anchors" class="tab-content">
+      <div class="table-box">
+        <div class="table-header-bar">
+          <div>
+            <h3 style="font-size: 17px; font-weight: 800; color: #FFF;">The 47 Multi-Order Customer Search Terms (Orders ≥ 2)</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Ranked strictly by order volume and longevity. These 47 terms drive 78% of all brand ad revenue.</p>
+          </div>
+          <button class="btn-copy gold" onclick="copyText(multiOrderTermsText, 'All 47 Multi-Order Terms')">📋 Copy All 47 Terms</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Customer Search Term</th>
+                <th>Orders</th>
+                <th>Verified Sales</th>
+                <th>Ad Spend</th>
+                <th>ACoS</th>
+                <th>Impressions</th>
+                <th>Clicks</th>
+                <th>CVR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">1</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruit basket for gift</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">57</strong></td>
+                  <td style="font-family: var(--font-mono);">₹32,924</td>
+                  <td style="font-family: var(--font-mono);">₹5,272</td>
+                  <td><strong style="color: #FDE68A; font-family: var(--font-mono);">16.0%</strong></td>
+                  <td style="font-family: var(--font-mono);">1,03,211</td>
+                  <td style="font-family: var(--font-mono);">1622</td>
+                  <td>3.5%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">2</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruit basket for wedding</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">14</strong></td>
+                  <td style="font-family: var(--font-mono);">₹6,210</td>
+                  <td style="font-family: var(--font-mono);">₹949</td>
+                  <td><strong style="color: #FDE68A; font-family: var(--font-mono);">15.3%</strong></td>
+                  <td style="font-family: var(--font-mono);">20,993</td>
+                  <td style="font-family: var(--font-mono);">330</td>
+                  <td>4.2%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">3</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">decorative basket for gift packing</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">13</strong></td>
+                  <td style="font-family: var(--font-mono);">₹6,909</td>
+                  <td style="font-family: var(--font-mono);">₹754</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">10.9%</strong></td>
+                  <td style="font-family: var(--font-mono);">10,412</td>
+                  <td style="font-family: var(--font-mono);">293</td>
+                  <td>4.4%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">4</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift basket hamper empty</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">12</strong></td>
+                  <td style="font-family: var(--font-mono);">₹6,238</td>
+                  <td style="font-family: var(--font-mono);">₹2,225</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">35.7%</strong></td>
+                  <td style="font-family: var(--font-mono);">47,313</td>
+                  <td style="font-family: var(--font-mono);">805</td>
+                  <td>1.5%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">5</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruits packing basket</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">10</strong></td>
+                  <td style="font-family: var(--font-mono);">₹4,486</td>
+                  <td style="font-family: var(--font-mono);">₹696</td>
+                  <td><strong style="color: #FDE68A; font-family: var(--font-mono);">15.5%</strong></td>
+                  <td style="font-family: var(--font-mono);">17,772</td>
+                  <td style="font-family: var(--font-mono);">209</td>
+                  <td>4.8%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">6</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">baskets for gift packing</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">9</strong></td>
+                  <td style="font-family: var(--font-mono);">₹4,102</td>
+                  <td style="font-family: var(--font-mono);">₹1,458</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">35.5%</strong></td>
+                  <td style="font-family: var(--font-mono);">20,203</td>
+                  <td style="font-family: var(--font-mono);">610</td>
+                  <td>1.5%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">7</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gifting basket</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">7</strong></td>
+                  <td style="font-family: var(--font-mono);">₹5,447</td>
+                  <td style="font-family: var(--font-mono);">₹243</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">4.5%</strong></td>
+                  <td style="font-family: var(--font-mono);">4,218</td>
+                  <td style="font-family: var(--font-mono);">92</td>
+                  <td>7.6%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">8</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">hamper basket for gifting</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">7</strong></td>
+                  <td style="font-family: var(--font-mono);">₹5,372</td>
+                  <td style="font-family: var(--font-mono);">₹718</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">13.4%</strong></td>
+                  <td style="font-family: var(--font-mono);">13,010</td>
+                  <td style="font-family: var(--font-mono);">271</td>
+                  <td>2.6%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">9</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift packing box for hamper</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">6</strong></td>
+                  <td style="font-family: var(--font-mono);">₹9,114</td>
+                  <td style="font-family: var(--font-mono);">₹790</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">8.7%</strong></td>
+                  <td style="font-family: var(--font-mono);">21,534</td>
+                  <td style="font-family: var(--font-mono);">416</td>
+                  <td>1.4%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">10</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">room hamper basket for wedding</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">6</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,922</td>
+                  <td style="font-family: var(--font-mono);">₹174</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">6.0%</strong></td>
+                  <td style="font-family: var(--font-mono);">5,165</td>
+                  <td style="font-family: var(--font-mono);">50</td>
+                  <td>12.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">11</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">engagement baskets for gift packing</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">5</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,814</td>
+                  <td style="font-family: var(--font-mono);">₹134</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">4.7%</strong></td>
+                  <td style="font-family: var(--font-mono);">2,237</td>
+                  <td style="font-family: var(--font-mono);">64</td>
+                  <td>7.8%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">12</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift basket</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">5</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,025</td>
+                  <td style="font-family: var(--font-mono);">₹1,001</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">49.4%</strong></td>
+                  <td style="font-family: var(--font-mono);">22,666</td>
+                  <td style="font-family: var(--font-mono);">490</td>
+                  <td>1.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">13</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">basket for gift hamper</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">5</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,087</td>
+                  <td style="font-family: var(--font-mono);">₹649</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">31.1%</strong></td>
+                  <td style="font-family: var(--font-mono);">8,881</td>
+                  <td style="font-family: var(--font-mono);">170</td>
+                  <td>2.9%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">14</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fancy basket for gifting</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">5</strong></td>
+                  <td style="font-family: var(--font-mono);">₹3,776</td>
+                  <td style="font-family: var(--font-mono);">₹331</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">8.8%</strong></td>
+                  <td style="font-family: var(--font-mono);">4,928</td>
+                  <td style="font-family: var(--font-mono);">94</td>
+                  <td>5.3%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">15</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">tokri basket for gifting</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">5</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,233</td>
+                  <td style="font-family: var(--font-mono);">₹530</td>
+                  <td><strong style="color: #FDE68A; font-family: var(--font-mono);">23.7%</strong></td>
+                  <td style="font-family: var(--font-mono);">11,106</td>
+                  <td style="font-family: var(--font-mono);">173</td>
+                  <td>2.9%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">16</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift baskets</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">4</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,835</td>
+                  <td style="font-family: var(--font-mono);">₹54</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">1.9%</strong></td>
+                  <td style="font-family: var(--font-mono);">605</td>
+                  <td style="font-family: var(--font-mono);">25</td>
+                  <td>16.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">17</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">hamper basket</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">4</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,143</td>
+                  <td style="font-family: var(--font-mono);">₹832</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">38.8%</strong></td>
+                  <td style="font-family: var(--font-mono);">14,518</td>
+                  <td style="font-family: var(--font-mono);">265</td>
+                  <td>1.5%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">18</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruit packing baskets for engagement</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">4</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,133</td>
+                  <td style="font-family: var(--font-mono);">₹605</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">28.4%</strong></td>
+                  <td style="font-family: var(--font-mono);">11,775</td>
+                  <td style="font-family: var(--font-mono);">187</td>
+                  <td>2.1%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">19</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruit basket gift</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">4</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,469</td>
+                  <td style="font-family: var(--font-mono);">₹268</td>
+                  <td><strong style="color: #FDE68A; font-family: var(--font-mono);">18.2%</strong></td>
+                  <td style="font-family: var(--font-mono);">4,625</td>
+                  <td style="font-family: var(--font-mono);">72</td>
+                  <td>5.6%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">20</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">decorative gift packing baskets</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">4</strong></td>
+                  <td style="font-family: var(--font-mono);">₹5,838</td>
+                  <td style="font-family: var(--font-mono);">₹154</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">2.6%</strong></td>
+                  <td style="font-family: var(--font-mono);">1,979</td>
+                  <td style="font-family: var(--font-mono);">42</td>
+                  <td>9.5%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">21</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift hamper box empty</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">3</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,430</td>
+                  <td style="font-family: var(--font-mono);">₹211</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">14.7%</strong></td>
+                  <td style="font-family: var(--font-mono);">4,415</td>
+                  <td style="font-family: var(--font-mono);">103</td>
+                  <td>2.9%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">22</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">hamper boxes for gift empty</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">3</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,373</td>
+                  <td style="font-family: var(--font-mono);">₹411</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">29.9%</strong></td>
+                  <td style="font-family: var(--font-mono);">11,309</td>
+                  <td style="font-family: var(--font-mono);">230</td>
+                  <td>1.3%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">23</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">small basket for wedding gifts</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">3</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,564</td>
+                  <td style="font-family: var(--font-mono);">₹33</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">2.1%</strong></td>
+                  <td style="font-family: var(--font-mono);">228</td>
+                  <td style="font-family: var(--font-mono);">12</td>
+                  <td>25.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">24</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift basket with ned</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,119</td>
+                  <td style="font-family: var(--font-mono);">₹2</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">0.2%</strong></td>
+                  <td style="font-family: var(--font-mono);">3</td>
+                  <td style="font-family: var(--font-mono);">1</td>
+                  <td>200.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">25</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift hamper boxes for packaging</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,118</td>
+                  <td style="font-family: var(--font-mono);">₹12</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">1.1%</strong></td>
+                  <td style="font-family: var(--font-mono);">15</td>
+                  <td style="font-family: var(--font-mono);">5</td>
+                  <td>40.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">26</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">empty basket for fruits gift packing</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹692</td>
+                  <td style="font-family: var(--font-mono);">₹18</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">2.6%</strong></td>
+                  <td style="font-family: var(--font-mono);">133</td>
+                  <td style="font-family: var(--font-mono);">10</td>
+                  <td>20.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">27</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift box</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹784</td>
+                  <td style="font-family: var(--font-mono);">₹87</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">11.1%</strong></td>
+                  <td style="font-family: var(--font-mono);">1,072</td>
+                  <td style="font-family: var(--font-mono);">37</td>
+                  <td>5.4%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">28</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift packing baskets pack of 3</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹690</td>
+                  <td style="font-family: var(--font-mono);">₹13</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">1.8%</strong></td>
+                  <td style="font-family: var(--font-mono);">57</td>
+                  <td style="font-family: var(--font-mono);">7</td>
+                  <td>28.6%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">29</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">teej inspired gifting baskets square</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,283</td>
+                  <td style="font-family: var(--font-mono);">₹2</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">0.2%</strong></td>
+                  <td style="font-family: var(--font-mono);">1</td>
+                  <td style="font-family: var(--font-mono);">1</td>
+                  <td>200.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">30</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">basket for gifting</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,374</td>
+                  <td style="font-family: var(--font-mono);">₹101</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">7.4%</strong></td>
+                  <td style="font-family: var(--font-mono);">983</td>
+                  <td style="font-family: var(--font-mono);">26</td>
+                  <td>7.7%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">31</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruit gift basket with net cover</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹2,077</td>
+                  <td style="font-family: var(--font-mono);">₹26</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">1.2%</strong></td>
+                  <td style="font-family: var(--font-mono);">623</td>
+                  <td style="font-family: var(--font-mono);">13</td>
+                  <td>15.4%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">32</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">small basket for gift hamper</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹948</td>
+                  <td style="font-family: var(--font-mono);">₹88</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">9.3%</strong></td>
+                  <td style="font-family: var(--font-mono);">608</td>
+                  <td style="font-family: var(--font-mono);">30</td>
+                  <td>6.7%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">33</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">bamboo gift packing baskets</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹853</td>
+                  <td style="font-family: var(--font-mono);">₹306</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">35.9%</strong></td>
+                  <td style="font-family: var(--font-mono);">5,245</td>
+                  <td style="font-family: var(--font-mono);">100</td>
+                  <td>2.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">34</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gift hamper basket empty with net</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹436</td>
+                  <td style="font-family: var(--font-mono);">₹25</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">5.7%</strong></td>
+                  <td style="font-family: var(--font-mono);">105</td>
+                  <td style="font-family: var(--font-mono);">10</td>
+                  <td>20.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">35</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">basket for gifts hamper</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹616</td>
+                  <td style="font-family: var(--font-mono);">₹15</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">2.4%</strong></td>
+                  <td style="font-family: var(--font-mono);">13</td>
+                  <td style="font-family: var(--font-mono);">4</td>
+                  <td>50.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">36</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fancy baskets for hampers</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,232</td>
+                  <td style="font-family: var(--font-mono);">₹8</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">0.7%</strong></td>
+                  <td style="font-family: var(--font-mono);">20</td>
+                  <td style="font-family: var(--font-mono);">3</td>
+                  <td>66.7%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">37</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruit baskets for gifting</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,213</td>
+                  <td style="font-family: var(--font-mono);">₹51</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">4.2%</strong></td>
+                  <td style="font-family: var(--font-mono);">615</td>
+                  <td style="font-family: var(--font-mono);">14</td>
+                  <td>14.3%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">38</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">kyna gift basket hamper empty</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹547</td>
+                  <td style="font-family: var(--font-mono);">₹17</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">3.1%</strong></td>
+                  <td style="font-family: var(--font-mono);">41</td>
+                  <td style="font-family: var(--font-mono);">4</td>
+                  <td>50.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">39</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">engagement fruits packing basket</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,119</td>
+                  <td style="font-family: var(--font-mono);">₹208</td>
+                  <td><strong style="color: #FDE68A; font-family: var(--font-mono);">18.6%</strong></td>
+                  <td style="font-family: var(--font-mono);">3,293</td>
+                  <td style="font-family: var(--font-mono);">68</td>
+                  <td>2.9%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">40</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">engagement packing baskets</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹854</td>
+                  <td style="font-family: var(--font-mono);">₹94</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">11.0%</strong></td>
+                  <td style="font-family: var(--font-mono);">583</td>
+                  <td style="font-family: var(--font-mono);">26</td>
+                  <td>7.7%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">41</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruit packing basket</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,120</td>
+                  <td style="font-family: var(--font-mono);">₹73</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">6.5%</strong></td>
+                  <td style="font-family: var(--font-mono);">204</td>
+                  <td style="font-family: var(--font-mono);">18</td>
+                  <td>11.1%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">42</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruits packing baskets for function</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹854</td>
+                  <td style="font-family: var(--font-mono);">₹12</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">1.5%</strong></td>
+                  <td style="font-family: var(--font-mono);">30</td>
+                  <td style="font-family: var(--font-mono);">4</td>
+                  <td>50.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">43</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">packing baskets for hampers</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹853</td>
+                  <td style="font-family: var(--font-mono);">₹431</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">50.6%</strong></td>
+                  <td style="font-family: var(--font-mono);">5,592</td>
+                  <td style="font-family: var(--font-mono);">115</td>
+                  <td>1.7%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">44</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">designer basket for gifting</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹1,231</td>
+                  <td style="font-family: var(--font-mono);">₹2</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">0.1%</strong></td>
+                  <td style="font-family: var(--font-mono);">3</td>
+                  <td style="font-family: var(--font-mono);">1</td>
+                  <td>200.0%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">45</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">gifting baskets</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹435</td>
+                  <td style="font-family: var(--font-mono);">₹21</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">4.7%</strong></td>
+                  <td style="font-family: var(--font-mono);">25</td>
+                  <td style="font-family: var(--font-mono);">7</td>
+                  <td>28.6%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">46</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">fruits packing basket for wedding</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹711</td>
+                  <td style="font-family: var(--font-mono);">₹383</td>
+                  <td><strong style="color: #F87171; font-family: var(--font-mono);">53.9%</strong></td>
+                  <td style="font-family: var(--font-mono);">4,712</td>
+                  <td style="font-family: var(--font-mono);">106</td>
+                  <td>1.9%</td>
+                </tr>
+<tr>
+                  <td style="color: var(--text-dim); font-family: var(--font-mono);">47</td>
+                  <td><strong style="color: #FFF; font-family: var(--font-mono);">wedding fruit gift packing basket net cloth</strong></td>
+                  <td><strong style="color: #34D399; font-size: 14px;">2</strong></td>
+                  <td style="font-family: var(--font-mono);">₹939</td>
+                  <td style="font-family: var(--font-mono);">₹130</td>
+                  <td><strong style="color: #34D399; font-family: var(--font-mono);">13.8%</strong></td>
+                  <td style="font-family: var(--font-mono);">1,044</td>
+                  <td style="font-family: var(--font-mono);">40</td>
+                  <td>5.0%</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: 1-ORDER FLUKES EXPOSED ==================== -->
+    <div id="tab-flukes" class="tab-content">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 28px;">
+        
+        <div class="ribbon-card" style="border-left: 4px solid var(--c-danger);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <strong style="color: #FFF; font-size: 15px;">"net basket for gift packing"</strong>
+            <span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px;">KEEP PAUSED</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+            Why the previous AI got fooled: <strong>2.7% ACoS</strong>.<br>
+            The Reality: <strong>Exactly 1 order</strong> across only 558 total impressions. A single customer bought multiple units (₹1,710). Zero proof of volume or longevity.
+          </p>
+          <div style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">558 Imp • 15 Clicks • ₹46.80 Spend • 1 Order</div>
+        </div>
+
+        <div class="ribbon-card" style="border-left: 4px solid var(--c-danger);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <strong style="color: #FFF; font-size: 15px;">"basket for packing gifts"</strong>
+            <span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px;">KEEP PAUSED</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+            Why the previous AI got fooled: <strong>14.7% ACoS</strong>.<br>
+            The Reality: <strong>1 order on 35 clicks (2.8% CVR)</strong>. Burned ₹125.65 for a single ₹853 order. High click cost risk without statistical longevity.
+          </p>
+          <div style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">1,513 Imp • 35 Clicks • ₹125.65 Spend • 1 Order</div>
+        </div>
+
+        <div class="ribbon-card" style="border-left: 4px solid var(--c-danger);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <strong style="color: #FFF; font-size: 15px;">"wedding hamper basket"</strong>
+            <span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px;">KEEP PAUSED</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+            Why the previous AI got fooled: <strong>17.9% ACoS</strong>.<br>
+            The Reality: <strong>1 single ₹380 purchase on 20 clicks</strong>. Low impression share (1,433) and completely eclipsed by active wedding harvesters.
+          </p>
+          <div style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">1,433 Imp • 20 Clicks • ₹68.08 Spend • 1 Order</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: WASTE PLUG ==================== -->
+    <div id="tab-bleed" class="tab-content">
+      <div class="table-box">
+        <div class="table-header-bar">
+          <div>
+            <h3 style="font-size: 17px; font-weight: 800; color: #FFF;">Zero-Order Bleed Protection (204 Search Terms)</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Search queries that spent budget without generating a single sale. Total historical bleed: ₹1,727.59.</p>
+          </div>
+          <button class="btn-copy gold" onclick="copyText(topBleedText, 'Top 25 Bleed Terms')">📋 Copy Top 25 Bleed Terms</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Customer Search Term</th>
+                <th>Clicks Wasted</th>
+                <th>Spend Bleed</th>
+                <th>Impressions</th>
+                <th>Recommended Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">1</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">wedding basket for gifting</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">18</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹71.11</td>
+                <td style="font-family: var(--font-mono);">988</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">2</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">small basket for gifting</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">17</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹55.16</td>
+                <td style="font-family: var(--font-mono);">982</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">3</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">fancy fruit basket for gifting</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">14</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹50.02</td>
+                <td style="font-family: var(--font-mono);">1,752</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">4</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">dry fruit basket for gifting</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">14</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹49.43</td>
+                <td style="font-family: var(--font-mono);">284</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">5</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">jute basket for gift hamper</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">9</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹40.00</td>
+                <td style="font-family: var(--font-mono);">109</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">6</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">decorative baskets for gifts</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">9</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹39.42</td>
+                <td style="font-family: var(--font-mono);">57</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">7</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">bamboo basket for gift hamper</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">8</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹36.11</td>
+                <td style="font-family: var(--font-mono);">83</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">8</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">basket for hamper</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">17</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹35.20</td>
+                <td style="font-family: var(--font-mono);">262</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">9</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">decor baskets for gifting</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">7</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹32.14</td>
+                <td style="font-family: var(--font-mono);">62</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">10</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">hamper baskets for gift empty</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">8</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹32.08</td>
+                <td style="font-family: var(--font-mono);">88</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">11</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">tokari basket gift</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">7</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹29.89</td>
+                <td style="font-family: var(--font-mono);">61</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">12</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">marriage dryfruit hamper basket gift</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">9</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹27.67</td>
+                <td style="font-family: var(--font-mono);">417</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">13</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">basket for gift</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">6</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹25.70</td>
+                <td style="font-family: var(--font-mono);">54</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">14</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">baskets for gifting</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">5</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹25.18</td>
+                <td style="font-family: var(--font-mono);">36</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">15</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">paper baskets for gift packing</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">5</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹24.81</td>
+                <td style="font-family: var(--font-mono);">30</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">16</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">basket gift hamper</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">6</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹23.13</td>
+                <td style="font-family: var(--font-mono);">94</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">17</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">dryfruit hamper basket gift</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">7</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹22.53</td>
+                <td style="font-family: var(--font-mono);">399</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">18</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">leather basket for gift hamper</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">6</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹22.30</td>
+                <td style="font-family: var(--font-mono);">105</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">19</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">decorative fruit basket for gift</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">5</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹21.92</td>
+                <td style="font-family: var(--font-mono);">41</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+<tr>
+                <td style="color: var(--text-dim); font-family: var(--font-mono);">20</td>
+                <td><strong style="color: #FFF; font-family: var(--font-mono);">fruit basket for gift packing</strong></td>
+                <td><strong style="color: var(--c-danger); font-size: 14px;">5</strong></td>
+                <td style="font-family: var(--font-mono); color: var(--c-danger);">₹21.24</td>
+                <td style="font-family: var(--font-mono);">62</td>
+                <td><span style="background: var(--c-danger-bg); color: var(--c-danger); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">Negative Exact</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==================== THOUGHT PROCESS MODAL ==================== -->
+  <div class="modal-overlay" id="thoughtModal" onclick="closeOnOverlay(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span style="font-size: 24px;">💡</span>
+          <div>
+            <div class="modal-title">Strategic Thought Process & Keyword Logic</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Why each keyword, match type, and modifier was chosen across the 4 campaigns.</div>
+          </div>
+        </div>
+        <button class="btn-close" onclick="closeThoughtModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Section 1 -->
+        <div class="thought-section" style="border-left: 4px solid var(--c-exact);">
+          <div class="thought-title" style="color: #34D399;">
+            <span>1. Exact Match Core: Why These 15 Keywords?</span>
+          </div>
+          <p>
+            <strong>The Human vs. Computer Filter:</strong> Many PPC tools make the mistake of picking targets purely because of a low ACoS figure. But if a keyword has only 1 order (like <em>net basket for gift packing</em> at ₹1,710 sales), that is a <strong>statistical fluke</strong>, not an evergreen asset.
+          </p>
+          <p style="margin-top: 8px;">
+            Every keyword chosen for this Exact campaign meets two strict business criteria:
+            <br>• <span class="thought-highlight">Multi-Order Proof:</span> Proven repeat demand (e.g. <em>fruit basket for gift</em> with 57 orders, <em>fruit basket for wedding</em> with 14 orders, <em>decorative basket for gift packing</em> with 13 orders).
+            <br>• <span class="thought-highlight">Impression Share & Longevity:</span> High search frequency (tens of thousands of impressions), ensuring that when we bid aggressively on Exact, daily conversions continue consistently.
+          </p>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="thought-section" style="border-left: 4px solid var(--c-phrase);">
+          <div class="thought-title" style="color: #38BDF8;">
+            <span>2. Phrase Match Harvester: Why Word-Order Locking?</span>
+          </div>
+          <p>
+            Phrase match was chosen for root sequences where the <strong>order of words indicates high commercial intent</strong>. For example, a customer searching <em>"fruit basket for wedding"</em> has an entirely different buying intent than someone searching <em>"wedding gift"</em>.
+          </p>
+          <p style="margin-top: 8px;">
+            <strong>Funnel Isolation Mechanism:</strong> To prevent this Phrase campaign from competing against your Exact campaign, all 15 Exact keywords are added as <strong>Negative Exact</strong> here. This forces Amazon to route exact high-volume queries to Campaign 1, while Phrase only harvests long-tail extensions (e.g., <em>"buy fruit basket for wedding online"</em>).
+          </p>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="thought-section" style="border-left: 4px solid var(--c-broad);">
+          <div class="thought-title" style="color: #FDE68A;">
+            <span>3. Broad Match: Deconstructing Your Zero-Repetition Compound String Architecture</span>
+          </div>
+          <p>
+            Your broad match philosophy is mathematically brilliant:
+            <br>• Instead of bidding on broad single words (like <em>"basket"</em> or <em>"hamper"</em>), you attach keywords into <strong>compound strings</strong> (e.g., <code>fruit basket with net cover</code>, <code>wedding return gift basket</code>).
+            <br>• Across all your strings combined, there is <strong>zero repetition of the modifier tokens</strong> (<code>wedding</code>, <code>return gift</code>, <code>net cover</code>, <code>dry fruit</code>, <code>engagement</code>, <code>diwali/navratri</code>, <code>decorative</code>, <code>box</code>, <code>room</code>, <code>fancy</code>, <code>tokri</code>).
+          </p>
+          <p style="margin-top: 8px;">
+            <strong>Why 4 standalone roots were kept PAUSED:</strong> Standalone roots like <em>gift basket, fruit basket, wedding basket, return gift basket</em> were deliberately paused because they would trigger on generic 2-word queries and cannibalize your specialized umbrella strings. By keeping them paused/negative, Amazon routes traffic exclusively to your high-margin compound umbrellas.
+          </p>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="thought-section" style="border-left: 4px solid var(--c-festive);">
+          <div class="thought-title" style="color: #D8B4FE;">
+            <span>4. Festive & Shagun Campaign: Why Cultural Timing Matters?</span>
+          </div>
+          <p>
+            From mid-September to November in India, over 70% of gift basket purchases are tied to specific cultural milestones: <strong>Navratri, Karwa Chauth Sargi, Diwali, Bhai Dooj, Roka, and Wedding Shagun</strong>.
+          </p>
+          <p style="margin-top: 8px;">
+            <strong>Pre-Filled Food Bleed Protection:</strong> Customers searching for festive hampers frequently type keywords expecting pre-filled sweets/dry fruits (<em>mithai, kaju katli, chocolates, haldiram</em>). Since Taarmi sells the presentation basket/hamper, adding food terms as <strong>Negative Phrase</strong> protects your budget from immediate bounces.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastBox">Copied to clipboard! ✅</div>
+
+  <script>
+    // Copy Text Buffers
+    const exactKwsText = "fruit basket for gift
+fruit basket for wedding
+decorative basket for gift packing
+fruits packing basket
+hamper basket for gifting
+gifting basket
+gift packing box for hamper
+room hamper basket for wedding
+engagement baskets for gift packing
+fancy basket for gifting
+tokri basket for gifting
+decorative gift packing baskets
+fruit basket gift
+fruit gift basket with net cover
+gift packing baskets pack of 3";
+    const exactNegExactText = "wedding basket for gifting
+small basket for gifting
+fancy fruit basket for gifting";
+    const universalNegPhraseText = "plastic
+wire
+steel
+laundry
+clothes";
+    
+    const phraseKwsText = "fruit basket for gift
+packing basket
+gift packing basket
+fruit basket for wedding
+room hamper basket
+fancy basket for gifting
+fruits packing basket
+tokri basket for gifting
+fruit basket with net cover
+dry fruit basket";
+    const phraseNegPhraseText = "plastic
+wire
+steel
+laundry
+cloth basket
+clothes basket
+storage basket";
+    
+    const broadKwsText = "fruit basket with net cover
+wedding return gift basket
+gifting basket for diwali and navratri
+gift packing basket
+hamper basket
+dry fruit basket
+engagement basket
+basket for wedding
+decorative gift packing basket
+gift packing box for hamper
+room hamper basket for wedding
+fancy basket for gifting
+tokri basket for gifting";
+    const broadNegPhraseText = "gift basket
+fruit basket
+wedding basket
+return gift basket
+plastic
+wire
+steel
+laundry
+clothes
+storage";
+    
+    const festiveBroadKwsText = "diwali dry fruit hamper basket
+gifting basket for diwali and navratri
+karwa chauth sargi gift basket
+pooja festive gifting tokri
+teej inspired gifting baskets square
+shagun ceremony gift hamper basket
+bhai dooj gift packing basket
+decorative festive dry fruits tray basket";
+    const festivePhraseKwsText = "diwali gift hamper basket
+karwa chauth sargi basket
+diwali dry fruit basket
+shagun basket for engagement
+festive gift packing basket
+dry fruit basket for gifting
+bhai dooj gift basket
+navratri gifting basket
+pooja basket for gifting
+roka ceremony dry fruit basket";
+    const festiveNegPhraseText = "mithai
+sweets
+chocolates
+haldiram
+cadbury
+kaju katli
+crackers
+pataka
+diyas
+candles
+plastic
+wire
+steel
+laundry";
+    const festiveNegExactText = "diwali gifts
+festive gifts
+navratri gifts
+karwa chauth gifts
+wedding gifts";
+    
+    const multiOrderTermsText = "fruit basket for gift
+fruit basket for wedding
+decorative basket for gift packing
+gift basket hamper empty
+fruits packing basket
+baskets for gift packing
+gifting basket
+hamper basket for gifting
+gift packing box for hamper
+room hamper basket for wedding
+engagement baskets for gift packing
+gift basket
+basket for gift hamper
+fancy basket for gifting
+tokri basket for gifting
+gift baskets
+hamper basket
+fruit packing baskets for engagement
+fruit basket gift
+decorative gift packing baskets
+gift hamper box empty
+hamper boxes for gift empty
+small basket for wedding gifts
+gift basket with ned
+gift hamper boxes for packaging
+empty basket for fruits gift packing
+gift box
+gift packing baskets pack of 3
+teej inspired gifting baskets square
+basket for gifting
+fruit gift basket with net cover
+small basket for gift hamper
+bamboo gift packing baskets
+gift hamper basket empty with net
+basket for gifts hamper
+fancy baskets for hampers
+fruit baskets for gifting
+kyna gift basket hamper empty
+engagement fruits packing basket
+engagement packing baskets
+fruit packing basket
+fruits packing baskets for function
+packing baskets for hampers
+designer basket for gifting
+gifting baskets
+fruits packing basket for wedding
+wedding fruit gift packing basket net cloth";
+    const topBleedText = "wedding basket for gifting
+small basket for gifting
+fancy fruit basket for gifting
+dry fruit basket for gifting
+jute basket for gift hamper
+decorative baskets for gifts
+bamboo basket for gift hamper
+basket for hamper
+decor baskets for gifting
+hamper baskets for gift empty
+tokari basket gift
+marriage dryfruit hamper basket gift
+basket for gift
+baskets for gifting
+paper baskets for gift packing
+basket gift hamper
+dryfruit hamper basket gift
+leather basket for gift hamper
+decorative fruit basket for gift
+fruit basket for gift packing
+hamper baskets
+bamboo baskets for gifting
+basket for gift packing
+bamboo baskets for gift packing
+handle basket for gift";
+
+    let activeFestiveMode = 'broad';
+
+    function showTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    function toggleFestiveMode(mode) {
+      activeFestiveMode = mode;
+      const cloud = document.getElementById('festiveKwCloud');
+      const broadBtn = document.getElementById('festiveBroadBtn');
+      const phraseBtn = document.getElementById('festivePhraseBtn');
+      
+      if (mode === 'broad') {
+        broadBtn.classList.add('gold');
+        phraseBtn.classList.remove('gold');
+        cloud.innerHTML = [{"kw":"diwali dry fruit hamper basket","modifier":"diwali + dry fruit","role":"Captures empty diwali dry fruit packing queries"},{"kw":"gifting basket for diwali and navratri","modifier":"diwali and navratri","role":"User's proven festive broad umbrella"},{"kw":"karwa chauth sargi gift basket","modifier":"karwa chauth + sargi","role":"Captures high-ticket bride & mother-in-law hampers"},{"kw":"pooja festive gifting tokri","modifier":"pooja + festive + tokri","role":"Vernacular cultural pooja & festive searches"},{"kw":"teej inspired gifting baskets square","modifier":"teej + square","role":"Proven historical converter: 2 orders at 0.2% ACoS!"},{"kw":"shagun ceremony gift hamper basket","modifier":"shagun + ceremony","role":"Engagement & wedding shagun presentation"},{"kw":"bhai dooj gift packing basket","modifier":"bhai dooj","role":"Post-Diwali brother/sister festival gifting"},{"kw":"decorative festive dry fruits tray basket","modifier":"festive tray","role":"Festive dry fruit platter presentation"}].map(t => 
+          '<div class="kw-pill"><span>' + t.kw + '</span><span class="kw-pill-sub sub-intent">' + t.modifier + '</span></div>'
+        ).join('');
+      } else {
+        phraseBtn.classList.add('gold');
+        broadBtn.classList.remove('gold');
+        cloud.innerHTML = [{"kw":"diwali gift hamper basket","role":"General Diwali empty hamper searchers"},{"kw":"karwa chauth sargi basket","role":"October peak traditional sargi hampers"},{"kw":"diwali dry fruit basket","role":"Corporate & family dry fruit packaging"},{"kw":"shagun basket for engagement","role":"Engagement & Roka shagun presentation"},{"kw":"festive gift packing basket","role":"General festival gift wrapping & packing"},{"kw":"dry fruit basket for gifting","role":"Evergreen dry fruits gifting"},{"kw":"bhai dooj gift basket","role":"Late October / November gifting"},{"kw":"navratri gifting basket","role":"Kanya Pujan & Navratri returns"},{"kw":"pooja basket for gifting","role":"Mandir & spiritual celebration hampers"},{"kw":"roka ceremony dry fruit basket","role":"Pre-wedding family ritual gifting"}].map(t => 
+          '<div class="kw-pill"><span>' + t.kw + '</span><span class="kw-pill-sub" style="background: rgba(168, 85, 247, 0.2); color: #D8B4FE;">Phrase</span></div>'
+        ).join('');
+      }
+    }
+
+    function copyFestiveActive() {
+      if (activeFestiveMode === 'broad') {
+        copyText(festiveBroadKwsText, '8 Festive Broad Strings');
+      } else {
+        copyText(festivePhraseKwsText, '10 Festive Phrase Targets');
+      }
+    }
+
+    function copyText(str, label) {
+      navigator.clipboard.writeText(str).then(() => {
+        showToast('Copied ' + label + ' to clipboard! ✅');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastBox');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2200);
+    }
+
+    function openThoughtModal() {
+      document.getElementById('thoughtModal').classList.add('open');
+    }
+    function closeThoughtModal() {
+      document.getElementById('thoughtModal').classList.remove('open');
+    }
+    function closeOnOverlay(e) {
+      if (e.target.id === 'thoughtModal') closeThoughtModal();
+    }
+  </script>
+</body>
+</html>

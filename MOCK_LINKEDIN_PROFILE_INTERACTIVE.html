@@ -1,0 +1,3743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kartikey Jain | Interactive LinkedIn Transformation & Positioning Studio</title>
+  
+  
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    /* ==========================================================================
+       CSS VARIABLES & THEME ARCHITECTURE: DARK LUXE LINKEDIN
+       ========================================================================== */
+    :root {
+      --bg-canvas: #090c10;
+      --bg-nav: #0f141c;
+      --bg-card: #141b24;
+      --bg-card-secondary: #1a2230;
+      --bg-card-hover: #202b3c;
+      --bg-input: #0e131b;
+      --border-subtle: #222d3d;
+      --border-highlight: #33445c;
+      --border-gold: rgba(245, 166, 35, 0.4);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #0a66c2;
+      --accent-blue-hover: #004182;
+      --accent-blue-glow: rgba(10, 102, 194, 0.25);
+      --accent-gold: #f5a623;
+      --accent-gold-soft: rgba(245, 166, 35, 0.12);
+      --accent-emerald: #10b981;
+      --accent-emerald-soft: rgba(16, 185, 129, 0.12);
+      --accent-ruby: #ef4444;
+      --accent-ruby-soft: rgba(239, 68, 68, 0.12);
+      --accent-violet: #8b5cf6;
+      --accent-violet-soft: rgba(139, 92, 246, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.5);
+      --shadow-lg: 0 16px 40px rgba(0,0,0,0.6);
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, monospace;
+      --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
+body {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      font-size: 14px;
+      line-height: 1.5;
+      padding-top: 108px; /* space for fixed global bar + navbar */
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-canvas);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-highlight);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       TOP PERSISTENT CONTROL BAR (BEFORE VS AFTER TOGGLE)
+       ========================================================================== */
+    .top-control-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: rgba(13, 17, 23, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.15), rgba(139, 92, 246, 0.15));
+      border: 1px solid var(--border-gold);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-logo-pill .dot-live {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-emerald);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .mode-switch-container {
+      display: flex;
+      align-items: center;
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px;
+      gap: 4px;
+    }
+
+    .mode-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-main);
+      font-size: 12px;
+      font-weight: 600;
+      transition: var(--transition-smooth);
+      background: transparent;
+      color: var(--text-secondary);
+    }
+
+    .mode-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .mode-btn.active.before-mode {
+      background: var(--accent-ruby);
+      color: #fff;
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.4);
+    }
+
+    .mode-btn.active.after-mode {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.45);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quick-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      text-decoration: none;
+    }
+
+    .quick-pill-btn:hover {
+      border-color: var(--accent-blue);
+      background: var(--bg-card-hover);
+      color: #fff;
+    }
+
+    .quick-pill-btn.checklist-btn {
+      background: linear-gradient(135deg, rgba(245, 166, 35, 0.15), rgba(245, 166, 35, 0.05));
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    .quick-pill-btn.checklist-btn:hover {
+      background: var(--accent-gold);
+      color: #000;
+    }
+
+    /* ==========================================================================
+       LINKEDIN GLOBAL NAVIGATION HEADER
+       ========================================================================== */
+    .linkedin-nav {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      right: 0;
+      height: 54px;
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 990;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .linkedin-logo-svg {
+      width: 34px;
+      height: 34px;
+      fill: var(--accent-blue);
+      flex-shrink: 0;
+    }
+
+    .nav-search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      width: 260px;
+      color: var(--text-secondary);
+      transition: var(--transition-smooth);
+    }
+
+    .nav-search-box:focus-within {
+      border-color: var(--accent-blue);
+      width: 300px;
+      box-shadow: 0 0 0 2px var(--accent-blue-glow);
+    }
+
+    .nav-search-box input {
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+    }
+
+    .nav-right-items {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 11px;
+      gap: 3px;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition-smooth);
+      min-width: 54px;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      color: var(--text-primary);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--text-primary);
+    }
+
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .nav-badge {
+      position: absolute;
+      top: -3px;
+      right: 12px;
+      background: var(--accent-ruby);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: var(--radius-full);
+      line-height: 1;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--border-subtle);
+      margin: 0 4px;
+    }
+
+    .premium-pill {
+      font-size: 11px;
+      color: var(--accent-gold);
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* ==========================================================================
+       MAIN LAYOUT GRID
+       ========================================================================== */
+    .app-container {
+      max-width: 1200px;
+      margin: 20px auto 60px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 260px 1fr 300px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1100px) {
+      .app-container {
+        grid-template-columns: 1fr 300px;
+      }
+      .sidebar-left {
+        display: none;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-right {
+        display: none;
+      }
+      .nav-search-box {
+        display: none;
+      }
+    }
+
+    /* Cards Base */
+    .linkedin-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .linkedin-card:hover {
+      border-color: var(--border-highlight);
+    }
+
+    /* ==========================================================================
+       BANNER COMPONENT (1584x396 RATIO)
+       ========================================================================== */
+    .profile-hero-card {
+      padding: 0;
+      position: relative;
+    }
+
+    .banner-container {
+      width: 100%;
+      height: 210px;
+      position: relative;
+      background: #090a0f;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.22) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(245, 166, 35, 0.25) 0%, transparent 45%),
+        linear-gradient(180deg, rgba(9, 10, 15, 0.3) 0%, #090a0f 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 32px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* Subtle grid line overlay in banner */
+    .banner-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-size: 28px 28px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      pointer-events: none;
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      max-width: 80%;
+    }
+
+    .banner-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+
+    .banner-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      line-height: 1.25;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      margin-bottom: 14px;
+    }
+
+    .banner-title .gradient-span {
+      background: linear-gradient(135deg, #ffffff 30%, #e2e8f0 70%, var(--accent-gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .banner-proof-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .banner-pill {
+      background: rgba(15, 20, 28, 0.85);
+      border: 1px solid rgba(245, 166, 35, 0.35);
+      backdrop-filter: blur(8px);
+      color: var(--text-primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .banner-pill span.metric-highlight {
+      color: var(--accent-gold);
+    }
+
+    .banner-controls-top {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+    }
+
+    .banner-action-btn {
+      background: rgba(15, 20, 28, 0.85);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .banner-action-btn:hover {
+      background: var(--bg-card-hover);
+      color: #fff;
+      border-color: var(--border-highlight);
+    }
+
+    /* Profile Avatar & Header Identity */
+    .profile-meta-wrap {
+      padding: 0 24px 24px;
+      position: relative;
+    }
+
+    .avatar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: -64px;
+      margin-bottom: 16px;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      border: 4px solid var(--bg-card);
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .avatar-wrapper.after-glow {
+      box-shadow: 0 0 24px rgba(245, 166, 35, 0.25), 0 0 40px rgba(139, 92, 246, 0.2);
+      border-color: var(--accent-gold);
+    }
+
+    .avatar-initials {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .avatar-badge-status {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 18px;
+      height: 18px;
+      background: var(--accent-emerald);
+      border: 3px solid var(--bg-card);
+      border-radius: 50%;
+    }
+
+    .profile-header-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .name-title-block {
+      margin-bottom: 12px;
+    }
+
+    .name-verified-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .verified-badge {
+      width: 18px;
+      height: 18px;
+      fill: var(--accent-blue);
+    }
+
+    .pronouns-badge {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .identity-pill-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .identity-pill-tag.after-tag {
+      background: var(--accent-gold-soft);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-gold);
+    }
+
+    .identity-pill-tag.before-tag {
+      background: var(--accent-ruby-soft);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: var(--accent-ruby);
+    }
+
+    /* Headline Dynamic Container */
+    .headline-container {
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      position: relative;
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+    }
+
+    .headline-critique-alert {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 10px;
+    }
+
+    .headline-critique-alert.before-critique {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .headline-critique-alert.after-highlight {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    .headline-text-render {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    /* Headline preset switcher (in After mode) */
+    .headline-presets-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .preset-chip {
+      font-size: 11px;
+      padding: 3px 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .preset-chip:hover, .preset-chip.active {
+      color: var(--text-primary);
+      border-color: var(--accent-gold);
+      background: var(--accent-gold-soft);
+    }
+
+    /* Location & School meta line */
+    .location-network-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .location-network-line a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .location-network-line a:hover {
+      text-decoration: underline;
+    }
+
+    /* CTA Button Group */
+    .profile-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border: none;
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-blue-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent-blue);
+      border: 1px solid var(--accent-blue);
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(10, 102, 194, 0.1);
+      border-color: #70b5f9;
+      color: #70b5f9;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-card-secondary);
+      color: var(--text-primary);
+      border-color: var(--border-highlight);
+    }
+
+    .btn-copy {
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-copy:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+      border-color: var(--accent-blue);
+    }
+
+    .btn-copy.copied {
+      background: var(--accent-emerald);
+      color: #fff;
+      border-color: var(--accent-emerald);
+    }
+
+    /* Open To Banner inside profile */
+    .open-to-box {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(10, 102, 194, 0.08));
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .open-to-box.before-style {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.25);
+    }
+
+    .open-to-text strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .open-to-text span {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       ANALYTICS / PRIVATE DASHBOARD BAR
+       ========================================================================== */
+    .analytics-summary-card {
+      padding: 20px 24px;
+    }
+
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-heading {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .analytics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .analytic-stat-box {
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      transition: var(--transition-smooth);
+    }
+
+    .analytic-stat-box:hover {
+      border-color: var(--border-highlight);
+    }
+
+    .stat-number {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .stat-delta {
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .stat-delta.positive {
+      color: var(--accent-emerald);
+    }
+
+    .stat-delta.neutral {
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       FEATURED SECTION (ABOVE-THE-FOLD PROOF TILES)
+       ========================================================================== */
+    .featured-card-wrapper {
+      padding: 20px 24px;
+    }
+
+    .featured-carousel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 800px) {
+      .featured-carousel-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .featured-tile {
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .featured-tile:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .featured-thumb-container {
+      height: 130px;
+      width: 100%;
+      position: relative;
+      background: #0d121a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .featured-thumb-container.thumb-amazon {
+      background: radial-gradient(circle at center, rgba(245, 166, 35, 0.25) 0%, #0d121a 70%);
+    }
+
+    .featured-thumb-container.thumb-webflow {
+      background: radial-gradient(circle at center, rgba(10, 102, 194, 0.25) 0%, #0d121a 70%);
+    }
+
+    .featured-thumb-container.thumb-video {
+      background: radial-gradient(circle at center, rgba(139, 92, 246, 0.25) 0%, #0d121a 70%);
+    }
+
+    .thumb-badge-overlay {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(15, 20, 28, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .featured-tile-body {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .featured-tile-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .featured-tile-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .featured-tile-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .proof-tag {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+    }
+
+    .proof-tag.gold {
+      color: var(--accent-gold);
+      border-color: rgba(245, 166, 35, 0.3);
+    }
+
+    .proof-tag.emerald {
+      color: var(--accent-emerald);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    /* ==========================================================================
+       ABOUT SECTION
+       ========================================================================== */
+    .about-card {
+      padding: 20px 24px;
+    }
+
+    .about-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .about-body-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-primary);
+      white-space: pre-line;
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-family: var(--font-main);
+      position: relative;
+    }
+
+    .about-body-text .highlight-lead {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .about-body-text .section-divider-line {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 12px 0;
+    }
+
+    .about-body-text .loop-badge {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #c4b5fd;
+      margin: 6px 0;
+    }
+
+    /* ==========================================================================
+       FOUNDER CONNECTION SCRIPT STUDIO (INTERACTIVE MODULE)
+       ========================================================================== */
+    .studio-card {
+      padding: 22px 24px;
+      border-left: 4px solid var(--accent-gold);
+      background: linear-gradient(180deg, var(--bg-card) 0%, rgba(20, 27, 36, 0.95) 100%);
+    }
+
+    .archetype-tabs {
+      display: flex;
+      gap: 8px;
+      margin: 14px 0 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .archetype-tab {
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .archetype-tab:hover {
+      color: var(--text-primary);
+      border-color: var(--border-highlight);
+    }
+
+    .archetype-tab.active {
+      background: var(--accent-gold-soft);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    .studio-inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .studio-inputs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .studio-input {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      font-size: 13px;
+      padding: 8px 12px;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .studio-input:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 2px var(--accent-gold-soft);
+    }
+
+    .script-variant-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .variant-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .variant-chip.active {
+      background: var(--accent-blue-hover);
+      border-color: var(--accent-blue);
+      color: #fff;
+    }
+
+    .script-preview-box {
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-family: var(--font-main);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-primary);
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .script-preview-box .highlight-var {
+      background: rgba(245, 166, 35, 0.2);
+      color: var(--accent-gold);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    .char-counter-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .char-meter-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 6px 0;
+    }
+
+    .char-meter-fill {
+      height: 100%;
+      background: var(--accent-emerald);
+      width: 0%;
+      transition: width 0.2s ease, background-color 0.2s ease;
+    }
+
+    .char-meter-fill.warning {
+      background: var(--accent-gold);
+    }
+
+    .char-meter-fill.danger {
+      background: var(--accent-ruby);
+    }
+
+    .char-status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .char-status-badge.safe {
+      background: var(--accent-emerald-soft);
+      color: var(--accent-emerald);
+    }
+
+    .char-status-badge.warning {
+      background: var(--accent-gold-soft);
+      color: var(--accent-gold);
+    }
+
+    .char-status-badge.danger {
+      background: var(--accent-ruby-soft);
+      color: var(--accent-ruby);
+    }
+
+    /* ==========================================================================
+       EXPERIENCE SECTION
+       ========================================================================== */
+    .experience-card {
+      padding: 20px 24px;
+    }
+
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .experience-item {
+      display: flex;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .experience-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .experience-item.missing-highlight {
+      background: rgba(239, 68, 68, 0.05);
+      border: 1px dashed rgba(239, 68, 68, 0.4);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .company-logo-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+
+    .company-logo-avatar.taarmi {
+      background: linear-gradient(135deg, #f5a623, #d97706);
+      color: #000;
+    }
+
+    .company-logo-avatar.urban {
+      background: linear-gradient(135deg, #0a66c2, #1e40af);
+      color: #fff;
+    }
+
+    .company-logo-avatar.creative {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      color: #fff;
+    }
+
+    .company-logo-avatar.xaviers {
+      background: linear-gradient(135deg, #10b981, #047857);
+      color: #fff;
+    }
+
+    .company-logo-avatar.lit {
+      background: linear-gradient(135deg, #ec4899, #be185d);
+      color: #fff;
+    }
+
+    .experience-details {
+      flex-grow: 1;
+    }
+
+    .experience-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .experience-company {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+    }
+
+    .experience-date-location {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .experience-metrics-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .exp-metric-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: rgba(245, 166, 35, 0.1);
+      border: 1px solid rgba(245, 166, 35, 0.3);
+      color: var(--accent-gold);
+    }
+
+    .exp-metric-pill.blue {
+      background: rgba(10, 102, 194, 0.1);
+      border-color: rgba(10, 102, 194, 0.3);
+      color: #60a5fa;
+    }
+
+    .exp-metric-pill.green {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: var(--accent-emerald);
+    }
+
+    .exp-bullets-list {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .exp-bullets-list li {
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .exp-bullets-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent-gold);
+    }
+
+    .exp-copy-action {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    /* ==========================================================================
+       ACTIVITY SECTION (TAPO VIRAL POST TEMPLATES)
+       ========================================================================== */
+    .activity-card {
+      padding: 20px 24px;
+    }
+
+    .activity-tabs {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0 16px;
+    }
+
+    .activity-tab-btn {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .activity-tab-btn.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #fff;
+    }
+
+    .post-box-container {
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .post-author-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .post-avatar-mini {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #1e293b;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .post-author-info {
+      flex-grow: 1;
+    }
+
+    .post-author-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .post-author-headline {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .post-body-content {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      white-space: pre-line;
+      margin-bottom: 14px;
+    }
+
+    .post-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .post-engagement-stats {
+      display: flex;
+      gap: 16px;
+    }
+
+    /* ==========================================================================
+       EDUCATION & SKILLS
+       ========================================================================== */
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .skill-pill {
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-smooth);
+    }
+
+    .skill-pill:hover {
+      border-color: var(--accent-blue);
+      background: var(--bg-card-hover);
+    }
+
+    .skill-pill .endorse-count {
+      font-size: 10px;
+      background: var(--bg-card);
+      padding: 1px 5px;
+      border-radius: var(--radius-full);
+      color: var(--accent-blue);
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       SIDEBARS (LEFT & RIGHT)
+       ========================================================================== */
+    .sidebar-widget {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .widget-heading {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .fleet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .fleet-item:last-child {
+      border-bottom: none;
+    }
+
+    .fleet-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--bg-card-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .fleet-details {
+      font-size: 12px;
+    }
+
+    .fleet-name {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .fleet-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       INTERACTIVE MODALS & FLYOUT CHECKLIST
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: modal-fade-in 0.2s ease-out;
+    }
+
+    @keyframes modal-fade-in {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-window {
+      background: var(--bg-card);
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg-card);
+      z-index: 10;
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 20px;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .modal-close-btn:hover {
+      background: var(--bg-card-hover);
+      color: #fff;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    /* Checklist Flyout Drawer */
+    .flyout-drawer {
+      position: fixed;
+      top: 0;
+      right: -480px;
+      width: 440px;
+      max-width: 90vw;
+      height: 100vh;
+      background: var(--bg-card);
+      border-left: 1px solid var(--border-highlight);
+      z-index: 2500;
+      box-shadow: var(--shadow-lg);
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flyout-drawer.open {
+      right: 0;
+    }
+
+    .flyout-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-nav);
+    }
+
+    .flyout-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .checklist-task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card-secondary);
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .checklist-task-item:hover {
+      border-color: var(--accent-gold);
+    }
+
+    .checklist-task-item.completed {
+      opacity: 0.65;
+      background: rgba(16, 185, 129, 0.05);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .checklist-task-item.completed .task-label {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .task-checkbox {
+      margin-top: 3px;
+      accent-color: var(--accent-gold);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .task-label {
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    .task-step-pill {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 1px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--accent-gold);
+      margin-bottom: 2px;
+      display: inline-block;
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast-msg {
+      background: #0f172a;
+      border: 1px solid var(--accent-emerald);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      animation: toast-slide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+
+    @keyframes toast-slide {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Video & Media Production Showcase */
+    .production-matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .prod-card,
+    .octa-card {
+      background: var(--bg-card-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+    }
+
+    .prod-title,
+    .octa-drive-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-violet);
+      margin-bottom: 2px;
+    }
+
+    .prod-desc,
+    .octa-app-desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TOP PERSISTENT CONTROL BAR (BEFORE VS AFTER TOGGLE)
+       ========================================================================== -->
+  <header class="top-control-bar">
+    <div class="brand-cluster">
+      <div class="brand-logo-pill">
+        <span class="dot-live"></span>
+        <span>KARTIKEY JAIN // POSITIONING OS</span>
+      </div>
+      <span style="font-size: 12px; color: var(--text-muted); display: none; @media(min-width:768px){display:inline;}">
+        Toggle to preview the transformation:
+      </span>
+    </div>
+
+    <!-- Toggle Switch -->
+    <div class="mode-switch-container">
+      <button class="mode-btn before-mode" id="btnModeBefore" onclick="setTransformationMode('before')">
+        <span>🔴</span>
+        <span>Before: Generic Tool-User</span>
+      </button>
+      <button class="mode-btn after-mode active" id="btnModeAfter" onclick="setTransformationMode('after')">
+        <span>🟢</span>
+        <span>After: Polymath Builder</span>
+      </button>
+    </div>
+
+    <!-- Top Actions -->
+    <div class="top-actions">
+      <button class="quick-pill-btn checklist-btn" onclick="toggleChecklistFlyout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="9 11 12 14 22 4"></polyline>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+        </svg>
+        <span id="checklistCounterBadge">Upgrade Checklist (0/9)</span>
+      </button>
+      <button class="quick-pill-btn" onclick="copyFullProfileMarkdown()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span>Copy Full Markdown</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       LINKEDIN HEADER NAVIGATION
+       ========================================================================== -->
+  <nav class="linkedin-nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <!-- LinkedIn Inline SVG Logo -->
+        <svg class="linkedin-logo-svg" viewBox="0 0 24 24">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76c.92 0 1.66-.74 1.66-1.66s-.74-1.66-1.66-1.66a1.66 1.66 0 0 0 0 3.32m1.39 9.74v-8.37H5.07v8.37h2.78z"/>
+        </svg>
+
+        <div class="nav-search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" placeholder="Search (Try 'Kartikey Jain' or 'Taarmi')..." readonly>
+        </div>
+      </div>
+
+      <div class="nav-right-items">
+        <a class="nav-item active" href="#profileTop">
+          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="#featuredSection">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          <span>My Network</span>
+          <span class="nav-badge">14</span>
+        </a>
+        <a class="nav-item" href="#experienceSection">
+          <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+          <span>Jobs</span>
+        </a>
+        <a class="nav-item" href="#founderStudioSection">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+          <span>Messaging</span>
+          <span class="nav-badge">3</span>
+        </a>
+        <a class="nav-item" href="javascript:void(0)" onclick="openContactModal()">
+          <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+          <span>Notifications</span>
+          <span class="nav-badge">5</span>
+        </a>
+        <div class="nav-divider"></div>
+        <div class="nav-item" onclick="openContactModal()">
+          <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--accent-gold); color: #000; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 11px;">KJ</div>
+          <span>Me ▾</span>
+        </div>
+        <div class="premium-pill" onclick="toggleChecklistFlyout()">
+          <span>Try Polymath<br>OS Pro</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       MAIN THREE-COLUMN APP CONTAINER
+       ========================================================================== -->
+  <main class="app-container" id="profileTop">
+
+    <!-- LEFT SIDEBAR: PROFILE SUMMARY & QUICK GAUGES -->
+    <aside class="sidebar-left">
+      <div class="sidebar-widget">
+        <div style="text-align: center; margin-bottom: 12px;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #1e293b, #0f172a); border: 2px solid var(--accent-gold); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #fff;">
+            KJ
+          </div>
+          <div style="font-weight: 700; font-size: 15px;">Kartikey Jain</div>
+          <div style="font-size: 12px; color: var(--text-muted);" id="sidebarRoleLabel">Polymath & Operator</div>
+        </div>
+        <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: 12px 0;">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px;">
+          <span style="color: var(--text-secondary);">Profile viewers</span>
+          <span style="color: var(--accent-blue); font-weight: 700;" id="sidebarViewersCount">1,842</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px;">
+          <span style="color: var(--text-secondary);">Post impressions</span>
+          <span style="color: var(--accent-blue); font-weight: 700;" id="sidebarImpressionsCount">48,910</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px;">
+          <span style="color: var(--text-secondary);">Search appearances</span>
+          <span style="color: var(--accent-emerald); font-weight: 700;" id="sidebarSearchCount">+312%</span>
+        </div>
+      </div>
+
+      <div class="sidebar-widget">
+        <div class="widget-heading">
+          <span>Second Brain Fleet</span>
+          <span style="font-size: 10px; color: var(--accent-emerald);">5 Active</span>
+        </div>
+        <div class="fleet-item">
+          <div class="fleet-icon">⚡</div>
+          <div class="fleet-details">
+            <div class="fleet-name">E-Com Marketplace Agent</div>
+            <div class="fleet-role">Amazon PPC & Flat-File COM</div>
+          </div>
+        </div>
+        <div class="fleet-item">
+          <div class="fleet-icon">🎨</div>
+          <div class="fleet-details">
+            <div class="fleet-name">Conversion Lab Agent</div>
+            <div class="fleet-role">Webflow, Clean Code & Craft</div>
+          </div>
+        </div>
+        <div class="fleet-item">
+          <div class="fleet-icon">🎬</div>
+          <div class="fleet-details">
+            <div class="fleet-name">Content & Video Production</div>
+            <div class="fleet-role">Event Coverage & Brand Video</div>
+          </div>
+        </div>
+        <div class="fleet-item">
+          <div class="fleet-icon">🎯</div>
+          <div class="fleet-details">
+            <div class="fleet-name">Client Outreach Agent</div>
+            <div class="fleet-role">Founder TAPO Intrigue Loops</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER COLUMN: MAIN LINKEDIN PROFILE STREAM -->
+    <div class="main-profile-column">
+
+      <!-- ====================================================================
+           HERO PROFILE CARD (BANNER + AVATAR + HEADLINE)
+           ==================================================================== -->
+      <section class="linkedin-card profile-hero-card">
+        <!-- 1584x396 PROPORTION BANNER -->
+        <div class="banner-container" id="profileBanner">
+          <div class="banner-controls-top">
+            <button class="banner-action-btn" title="Inspect Banner Specs" onclick="openBannerSpecsModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+            </button>
+            <button class="banner-action-btn" title="Copy Banner Copy" onclick="copyBannerText()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="banner-content">
+            <div class="banner-eyebrow">
+              <span>●</span>
+              <span id="bannerEyebrowText">19YO CREATIVE GENERALIST & RELENTLESS BUILDER</span>
+            </div>
+            <h1 class="banner-title" id="bannerMainTitle">
+              <span class="gradient-span">GREAT WEBSITE DEVELOPER • AMAZON MARKETPLACE SCALE • VIDEO PRODUCTION</span>
+            </h1>
+            <div class="banner-proof-pills" id="bannerProofPills">
+              <div class="banner-pill">
+                <span>💻</span>
+                <span><span class="metric-highlight">Modern</span> Webflow Builds</span>
+              </div>
+              <div class="banner-pill">
+                <span>📦</span>
+                <span><span class="metric-highlight">₹9L+</span> Amazon Revenue</span>
+              </div>
+              <div class="banner-pill">
+                <span>🚀</span>
+                <span><span class="metric-highlight">5+</span> ROAS Scale</span>
+              </div>
+              <div class="banner-pill">
+                <span>🎬</span>
+                <span><span class="metric-highlight">15+</span> Brand Video Projects</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE META (AVATAR, NAME, HEADLINE, CTAS) -->
+        <div class="profile-meta-wrap">
+          <div class="avatar-row">
+            <div class="avatar-wrapper after-glow" id="avatarWrapper" onclick="toggleAvatarDetail()">
+              <span class="avatar-initials">KJ</span>
+              <div class="avatar-badge-status" title="Active in Bangalore"></div>
+            </div>
+            <div class="profile-header-actions">
+              <button class="btn-copy" onclick="copyHeadlineText()" id="btnCopyHeadline">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Copy Headline</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Name & Verification -->
+          <div class="name-title-block">
+            <div class="name-verified-row">
+              <h2 class="profile-name">Kartikey Jain</h2>
+              <svg class="verified-badge" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+              <span class="pronouns-badge">(he/him)</span>
+              <span class="identity-pill-tag after-tag" id="identityModeTag">POLYMATH BUILDER</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Headline Area -->
+          <div class="headline-container">
+            <!-- Alert describing before/after status -->
+            <div class="headline-critique-alert after-highlight" id="headlineCritiqueAlert">
+              <span id="headlineAlertIcon">✨</span>
+              <span id="headlineAlertText">
+                <strong>Authentic Builder Positioning:</strong> Highlighting real execution—great website development (Webflow), ₹9L+ Amazon scale (5+ ROAS), and video production for 15+ brands.
+              </span>
+            </div>
+
+            <!-- The Rendered Headline -->
+            <div class="headline-text-render" id="headlineTextDisplay">
+              Webflow Developer • Scaled Amazon E-Com to ₹9L+ (5+ ROAS) • Video Production
+            </div>
+
+            <!-- Headline Presets Selector (Visible in After mode) -->
+            <div class="headline-presets-bar" id="headlinePresetsBar">
+              <span style="font-size: 11px; color: var(--text-muted); align-self: center; margin-right: 4px;">Preset Variations:</span>
+              <button class="preset-chip active" onclick="switchHeadlinePreset(1)">Option 1: Generalist Builder (Recommended)</button>
+              <button class="preset-chip" onclick="switchHeadlinePreset(2)">Option 2: Web Dev & Marketplace Scale</button>
+              <button class="preset-chip" onclick="switchHeadlinePreset(3)">Option 3: Hungry 19yo Builder</button>
+              <button class="preset-chip" onclick="switchHeadlinePreset(4)">Option 4: Craft & Storytelling Focus</button>
+            </div>
+          </div>
+
+          <!-- Location, Connection Info -->
+          <div class="location-network-line">
+            <span>Bangalore (Bengaluru), Karnataka, India</span>
+            <span>•</span>
+            <a href="javascript:void(0)" onclick="openContactModal()">Contact info</a>
+            <span>•</span>
+            <span style="color: var(--accent-gold); font-weight: 700;">500+ connections</span>
+          </div>
+
+          <!-- Profile Actions -->
+          <div class="profile-cta-group">
+            <button class="btn-primary" onclick="scrollToSection('founderStudioSection')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M22 2L11 13"></path>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              <span>Connect / Reach Out</span>
+            </button>
+            <button class="btn-secondary" onclick="openContactModal()">
+              <span>Contact Information</span>
+            </button>
+            <button class="btn-ghost" onclick="toggleChecklistFlyout()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+              <span>Profile Action Plan</span>
+            </button>
+          </div>
+
+          <!-- "Open To" Box -->
+          <div class="open-to-box" id="openToBox">
+            <div class="open-to-text">
+              <strong id="openToTitle">Open to High-Leverage Collaborations & Advisory</strong>
+              <span id="openToSubtitle">Modern Webflow Development, Amazon Marketplace Scaling, and Video/Media Production</span>
+            </div>
+            <button class="btn-copy" onclick="copyOpenToDetails()">
+              <span>📋 Copy</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           ANALYTICS & ACTIVITY CARD
+           ==================================================================== -->
+      <section class="linkedin-card analytics-summary-card">
+        <div class="section-title-row">
+          <div>
+            <h3 class="section-heading">
+              <span>Analytics & Founder Inbound Proof</span>
+            </h3>
+            <span class="section-subtitle">Private to you • Simulated real-world impact</span>
+          </div>
+          <span style="font-size: 11px; color: var(--accent-emerald); font-weight: 700;">● Active Tracking</span>
+        </div>
+
+        <div class="analytics-grid">
+          <div class="analytic-stat-box">
+            <div class="stat-number" id="statViews">1,842</div>
+            <div class="stat-label">Profile viewers (past 90 days)</div>
+            <div class="stat-delta positive" id="statViewsDelta">▲ +1,385% after repositioning</div>
+          </div>
+          <div class="analytic-stat-box">
+            <div class="stat-number" id="statImpressions">48,910</div>
+            <div class="stat-label">Post impressions (T.A.P.O. Reach)</div>
+            <div class="stat-delta positive" id="statImpressionsDelta">▲ +5,650% viral loop</div>
+          </div>
+          <div class="analytic-stat-box">
+            <div class="stat-number" id="statSearches">312</div>
+            <div class="stat-label">Founder & C-Suite searches</div>
+            <div class="stat-delta positive" id="statSearchesDelta">▲ 82% D2C & Tech Founders</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           FEATURED SECTION (ABOVE-THE-FOLD PROOF TILES)
+           ==================================================================== -->
+      <section class="linkedin-card featured-card-wrapper" id="featuredSection">
+        <div class="section-title-row">
+          <div>
+            <h3 class="section-heading">
+              <span>Featured Proof of Work</span>
+            </h3>
+            <span class="section-subtitle">Top verified outcomes & commercial leverage</span>
+          </div>
+          <button class="btn-copy" onclick="copyFeaturedListText()">
+            <span>📋 Copy Case Links</span>
+          </button>
+        </div>
+
+        <div class="featured-carousel-grid">
+          <!-- CARD 1: TAARMI AMAZON SCALE -->
+          <div class="featured-tile" onclick="openCaseStudyModal('taarmi')">
+            <div class="featured-thumb-container thumb-amazon">
+              <span class="thumb-badge-overlay">E-COM CASE STUDY</span>
+              <div style="text-align: center;">
+                <div style="font-size: 26px; font-weight: 800; color: var(--accent-gold);">₹9L+ REVENUE</div>
+                <div style="font-size: 11px; color: #fff; font-family: var(--font-mono); letter-spacing: 1px;">5+ ROAS • 348% YoY GROWTH</div>
+              </div>
+            </div>
+            <div class="featured-tile-body">
+              <div>
+                <h4 class="featured-tile-title">Scaling an Amazon India Brand to ₹9L+ Revenue & 5+ ROAS</h4>
+                <p class="featured-tile-desc">
+                  Autonomous operator playbook: 60+ SKUs, A10 SEO keyword matrices, sub-22% ACoS, and negative auction shields.
+                </p>
+              </div>
+              <div class="featured-tile-tags">
+                <span class="proof-tag gold">₹9L+ Revenue</span>
+                <span class="proof-tag emerald">5+ ROAS</span>
+                <span class="proof-tag">348% YoY</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2: HIGH-CRAFT WEBFLOW DEVELOPMENT -->
+          <div class="featured-tile" onclick="openCaseStudyModal('webflow')">
+            <div class="featured-thumb-container thumb-webflow">
+              <span class="thumb-badge-overlay">WEBFLOW CRAFT</span>
+              <div style="text-align: center;">
+                <div style="font-size: 26px; font-weight: 800; color: #60a5fa;">HIGH-CRAFT WEB</div>
+                <div style="font-size: 11px; color: #fff; font-family: var(--font-mono); letter-spacing: 1px;">CLIENT-FIRST & RESPONSIVE</div>
+              </div>
+            </div>
+            <div class="featured-tile-body">
+              <div>
+                <h4 class="featured-tile-title">Crafting Modern, High-Performance Websites in Webflow</h4>
+                <p class="featured-tile-desc">
+                  Modern web builds: Client-First class architecture, clean DOM structure, responsive breakpoints, and micro-interactions (featuring Urban Vault).
+                </p>
+              </div>
+              <div class="featured-tile-tags">
+                <span class="proof-tag gold">Great Web Dev</span>
+                <span class="proof-tag">Webflow</span>
+                <span class="proof-tag">Clean Code</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 3: CONTENT & VIDEO PRODUCTION -->
+          <div class="featured-tile" onclick="openCaseStudyModal('video')">
+            <div class="featured-thumb-container thumb-video">
+              <span class="thumb-badge-overlay">MEDIA PRODUCTION</span>
+              <div style="text-align: center;">
+                <div style="font-size: 24px; font-weight: 800; color: #c084fc;">15+ BRAND FILMS</div>
+                <div style="font-size: 11px; color: #fff; font-family: var(--font-mono); letter-spacing: 1px;">CINEMATOGRAPHY & EDITING</div>
+              </div>
+            </div>
+            <div class="featured-tile-body">
+              <div>
+                <h4 class="featured-tile-title">On-Ground Event Cinematography & Brand Video Storytelling</h4>
+                <p class="featured-tile-desc">
+                  Directed and cut video campaigns for 15+ brands (Medial, Shopsy, Urban Vault) and covered BLR Tech Summit with 50+ on-camera interviews.
+                </p>
+              </div>
+              <div class="featured-tile-tags">
+                <span class="proof-tag gold">15+ Brands</span>
+                <span class="proof-tag emerald">50+ Interviews</span>
+                <span class="proof-tag">Video Editing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           ABOUT SECTION CARD
+           ==================================================================== -->
+      <section class="linkedin-card about-card" id="aboutSection">
+        <div class="about-header-row">
+          <div>
+            <h3 class="section-heading">About</h3>
+            <span class="section-subtitle" id="aboutModeSubtitle">The Polymath Manifesto & Proof of Work</span>
+          </div>
+          <button class="btn-copy" onclick="copyAboutText()" id="btnCopyAbout">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copy About Copy</span>
+          </button>
+        </div>
+
+        <div class="about-body-text" id="aboutBodyContent">
+          <!-- Populated by JavaScript according to Before / After state -->
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           FOUNDER CONNECTION SCRIPT STUDIO (INTERACTIVE DRAWER)
+           ==================================================================== -->
+      <section class="linkedin-card studio-card" id="founderStudioSection">
+        <div class="section-title-row">
+          <div>
+            <h3 class="section-heading">
+              <span>Founder Connection Script Studio</span>
+            </h3>
+            <span class="section-subtitle">Real-time customizable outreach note with strict 300-character LinkedIn limits</span>
+          </div>
+          <span style="font-size: 11px; color: var(--accent-gold); font-weight: 700;">★ 100% Strict Verified</span>
+        </div>
+
+        <!-- Archetype Tabs -->
+        <div class="archetype-tabs">
+          <button class="archetype-tab active" id="tabNewAge" onclick="setFounderArchetype('newage')">
+            🚀 New-Age / Venture / D2C Founder
+          </button>
+          <button class="archetype-tab" id="tabLegacy" onclick="setFounderArchetype('legacy')">
+            🏭 Legacy / Traditional Business Founder
+          </button>
+        </div>
+
+        <!-- Customizer Inputs -->
+        <div class="studio-inputs-grid">
+          <div class="input-field-group">
+            <label class="input-label" for="founderNameInput">Founder Name</label>
+            <input type="text" id="founderNameInput" class="studio-input" value="Varun" oninput="renderConnectionScript()">
+          </div>
+          <div class="input-field-group">
+            <label class="input-label" for="companyNameInput">Target Company Name</label>
+            <input type="text" id="companyNameInput" class="studio-input" value="Ultrahuman" oninput="renderConnectionScript()">
+          </div>
+        </div>
+
+        <!-- Script Variants -->
+        <div class="script-variant-selector">
+          <span style="font-size: 11px; color: var(--text-muted); align-self: center;">Angle:</span>
+          <button class="variant-chip active" id="chipVar1" onclick="setScriptVariant(1)">Angle 1: The Asymmetry Hook</button>
+          <button class="variant-chip" id="chipVar2" onclick="setScriptVariant(2)">Angle 2: Unreasonable Speed / Anti-Agency</button>
+        </div>
+
+        <!-- Live Script Render Box -->
+        <div class="script-preview-box" id="scriptPreviewBox">
+          <!-- Text dynamically injected -->
+        </div>
+
+        <!-- Live Character Meter -->
+        <div class="char-counter-container">
+          <div>
+            <span id="charCountLabel">Length: <strong>0</strong> / 300 characters</span>
+            <span style="color: var(--text-muted); margin-left: 8px;" id="charRemainingLabel">(300 chars remaining)</span>
+          </div>
+          <span class="char-status-badge safe" id="charStatusBadge">✓ Compliant (&lt;300)</span>
+        </div>
+        <div class="char-meter-bar">
+          <div class="char-meter-fill" id="charMeterFill"></div>
+        </div>
+
+        <!-- Action row -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
+          <div style="font-size: 11px; color: var(--text-muted);">
+            💡 <em>Rule: Keep connection notes under 280 chars to leave buffer for unexpected whitespace encoding.</em>
+          </div>
+          <button class="btn-primary" onclick="copyConnectionScript()" id="btnCopyScript">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copy Personalized Note</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           EXPERIENCE SECTION
+           ==================================================================== -->
+      <section class="linkedin-card experience-card" id="experienceSection">
+        <div class="section-title-row">
+          <div>
+            <h3 class="section-heading">Experience</h3>
+            <span class="section-subtitle">Real-world commercial proof, leadership, and execution</span>
+          </div>
+          <button class="btn-copy" onclick="copyAllExperienceText()">
+            <span>📋 Copy All Roles</span>
+          </button>
+        </div>
+
+        <div class="experience-list" id="experienceListContainer">
+          <!-- Injected via JavaScript based on Before / After state -->
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           ACTIVITY & CONTENT SECTION (T.A.P.O. VIRAL POSTS)
+           ==================================================================== -->
+      <section class="linkedin-card activity-card" id="activitySection">
+        <div class="section-title-row">
+          <div>
+            <h3 class="section-heading">Recent Posts & Thought Leadership</h3>
+            <span class="section-subtitle">Using the T.A.P.O. Curiosity Engine (Tension • Proof • Mechanism • Open Loop)</span>
+          </div>
+          <button class="btn-copy" onclick="copyActivePostText()">
+            <span>📋 Copy Active Post</span>
+          </button>
+        </div>
+
+        <!-- Post Switcher Tabs -->
+        <div class="activity-tabs">
+          <button class="activity-tab-btn active" id="tabPost1" onclick="switchActivePost(1)">
+            📦 Amazon E-Commerce Teardown
+          </button>
+          <button class="activity-tab-btn" id="tabPost2" onclick="switchActivePost(2)">
+            🤖 The Autonomous Agent Engine
+          </button>
+          <button class="activity-tab-btn" id="tabPost3" onclick="switchActivePost(3)">
+            🎬 Video Production & Event Media
+          </button>
+        </div>
+
+        <!-- Interactive Post Render Box -->
+        <div class="post-box-container">
+          <div class="post-author-row">
+            <div class="post-avatar-mini">KJ</div>
+            <div class="post-author-info">
+              <div class="post-author-name">Kartikey Jain • 1st</div>
+              <div class="post-author-headline">Webflow Developer • Scaled Amazon E-Com to ₹9L+ (5+ ROAS) • Video Production</div>
+              <div style="font-size: 11px; color: var(--text-muted);">2d • Edited • 🌐</div>
+            </div>
+          </div>
+
+          <div class="post-body-content" id="postBodyContent">
+            <!-- Dynamic post content -->
+          </div>
+
+          <div class="post-actions-bar">
+            <div class="post-engagement-stats">
+              <span>👍 ❤️ 💡 <strong>482 reactions</strong></span>
+              <span>💬 <strong>84 comments</strong></span>
+              <span>🔁 <strong>32 reposts</strong></span>
+            </div>
+            <button class="btn-copy" onclick="copyActivePostText()">
+              <span>Copy Post Text</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           EDUCATION SECTION
+           ==================================================================== -->
+      <section class="linkedin-card" style="padding: 20px 24px;">
+        <div class="section-title-row">
+          <h3 class="section-heading">Education & Non-Traditional Proof-of-Work</h3>
+        </div>
+
+        <div class="experience-list">
+          <div class="experience-item">
+            <div class="company-logo-avatar lit">LIT</div>
+            <div class="experience-details">
+              <div class="experience-title">The LIT School, Bangalore</div>
+              <div class="experience-company">Experiential Fellow & Cross-Functional Builder</div>
+              <div class="experience-date-location">2024 – 2025 • Bengaluru, Karnataka, India</div>
+              <ul class="exp-bullets-list">
+                <li>Dropped out of the conventional credential path to pursue intensive experiential learning by doing.</li>
+                <li>Shipped 58 live challenges across 7 business epics: Storytelling, Social Media, Product Design, E-Commerce, ROI/Performance, Webflow Development, and Creator Operations.</li>
+                <li>Built live stakes projects under rapid 48-hour turnarounds with direct user feedback loops.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="company-logo-avatar xaviers">SX</div>
+            <div class="experience-details">
+              <div class="experience-title">St. Xavier's Senior Secondary School, Jaipur</div>
+              <div class="experience-company">Class 12 Commerce with Informatics Practices (IP)</div>
+              <div class="experience-date-location">Completed March 2024 • Jaipur, Rajasthan</div>
+              <ul class="exp-bullets-list">
+                <li>Vice President & Treasurer of Xavier's Photography Club (led team of 12, ran 15-20 events, ₹15,000 net profit).</li>
+                <li>Winner of Inter-School Filmmaking & Visual Storytelling Competition.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SKILLS & ENDORSEMENTS
+           ==================================================================== -->
+      <section class="linkedin-card" style="padding: 20px 24px;">
+        <div class="section-title-row">
+          <div>
+            <h3 class="section-heading">Skills & Endorsements</h3>
+            <span class="section-subtitle">Categorized by real-world execution & commercial proof</span>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-pill">
+            <span>E-Commerce Marketplace Strategy</span>
+            <span class="endorse-count">48</span>
+          </div>
+          <div class="skill-pill">
+            <span>Amazon PPC & ACoS Optimization</span>
+            <span class="endorse-count">42</span>
+          </div>
+          <div class="skill-pill">
+            <span>Webflow Development (Client-First)</span>
+            <span class="endorse-count">56</span>
+          </div>
+          <div class="skill-pill">
+            <span>Responsive Web Design & Interactions</span>
+            <span class="endorse-count">48</span>
+          </div>
+          <div class="skill-pill">
+            <span>Clean HTML, CSS & DOM Architecture</span>
+            <span class="endorse-count">46</span>
+          </div>
+          <div class="skill-pill">
+            <span>On-Ground Video & Event Cinematography</span>
+            <span class="endorse-count">44</span>
+          </div>
+          <div class="skill-pill">
+            <span>Autonomous AI Agent Orchestration</span>
+            <span class="endorse-count">51</span>
+          </div>
+          <div class="skill-pill">
+            <span>Figma UI/UX Prototyping</span>
+            <span class="endorse-count">45</span>
+          </div>
+          <div class="skill-pill">
+            <span>Commercial Photography & Video Direction</span>
+            <span class="endorse-count">34</span>
+          </div>
+          <div class="skill-pill">
+            <span>Bubble.io MVP Development</span>
+            <span class="endorse-count">29</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT SIDEBAR: PEOPLE ALSO VIEWED / ADVISORY -->
+    <aside class="sidebar-right">
+      <div class="sidebar-widget">
+        <div class="widget-heading">
+          <span>People Also Viewed</span>
+        </div>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 12px; align-items: center;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #1e293b; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px;">VK</div>
+          <div style="font-size: 12px;">
+            <div style="font-weight: 700; color: var(--text-primary);">Varun K.</div>
+            <div style="color: var(--text-muted);">Founder @ D2C Health Wearable</div>
+            <button class="btn-copy" style="margin-top: 4px; padding: 2px 8px; font-size: 11px;">+ Connect</button>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 12px; align-items: center;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #1e293b; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px;">SG</div>
+          <div style="font-size: 12px;">
+            <div style="font-weight: 700; color: var(--text-primary);">Siddharth G.</div>
+            <div style="color: var(--text-muted);">VP Growth @ Consumer Tech</div>
+            <button class="btn-copy" style="margin-top: 4px; padding: 2px 8px; font-size: 11px;">+ Connect</button>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #1e293b; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px;">RM</div>
+          <div style="font-size: 12px;">
+            <div style="font-weight: 700; color: var(--text-primary);">Rohan M.</div>
+            <div style="color: var(--text-muted);">Managing Partner @ Seed Fund</div>
+            <button class="btn-copy" style="margin-top: 4px; padding: 2px 8px; font-size: 11px;">+ Connect</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-widget" style="background: linear-gradient(135deg, rgba(245, 166, 35, 0.08), rgba(139, 92, 246, 0.08)); border-color: var(--border-gold);">
+        <div class="widget-heading">
+          <span style="color: var(--accent-gold);">⚡ Positioning Diagnostics</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
+          Your profile now passes the <strong>30-Second Founder Test</strong>:
+        </p>
+        <div style="font-size: 11px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="color: var(--accent-emerald);">✓ Hard Top-Line Proof (₹9L+)</div>
+          <div style="color: var(--accent-emerald);">✓ Great Website Developer (Webflow)</div>
+          <div style="color: var(--accent-emerald);">✓ Creative Video Production (15+ Brands)</div>
+          <div style="color: var(--accent-emerald);">✓ Autonomous Agent Leverage</div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL 1: CONTACT INFO MODAL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="contactModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title">Kartikey Jain — Contact & Advisory Info</div>
+        <button class="modal-close-btn" onclick="closeContactModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-card-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Direct Email</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">kartikeyjain14@gmail.com</div>
+            </div>
+            <button class="btn-copy" onclick="copyTextDirect('kartikeyjain14@gmail.com', 'Email copied!')">📋 Copy</button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-card-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Phone / WhatsApp</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">+91 8005890986</div>
+            </div>
+            <button class="btn-copy" onclick="copyTextDirect('+918005890986', 'Phone number copied!')">📋 Copy</button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-card-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Live LinkedIn Profile</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--accent-blue);">linkedin.com/in/kartikey-jain-</div>
+            </div>
+            <button class="btn-copy" onclick="copyTextDirect('https://www.linkedin.com/in/kartikey-jain-/', 'LinkedIn URL copied!')">📋 Copy</button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-card-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Current Operational Base</div>
+              <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Bangalore (Bengaluru), Karnataka, India (IST / UTC+5:30)</div>
+            </div>
+            <span style="font-size: 12px; color: var(--accent-emerald);">● On-Site & Remote</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: CASE STUDY DEEP DIVES
+       ========================================================================== -->
+  <div class="modal-backdrop" id="caseStudyModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title" id="caseStudyModalTitle">Case Study Breakdown</div>
+        <button class="modal-close-btn" onclick="closeCaseStudyModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="caseStudyModalBody">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: BANNER SPEC & COPY MODAL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="bannerSpecsModal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title">Custom LinkedIn Banner Specifications (1584x396)</div>
+        <button class="modal-close-btn" onclick="closeBannerSpecsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 14px; color: var(--text-secondary);">
+          Designed for maximum visual retention, desktop & mobile safe zones, and instant proof-of-work credibility:
+        </p>
+        <div style="background: var(--bg-card-secondary); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 14px;">
+          <div style="font-family: var(--font-mono); font-size: 12px; color: var(--accent-gold); margin-bottom: 6px;">
+            // BANNER SPECS MATRIX
+          </div>
+          <div style="font-size: 13px; line-height: 1.6;">
+            • <strong>Dimensions:</strong> 1584 x 396 px (Official LinkedIn 4:1 ratio)<br>
+            • <strong>Base Canvas:</strong> Deep Obsidian (#090A0F) with champagne gold (#F5A623) & electric violet (#8B5CF6) glow mesh<br>
+            • <strong>Primary Headline:</strong> GREAT WEBSITE DEVELOPER • AMAZON MARKETPLACE SCALE • VIDEO PRODUCTION<br>
+            • <strong>Micro-Proof Badges:</strong> [ 💻 Webflow Craft ] [ 📦 ₹9L+ Amazon Revenue (5+ ROAS) ] [ 🎬 15+ Brand Video Projects ]<br>
+            • <strong>Safe Zone:</strong> Center-right 75% weighted (keeps left 25% clear for avatar overlay on desktop & mobile).
+          </div>
+        </div>
+        <button class="btn-primary" onclick="copyBannerText()">
+          <span>📋 Copy Banner Text Content</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FLYOUT DRAWER: PROFILE UPGRADE ACTION PLAN (9-STEP PERSISTENT CHECKLIST)
+       ========================================================================== -->
+  <div class="flyout-drawer" id="checklistFlyout">
+    <div class="flyout-header">
+      <div>
+        <div style="font-size: 15px; font-weight: 700; color: var(--text-primary);">Profile Upgrade Checklist</div>
+        <div style="font-size: 11px; color: var(--text-muted);">State automatically saved to localStorage</div>
+      </div>
+      <button class="modal-close-btn" onclick="toggleChecklistFlyout()">&times;</button>
+    </div>
+    <div class="flyout-body">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <span style="font-size: 12px; font-weight: 700; color: var(--accent-gold);" id="flyoutProgressLabel">0 of 9 Completed (0%)</span>
+        <button class="btn-copy" onclick="resetChecklist()" style="font-size: 11px;">Reset</button>
+      </div>
+      <div class="char-meter-bar" style="margin-bottom: 16px;">
+        <div class="char-meter-fill" id="flyoutProgressBar" style="width: 0%;"></div>
+      </div>
+
+      <div id="checklistTasksContainer">
+        <!-- 9 Step tasks injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT ARCHITECTURE & DATA ENGINES
+       ========================================================================== -->
+  <script>
+    // Master Profile State
+    const profileState = {
+      mode: 'after', // 'before' or 'after'
+      headlinePreset: 1,
+      founderArchetype: 'newage', // 'newage' or 'legacy'
+      scriptVariant: 1, // 1 or 2
+      activePost: 1
+    };
+
+    // Checklist Definition (9 Steps)
+    const checklistItems = [
+      { id: 'step1', step: 'Step 1', title: 'Update Headline to Grounded Generalist Hook', desc: 'Deploy headline highlighting Webflow development, ₹9L+ Amazon scale, and video production.' },
+      { id: 'step2', step: 'Step 2', title: 'Paste Authentic Generalist About Section', desc: 'Deploy the authentic builder story featuring web dev, ₹9L+ Amazon proof, and video production.' },
+      { id: 'step3', step: 'Step 3', title: 'Add Missing Taarmi E-Commerce Operator Role', desc: 'Plug your highest commercial leverage asset: ₹9L+ revenue, 5+ ROAS, 348% YoY growth.' },
+      { id: 'step4', step: 'Step 4', title: 'Upgrade Webflow Developer Role with High-Craft Build', desc: 'Anchor Webflow development to Client-First architecture, clean code, and Urban Vault build.' },
+      { id: 'step5', step: 'Step 5', title: 'Upgrade Content & Video Production Role (15+ Brands)', desc: 'Showcase work for Medial, Shopsy, Urban Vault, and 50+ BLR Tech Summit interviews.' },
+      { id: 'step6', step: 'Step 6', title: 'Add Xavier’s Photography Club Leadership & Profit', desc: 'Highlight leading a 12-person executive team, 15-20 events, and ₹15k net profit.' },
+      { id: 'step7', step: 'Step 7', title: 'Pin 3 Visual Proof-of-Work Cards to Featured Section', desc: 'Pin Taarmi Amazon E-Commerce, Webflow Craft, and Video & Media Production.' },
+      { id: 'step8', step: 'Step 8', title: 'Deploy Custom Obsidian & Champagne Gold Banner', desc: 'Apply 1584x396 banner with proof pills (Webflow Builds, ₹9L+ Amazon, 15+ Brand Projects).' },
+      { id: 'step9', step: 'Step 9', title: 'Launch Daily Founder Connection Cadence', desc: 'Send 15-20 targeted notes daily using natural builder scripts under 300 characters.' }
+    ];
+
+    // Headline Presets Data
+    const headlinePresets = {
+      1: "Webflow Developer • Scaled Amazon E-Com to ₹9L+ (5+ ROAS) • Video Production",
+      2: "Building on the web, scaling on Amazon (₹9L+ revenue), shooting on camera. 19 & learning by doing.",
+      3: "Webflow Developer & E-Com Operator. Scaled Taarmi to ₹9L+ on Amazon (5+ ROAS). Media for 15+ brands.",
+      4: "Great Web Development (Webflow) • Amazon Marketplace Operations (₹9L+ GMV, 5+ ROAS) • Video Production"
+    };
+
+    // About Section Copies
+    const aboutContent = {
+      before: `Hey! I’m Kartikey.
+
+A 19-year-old creator from Bangalore learning by doing.
+
+Instead of sitting in regular college lectures, I decided to build real things. I know no-code tools like Bubble, Webflow, and Framer, and I love designing interfaces in Figma.
+
+I also do photography and video editing for events and brands.
+
+Always open to freelance projects, MVP building, or volunteering for events! Feel free to connect!`,
+      after: `I like building things end-to-end.
+
+At 19, most people told me to pick one lane. Instead, I’ve spent the last two years testing myself across three completely different arenas:
+
+1. Web Development — I build clean, fast, responsive websites on Webflow with custom interactions. I care about typography, layout discipline, and shipping interfaces that feel effortless.
+
+2. Amazon Marketplace — Scaled Taarmi on Amazon India from scratch to ₹9,00,000+ in sales at a 5+ ROAS (348% YoY growth). Handled the actual operational heavy lifting: catalog SEO, search term indexing, PPC campaigns, and inventory operations.
+
+3. Video & Media Production — Shot, edited, and directed video for 15+ brands and tech events across Bangalore (like BLR Tech Summit).
+
+I don’t pretend to know everything. But I learn insanely fast, I don’t wait around for permission, and I know how to turn ideas into working systems.
+
+If you’re building something interesting or want to talk web, marketplace scale, or video, I’d love to connect.
+
+📩 kartikeyjain14@gmail.com
+📍 Bangalore, India`
+    };
+
+    // Connection Scripts Data
+    const connectionScripts = {
+      newage: {
+        1: (name, comp) => `Hey ${name}, love what you're building at ${comp}. I'm a 19yo Webflow dev and e-com operator in BLR (scaled an Amazon brand to ₹9L+ at 5+ ROAS). Love following high-agency founders. Would be great to connect!`,
+        2: (name, comp) => `Hi ${name}, huge fan of ${comp}. I build clean, fast Webflow sites and run marketplace growth. Really admire your execution speed. Would love to stay connected and follow what you build next!`
+      },
+      legacy: {
+        1: (name, comp) => `Hi ${name}, really respect what you’ve built at ${comp}. I run marketplace operations for Taarmi on Amazon India (scaled to ₹9L+ at 5+ ROAS) alongside web dev. Always keen to learn from experienced operators who know real business fundamentals.`,
+        2: (name, comp) => `Hi ${name}, admire ${comp}'s brand and longevity. I'm a 19yo operator in Bangalore working across Amazon marketplace scale (₹9L+ revenue, 5+ ROAS) and web development. Would value connecting with fellow operators.`
+      }
+    };
+
+    // Posts Data (TAPO Framework)
+    const postsData = {
+      1: {
+        title: "Amazon E-Commerce Teardown",
+        content: `The biggest lie in e-commerce is that you need a performance agency to scale on Amazon.
+
+Last quarter, agencies pitched us a ₹1.5L/month retainer to "manage" our catalog.
+Instead, we built an automated architecture.
+
+The results over 4 months:
+• ₹9,00,000+ top-line revenue
+• 5+ ROAS across the catalog
+• 348% YoY growth
+• 0 agency fees. 1 operator. 19 years old.
+
+Here is what agencies don't want you to know:
+Most Amazon ad spend doesn't fail because of bad bids. It fails because of "Internal Auction Cannibalization"—where your own Broad campaigns bid against your Exact winners, driving up your own CPCs.
+
+We solved this not with more manpower, but with a 3-tier negative isolation shield across 164 bulk campaign rows.
+
+Every time a search term converts twice in Phrase, it automatically gets graduated to Exact and negated in Broad. Zero budget bleed. Zero human guesswork.
+
+Agencies sell you billable hours. Systems give you profit.
+
+There's one specific 249-byte indexing rule we used to bypass the standard Amazon algorithm lag—dropping the breakdown on that soon.
+
+What’s your biggest bottleneck with Amazon agencies right now?`
+      },
+      2: {
+        title: "The Autonomous Agent Engine",
+        content: `Hiring 5 people before you have product-market leverage is just subsidized procrastination.
+
+I’m 19. Right now, I run:
+1. An Amazon storefront doing ₹2L+/month
+2. A Webflow website development practice (Client-First CSS)
+3. A client acquisition desk
+4. A multi-channel content engine
+
+Total full-time employees: 0.
+Total funding: ₹0.
+
+How? 
+
+I stopped treating AI like a chatbot and started treating it like an operating system.
+
+Inside my terminal, I orchestrate a 5-department autonomous Second Brain:
+• Department 1: Competitive intelligence & content research
+• Department 2: High-ticket D2C teardowns & pitch architecture
+• Department 3: Amazon PPC keyword harvesting & flat-file COM automation
+• Department 4: Webflow / Framer prototyping & clean code
+• Department 5: System reliability & circuit breakers
+
+The models don't just "write text." They run round-robin execution loops against strict validation criteria. If an output doesn't hit our quality standards, responsive layout checks, or byte limits, it gets rejected and re-run automatically.
+
+We are entering an era where an ambitious 19-year-old with the right architecture can match the output of a 20-person seed-stage company.
+
+The question isn't "what tools are you using?"
+The question is: "What does your orchestration look like?"
+
+Curious—if you could clone one department of your business into an autonomous loop tomorrow, which one would it be?`
+      },
+      3: {
+        title: "Video Production & Event Media",
+        content: `Over the past year, I’ve had a camera in hand at major Bangalore tech summits—BLR Tech Summit, Creator Fest, and founder gatherings.
+
+50+ on-camera founder interviews. Same-day aftermovie cuts. Visual storytelling for 15+ brands.
+
+Here is what running on-ground video production teaches you that sitting behind a desk never will:
+
+1. Energy and timing are everything. You don't get a second take at a live keynote or a candid reaction. You have to anticipate the moment before it happens.
+2. Storytelling beats gear. Having a high-end camera means nothing if your pacing is sluggish and your audio is muddy. Rhythm, sound design, and emotional arc make an aftermovie hit.
+3. Speed is your competitive advantage. Delivering a polished, color-graded highlight reel within 12 hours of an event ending creates 10x the organic momentum of a video delivered two weeks later.
+
+Visual storytelling is one of my favorite creative outlets. It sharpens how I look at digital craft, framing, and audience attention.
+
+If you’re organizing an event or building a brand that needs energetic video coverage, let’s talk.`
+      }
+    };
+
+    // Experience Roles Data
+    const experienceData = {
+      before: [
+        {
+          missing: true,
+          company: "Taarmi (Jain Enterprises)",
+          logoClass: "taarmi",
+          logoText: "TJ",
+          title: "🚨 100% MISSING: E-Commerce Brand Operator & Marketplace Strategist",
+          date: "NOT LISTED ON LIVE PROFILE",
+          bullets: [
+            "CRITICAL FLAW: Your highest-leverage commercial asset (₹9L+ revenue, 5+ ROAS, 348% YoY growth) was completely absent from your profile!",
+            "Leaving this out leaves you looking like an inexperienced student instead of an operator with actual P&L ownership."
+          ]
+        },
+        {
+          company: "Self-Employed",
+          logoClass: "urban",
+          logoText: "WF",
+          title: "Freelance No-Code Developer",
+          date: "Apr 2025 – Present • Bengaluru",
+          bullets: [
+            "Built responsive websites using Webflow and Bubble.",
+            "Created smooth animations and worked on early-stage MVPs.",
+            "Helped clients convert Figma designs into working web pages."
+          ]
+        },
+        {
+          company: "Freelance",
+          logoClass: "creative",
+          logoText: "FL",
+          title: "Visual Content Creator",
+          date: "Oct 2024 – Present",
+          bullets: [
+            "Created reels and short-form videos for social media.",
+            "Shot photos at tech events in Bangalore.",
+            "Edited videos using Premiere Pro and CapCut."
+          ]
+        },
+        {
+          company: "Xavier's Photography Club",
+          logoClass: "xaviers",
+          logoText: "SX",
+          title: "Treasurer & Photographer",
+          date: "Jul 2023 – Aug 2024",
+          bullets: [
+            "Handled club photography and finances.",
+            "ZERO metric details or leadership proof provided on original profile."
+          ]
+        }
+      ],
+      after: [
+        {
+          company: "Taarmi (Jain Enterprises)",
+          logoClass: "taarmi",
+          logoText: "TJ",
+          title: "E-Commerce Brand Operator & Marketplace Strategist",
+          date: "May 2024 – Present • Bangalore, India",
+          metrics: ["₹9L+ Independent Revenue", "5+ ROAS", "348% YoY Growth", "60+ Active SKUs"],
+          bullets: [
+            "Independently operated and scaled the Taarmi Amazon India catalog across Home, Festive Gifting, and Decor, driving ₹9+ Lakhs top-line revenue over 4 months (~₹2L/month average run rate).",
+            "Maintained an account-wide 5+ ROAS while reducing ACoS under target thresholds using multi-tier negative keyword isolation shields.",
+            "Engineered end-to-end listing architecture: A10 SEO mobile-first copy, dense 5-input × 249-byte backend keyword matrices, and native Excel COM flat-file automation.",
+            "Bypassed Amazon brand registry roadblocks (5665 error) via generic catalog architecture while preserving branded customer title identity."
+          ]
+        },
+        {
+          company: "Urban Vault / Freelance",
+          logoClass: "urban",
+          logoText: "UV",
+          title: "Freelance Website Developer (Webflow & Modern Web)",
+          date: "Apr 2025 – Present • Bengaluru, Karnataka, India",
+          metrics: ["Webflow Craft", "Client-First CSS", "Clean Code & DOM", "Figma to Web"],
+          bullets: [
+            "Designed and developed responsive, high-craft websites and landing pages in Webflow using Client-First CSS class naming conventions and clean DOM structure.",
+            "Built the custom landing page for Urban Vault (managed office spaces), focusing on clean visual hierarchy, fast load times, and seamless user experience across devices.",
+            "Implemented custom interactions, smooth micro-animations, and responsive breakpoints for desktop, tablet, and mobile.",
+            "Built early-stage MVPs, prototypes, and web tools integrating Bubble.io, Framer, and Webflow with third-party APIs and forms."
+          ]
+        },
+        {
+          company: "Freelance",
+          logoClass: "creative",
+          logoText: "CD",
+          title: "Video Editor & Content Producer",
+          date: "Oct 2024 – Present • Bengaluru, Karnataka, India",
+          metrics: ["15+ Brand Projects", "50+ Tech Summit Interviews", "Event Cinematography"],
+          bullets: [
+            "Developed short-form video strategies, scripts, and visual direction for 15+ consumer and B2B brands (including Medial, Goats, Shopsy, and Doodley).",
+            "Covered major ecosystem events including BLR Tech Summit, Great Indian Startup Summit, and BLR Creator Fest; conducted 50+ on-camera executive interviews and produced same-day aftermovies.",
+            "Executed creator partnership campaigns using structured sub-₹5,000 barter and collaboration SOPs."
+          ]
+        },
+        {
+          company: "Xavier's Photography Club",
+          logoClass: "xaviers",
+          logoText: "SX",
+          title: "Vice President & Treasurer",
+          date: "Jul 2023 – Aug 2024 • Jaipur, Rajasthan",
+          metrics: ["Team of 12", "15-20 Major Events", "₹15,000 Net Profit"],
+          bullets: [
+            "Directed operations for an active club of 40+ members, managing a core executive team of 12.",
+            "Spearheaded 15–20 high-stakes campus events and Jaipur’s premier inter-school photography exhibition.",
+            "Managed club finances, brand sponsorships, and event ticketing, delivering ₹15,000 in verified net profit."
+          ]
+        },
+        {
+          company: "The LIT School",
+          logoClass: "lit",
+          logoText: "LIT",
+          title: "Experiential Builder & Fellow",
+          date: "2024 – 2025 • Bengaluru, Karnataka, India",
+          metrics: ["58 Shipped Challenges", "7 Business Epics", "Learning by Doing"],
+          bullets: [
+            "Completed 58 intensive live challenges across 7 business epics (Storytelling, Social Media, Product Design, E-Commerce, ROI/Performance, Webflow, and Creator Economy).",
+            "Replaced passive credential bureaucracy with rapid, high-agency shipping velocity and real-world stakeholder feedback."
+          ]
+        }
+      ]
+    };
+
+    // =========================================================================
+    // INITIALIZATION & EVENT LISTENERS
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      initChecklist();
+      renderCurrentMode();
+      renderConnectionScript();
+      switchActivePost(1);
+
+      // Keyboard shortcut: Press 'T' to toggle Before / After
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 't' || e.key === 'T') {
+          const nextMode = profileState.mode === 'after' ? 'before' : 'after';
+          setTransformationMode(nextMode);
+        }
+      });
+    });
+
+    // =========================================================================
+    // BEFORE VS AFTER TRANSFORMATION ENGINE
+    // =========================================================================
+    function setTransformationMode(mode) {
+      profileState.mode = mode;
+
+      const btnBefore = document.getElementById('btnModeBefore');
+      const btnAfter = document.getElementById('btnModeAfter');
+
+      if (mode === 'before') {
+        btnBefore.classList.add('active');
+        btnAfter.classList.remove('active');
+        showToast('Switched to: 🔴 Before (Generic Tool-User)', 'warning');
+      } else {
+        btnAfter.classList.add('active');
+        btnBefore.classList.remove('active');
+        showToast('Switched to: 🟢 After (Curiosity-Driven Polymath Builder)', 'success');
+      }
+
+      renderCurrentMode();
+    }
+
+    function renderCurrentMode() {
+      const isAfter = profileState.mode === 'after';
+
+      // 1. Avatar & Identity Tag
+      const avatarWrapper = document.getElementById('avatarWrapper');
+      const identityModeTag = document.getElementById('identityModeTag');
+      const sidebarRoleLabel = document.getElementById('sidebarRoleLabel');
+
+      if (isAfter) {
+        avatarWrapper.classList.add('after-glow');
+        identityModeTag.className = 'identity-pill-tag after-tag';
+        identityModeTag.textContent = 'POLYMATH BUILDER';
+        sidebarRoleLabel.textContent = 'Polymath & Operator';
+      } else {
+        avatarWrapper.classList.remove('after-glow');
+        identityModeTag.className = 'identity-pill-tag before-tag';
+        identityModeTag.textContent = 'GENERIC FREELANCER';
+        sidebarRoleLabel.textContent = 'Junior Freelancer';
+      }
+
+      // 2. Banner Elements
+      const bannerEyebrow = document.getElementById('bannerEyebrowText');
+      const bannerMainTitle = document.getElementById('bannerMainTitle');
+      const bannerProofPills = document.getElementById('bannerProofPills');
+
+      if (isAfter) {
+        bannerEyebrow.textContent = '19YO CREATIVE GENERALIST & RELENTLESS BUILDER';
+        bannerMainTitle.innerHTML = '<span class="gradient-span">GREAT WEBSITE DEVELOPER • AMAZON MARKETPLACE SCALE • VIDEO PRODUCTION</span>';
+        bannerProofPills.innerHTML = `
+          <div class="banner-pill"><span>💻</span><span><span class="metric-highlight">Modern</span> Webflow Builds</span></div>
+          <div class="banner-pill"><span>📦</span><span><span class="metric-highlight">₹9L+</span> Amazon Revenue</span></div>
+          <div class="banner-pill"><span>🚀</span><span><span class="metric-highlight">5+</span> ROAS Scale</span></div>
+          <div class="banner-pill"><span>🎬</span><span><span class="metric-highlight">15+</span> Brand Video Projects</span></div>
+        `;
+      } else {
+        bannerEyebrow.textContent = 'PORTFOLIO & FREELANCE SERVICES';
+        bannerMainTitle.innerHTML = '<span style="color: #94a3b8;">NO-CODE DEVELOPER • FIGMA DESIGNER • VIDEO EDITOR</span>';
+        bannerProofPills.innerHTML = `
+          <div class="banner-pill" style="border-color: rgba(239, 68, 68, 0.4);"><span>⚠️</span><span>Zero Hard Proof Metrics Displayed</span></div>
+        `;
+      }
+
+      // 3. Headline Rendering
+      const headlineAlert = document.getElementById('headlineCritiqueAlert');
+      const headlineAlertIcon = document.getElementById('headlineAlertIcon');
+      const headlineAlertText = document.getElementById('headlineAlertText');
+      const headlineTextDisplay = document.getElementById('headlineTextDisplay');
+      const headlinePresetsBar = document.getElementById('headlinePresetsBar');
+
+      if (isAfter) {
+        headlineAlert.className = 'headline-critique-alert after-highlight';
+        headlineAlertIcon.textContent = '✨';
+        headlineAlertText.innerHTML = '<strong>Authentic Builder Positioning:</strong> Highlighting real execution—great website development (Webflow), ₹9L+ Amazon scale (5+ ROAS), and video production for 15+ brands.';
+        headlineTextDisplay.textContent = headlinePresets[profileState.headlinePreset];
+        headlinePresetsBar.style.display = 'flex';
+      } else {
+        headlineAlert.className = 'headline-critique-alert before-critique';
+        headlineAlertIcon.textContent = '⚠️';
+        headlineAlertText.innerHTML = '<strong>Critique of Old Headline:</strong> Weak laundry list of tools separated by 5 pipes. "Event volunteering" destroys pricing power. Zero commercial proof or outcomes.';
+        headlineTextDisplay.textContent = "| No-Code Developer (Bubble, Webflow, Framer) | Visual Content Creator | Early-Stage MVP | Figma Prototyper | Event volunteering |";
+        headlinePresetsBar.style.display = 'none';
+      }
+
+      // 4. "Open To" Box
+      const openToBox = document.getElementById('openToBox');
+      const openToTitle = document.getElementById('openToTitle');
+      const openToSubtitle = document.getElementById('openToSubtitle');
+
+      if (isAfter) {
+        openToBox.className = 'open-to-box';
+        openToTitle.textContent = 'Open to High-Leverage Collaborations & Advisory';
+        openToSubtitle.textContent = 'Modern Webflow Development, Amazon Marketplace Scaling, and Video/Media Production';
+      } else {
+        openToBox.className = 'open-to-box before-style';
+        openToTitle.textContent = 'Open to Work: Any Junior Freelance Projects';
+        openToSubtitle.textContent = 'Figma design, Bubble prototyping, video editing, event volunteering';
+      }
+
+      // 5. Analytics Stats
+      const statViews = document.getElementById('statViews');
+      const statImpressions = document.getElementById('statImpressions');
+      const statSearches = document.getElementById('statSearches');
+      const statViewsDelta = document.getElementById('statViewsDelta');
+      const statImpressionsDelta = document.getElementById('statImpressionsDelta');
+      const statSearchesDelta = document.getElementById('statSearchesDelta');
+
+      if (isAfter) {
+        statViews.textContent = '1,842';
+        statImpressions.textContent = '48,910';
+        statSearches.textContent = '312';
+        statViewsDelta.textContent = '▲ +1,385% after repositioning';
+        statViewsDelta.className = 'stat-delta positive';
+        statImpressionsDelta.textContent = '▲ +5,650% viral loop';
+        statSearchesDelta.textContent = '▲ 82% D2C & Tech Founders';
+      } else {
+        statViews.textContent = '124';
+        statImpressions.textContent = '850';
+        statSearches.textContent = '42';
+        statViewsDelta.textContent = '▼ Low visibility (flat)';
+        statViewsDelta.className = 'stat-delta neutral';
+        statImpressionsDelta.textContent = '▼ Standard connection feed';
+        statSearchesDelta.textContent = '▼ 71% Unpaid internship recruiters';
+      }
+
+      // 6. About Section
+      const aboutBodyContent = document.getElementById('aboutBodyContent');
+      const aboutModeSubtitle = document.getElementById('aboutModeSubtitle');
+
+      if (isAfter) {
+        aboutModeSubtitle.textContent = 'Authentic Story & Verified Proof of Work';
+        aboutBodyContent.textContent = aboutContent.after;
+      } else {
+        aboutModeSubtitle.textContent = 'Old Generic Freelance Bio';
+        aboutBodyContent.textContent = aboutContent.before;
+      }
+
+      // 7. Experience List
+      renderExperienceList();
+    }
+
+    function switchHeadlinePreset(index) {
+      profileState.headlinePreset = index;
+      document.querySelectorAll('.preset-chip').forEach((chip, idx) => {
+        chip.classList.toggle('active', idx + 1 === index);
+      });
+      document.getElementById('headlineTextDisplay').textContent = headlinePresets[index];
+      showToast(`Applied Headline Preset ${index}`, 'success');
+    }
+
+    function renderExperienceList() {
+      const container = document.getElementById('experienceListContainer');
+      const roles = profileState.mode === 'after' ? experienceData.after : experienceData.before;
+
+      container.innerHTML = roles.map((role, idx) => {
+        const isMissing = role.missing;
+        return `
+          <div class="experience-item ${isMissing ? 'missing-highlight' : ''}">
+            <div class="company-logo-avatar ${role.logoClass}">${role.logoText}</div>
+            <div class="experience-details">
+              <div class="experience-title">${role.title}</div>
+              <div class="experience-company">${role.company}</div>
+              <div class="experience-date-location">${role.date}</div>
+              
+              ${role.metrics ? `
+                <div class="experience-metrics-row">
+                  ${role.metrics.map(m => `<span class="exp-metric-pill">${m}</span>`).join('')}
+                </div>
+              ` : ''}
+
+              <ul class="exp-bullets-list">
+                ${role.bullets.map(b => `<li>${b}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="exp-copy-action">
+              <button class="btn-copy" onclick="copyRoleText(${idx})">📋 Copy Role</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // FOUNDER CONNECTION SCRIPT STUDIO
+    // =========================================================================
+    function setFounderArchetype(arch) {
+      profileState.founderArchetype = arch;
+      document.getElementById('tabNewAge').classList.toggle('active', arch === 'newage');
+      document.getElementById('tabLegacy').classList.toggle('active', arch === 'legacy');
+
+      const chipVar1 = document.getElementById('chipVar1');
+      const chipVar2 = document.getElementById('chipVar2');
+
+      if (arch === 'newage') {
+        chipVar1.textContent = 'Angle 1: The Asymmetry Hook';
+        chipVar2.textContent = 'Angle 2: Unreasonable Speed';
+      } else {
+        chipVar1.textContent = 'Angle 1: The Anti-Agency Reality';
+        chipVar2.textContent = 'Angle 2: Supply Chain Operator';
+      }
+
+      renderConnectionScript();
+    }
+
+    function setScriptVariant(variant) {
+      profileState.scriptVariant = variant;
+      document.getElementById('chipVar1').classList.toggle('active', variant === 1);
+      document.getElementById('chipVar2').classList.toggle('active', variant === 2);
+      renderConnectionScript();
+    }
+
+    function renderConnectionScript() {
+      const founderName = document.getElementById('founderNameInput').value.trim() || '[Name]';
+      const companyName = document.getElementById('companyNameInput').value.trim() || '[Company]';
+
+      const scriptGen = connectionScripts[profileState.founderArchetype][profileState.scriptVariant];
+      const rawText = scriptGen(founderName, companyName);
+
+      // Render with highlighted variables
+      const highlightedText = rawText
+        .replace(new RegExp(escapeRegExp(founderName), 'g'), `<span class="highlight-var">${founderName}</span>`)
+        .replace(new RegExp(escapeRegExp(companyName), 'g'), `<span class="highlight-var">${companyName}</span>`);
+
+      document.getElementById('scriptPreviewBox').innerHTML = highlightedText;
+
+      // Character count logic
+      const charCount = rawText.length;
+      const remaining = 300 - charCount;
+      const pct = Math.min(100, Math.round((charCount / 300) * 100));
+
+      document.getElementById('charCountLabel').innerHTML = `Length: <strong>${charCount}</strong> / 300 characters`;
+      document.getElementById('charRemainingLabel').textContent = `(${remaining >= 0 ? remaining + ' chars remaining' : Math.abs(remaining) + ' chars OVER LIMIT!'})`;
+
+      const meterFill = document.getElementById('charMeterFill');
+      const statusBadge = document.getElementById('charStatusBadge');
+
+      meterFill.style.width = pct + '%';
+      meterFill.className = 'char-meter-fill';
+
+      if (charCount <= 280) {
+        statusBadge.className = 'char-status-badge safe';
+        statusBadge.textContent = '✓ Compliant (<280 safe)';
+      } else if (charCount <= 300) {
+        statusBadge.className = 'char-status-badge warning';
+        meterFill.classList.add('warning');
+        statusBadge.textContent = '⚠️ Tight (281-300 limit)';
+      } else {
+        statusBadge.className = 'char-status-badge danger';
+        meterFill.classList.add('danger');
+        statusBadge.textContent = '❌ Exceeds 300 Chars!';
+      }
+    }
+
+    function copyConnectionScript() {
+      const founderName = document.getElementById('founderNameInput').value.trim() || '[Name]';
+      const companyName = document.getElementById('companyNameInput').value.trim() || '[Company]';
+      const rawText = connectionScripts[profileState.founderArchetype][profileState.scriptVariant](founderName, companyName);
+
+      copyTextDirect(rawText, `Copied connection note (${rawText.length} chars)`);
+    }
+
+    // =========================================================================
+    // ACTIVITY & POSTS
+    // =========================================================================
+    function switchActivePost(postId) {
+      profileState.activePost = postId;
+      document.querySelectorAll('.activity-tab-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx + 1 === postId);
+      });
+      document.getElementById('postBodyContent').textContent = postsData[postId].content;
+    }
+
+    function copyActivePostText() {
+      const text = postsData[profileState.activePost].content;
+      copyTextDirect(text, 'Copied post to clipboard!');
+    }
+
+    // =========================================================================
+    // CHECKLIST SYSTEM (LOCAL STORAGE PERSISTENCE)
+    // =========================================================================
+    function initChecklist() {
+      const container = document.getElementById('checklistTasksContainer');
+      const saved = getStoredChecklist();
+
+      container.innerHTML = checklistItems.map((item) => {
+        const isChecked = !!saved[item.id];
+        return `
+          <div class="checklist-task-item ${isChecked ? 'completed' : ''}" id="taskItem_${item.id}" onclick="toggleTask('${item.id}')">
+            <input type="checkbox" class="task-checkbox" id="chk_${item.id}" ${isChecked ? 'checked' : ''} onclick="event.stopPropagation(); toggleTask('${item.id}')">
+            <div class="task-label">
+              <span class="task-step-pill">${item.step}</span>
+              <div style="font-weight: 600; color: var(--text-primary);">${item.title}</div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">${item.desc}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateChecklistCounters();
+    }
+
+    function toggleTask(id) {
+      const saved = getStoredChecklist();
+      saved[id] = !saved[id];
+      saveStoredChecklist(saved);
+
+      const chk = document.getElementById(`chk_${id}`);
+      const itemEl = document.getElementById(`taskItem_${id}`);
+
+      if (chk) chk.checked = saved[id];
+      if (itemEl) itemEl.classList.toggle('completed', saved[id]);
+
+      updateChecklistCounters();
+      if (saved[id]) {
+        showToast(`Checked off task: ${id}`, 'success');
+      }
+    }
+
+    function updateChecklistCounters() {
+      const saved = getStoredChecklist();
+      const completedCount = checklistItems.filter(i => !!saved[i.id]).length;
+      const total = checklistItems.length;
+      const pct = Math.round((completedCount / total) * 100);
+
+      document.getElementById('checklistCounterBadge').textContent = `Upgrade Checklist (${completedCount}/${total})`;
+      document.getElementById('flyoutProgressLabel').textContent = `${completedCount} of ${total} Completed (${pct}%)`;
+      document.getElementById('flyoutProgressBar').style.width = `${pct}%`;
+    }
+
+    function resetChecklist() {
+      if (confirm('Reset all checklist progress?')) {
+        saveStoredChecklist({});
+        initChecklist();
+        showToast('Checklist reset to 0%', 'warning');
+      }
+    }
+
+    function getStoredChecklist() {
+      try {
+        const data = localStorage.getItem('kartikey_linkedin_checklist');
+        return data ? JSON.parse(data) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveStoredChecklist(obj) {
+      try {
+        localStorage.setItem('kartikey_linkedin_checklist', JSON.stringify(obj));
+      } catch (e) {}
+    }
+
+    function toggleChecklistFlyout() {
+      document.getElementById('checklistFlyout').classList.toggle('open');
+    }
+
+    // =========================================================================
+    // CASE STUDY & DETAIL MODALS
+    // =========================================================================
+    function openCaseStudyModal(studyKey) {
+      const modal = document.getElementById('caseStudyModal');
+      const title = document.getElementById('caseStudyModalTitle');
+      const body = document.getElementById('caseStudyModalBody');
+
+      if (studyKey === 'taarmi') {
+        title.textContent = 'Case Study: Taarmi Amazon Marketplace Scale (₹9L+ Revenue)';
+        body.innerHTML = `
+          <div style="font-size: 13.5px; line-height: 1.6; color: var(--text-primary);">
+            <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+              <div class="analytic-stat-box" style="flex: 1;"><div class="stat-number" style="color: var(--accent-gold);">₹9,00,000+</div><div class="stat-label">Top-line Revenue</div></div>
+              <div class="analytic-stat-box" style="flex: 1;"><div class="stat-number" style="color: var(--accent-emerald);">5+ ROAS</div><div class="stat-label">Return on Ad Spend</div></div>
+              <div class="analytic-stat-box" style="flex: 1;"><div class="stat-number">348% YoY</div><div class="stat-label">Revenue Expansion</div></div>
+            </div>
+
+            <h4 style="color: var(--accent-gold); margin-bottom: 6px;">1. The Amazon 5665 Brand Registry Blocker</h4>
+            <p style="margin-bottom: 12px; color: var(--text-secondary);">
+              Amazon blocked branded listings due to trademark registration pending (5665 error). Solved this by engineering a compliant Generic catalog mapping in flat-files while retaining the branded customer title identity "Taarmi" prefix without account suspension.
+            </p>
+
+            <h4 style="color: var(--accent-gold); margin-bottom: 6px;">2. 249-Byte Backend Search Term Matrix</h4>
+            <p style="margin-bottom: 12px; color: var(--text-secondary);">
+              Harvested high-intent dual-evidence search terms. Populated exact 249-byte limits across 5 distinct attributes using native Excel COM automation to avoid algorithm truncation.
+            </p>
+
+            <h4 style="color: var(--accent-gold); margin-bottom: 6px;">3. 3-Tier PPC Auction Isolation Shield</h4>
+            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+              Engineered Broad ➔ Phrase ➔ Exact keyword graduation across 164 bulk campaign rows. Eliminated internal auction cannibalization with negative phrase/exact isolation shields, holding ACoS below 22%.
+            </p>
+
+            <button class="btn-primary" onclick="copyTextDirect(taarmiDeepText, 'Copied Taarmi Case Breakdown!')">
+              <span>📋 Copy Case Study Summary</span>
+            </button>
+          </div>
+        `;
+      } else if (studyKey === 'webflow') {
+        title.textContent = 'Showcase: Modern Webflow Development & Digital Craft (Urban Vault)';
+        body.innerHTML = `
+          <div style="font-size: 13.5px; line-height: 1.6; color: var(--text-primary);">
+            <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+              <div class="analytic-stat-box" style="flex: 1;"><div class="stat-number" style="color: #60a5fa;">Webflow</div><div class="stat-label">High-Craft Platform</div></div>
+              <div class="analytic-stat-box" style="flex: 1;"><div class="stat-number" style="color: var(--accent-emerald);">Client-First</div><div class="stat-label">Clean CSS System</div></div>
+              <div class="analytic-stat-box" style="flex: 1;"><div class="stat-number">&lt; 1s</div><div class="stat-label">Fast Load Speed</div></div>
+            </div>
+
+            <h4 style="color: #60a5fa; margin-bottom: 6px;">1. Client-First Class Architecture & Clean Code</h4>
+            <p style="margin-bottom: 12px; color: var(--text-secondary);">
+              Built using Finsweet Client-First conventions. Organized utility classes, structured rem units, clean DOM nesting, and zero CSS bloat for seamless scalability.
+            </p>
+
+            <h4 style="color: #60a5fa; margin-bottom: 6px;">2. Responsive Breakpoints & Interaction Craft</h4>
+            <p style="margin-bottom: 12px; color: var(--text-secondary);">
+              Crafted custom micro-interactions, smooth page transitions, and pixel-perfect layouts across Desktop, Tablet, Mobile Landscape, and Mobile Portrait.
+            </p>
+
+            <h4 style="color: #60a5fa; margin-bottom: 6px;">3. Production Speed & Webhook Integration</h4>
+            <p style="margin-bottom: 16px; color: var(--text-secondary);">
+              Delivered the Urban Vault managed office landing page with direct form endpoints, GA4 event tracking, and seamless lead routing into CRM backends.
+            </p>
+
+            <button class="btn-primary" onclick="copyTextDirect(webflowDeepText, 'Copied Webflow Craft Breakdown!')">
+              <span>📋 Copy Webflow Breakdown</span>
+            </button>
+          </div>
+        `;
+      } else if (studyKey === 'video') {
+        title.textContent = 'Showcase: Content & Video Production for 15+ Brands';
+        body.innerHTML = `
+          <div style="font-size: 13.5px; line-height: 1.6; color: var(--text-primary);">
+            <p style="margin-bottom: 14px; color: var(--text-secondary);">
+              Real-world visual storytelling, on-ground event cinematography, and fast-turnaround video editing:
+            </p>
+
+            <div class="production-matrix">
+              <div class="prod-card">
+                <div class="prod-title">🎬 15+ Brand Collaborations</div>
+                <div class="prod-desc">Directed and edited short-form visual content for Medial, Goats, Shopsy, Urban Vault, and Doodley.</div>
+              </div>
+              <div class="prod-card">
+                <div class="prod-title">🎤 50+ Founder Interviews</div>
+                <div class="prod-desc">On-ground media lead at BLR Tech Summit, Great Indian Startup Summit, and BLR Creator Fest.</div>
+              </div>
+              <div class="prod-card">
+                <div class="prod-title">⚡ Same-Day Aftermovies</div>
+                <div class="prod-desc">High-energy event cuts delivered within 12-24 hours with custom sound design and dynamic pacing.</div>
+              </div>
+              <div class="prod-card">
+                <div class="prod-title">🏆 Xavier's Photo Club Leadership</div>
+                <div class="prod-desc">VP & Treasurer: managed 12-person executive team, hosted 15+ events, and delivered ₹15,000 net profit.</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 16px;">
+              <button class="btn-primary" onclick="copyTextDirect(videoDeepText, 'Copied Video Production Breakdown!')">
+                <span>📋 Copy Video Production Breakdown</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      modal.classList.add('open');
+    }
+
+    function closeCaseStudyModal() {
+      document.getElementById('caseStudyModal').classList.remove('open');
+    }
+
+    function openContactModal() {
+      document.getElementById('contactModal').classList.add('open');
+    }
+
+    function closeContactModal() {
+      document.getElementById('contactModal').classList.remove('open');
+    }
+
+    function openBannerSpecsModal() {
+      document.getElementById('bannerSpecsModal').classList.add('open');
+    }
+
+    function closeBannerSpecsModal() {
+      document.getElementById('bannerSpecsModal').classList.remove('open');
+    }
+
+    // =========================================================================
+    // 1-CLICK CLIPBOARD COPY ENGINE
+    // =========================================================================
+    function copyTextDirect(text, toastMsg) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(toastMsg || 'Copied to clipboard!', 'success');
+        }).catch(() => fallbackCopy(text, toastMsg));
+      } else {
+        fallbackCopy(text, toastMsg);
+      }
+    }
+
+    function fallbackCopy(text, toastMsg) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(toastMsg || 'Copied to clipboard!', 'success');
+      } catch (err) {
+        showToast('Failed to copy. Please manually select text.', 'warning');
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function copyHeadlineText() {
+      const text = document.getElementById('headlineTextDisplay').textContent.trim();
+      const btn = document.getElementById('btnCopyHeadline');
+      btn.classList.add('copied');
+      btn.innerHTML = '<span>✓ Copied!</span>';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copy Headline</span>
+        `;
+      }, 2000);
+      copyTextDirect(text, 'Headline copied to clipboard!');
+    }
+
+    function copyAboutText() {
+      const text = document.getElementById('aboutBodyContent').textContent.trim();
+      const btn = document.getElementById('btnCopyAbout');
+      btn.classList.add('copied');
+      btn.innerHTML = '<span>✓ Copied!</span>';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copy About Copy</span>
+        `;
+      }, 2000);
+      copyTextDirect(text, 'About section copied to clipboard!');
+    }
+
+    function copyBannerText() {
+      const text = `GREAT WEBSITE DEVELOPER • AMAZON MARKETPLACE SCALE • VIDEO PRODUCTION
+[ 💻 Modern Webflow Builds ] [ 📦 ₹9L+ Amazon Revenue ] [ 🚀 5+ ROAS Scale ] [ 🎬 15+ Brand Video Projects ]`;
+      copyTextDirect(text, 'Banner text copied!');
+    }
+
+    function copyOpenToDetails() {
+      const text = `Open to High-Impact Collaborations: Modern Webflow Development, Amazon Marketplace Scaling, and Video/Content Production.`;
+      copyTextDirect(text, 'Open To details copied!');
+    }
+
+    function copyFeaturedListText() {
+      const text = `1. Taarmi Amazon India E-Commerce Scale (₹9L+ Revenue, 5+ ROAS, 348% YoY)
+2. High-Craft Webflow Development (Urban Vault Build & Clean Code)
+3. Content & Video Production (15+ Brands & BLR Tech Summit Coverage)`;
+      copyTextDirect(text, 'Featured section links copied!');
+    }
+
+    function copyRoleText(index) {
+      const roles = profileState.mode === 'after' ? experienceData.after : experienceData.before;
+      const r = roles[index];
+      const text = `${r.title}
+${r.company} (${r.date})
+${r.bullets.map(b => '• ' + b).join('
+')}`;
+      copyTextDirect(text, `Copied ${r.company} role bullets!`);
+    }
+
+    function copyAllExperienceText() {
+      const roles = profileState.mode === 'after' ? experienceData.after : experienceData.before;
+      const text = roles.map(r => `${r.title} — ${r.company} (${r.date})
+${r.bullets.map(b => '• ' + b).join('
+')}`).join('
+
+');
+      copyTextDirect(text, 'Copied all experience roles to clipboard!');
+    }
+
+    function copyFullProfileMarkdown() {
+      const text = `# KARTIKEY JAIN — LINKEDIN PROFILE MAKEOVER MASTER COPY
+
+## HEADLINE
+${document.getElementById('headlineTextDisplay').textContent.trim()}
+
+## ABOUT SECTION
+${aboutContent.after}
+
+## FEATURED SECTION
+1. Taarmi Amazon India E-Commerce Scale (₹9L+ Revenue, 5+ ROAS, 348% YoY)
+2. High-Craft Webflow Development (Urban Vault Build & Clean Code)
+3. Content & Video Production (15+ Brands & BLR Tech Summit Coverage)
+
+## EXPERIENCE SECTION
+${experienceData.after.map(r => `### ${r.title} | ${r.company}
+*${r.date}*
+${r.bullets.map(b => '- ' + b).join('
+')}`).join('
+
+')}
+
+## CONTACT
+Email: kartikeyjain14@gmail.com | Phone: +91 8005890986 | Bangalore, India`;
+
+      copyTextDirect(text, 'Full Profile Markdown copied to clipboard!');
+    }
+
+    // =========================================================================
+    // UTILITIES
+    // =========================================================================
+    function showToast(msg, type) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<span>${type === 'warning' ? '⚠️' : '✓'}</span><span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.2s ease';
+        setTimeout(() => toast.remove(), 200);
+      }, 2600);
+    }
+
+    function escapeRegExp(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function toggleAvatarDetail() {
+      showToast('Kartikey Jain • Bangalore Base • 19yo Polymath Builder', 'success');
+    }
+
+    // Deep text blobs for case study copies
+    const taarmiDeepText = `TAARMI AMAZON E-COMMERCE BREAKDOWN:
+• ₹9,00,000+ top-line revenue over 4 months (~₹2L/mo average run rate)
+• 5+ Account ROAS across 60+ SKUs
+• 348% Year-over-Year revenue expansion
+• Amazon 5665 error bypassed via Generic flat-file mapping with branded customer title
+• 249-byte backend keywords with Excel COM automation
+• 3-tier negative auction shields eliminating keyword cannibalization`;
+
+    const webflowDeepText = `GREAT WEBSITE DEVELOPMENT & WEBFLOW BREAKDOWN:
+• Modern, high-craft website builds with Webflow and clean code
+• Built with Finsweet Client-First CSS class architecture & clean DOM
+• Fully responsive across Desktop, Tablet, and Mobile breakpoints
+• Smooth micro-interactions, clean typography, and sub-1s load times
+• Shipped custom landing page for Urban Vault managed office spaces`;
+
+    const videoDeepText = `CONTENT & VIDEO PRODUCTION BREAKDOWN:
+• Produced, shot, and edited video content for 15+ brands (Medial, Shopsy, Urban Vault)
+• Covered high-energy ecosystem events including BLR Tech Summit & BLR Creator Fest
+• Conducted 50+ on-camera founder and executive interviews
+• Turned around same-day high-energy aftermovies with custom sound & color grading
+• Former VP & Treasurer of Xavier's Photography Club: led team of 12, ₹15,000 net profit`;
+    // deep text aliases
+  </script>
+</body>
+</html>

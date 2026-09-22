@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taarmi Central — PPC Volume, Competitor Rankings & ROAS Intelligence Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --bg-base: #0B0F19;
+      --bg-surface: #111827;
+      --bg-card: #182234;
+      --bg-card-hover: #1F2C44;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(245, 158, 11, 0.4);
+      --border-green: rgba(16, 185, 129, 0.4);
+      --border-blue: rgba(56, 189, 248, 0.4);
+      --border-purple: rgba(168, 85, 247, 0.4);
+      --border-red: rgba(239, 68, 68, 0.4);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --gold-primary: #F59E0B;
+      --gold-light: #FDE68A;
+      --gold-glow: rgba(245, 158, 11, 0.15);
+      --green-accent: #10B981;
+      --green-glow: rgba(16, 185, 129, 0.15);
+      --blue-accent: #38BDF8;
+      --blue-glow: rgba(56, 189, 248, 0.15);
+      --purple-accent: #A855F7;
+      --purple-glow: rgba(168, 85, 247, 0.15);
+      --danger-red: #EF4444;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
+body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(180deg, rgba(24, 34, 52, 0.95) 0%, rgba(11, 15, 25, 0.95) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 22px 36px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .header-content {
+      max-width: 1750px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: #000;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .readonly-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--border-green);
+      color: var(--green-accent);
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+      color: var(--gold-primary);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: #000;
+      border: none;
+      font-weight: 700;
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #FBBF24, #F59E0B);
+      color: #000;
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    .container {
+      max-width: 1750px;
+      margin: 24px auto;
+      padding: 0 36px;
+    }
+
+    /* KPI METRIC CARDS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    .kpi-card.highlight {
+      border-color: var(--border-accent);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.06) 0%, var(--bg-surface) 100%);
+    }
+    .kpi-card.green-highlight {
+      border-color: var(--border-green);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.06) 0%, var(--bg-surface) 100%);
+    }
+    .kpi-card.blue-highlight {
+      border-color: var(--border-blue);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.06) 0%, var(--bg-surface) 100%);
+    }
+    .kpi-card.purple-highlight {
+      border-color: var(--border-purple);
+      background: linear-gradient(180deg, rgba(168, 85, 247, 0.06) 0%, var(--bg-surface) 100%);
+    }
+    .kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .kpi-value {
+      font-size: 26px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      letter-spacing: -0.5px;
+    }
+    .kpi-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* TABS */
+    .tabs-nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 12px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+    }
+    .tab-btn.active {
+      color: var(--gold-primary);
+      border-bottom-color: var(--gold-primary);
+    }
+    .tab-count {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+    }
+    .tab-btn.active .tab-count {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--gold-primary);
+    }
+
+    /* CONTROLS BAR */
+    .controls-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 16px 10px 40px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .search-input:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 10px var(--gold-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .pill-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+    }
+    .pill {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .pill:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text-main);
+    }
+    .pill.active {
+      background: var(--gold-glow);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+      font-weight: 700;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .badge-exact {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34D399;
+    }
+    .badge-phrase {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #7DD3FC;
+    }
+    .badge-broad {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #C084FC;
+    }
+
+    .badge-rank1 {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid #F59E0B;
+      color: #FDE68A;
+      font-weight: 800;
+    }
+    .badge-top5 {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid #10B981;
+      color: #34D399;
+      font-weight: 700;
+    }
+    .badge-top10 {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #38BDF8;
+      color: #7DD3FC;
+    }
+    .badge-page2 {
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #CBD5E1;
+    }
+
+    /* DATA TABLE */
+    .table-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-x: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    th {
+      background: #151D2E;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.6px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s ease;
+    }
+    th:hover {
+      color: var(--gold-primary);
+    }
+    th.sorted-asc::after {
+      content: " ▲";
+      color: var(--gold-primary);
+    }
+    th.sorted-desc::after {
+      content: " ▼";
+      color: var(--gold-primary);
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    tbody tr {
+      transition: background-color 0.15s ease;
+    }
+    tbody tr:hover {
+      background-color: var(--bg-card-hover);
+    }
+    .cell-term {
+      font-weight: 600;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .copy-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 12px;
+      transition: all 0.15s ease;
+    }
+    .copy-btn:hover {
+      color: var(--gold-primary);
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .asin-link {
+      color: #38BDF8;
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      border-bottom: 1px dotted rgba(56, 189, 248, 0.4);
+    }
+    .asin-link:hover {
+      color: #7DD3FC;
+      border-bottom-style: solid;
+    }
+    .cell-mono {
+      font-family: var(--font-mono);
+    }
+    .cell-orders {
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .cell-sales {
+      font-weight: 700;
+      color: #F8FAFC;
+    }
+    .cell-roas {
+      font-weight: 800;
+      color: #FDE68A;
+      background: rgba(245, 158, 11, 0.1);
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .cell-cpc {
+      color: #7DD3FC;
+      font-weight: 600;
+    }
+    .cell-bid {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+    .spread-green {
+      color: #34D399;
+      font-size: 11px;
+    }
+    .spread-orange {
+      color: #FB923C;
+      font-size: 11px;
+    }
+
+    /* EMPTY STATE */
+    .empty-banner {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid var(--border-green);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    /* TOAST NOTIFICATION */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10B981;
+      color: #000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 1000;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  /* Responsive Overrides */
+@media (max-width: 1024px) {
+  .kpi-grid, .grid-container, .metrics-grid, .kpi-row, .kpi-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .controls, .controls-panel, .filters-container, .table-controls {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+  }
+  .search-box, .search-container, input[type='text'], .search-input {
+    width: 100% !important;
+  }
+  .matrix-grid, .strategic-matrix {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 768px) {
+  header, .top-bar, .app-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  header button, .top-bar button, .header-actions button, .action-btn {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  .kpi-grid, .grid-container, .metrics-grid, .kpi-row, .kpi-container {
+    grid-template-columns: 1fr !important;
+  }
+  .kpi-card, .metric-card, .stat-card {
+    padding: 14px !important;
+  }
+  .table-container, .data-table-wrapper, .table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .tabs, .tab-navigation, .nav-tabs {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    flex-wrap: nowrap !important;
+  }
+  table, th, td, .data-table {
+    font-size: 12px !important;
+  }
+}
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-content">
+      <div class="brand-title">
+        <span class="brand-badge">PPC &amp; RANKING CONSOLE</span>
+        <div>
+          <h1>🎯 PPC Volume, Competitor Rankings &amp; ROAS Intelligence</h1>
+          <div class="subtitle">
+            <span>Aug 1 – Sep 21, 2026</span>
+            <span>•</span>
+            <span class="readonly-pill">🔒 100% READ-ONLY ENFORCED</span>
+            <span>•</span>
+            <span>Account: <strong>JAIN ENTERPRISES JAIPUR</strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn" onclick="exportCsv()">📥 Download Active Table CSV</button>
+        <button class="btn btn-gold" onclick="copyTopVolumeTerms()">📋 Copy Top Queries</button>
+        <a href="00_DASHBOARD_PORTAL.html" class="btn">🏠 Portal Hub</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- KPI SUMMARY CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card green-highlight">
+        <div class="kpi-label">
+          <span>Rank #1 Filter Status</span>
+          <span>👑</span>
+        </div>
+        <div class="kpi-value" style="color: #34D399;">0 Keywords #1</div>
+        <div class="kpi-sub">0 suppressed; all remain active scaling targets</div>
+      </div>
+      <div class="kpi-card purple-highlight">
+        <div class="kpi-label">
+          <span>Striking Distance (Ranks #2 - #5)</span>
+          <span>⚔️</span>
+        </div>
+        <div class="kpi-value" style="color: #C084FC;">35 Queries</div>
+        <div class="kpi-sub">Within 1-4 rank positions of overtaking #1</div>
+      </div>
+      <div class="kpi-card highlight">
+        <div class="kpi-label">
+          <span>Total Attributed Sales</span>
+          <span>💰</span>
+        </div>
+        <div class="kpi-value">₹1,44,462.40</div>
+        <div class="kpi-sub">246 Converted Orders | 7.01x ROAS</div>
+      </div>
+      <div class="kpi-card blue-highlight">
+        <div class="kpi-label">
+          <span>Traffic Volume</span>
+          <span>👁️</span>
+        </div>
+        <div class="kpi-value">8,547 Clicks</div>
+        <div class="kpi-sub">5,45,790 Total Impressions</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">
+          <span>Bid &amp; CPC Calibration</span>
+          <span>🏷️</span>
+        </div>
+        <div class="kpi-value">₹2.41 Avg CPC</div>
+        <div class="kpi-sub">Total Ad Spend: ₹20,597.90</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('competitors')" id="tab-btn-competitors">
+        ⚔️ Top Products for Other Queries &amp; Competitor #1 Intel
+        <span class="tab-count">104</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('rank1')" id="tab-btn-rank1">
+        👑 Keywords Where Product Ranks #1 (Separated)
+        <span class="tab-count">0</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('targets')" id="tab-btn-targets">
+        🎯 Targeting Keywords Inventory
+        <span class="tab-count">18</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('searchterms')" id="tab-btn-searchterms">
+        🔍 Customer Search Terms Deep Mine
+        <span class="tab-count">117</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('matrix')" id="tab-btn-matrix">
+        📊 Volume vs ROAS Strategic Matrix
+      </button>
+    </div>
+
+    <!-- CONTROLS PANEL (FILTER / SORT) -->
+    <div class="controls-panel" id="controlsPanel">
+      <div class="controls-row">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search keywords, competitor ASINs, titles, prices, rankings..." oninput="applyFilters()">
+        </div>
+        <div class="pill-group" id="sortPillGroup">
+          <span class="pill-label">Sort:</span>
+          <button class="pill active" onclick="setSort('orders', 'desc', this)">👑 Order Volume</button>
+          <button class="pill" onclick="setSort('sales', 'desc', this)">💰 Sales Volume</button>
+          <button class="pill" onclick="setSort('ourRank', 'asc', this)">🏆 Your Best Rank (#2 First)</button>
+          <button class="pill" onclick="setSort('cpc', 'asc', this)">🏷️ Lowest CPC</button>
+          <button class="pill" onclick="setSort('roas', 'desc', this)">⚡ ROAS</button>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <div class="pill-group">
+          <span class="pill-label">Ranking Position Filter:</span>
+          <button class="pill active" onclick="setFilter('rankFilter', 'ALL', this)">All Queries</button>
+          <button class="pill" onclick="setFilter('rankFilter', 'top5', this)">🔥 Striking Distance (Ranks #2 - #5)</button>
+          <button class="pill" onclick="setFilter('rankFilter', 'top10', this)">🎯 Page 1 Top 10 (Ranks #6 - #10)</button>
+          <button class="pill" onclick="setFilter('rankFilter', 'page2', this)">⏳ Page 2+ Opportunity</button>
+        </div>
+
+        <div class="pill-group">
+          <span class="pill-label">Occasion:</span>
+          <button class="pill active" onclick="setFilter('occasion', 'ALL', this)">All</button>
+          <button class="pill" onclick="setFilter('occasion', 'fruit', this)">🍇 Fruit</button>
+          <button class="pill" onclick="setFilter('occasion', 'wedding', this)">💍 Wedding</button>
+          <button class="pill" onclick="setFilter('occasion', 'hamper', this)">🎁 Hamper</button>
+          <button class="pill" onclick="setFilter('occasion', 'festive', this)">🪔 Festive/Diwali</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 1: COMPETITOR #1 & OTHER QUERIES TABLE -->
+    <div id="view-competitors" class="tab-view">
+      <div class="table-container">
+        <table id="competitorsTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('query')">Customer Search Query</th>
+              <th onclick="sortTable('ourRank')" class="sorted-asc">Your Product Current Rank</th>
+              <th>Top #1 Competitor Product</th>
+              <th onclick="sortTable('competitorPrice')">Competitor Price</th>
+              <th>Competitor Rating / Reviews</th>
+              <th onclick="sortTable('orders')">Your Orders</th>
+              <th onclick="sortTable('sales')">Your Sales (₹)</th>
+              <th onclick="sortTable('cpc')">Your Avg CPC (₹)</th>
+              <th onclick="sortTable('roas')">Your ROAS</th>
+              <th>Conquest Opportunity &amp; Strategic Action</th>
+            </tr>
+          </thead>
+          <tbody id="competitorsTbody">
+            <!-- Dynamically Rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW 2: RANK #1 KEYWORDS (SEPARATED LIST) -->
+    <div id="view-rank1" class="tab-view" style="display: none;">
+      <div class="empty-banner">
+        <div style="font-size: 40px; margin-bottom: 12px;">👑</div>
+        <h2 style="font-size: 20px; font-weight: 800; color: #FDE68A; margin-bottom: 8px;">No Keywords Filtered Out — All 104 Queries Are Active Scaling Opportunities!</h2>
+        <p style="font-size: 14.5px; color: #CBD5E1; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+          Your live Amazon search ranking audit reveals that <strong>your products currently hold positions between Rank #2 and Rank #5 across 35 high-converting queries</strong>, but have <strong>not yet locked in Organic #1</strong> on any query.<br><br>
+          Therefore, <strong>zero keywords have been suppressed or excluded</strong> from your advertising targets. Every single query remains an active growth lever where a modest +₹0.20 to +₹0.40 bid adjustment can conquer the #1 spot from competitors like <code>B0BGQ9RW1T</code>, <code>B0CP8CNZYZ</code>, and <code>B0HBCVSRTM</code>.
+        </p>
+      </div>
+
+      <div class="controls-panel" style="margin-top: 24px;">
+        <h3 style="font-size: 16px; color: #FFF; margin-bottom: 12px;">🎯 Nearest Striking Distance Queries (Where You Rank #2 to #4):</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px;">
+          <div style="background: var(--bg-base); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border-green);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: #FFF;">baby shower fruit packing basket</strong>
+              <span class="badge badge-top5">RANK #2</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+              Top #1 Competitor: <code>B0CP8CNZYZ</code> (₹198) • Your CPC: ₹3.31 • <strong>14.34x ROAS</strong>
+            </div>
+            <div style="font-size: 11px; color: #34D399; margin-top: 4px;">
+              Action: Target exact keyword at ₹3.50 bid to flip to #1 position!
+            </div>
+          </div>
+
+          <div style="background: var(--bg-base); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border-green);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: #FFF;">ghat nariyal packing basket</strong>
+              <span class="badge badge-top5">RANK #2</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+              Top #1 Competitor: <code>B0G6LTCVJ1</code> (₹198) • Your CPC: ₹3.46 • <strong>123.32x ROAS</strong>
+            </div>
+            <div style="font-size: 11px; color: #34D399; margin-top: 4px;">
+              Action: High-intent cultural query. Elevate Top-of-Search placement.
+            </div>
+          </div>
+
+          <div style="background: var(--bg-base); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border-green);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: #FFF;">basket for gifts hamper</strong>
+              <span class="badge badge-top5">RANK #3</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+              Top #1 Competitor: <code>B0DQTPNB8Z</code> • Your CPC: ₹5.43 • <strong>113.48x ROAS</strong>
+            </div>
+            <div style="font-size: 11px; color: #34D399; margin-top: 4px;">
+              Action: Aggressive conversion power. Defend top placement.
+            </div>
+          </div>
+
+          <div style="background: var(--bg-base); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border-green);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: #FFF;">room hamper basket for wedding</strong>
+              <span class="badge badge-top5">RANK #4</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
+              Top #1 Competitor: <code>B0BGQ9RW1T</code> (₹269) • Your CPC: ₹3.28 • <strong>10.85x ROAS (6 Orders)</strong>
+            </div>
+            <div style="font-size: 11px; color: #34D399; margin-top: 4px;">
+              Action: Premium wedding bulk buyer magnet. Increase daily budget.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: TARGETING KEYWORDS TABLE -->
+    <div id="view-targets" class="tab-view" style="display: none;">
+      <div class="table-container">
+        <table id="targetsTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('targetingValue')">Targeting Keyword</th>
+              <th onclick="sortTable('matchType')">Match Type</th>
+              <th onclick="sortTable('bid')">Set Bid (₹)</th>
+              <th onclick="sortTable('cpc')">Avg CPC (₹)</th>
+              <th onclick="sortTable('bidCpcSpread')">Bid vs CPC Gap</th>
+              <th onclick="sortTable('orders')">Orders (Vol)</th>
+              <th onclick="sortTable('sales')">Sales (₹)</th>
+              <th onclick="sortTable('clicks')">Clicks</th>
+              <th onclick="sortTable('impressions')">Impressions</th>
+              <th onclick="sortTable('volumeTier')">Volume Tier</th>
+              <th onclick="sortTable('ctr')">CTR</th>
+              <th onclick="sortTable('cvr')">CVR</th>
+              <th onclick="sortTable('spend')">Spend (₹)</th>
+              <th onclick="sortTable('acos')">ACoS</th>
+              <th onclick="sortTable('roas')">ROAS</th>
+              <th onclick="sortTable('campaignName')">Campaign &amp; Ad Group</th>
+            </tr>
+          </thead>
+          <tbody id="targetsTbody">
+            <!-- Dynamically Rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW 4: CUSTOMER SEARCH TERMS TABLE -->
+    <div id="view-searchterms" class="tab-view" style="display: none;">
+      <div class="table-container">
+        <table id="searchTermsTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('searchTerm')">Customer Search Term</th>
+              <th onclick="sortTable('matchedTarget')">Triggering Target</th>
+              <th onclick="sortTable('targetMatchType')">Target Match</th>
+              <th onclick="sortTable('targetBid')">Target Bid (₹)</th>
+              <th onclick="sortTable('cpc')">Realized CPC (₹)</th>
+              <th onclick="sortTable('bidCpcSpread')">Bid Spread</th>
+              <th onclick="sortTable('orders')">Orders (Vol)</th>
+              <th onclick="sortTable('sales')">Sales (₹)</th>
+              <th onclick="sortTable('clicks')">Clicks</th>
+              <th onclick="sortTable('impressions')">Impressions</th>
+              <th onclick="sortTable('volumeTier')">Volume Tier</th>
+              <th onclick="sortTable('ctr')">CTR</th>
+              <th onclick="sortTable('cvr')">CVR</th>
+              <th onclick="sortTable('spend')">Spend (₹)</th>
+              <th onclick="sortTable('acos')">ACoS</th>
+              <th onclick="sortTable('roas')">ROAS</th>
+              <th onclick="sortTable('campaignName')">Campaign Name</th>
+            </tr>
+          </thead>
+          <tbody id="searchTermsTbody">
+            <!-- Dynamically Rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW 5: STRATEGIC MATRIX -->
+    <div id="view-matrix" class="tab-view" style="display: none;">
+      <div class="controls-panel">
+        <h2 style="font-size: 18px; margin-bottom: 14px; color: var(--gold-light);">📊 Strategic Matrix: Competitor Conquest &amp; Scaling Action Plan</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px;">
+          <div style="background: var(--bg-base); padding: 18px; border-radius: 10px; border: 1px solid var(--border-accent);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <h3 style="color: #FBBF24; font-size: 15px;">👑 High Volume Striking Distance</h3>
+              <span class="badge badge-top5">RANKS #2 - #5</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+              Queries like <code>baskets for gift packing</code> (21 orders, Rank #4/9), <code>gift packing box for hamper</code> (5 orders, Rank #5), and <code>baby shower fruit packing basket</code> (Rank #2).<br><br>
+              <strong>Directive:</strong> Boost Top-of-Search placement modifier by +15% in <em>sp-basket-exact-sept</em> to jump from #4 directly into the #1 slot above <code>B0DMJKYVTF</code>.
+            </p>
+          </div>
+
+          <div style="background: var(--bg-base); padding: 18px; border-radius: 10px; border: 1px solid var(--border-green);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <h3 style="color: #34D399; font-size: 15px;">💎 Ultra-High ROAS Sniper Queries</h3>
+              <span class="badge badge-rank1">CONVERTED AT 200x - 3000x</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+              Queries like <code>gift basket set of 10</code> (3,132x ROAS), <code>wedding return gift basket</code> (228x ROAS), and <code>teej inspired gifting baskets square</code> (641x ROAS).<br><br>
+              <strong>Directive:</strong> Harvest into isolated Exact match with a dedicated ₹3.20 bid. Your organic rank is currently #5 to #10; targeted exact ads will claim position #1 instantly.
+            </p>
+          </div>
+
+          <div style="background: var(--bg-base); padding: 18px; border-radius: 10px; border: 1px solid var(--border-blue);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <h3 style="color: #38BDF8; font-size: 15px;">🛡️ Competitor Conquest Strategy</h3>
+              <span class="badge badge-top10">COMPETITOR ASIN PAT</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+              The top competitor dominating over 40 gift basket queries is <code>B0BGQ9RW1T</code> (Satyam Kraft @ ₹269), followed by <code>B0HBCVSRTM</code> for fruit baskets.<br><br>
+              <strong>Directive:</strong> Target ASIN <code>B0BGQ9RW1T</code> and <code>B0HBCVSRTM</code> in your Product Attribute Targeting (PAT) campaign at ₹2.40 bid to show your premium basket set directly on their product pages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast">Copied to clipboard!</div>
+
+  <script>
+    // DATA INGESTION
+    const targetsData = [{"targetingValue":"fruit basket for gift","matchType":"EXACT","bid":3.69,"isDefaultBid":false,"cpc":3.42,"bidCpcSpread":-7.3,"orders":41,"sales":25099.68,"clicks":1085,"impressions":73841,"spend":3708.75,"acos":14.78,"roas":6.77,"ctr":1.47,"cvr":3.78,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Mega Volume","state":"PAUSED"},{"targetingValue":"gift hamper","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.95,"bidCpcSpread":-2.5,"orders":40,"sales":25661.3,"clicks":2596,"impressions":150345,"spend":5050.25,"acos":19.68,"roas":5.08,"ctr":1.73,"cvr":1.54,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"gifting basket","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.9,"bidCpcSpread":-5,"orders":31,"sales":24287.95,"clicks":1133,"impressions":77759,"spend":2150.28,"acos":8.85,"roas":11.3,"ctr":1.46,"cvr":2.74,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"basket for wedding","matchType":"BROAD","bid":3,"isDefaultBid":true,"cpc":2.71,"bidCpcSpread":-9.7,"orders":29,"sales":18090.47,"clicks":1126,"impressions":80752,"spend":3048.24,"acos":16.85,"roas":5.93,"ctr":1.39,"cvr":2.58,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"gift packing basket","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.99,"bidCpcSpread":-0.5,"orders":24,"sales":9787.64,"clicks":767,"impressions":36137,"spend":1526.93,"acos":15.6,"roas":6.41,"ctr":2.12,"cvr":3.13,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"baskets for gift packing","matchType":"EXACT","bid":3.76,"isDefaultBid":false,"cpc":3.66,"bidCpcSpread":-2.7,"orders":22,"sales":9796.18,"clicks":452,"impressions":40048,"spend":1653.16,"acos":16.88,"roas":5.93,"ctr":1.13,"cvr":4.87,"campaignName":"sp-basket-exact-sept","adGroupName":"exact from ai","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"hamper basket","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":2.09,"bidCpcSpread":4.5,"orders":20,"sales":9822.24,"clicks":724,"impressions":37898,"spend":1516.23,"acos":15.44,"roas":6.48,"ctr":1.91,"cvr":2.76,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"fruit basket for wedding","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":3.09,"bidCpcSpread":3,"orders":10,"sales":4424.77,"clicks":189,"impressions":11949,"spend":583.49,"acos":13.19,"roas":7.58,"ctr":1.58,"cvr":5.29,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"fruit basket with net cover","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.98,"bidCpcSpread":-1,"orders":7,"sales":4957.22,"clicks":76,"impressions":5032,"spend":150.68,"acos":3.04,"roas":32.9,"ctr":1.51,"cvr":9.21,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"High Volume","state":"ENABLED"},{"targetingValue":"room hamper basket","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":3.47,"bidCpcSpread":15.7,"orders":6,"sales":2921.91,"clicks":65,"impressions":7942,"spend":225.68,"acos":7.72,"roas":12.95,"ctr":0.82,"cvr":9.23,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume","state":"ENABLED"},{"targetingValue":"fruit basket for wedding","matchType":"EXACT","bid":3.2,"isDefaultBid":false,"cpc":2.83,"bidCpcSpread":-11.6,"orders":5,"sales":2235.24,"clicks":71,"impressions":6109,"spend":201.16,"acos":9,"roas":11.11,"ctr":1.16,"cvr":7.04,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"High Volume","state":"ENABLED"},{"targetingValue":"fancy basket for gifting","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":4.12,"bidCpcSpread":37.3,"orders":4,"sales":3396.2,"clicks":75,"impressions":6148,"spend":309.21,"acos":9.1,"roas":10.98,"ctr":1.22,"cvr":5.33,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume","state":"ENABLED"},{"targetingValue":"hamper basket for gifting","matchType":"PHRASE","bid":1.5,"isDefaultBid":false,"cpc":1.9,"bidCpcSpread":26.7,"orders":2,"sales":1314.93,"clicks":16,"impressions":954,"spend":30.39,"acos":2.31,"roas":43.27,"ctr":1.68,"cvr":12.5,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler","state":"ENABLED"},{"targetingValue":"engagement basket","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.89,"bidCpcSpread":-5.5,"orders":1,"sales":692.38,"clicks":67,"impressions":4144,"spend":126.32,"acos":18.24,"roas":5.48,"ctr":1.62,"cvr":1.49,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche","state":"ENABLED"},{"targetingValue":"fruit basket for gift","matchType":"EXACT","bid":2.75,"isDefaultBid":false,"cpc":2.52,"bidCpcSpread":-8.4,"orders":1,"sales":692.38,"clicks":47,"impressions":2767,"spend":118.22,"acos":17.07,"roas":5.86,"ctr":1.7,"cvr":2.13,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"Sniper / Niche","state":"ENABLED"},{"targetingValue":"fancy baskets for gifts","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":4.16,"bidCpcSpread":38.7,"orders":1,"sales":427.62,"clicks":15,"impressions":285,"spend":62.37,"acos":14.59,"roas":6.86,"ctr":5.26,"cvr":6.67,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche","state":"ENABLED"},{"targetingValue":"hamper basket for gifting","matchType":"EXACT","bid":3.2,"isDefaultBid":false,"cpc":3.21,"bidCpcSpread":0.3,"orders":1,"sales":427.62,"clicks":21,"impressions":1940,"spend":67.44,"acos":15.77,"roas":6.34,"ctr":1.08,"cvr":4.76,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"Sniper / Niche","state":"ENABLED"},{"targetingValue":"gift packing basket","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":3.14,"bidCpcSpread":4.7,"orders":1,"sales":426.67,"clicks":22,"impressions":1740,"spend":69.1,"acos":16.2,"roas":6.17,"ctr":1.26,"cvr":4.55,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche","state":"ENABLED"}];
+    const searchTermsData = [{"searchTerm":"fruit basket for gift","matchedTarget":"fruit basket for gift","targetMatchType":"EXACT","targetBid":3.69,"cpc":3.33,"bidCpcSpread":-9.8,"orders":37,"sales":23631.09,"clicks":976,"impressions":66269,"spend":3254.38,"acos":13.77,"roas":7.26,"ctr":1.47,"cvr":3.79,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Mega Volume"},{"searchTerm":"baskets for gift packing","matchedTarget":"baskets for gift packing","targetMatchType":"EXACT","targetBid":3.76,"cpc":3.66,"bidCpcSpread":-2.7,"orders":21,"sales":9368.56,"clicks":443,"impressions":39471,"spend":1619.93,"acos":17.29,"roas":5.78,"ctr":1.12,"cvr":4.74,"campaignName":"sp-basket-exact-sept","adGroupName":"exact from ai","volumeTier":"Mega Volume"},{"searchTerm":"fruit basket for wedding","matchedTarget":"fruit basket for wedding","targetMatchType":"PHRASE","targetBid":3,"cpc":3.11,"bidCpcSpread":3.7,"orders":8,"sales":3997.15,"clicks":132,"impressions":9477,"spend":410.71,"acos":10.28,"roas":9.73,"ctr":1.39,"cvr":6.06,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume"},{"searchTerm":"fruits packing basket","matchedTarget":"packing basket","targetMatchType":"PHRASE","targetBid":3,"cpc":3.35,"bidCpcSpread":11.7,"orders":7,"sales":3177.15,"clicks":110,"impressions":7113,"spend":368.92,"acos":11.61,"roas":8.61,"ctr":1.55,"cvr":6.36,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume"},{"searchTerm":"fruit basket for wedding","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.59,"bidCpcSpread":-13.7,"orders":6,"sales":3070.48,"clicks":165,"impressions":15502,"spend":427.69,"acos":13.93,"roas":7.18,"ctr":1.06,"cvr":3.64,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"High Volume"},{"searchTerm":"room hamper basket for wedding","matchedTarget":"room hamper basket","targetMatchType":"PHRASE","targetBid":3,"cpc":3.46,"bidCpcSpread":15.3,"orders":6,"sales":2921.91,"clicks":61,"impressions":7394,"spend":211.13,"acos":7.23,"roas":13.84,"ctr":0.82,"cvr":9.84,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume"},{"searchTerm":"gift packing box for hamper","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.02,"bidCpcSpread":1,"orders":5,"sales":8748.56,"clicks":168,"impressions":9257,"spend":340.16,"acos":3.89,"roas":25.72,"ctr":1.81,"cvr":2.98,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"High Volume"},{"searchTerm":"gift basket hamper empty","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.11,"bidCpcSpread":5.5,"orders":5,"sales":2686.36,"clicks":38,"impressions":977,"spend":80.01,"acos":2.98,"roas":33.58,"ctr":3.89,"cvr":13.16,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"High Volume"},{"searchTerm":"engagement baskets for gift packing","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.84,"bidCpcSpread":-8,"orders":5,"sales":2457.14,"clicks":30,"impressions":786,"spend":55.25,"acos":2.25,"roas":44.47,"ctr":3.82,"cvr":16.67,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"High Volume"},{"searchTerm":"fruit basket for wedding","matchedTarget":"fruit basket for wedding","targetMatchType":"EXACT","targetBid":3.2,"cpc":2.83,"bidCpcSpread":-11.6,"orders":5,"sales":2235.24,"clicks":71,"impressions":5790,"spend":201.16,"acos":9,"roas":11.11,"ctr":1.23,"cvr":7.04,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"High Volume"},{"searchTerm":"fancy basket for gifting","matchedTarget":"fancy basket for gifting","targetMatchType":"PHRASE","targetBid":3,"cpc":4.09,"bidCpcSpread":36.3,"orders":4,"sales":3396.2,"clicks":61,"impressions":4095,"spend":249.46,"acos":7.35,"roas":13.61,"ctr":1.49,"cvr":6.56,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume"},{"searchTerm":"fruit basket gift","matchedTarget":"fruit basket for gift","targetMatchType":"EXACT","targetBid":3.69,"cpc":3.66,"bidCpcSpread":-0.8,"orders":4,"sales":1468.59,"clicks":66,"impressions":4349,"spend":241.51,"acos":16.45,"roas":6.08,"ctr":1.52,"cvr":6.06,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume"},{"searchTerm":"decorative basket for gift packing","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.93,"bidCpcSpread":-3.5,"orders":3,"sales":2510.47,"clicks":33,"impressions":1106,"spend":63.79,"acos":2.54,"roas":39.36,"ctr":2.98,"cvr":9.09,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"fruit basket for wedding","matchedTarget":"fruit basket with net cover","targetMatchType":"BROAD","targetBid":2,"cpc":1.8,"bidCpcSpread":-10,"orders":3,"sales":2358.18,"clicks":27,"impressions":1603,"spend":48.57,"acos":2.06,"roas":48.55,"ctr":1.68,"cvr":11.11,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"fruit gift basket with net cover","matchedTarget":"fruit basket with net cover","targetMatchType":"BROAD","targetBid":2,"cpc":1.94,"bidCpcSpread":-3,"orders":3,"sales":2077.14,"clicks":15,"impressions":1403,"spend":29.09,"acos":1.4,"roas":71.4,"ctr":1.07,"cvr":20,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"decorative basket for gift packing","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":2.36,"bidCpcSpread":18,"orders":3,"sales":1706.68,"clicks":113,"impressions":5196,"spend":266.36,"acos":15.61,"roas":6.41,"ctr":2.17,"cvr":2.65,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler"},{"searchTerm":"decorative gift packing baskets","matchedTarget":"packing basket","targetMatchType":"PHRASE","targetBid":3,"cpc":3.54,"bidCpcSpread":18,"orders":3,"sales":1571.42,"clicks":38,"impressions":1960,"spend":134.33,"acos":8.55,"roas":11.7,"ctr":1.94,"cvr":7.89,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler"},{"searchTerm":"small basket for wedding gifts","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.72,"bidCpcSpread":-9.3,"orders":3,"sales":1563.81,"clicks":11,"impressions":218,"spend":29.97,"acos":1.92,"roas":52.18,"ctr":5.05,"cvr":27.27,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"gift hamper box empty","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.08,"bidCpcSpread":4,"orders":3,"sales":1429.52,"clicks":115,"impressions":4802,"spend":239.48,"acos":16.75,"roas":5.97,"ctr":2.39,"cvr":2.61,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"gifting basket","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.64,"bidCpcSpread":-12,"orders":3,"sales":1376.19,"clicks":59,"impressions":3818,"spend":155.94,"acos":11.33,"roas":8.83,"ctr":1.55,"cvr":5.08,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"fruit packing basket","matchedTarget":"packing basket","targetMatchType":"PHRASE","targetBid":3,"cpc":4.19,"bidCpcSpread":39.7,"orders":3,"sales":1120,"clicks":14,"impressions":148,"spend":58.62,"acos":5.23,"roas":19.11,"ctr":9.46,"cvr":21.43,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler"},{"searchTerm":"gift basket hamper empty","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.64,"bidCpcSpread":-18,"orders":3,"sales":939.05,"clicks":79,"impressions":4410,"spend":129.91,"acos":13.83,"roas":7.23,"ctr":1.79,"cvr":3.8,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"ganpati gift hamper","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":1.99,"bidCpcSpread":-0.5,"orders":3,"sales":427.62,"clicks":1,"impressions":1,"spend":1.99,"acos":0.47,"roas":214.88,"ctr":100,"cvr":300,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"gift basket set of 10","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.3,"bidCpcSpread":15,"orders":2,"sales":7204.77,"clicks":1,"impressions":4,"spend":2.3,"acos":0.03,"roas":3132.51,"ctr":25,"cvr":200,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"hamper basket for gifting","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":2.4,"bidCpcSpread":20,"orders":2,"sales":2992.39,"clicks":74,"impressions":3578,"spend":177.49,"acos":5.93,"roas":16.86,"ctr":2.07,"cvr":2.7,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler"},{"searchTerm":"gift baskets","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.37,"bidCpcSpread":18.5,"orders":2,"sales":1884.76,"clicks":13,"impressions":170,"spend":30.8,"acos":1.63,"roas":61.19,"ctr":7.65,"cvr":15.38,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"gifting basket","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.14,"bidCpcSpread":7,"orders":2,"sales":1469.52,"clicks":23,"impressions":817,"spend":49.33,"acos":3.36,"roas":29.79,"ctr":2.82,"cvr":8.7,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"basket for gifting","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":3.03,"bidCpcSpread":1,"orders":2,"sales":1374.28,"clicks":3,"impressions":17,"spend":9.09,"acos":0.66,"roas":151.19,"ctr":17.65,"cvr":66.67,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"teej inspired gifting baskets square","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":2,"sales":1282.86,"clicks":1,"impressions":1,"spend":2,"acos":0.16,"roas":641.43,"ctr":100,"cvr":200,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"fancy baskets for hampers","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":3.97,"bidCpcSpread":98.5,"orders":2,"sales":1232.38,"clicks":1,"impressions":2,"spend":3.97,"acos":0.32,"roas":310.42,"ctr":50,"cvr":200,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler"},{"searchTerm":"gift basket with ned","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":2,"sales":1119.05,"clicks":1,"impressions":3,"spend":2,"acos":0.18,"roas":559.52,"ctr":33.33,"cvr":200,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"gift hamper boxes for packaging","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.31,"bidCpcSpread":15.5,"orders":2,"sales":1118.09,"clicks":6,"impressions":19,"spend":13.89,"acos":1.24,"roas":80.5,"ctr":31.58,"cvr":33.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"gift basket","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.99,"bidCpcSpread":-0.5,"orders":2,"sales":923.81,"clicks":86,"impressions":3379,"spend":171.09,"acos":18.52,"roas":5.4,"ctr":2.55,"cvr":2.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"fruits packing baskets for function","matchedTarget":"packing basket","targetMatchType":"PHRASE","targetBid":3,"cpc":3.12,"bidCpcSpread":4,"orders":2,"sales":854.29,"clicks":4,"impressions":30,"spend":12.48,"acos":1.46,"roas":68.45,"ctr":13.33,"cvr":50,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler"},{"searchTerm":"gift box","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.37,"bidCpcSpread":18.5,"orders":2,"sales":783.81,"clicks":47,"impressions":1661,"spend":111.18,"acos":14.18,"roas":7.05,"ctr":2.83,"cvr":4.26,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"decorative basket for gift packing","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.96,"bidCpcSpread":-2,"orders":2,"sales":767.62,"clicks":46,"impressions":1596,"spend":90.34,"acos":11.77,"roas":8.5,"ctr":2.88,"cvr":4.35,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"empty basket for fruits gift packing","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.88,"bidCpcSpread":-6,"orders":2,"sales":692.38,"clicks":9,"impressions":129,"spend":16.93,"acos":2.45,"roas":40.9,"ctr":6.98,"cvr":22.22,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"gift packing baskets pack of 3","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.66,"bidCpcSpread":-17,"orders":2,"sales":689.52,"clicks":5,"impressions":50,"spend":8.3,"acos":1.2,"roas":83.07,"ctr":10,"cvr":40,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"basket for gifts hamper","matchedTarget":"basket for gifting","targetMatchType":"PHRASE","targetBid":3,"cpc":5.43,"bidCpcSpread":81,"orders":2,"sales":616.19,"clicks":1,"impressions":6,"spend":5.43,"acos":0.88,"roas":113.48,"ctr":16.67,"cvr":200,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler"},{"searchTerm":"gifting baskets","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":2.78,"bidCpcSpread":39,"orders":2,"sales":435.24,"clicks":6,"impressions":24,"spend":16.69,"acos":3.83,"roas":26.08,"ctr":25,"cvr":33.33,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler"},{"searchTerm":"gift hamper baskets near me","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.24,"bidCpcSpread":12,"orders":2,"sales":434.28,"clicks":1,"impressions":1,"spend":2.24,"acos":0.52,"roas":193.87,"ctr":100,"cvr":200,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"gift baskets for gifting","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.22,"bidCpcSpread":11,"orders":2,"sales":377.14,"clicks":18,"impressions":228,"spend":40.01,"acos":10.61,"roas":9.43,"ctr":7.89,"cvr":11.11,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Steady Scaler"},{"searchTerm":"wedding return gift basket","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":3.04,"bidCpcSpread":1.3,"orders":1,"sales":4154.28,"clicks":4,"impressions":14,"spend":12.17,"acos":0.29,"roas":341.35,"ctr":28.57,"cvr":25,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gifting, empty decorative gift basket hamper, gift packing basket for wedding return gifts, dry fruits & festive gifting (golden design)","matchedTarget":"packing basket","targetMatchType":"PHRASE","targetBid":3,"cpc":4.51,"bidCpcSpread":50.3,"orders":1,"sales":2565.72,"clicks":1,"impressions":1,"spend":4.51,"acos":0.18,"roas":568.9,"ctr":100,"cvr":100,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"haba fruit basket for return gift","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.89,"bidCpcSpread":-5.5,"orders":1,"sales":1384.76,"clicks":1,"impressions":1,"spend":1.89,"acos":0.14,"roas":732.68,"ctr":100,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift hamper basket","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.02,"bidCpcSpread":1,"orders":1,"sales":1280.01,"clicks":44,"impressions":1933,"spend":89.08,"acos":6.96,"roas":14.37,"ctr":2.28,"cvr":2.27,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"hamper basket","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":3.61,"bidCpcSpread":80.5,"orders":1,"sales":1280.01,"clicks":24,"impressions":347,"spend":86.54,"acos":6.76,"roas":14.79,"ctr":6.92,"cvr":4.17,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"decorative fruit basket for gift packing","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.7,"bidCpcSpread":35,"orders":1,"sales":1045.72,"clicks":1,"impressions":3,"spend":2.7,"acos":0.26,"roas":387.3,"ctr":33.33,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"room hampers for wedding","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.88,"bidCpcSpread":-4,"orders":1,"sales":1041.9,"clicks":10,"impressions":41,"spend":28.81,"acos":2.77,"roas":36.16,"ctr":24.39,"cvr":10,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift hamper net cloth for packing","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.34,"bidCpcSpread":17,"orders":1,"sales":1000,"clicks":8,"impressions":56,"spend":18.74,"acos":1.87,"roas":53.36,"ctr":14.29,"cvr":12.5,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift hamper basket for gifting","matchedTarget":"hamper basket for gifting","targetMatchType":"PHRASE","targetBid":1.5,"cpc":1.91,"bidCpcSpread":27.3,"orders":1,"sales":855.24,"clicks":8,"impressions":448,"spend":15.3,"acos":1.79,"roas":55.9,"ctr":1.79,"cvr":12.5,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"return gift hampers for wedding","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":1.77,"bidCpcSpread":-11.5,"orders":1,"sales":855.24,"clicks":1,"impressions":3,"spend":1.77,"acos":0.21,"roas":483.19,"ctr":33.33,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"dry fruits basket","matchedTarget":"dry fruit basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.86,"bidCpcSpread":-7,"orders":1,"sales":853.34,"clicks":33,"impressions":4975,"spend":61.42,"acos":7.2,"roas":13.89,"ctr":0.66,"cvr":3.03,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"fruit basket for gift","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.54,"bidCpcSpread":-23,"orders":1,"sales":853.34,"clicks":86,"impressions":9598,"spend":132.05,"acos":15.47,"roas":6.46,"ctr":0.9,"cvr":1.16,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"hamper basket pack","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":2.6,"bidCpcSpread":30,"orders":1,"sales":853.34,"clicks":11,"impressions":137,"spend":28.6,"acos":3.35,"roas":29.84,"ctr":8.03,"cvr":9.09,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"return gifts baskets","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":1,"sales":853.34,"clicks":1,"impressions":2,"spend":2,"acos":0.23,"roas":426.67,"ctr":50,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"empty gift basket hamper","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.92,"bidCpcSpread":-4,"orders":1,"sales":692.38,"clicks":5,"impressions":68,"spend":9.59,"acos":1.39,"roas":72.2,"ctr":7.35,"cvr":20,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"fruit basket for gift","matchedTarget":"fruit basket for gift","targetMatchType":"EXACT","targetBid":2.75,"cpc":2.47,"bidCpcSpread":-10.2,"orders":1,"sales":692.38,"clicks":41,"impressions":2505,"spend":101.19,"acos":14.61,"roas":6.84,"ctr":1.64,"cvr":2.44,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"Sniper / Niche"},{"searchTerm":"fruit packing baskets for engagement","matchedTarget":"engagement basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.93,"bidCpcSpread":-3.5,"orders":1,"sales":692.38,"clicks":12,"impressions":290,"spend":23.19,"acos":3.35,"roas":29.86,"ctr":4.14,"cvr":8.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift basket with net medium","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.25,"bidCpcSpread":12.5,"orders":1,"sales":692.38,"clicks":1,"impressions":8,"spend":2.25,"acos":0.32,"roas":307.72,"ctr":12.5,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift baskets for gifting","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.01,"bidCpcSpread":0.5,"orders":1,"sales":692.38,"clicks":18,"impressions":614,"spend":36.21,"acos":5.23,"roas":19.12,"ctr":2.93,"cvr":5.56,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift hamper basket empty in large size","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.96,"bidCpcSpread":-2,"orders":1,"sales":692.38,"clicks":1,"impressions":3,"spend":1.96,"acos":0.28,"roas":353.26,"ctr":33.33,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift keeping basket","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.4,"bidCpcSpread":20,"orders":1,"sales":692.38,"clicks":1,"impressions":4,"spend":2.4,"acos":0.35,"roas":288.49,"ctr":25,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift trays for hampers","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":1,"sales":692.38,"clicks":1,"impressions":4,"spend":2,"acos":0.29,"roas":346.19,"ctr":25,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"hamper basket for gifting","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.98,"bidCpcSpread":-1,"orders":1,"sales":692.38,"clicks":44,"impressions":2020,"spend":87.32,"acos":12.61,"roas":7.93,"ctr":2.18,"cvr":2.27,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"hamper basket with attached net","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.8,"bidCpcSpread":-10,"orders":1,"sales":692.38,"clicks":1,"impressions":2,"spend":1.8,"acos":0.26,"roas":384.66,"ctr":50,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"wedding fruit gift packing basket big size","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":3,"bidCpcSpread":0,"orders":1,"sales":692.38,"clicks":1,"impressions":1,"spend":3,"acos":0.43,"roas":230.79,"ctr":100,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"basket for gift hamper","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.2,"bidCpcSpread":10,"orders":1,"sales":522.86,"clicks":25,"impressions":601,"spend":54.89,"acos":10.5,"roas":9.53,"ctr":4.16,"cvr":4,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"ready to use basket for hampers","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.3,"bidCpcSpread":15,"orders":1,"sales":522.86,"clicks":1,"impressions":1,"spend":2.3,"acos":0.44,"roas":227.33,"ctr":100,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"fruits baskets with net cover gift","matchedTarget":"fruit basket with net cover","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":1,"sales":521.9,"clicks":2,"impressions":6,"spend":4,"acos":0.77,"roas":130.47,"ctr":33.33,"cvr":50,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"sweet box for gift","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.37,"bidCpcSpread":18.5,"orders":1,"sales":521.9,"clicks":3,"impressions":13,"spend":7.1,"acos":1.36,"roas":73.51,"ctr":23.08,"cvr":33.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"basket for wedding gift hamper","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.4,"bidCpcSpread":-20,"orders":1,"sales":520.95,"clicks":24,"impressions":1799,"spend":57.49,"acos":11.04,"roas":9.06,"ctr":1.33,"cvr":4.17,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"hampers box for gifting for baking items","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":1,"sales":520.95,"clicks":1,"impressions":1,"spend":2,"acos":0.38,"roas":260.48,"ctr":100,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"small basket for gift hamper","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.03,"bidCpcSpread":1.5,"orders":1,"sales":520.95,"clicks":20,"impressions":470,"spend":40.67,"acos":7.81,"roas":12.81,"ctr":4.26,"cvr":5,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"basket fo gift","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.4,"bidCpcSpread":20,"orders":1,"sales":500,"clicks":1,"impressions":1,"spend":2.4,"acos":0.48,"roas":208.33,"ctr":100,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"big fruit basket for wedding","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.84,"bidCpcSpread":-5.3,"orders":1,"sales":500,"clicks":4,"impressions":51,"spend":11.35,"acos":2.27,"roas":44.05,"ctr":7.84,"cvr":25,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"decorative basket for gift packing","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.7,"bidCpcSpread":-10,"orders":1,"sales":500,"clicks":25,"impressions":614,"spend":67.59,"acos":13.52,"roas":7.4,"ctr":4.07,"cvr":4,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"decorative hamper basket","matchedTarget":"hamper basket","targetMatchType":"PHRASE","targetBid":3,"cpc":4.43,"bidCpcSpread":47.7,"orders":1,"sales":500,"clicks":4,"impressions":289,"spend":17.73,"acos":3.55,"roas":28.2,"ctr":1.38,"cvr":25,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"engagement gift hamper","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":1,"sales":500,"clicks":1,"impressions":1,"spend":2,"acos":0.4,"roas":250,"ctr":100,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"boxes for gifts","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.23,"bidCpcSpread":11.5,"orders":1,"sales":459.69,"clicks":2,"impressions":6,"spend":4.45,"acos":0.97,"roas":103.3,"ctr":33.33,"cvr":50,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"decorative basket for hampers","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.7,"bidCpcSpread":35,"orders":1,"sales":459.69,"clicks":1,"impressions":1,"spend":2.7,"acos":0.59,"roas":170.26,"ctr":100,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"empty gift hamper","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":1.71,"bidCpcSpread":-14.5,"orders":1,"sales":459.69,"clicks":4,"impressions":60,"spend":6.83,"acos":1.49,"roas":67.3,"ctr":6.67,"cvr":25,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift basket wholesale","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.87,"bidCpcSpread":-6.5,"orders":1,"sales":459.69,"clicks":1,"impressions":3,"spend":1.87,"acos":0.41,"roas":245.82,"ctr":33.33,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"hamper basket for gifting","matchedTarget":"hamper basket for gifting","targetMatchType":"PHRASE","targetBid":1.5,"cpc":1.87,"bidCpcSpread":24.7,"orders":1,"sales":459.69,"clicks":7,"impressions":159,"spend":13.11,"acos":2.85,"roas":35.06,"ctr":4.4,"cvr":14.29,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"tray for gift hamper","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":1.83,"bidCpcSpread":-8.5,"orders":1,"sales":459.69,"clicks":12,"impressions":345,"spend":21.99,"acos":4.78,"roas":20.9,"ctr":3.48,"cvr":8.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"cane baskets for gift packing","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.24,"bidCpcSpread":12,"orders":1,"sales":427.62,"clicks":18,"impressions":296,"spend":40.3,"acos":9.42,"roas":10.61,"ctr":6.08,"cvr":5.56,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"dry fruits basket for wedding","matchedTarget":"fruit basket for wedding","targetMatchType":"PHRASE","targetBid":3,"cpc":3.14,"bidCpcSpread":4.7,"orders":1,"sales":427.62,"clicks":7,"impressions":62,"spend":22.01,"acos":5.15,"roas":19.43,"ctr":11.29,"cvr":14.29,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"fancy basket for gifting","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.86,"bidCpcSpread":-7,"orders":1,"sales":427.62,"clicks":23,"impressions":872,"spend":42.82,"acos":10.01,"roas":9.99,"ctr":2.64,"cvr":4.35,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"fancy baskets for gifts","matchedTarget":"fancy baskets for gifts","targetMatchType":"PHRASE","targetBid":3,"cpc":3.95,"bidCpcSpread":31.7,"orders":1,"sales":427.62,"clicks":12,"impressions":55,"spend":47.43,"acos":11.09,"roas":9.02,"ctr":21.82,"cvr":8.33,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"foldable hamper box","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.98,"bidCpcSpread":-1,"orders":1,"sales":427.62,"clicks":4,"impressions":36,"spend":7.94,"acos":1.86,"roas":53.86,"ctr":11.11,"cvr":25,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift baskets","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":1.98,"bidCpcSpread":-1,"orders":1,"sales":427.62,"clicks":12,"impressions":418,"spend":23.74,"acos":5.55,"roas":18.01,"ctr":2.87,"cvr":8.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift hamper box medium size","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.33,"bidCpcSpread":16.5,"orders":1,"sales":427.62,"clicks":3,"impressions":14,"spend":7,"acos":1.64,"roas":61.09,"ctr":21.43,"cvr":33.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift paking basket","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":4.01,"bidCpcSpread":100.5,"orders":1,"sales":427.62,"clicks":3,"impressions":9,"spend":12.03,"acos":2.81,"roas":35.55,"ctr":33.33,"cvr":33.33,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"hamper basket for gifting","matchedTarget":"hamper basket for gifting","targetMatchType":"EXACT","targetBid":3.2,"cpc":3.21,"bidCpcSpread":0.3,"orders":1,"sales":427.62,"clicks":21,"impressions":1580,"spend":67.44,"acos":15.77,"roas":6.34,"ctr":1.33,"cvr":4.76,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"Sniper / Niche"},{"searchTerm":"baby shower fruit packing basket","matchedTarget":"fruits packing basket","targetMatchType":"PHRASE","targetBid":3,"cpc":3.21,"bidCpcSpread":7,"orders":1,"sales":426.67,"clicks":8,"impressions":154,"spend":25.7,"acos":6.02,"roas":16.6,"ctr":5.19,"cvr":12.5,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"bamboo gift basket hamper empty","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":2.7,"bidCpcSpread":35,"orders":1,"sales":426.67,"clicks":12,"impressions":533,"spend":32.45,"acos":7.61,"roas":13.15,"ctr":2.25,"cvr":8.33,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"basket for hampers for gifting","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":3.43,"bidCpcSpread":71.5,"orders":1,"sales":426.67,"clicks":2,"impressions":13,"spend":6.85,"acos":1.61,"roas":62.29,"ctr":15.38,"cvr":50,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"dry fruits gift basket","matchedTarget":"dry fruit basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.94,"bidCpcSpread":-3,"orders":1,"sales":426.67,"clicks":25,"impressions":644,"spend":48.43,"acos":11.35,"roas":8.81,"ctr":3.88,"cvr":4,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"ghat nariyal packing basket","matchedTarget":"packing basket","targetMatchType":"PHRASE","targetBid":3,"cpc":3.46,"bidCpcSpread":15.3,"orders":1,"sales":426.67,"clicks":1,"impressions":4,"spend":3.46,"acos":0.81,"roas":123.32,"ctr":25,"cvr":100,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"gift basket empty","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":2.32,"bidCpcSpread":16,"orders":1,"sales":426.67,"clicks":8,"impressions":150,"spend":18.55,"acos":4.35,"roas":23,"ctr":5.33,"cvr":12.5,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"gift hamper basket for gifting","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.02,"bidCpcSpread":1,"orders":1,"sales":426.67,"clicks":17,"impressions":469,"spend":34.33,"acos":8.05,"roas":12.43,"ctr":3.62,"cvr":5.88,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift packing basket for baby shower","matchedTarget":"gift packing basket","targetMatchType":"PHRASE","targetBid":3,"cpc":3.18,"bidCpcSpread":6,"orders":1,"sales":426.67,"clicks":5,"impressions":35,"spend":15.89,"acos":3.72,"roas":26.85,"ctr":14.29,"cvr":20,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"round net baskets for gift","matchedTarget":"basket for gifting","targetMatchType":"PHRASE","targetBid":3,"cpc":4.64,"bidCpcSpread":54.7,"orders":1,"sales":426.67,"clicks":1,"impressions":2,"spend":4.64,"acos":1.09,"roas":91.95,"ctr":50,"cvr":100,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"small basket for gift hamper","matchedTarget":"basket for gifting","targetMatchType":"PHRASE","targetBid":3,"cpc":5.36,"bidCpcSpread":78.7,"orders":1,"sales":426.67,"clicks":4,"impressions":52,"spend":21.44,"acos":5.02,"roas":19.9,"ctr":7.69,"cvr":25,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"gift basket hamper empty small","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.02,"bidCpcSpread":-32.7,"orders":1,"sales":423.81,"clicks":1,"impressions":5,"spend":2.02,"acos":0.48,"roas":209.81,"ctr":20,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gifting basket","matchedTarget":"gift basket hamper empty","targetMatchType":"BROAD","targetBid":2,"cpc":3.48,"bidCpcSpread":74,"orders":1,"sales":423.81,"clicks":14,"impressions":129,"spend":48.7,"acos":11.49,"roas":8.7,"ctr":10.85,"cvr":7.14,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche"},{"searchTerm":"hamper for wedding baskets","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":1.75,"bidCpcSpread":-41.7,"orders":1,"sales":423.81,"clicks":1,"impressions":2,"spend":1.75,"acos":0.41,"roas":242.18,"ctr":50,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"wedding fruit basket","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.19,"bidCpcSpread":-27,"orders":1,"sales":423.81,"clicks":9,"impressions":154,"spend":19.7,"acos":4.65,"roas":21.51,"ctr":5.84,"cvr":11.11,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift packing","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.67,"bidCpcSpread":-16.5,"orders":1,"sales":378.1,"clicks":3,"impressions":12,"spend":5,"acos":1.32,"roas":75.62,"ctr":25,"cvr":33.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"basket for decoration","matchedTarget":"basket for wedding","targetMatchType":"BROAD","targetBid":3,"cpc":2.91,"bidCpcSpread":-3,"orders":1,"sales":246.67,"clicks":12,"impressions":209,"spend":34.88,"acos":14.14,"roas":7.07,"ctr":5.74,"cvr":8.33,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift hamper baskets","matchedTarget":"hamper basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.17,"bidCpcSpread":8.5,"orders":1,"sales":246.67,"clicks":5,"impressions":17,"spend":10.85,"acos":4.4,"roas":22.73,"ctr":29.41,"cvr":20,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gift hampers paking","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":1,"sales":246.67,"clicks":1,"impressions":2,"spend":2,"acos":0.81,"roas":123.33,"ctr":50,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"hamper boxes transparent for gift empty","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2.04,"bidCpcSpread":2,"orders":1,"sales":246.67,"clicks":1,"impressions":1,"spend":2.04,"acos":0.83,"roas":120.92,"ctr":100,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"gifting baskets for packaging","matchedTarget":"gifting basket","targetMatchType":"BROAD","targetBid":2,"cpc":1.91,"bidCpcSpread":-4.5,"orders":1,"sales":245.71,"clicks":14,"impressions":287,"spend":26.68,"acos":10.86,"roas":9.21,"ctr":4.88,"cvr":7.14,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"box for gift","matchedTarget":"gift packing basket","targetMatchType":"BROAD","targetBid":2,"cpc":2.55,"bidCpcSpread":27.5,"orders":1,"sales":189.52,"clicks":2,"impressions":16,"spend":5.1,"acos":2.69,"roas":37.16,"ctr":12.5,"cvr":50,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"dry fruits gift hamper box empty","matchedTarget":"gift hamper","targetMatchType":"BROAD","targetBid":2,"cpc":2,"bidCpcSpread":0,"orders":1,"sales":189.52,"clicks":1,"impressions":2,"spend":2,"acos":1.06,"roas":94.76,"ctr":50,"cvr":100,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"},{"searchTerm":"ceremony gift hamper","matchedTarget":"gifting basket for diwali and navratri","targetMatchType":"BROAD","targetBid":3,"cpc":3.35,"bidCpcSpread":11.7,"orders":1,"sales":188.57,"clicks":2,"impressions":2,"spend":6.69,"acos":3.55,"roas":28.19,"ctr":100,"cvr":50,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche"}];
+    const otherQueriesData = [{"query":"fruit basket for gift","type":"Target Keyword","matchType":"EXACT","orders":41,"sales":25099.68,"roas":6.77,"cpc":3.42,"ourRank":9,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"gift hamper","type":"Target Keyword","matchType":"BROAD","orders":40,"sales":25661.3,"roas":5.08,"cpc":1.95,"ourRank":"> 77","ourSponsoredRank":"None","topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"gifting basket","type":"Target Keyword","matchType":"BROAD","orders":31,"sales":24287.95,"roas":11.3,"cpc":1.9,"ourRank":6,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"basket for wedding","type":"Target Keyword","matchType":"BROAD","orders":29,"sales":18090.47,"roas":5.93,"cpc":2.71,"ourRank":13,"ourSponsoredRank":12,"topCompetitor":{"asin":"B0B65QY8C4","title":"","price":"₹94.","rating":"4.1 out of 5 stars.","reviews":"0"}},{"query":"gift packing basket","type":"Target Keyword","matchType":"BROAD","orders":24,"sales":9787.64,"roas":6.41,"cpc":1.99,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"baskets for gift packing","type":"Target Keyword","matchType":"EXACT","orders":22,"sales":9796.18,"roas":5.93,"cpc":3.66,"ourRank":5,"ourSponsoredRank":4,"topCompetitor":{"asin":"B0DMJKYVTF","title":"","price":"₹523.","rating":"4.5 out of 5 stars.","reviews":"0"}},{"query":"hamper basket","type":"Target Keyword","matchType":"BROAD","orders":20,"sales":9822.24,"roas":6.48,"cpc":2.09,"ourRank":16,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0DQTPNB8Z","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"fruit basket for wedding","type":"Target Keyword","matchType":"PHRASE","orders":10,"sales":4424.77,"roas":7.58,"cpc":3.09,"ourRank":8,"ourSponsoredRank":7,"topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"fruit basket with net cover","type":"Target Keyword","matchType":"BROAD","orders":7,"sales":4957.22,"roas":32.9,"cpc":1.98,"ourRank":"> 68","ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"fruits packing basket","type":"Customer Search Term","matchType":"PHRASE","orders":7,"sales":3177.15,"roas":8.61,"cpc":3.35,"ourRank":8,"ourSponsoredRank":9,"topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"room hamper basket","type":"Target Keyword","matchType":"PHRASE","orders":6,"sales":2921.91,"roas":12.95,"cpc":3.47,"ourRank":"> 82","ourSponsoredRank":"None","topCompetitor":{"asin":"B0CZKXVGLF","title":"","price":"₹844.","rating":"4.8 out of 5 stars.","reviews":"0"}},{"query":"room hamper basket for wedding","type":"Customer Search Term","matchType":"PHRASE","orders":6,"sales":2921.91,"roas":13.84,"cpc":3.46,"ourRank":4,"ourSponsoredRank":6,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift packing box for hamper","type":"Customer Search Term","matchType":"BROAD","orders":5,"sales":8748.56,"roas":25.72,"cpc":2.02,"ourRank":29,"ourSponsoredRank":25,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift basket hamper empty","type":"Customer Search Term","matchType":"BROAD","orders":5,"sales":2686.36,"roas":33.58,"cpc":2.11,"ourRank":19,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0GH1GM2PS","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"engagement baskets for gift packing","type":"Customer Search Term","matchType":"BROAD","orders":5,"sales":2457.14,"roas":44.47,"cpc":1.84,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"fancy basket for gifting","type":"Target Keyword","matchType":"PHRASE","orders":4,"sales":3396.2,"roas":10.98,"cpc":4.12,"ourRank":5,"ourSponsoredRank":5,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"fruit basket gift","type":"Customer Search Term","matchType":"EXACT","orders":4,"sales":1468.59,"roas":6.08,"cpc":3.66,"ourRank":9,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"decorative basket for gift packing","type":"Customer Search Term","matchType":"BROAD","orders":3,"sales":2510.47,"roas":39.36,"cpc":1.93,"ourRank":5,"ourSponsoredRank":6,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"fruit gift basket with net cover","type":"Customer Search Term","matchType":"BROAD","orders":3,"sales":2077.14,"roas":71.4,"cpc":1.94,"ourRank":7,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"decorative gift packing baskets","type":"Customer Search Term","matchType":"PHRASE","orders":3,"sales":1571.42,"roas":11.7,"cpc":3.54,"ourRank":5,"ourSponsoredRank":6,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"small basket for wedding gifts","type":"Customer Search Term","matchType":"BROAD","orders":3,"sales":1563.81,"roas":52.18,"cpc":2.72,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift hamper box empty","type":"Customer Search Term","matchType":"BROAD","orders":3,"sales":1429.52,"roas":5.97,"cpc":2.08,"ourRank":19,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"fruit packing basket","type":"Customer Search Term","matchType":"PHRASE","orders":3,"sales":1120,"roas":19.11,"cpc":4.19,"ourRank":8,"ourSponsoredRank":7,"topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"ganpati gift hamper","type":"Customer Search Term","matchType":"BROAD","orders":3,"sales":427.62,"roas":214.88,"cpc":1.99,"ourRank":"> 86","ourSponsoredRank":"None","topCompetitor":{"asin":"B0HFMX2L89","title":"","price":"₹249.","rating":"5 out of 5 stars.","reviews":"0"}},{"query":"gift basket set of 10","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":7204.77,"roas":3132.51,"cpc":2.3,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"hamper basket for gifting","type":"Target Keyword","matchType":"PHRASE","orders":2,"sales":2992.39,"roas":43.27,"cpc":1.9,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift baskets","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":1884.76,"roas":61.19,"cpc":2.37,"ourRank":6,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"basket for gifting","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":1374.28,"roas":151.19,"cpc":3.03,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"teej inspired gifting baskets square","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":1282.86,"roas":641.43,"cpc":2,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"fancy baskets for hampers","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":1232.38,"roas":310.42,"cpc":3.97,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift basket with ned","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":1119.05,"roas":559.52,"cpc":2,"ourRank":"> 67","ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift hamper boxes for packaging","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":1118.09,"roas":80.5,"cpc":2.31,"ourRank":"> 75","ourSponsoredRank":30,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift basket","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":923.81,"roas":5.4,"cpc":1.99,"ourRank":21,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"fruits packing baskets for function","type":"Customer Search Term","matchType":"PHRASE","orders":2,"sales":854.29,"roas":68.45,"cpc":3.12,"ourRank":8,"ourSponsoredRank":7,"topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"gift box","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":783.81,"roas":7.05,"cpc":2.37,"ourRank":"> 75","ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"empty basket for fruits gift packing","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":692.38,"roas":40.9,"cpc":1.88,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift baskets for gifting","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":692.38,"roas":9.43,"cpc":2.22,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"gift packing baskets pack of 3","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":689.52,"roas":83.07,"cpc":1.66,"ourRank":33,"ourSponsoredRank":4,"topCompetitor":{"asin":"B0DMJKYVTF","title":"","price":"₹523.","rating":"4.5 out of 5 stars.","reviews":"0"}},{"query":"basket for gifts hamper","type":"Customer Search Term","matchType":"PHRASE","orders":2,"sales":616.19,"roas":113.48,"cpc":5.43,"ourRank":3,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0DQTPNB8Z","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"gifting baskets","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":435.24,"roas":26.08,"cpc":2.78,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift hamper baskets near me","type":"Customer Search Term","matchType":"BROAD","orders":2,"sales":434.28,"roas":193.87,"cpc":2.24,"ourRank":"> 63","ourSponsoredRank":"None","topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"wedding return gift basket","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":4154.28,"roas":341.35,"cpc":3.04,"ourRank":10,"ourSponsoredRank":10,"topCompetitor":{"asin":"B0DHRS6T3W","title":"","price":"₹399.","rating":"4.5 out of 5 stars.","reviews":"0"}},{"query":"gifting, empty decorative gift basket hamper, gift packing basket for wedding return gifts, dry fruits & festive gifting (golden design)","type":"Customer Search Term","matchType":"PHRASE","orders":1,"sales":2565.72,"roas":568.9,"cpc":4.51,"ourRank":5,"ourSponsoredRank":4,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"haba fruit basket for return gift","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":1384.76,"roas":732.68,"cpc":1.89,"ourRank":11,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0DHRS6T3W","title":"","price":"₹399.","rating":"4.5 out of 5 stars.","reviews":"0"}},{"query":"gift hamper basket","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":1280.01,"roas":14.37,"cpc":2.02,"ourRank":7,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"decorative fruit basket for gift packing","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":1045.72,"roas":387.3,"cpc":2.7,"ourRank":8,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"room hampers for wedding","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":1041.9,"roas":36.16,"cpc":2.88,"ourRank":59,"ourSponsoredRank":22,"topCompetitor":{"asin":"B089WBSZJC","title":"","price":"₹3,145.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift hamper net cloth for packing","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":1000,"roas":53.36,"cpc":2.34,"ourRank":35,"ourSponsoredRank":24,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift hamper basket for gifting","type":"Customer Search Term","matchType":"PHRASE","orders":1,"sales":855.24,"roas":55.9,"cpc":1.91,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"return gift hampers for wedding","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":855.24,"roas":483.19,"cpc":1.77,"ourRank":33,"ourSponsoredRank":33,"topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"dry fruits basket","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":853.34,"roas":13.89,"cpc":1.86,"ourRank":25,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"hamper basket pack","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":853.34,"roas":29.84,"cpc":2.6,"ourRank":18,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"return gifts baskets","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":853.34,"roas":426.67,"cpc":2,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"engagement basket","type":"Target Keyword","matchType":"BROAD","orders":1,"sales":692.38,"roas":5.48,"cpc":1.89,"ourRank":13,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0B65QY8C4","title":"","price":"₹94.","rating":"4.1 out of 5 stars.","reviews":"0"}},{"query":"empty gift basket hamper","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":692.38,"roas":72.2,"cpc":1.92,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"fruit packing baskets for engagement","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":692.38,"roas":29.86,"cpc":1.93,"ourRank":7,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"gift basket with net medium","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":692.38,"roas":307.72,"cpc":2.25,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift hamper basket empty in large size","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":692.38,"roas":353.26,"cpc":1.96,"ourRank":33,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift keeping basket","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":692.38,"roas":288.49,"cpc":2.4,"ourRank":57,"ourSponsoredRank":26,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift trays for hampers","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":692.38,"roas":346.19,"cpc":2,"ourRank":35,"ourSponsoredRank":35,"topCompetitor":{"asin":"B0DQTPNB8Z","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"hamper basket with attached net","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":692.38,"roas":384.66,"cpc":1.8,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0DCZMRGN1","title":"","price":"₹399.","rating":"3.9 out of 5 stars.","reviews":"0"}},{"query":"wedding fruit gift packing basket big size","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":692.38,"roas":230.79,"cpc":3,"ourRank":5,"ourSponsoredRank":5,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"basket for gift hamper","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":522.86,"roas":9.53,"cpc":2.2,"ourRank":4,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0DQTPNB8Z","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"ready to use basket for hampers","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":522.86,"roas":227.33,"cpc":2.3,"ourRank":4,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"fruits baskets with net cover gift","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":521.9,"roas":130.47,"cpc":2,"ourRank":"> 65","ourSponsoredRank":23,"topCompetitor":{"asin":"B0F7GBNRFG","title":"","price":"₹947.","rating":"4.5 out of 5 stars.","reviews":"0"}},{"query":"sweet box for gift","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":521.9,"roas":73.51,"cpc":2.37,"ourRank":"> 85","ourSponsoredRank":"None","topCompetitor":{"asin":"B0C9V73FNP","title":"","price":"₹1,220.","rating":"3.8 out of 5 stars.","reviews":"0"}},{"query":"basket for wedding gift hamper","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":520.95,"roas":9.06,"cpc":2.4,"ourRank":6,"ourSponsoredRank":5,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"hampers box for gifting for baking items","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":520.95,"roas":260.48,"cpc":2,"ourRank":"> 76","ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"small basket for gift hamper","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":520.95,"roas":12.81,"cpc":2.03,"ourRank":6,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"basket fo gift","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":500,"roas":208.33,"cpc":2.4,"ourRank":"> 74","ourSponsoredRank":30,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"big fruit basket for wedding","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":500,"roas":44.05,"cpc":2.84,"ourRank":8,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"decorative hamper basket","type":"Customer Search Term","matchType":"PHRASE","orders":1,"sales":500,"roas":28.2,"cpc":4.43,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"engagement gift hamper","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":500,"roas":250,"cpc":2,"ourRank":"> 70","ourSponsoredRank":32,"topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"boxes for gifts","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":459.69,"roas":103.3,"cpc":2.23,"ourRank":"> 76","ourSponsoredRank":"None","topCompetitor":{"asin":"B0DMJKYVTF","title":"","price":"₹523.","rating":"4.5 out of 5 stars.","reviews":"0"}},{"query":"decorative basket for hampers","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":459.69,"roas":170.26,"cpc":2.7,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"empty gift hamper","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":459.69,"roas":67.3,"cpc":1.71,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift basket wholesale","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":459.69,"roas":245.82,"cpc":1.87,"ourRank":20,"ourSponsoredRank":24,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"tray for gift hamper","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":459.69,"roas":20.9,"cpc":1.83,"ourRank":32,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0DQTPNB8Z","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"fancy baskets for gifts","type":"Target Keyword","matchType":"PHRASE","orders":1,"sales":427.62,"roas":6.86,"cpc":4.16,"ourRank":6,"ourSponsoredRank":5,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"cane baskets for gift packing","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":427.62,"roas":10.61,"cpc":2.24,"ourRank":"> 73","ourSponsoredRank":"None","topCompetitor":{"asin":"B07P9XXVSK","title":"","price":"₹598.","rating":"4.1 out of 5 stars.","reviews":"0"}},{"query":"dry fruits basket for wedding","type":"Customer Search Term","matchType":"PHRASE","orders":1,"sales":427.62,"roas":19.43,"cpc":3.14,"ourRank":8,"ourSponsoredRank":7,"topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"foldable hamper box","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":427.62,"roas":53.86,"cpc":1.98,"ourRank":"> 75","ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift hamper box medium size","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":427.62,"roas":61.09,"cpc":2.33,"ourRank":"> 75","ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift paking basket","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":427.62,"roas":35.55,"cpc":4.01,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"baby shower fruit packing basket","type":"Customer Search Term","matchType":"PHRASE","orders":1,"sales":426.67,"roas":16.6,"cpc":3.21,"ourRank":2,"ourSponsoredRank":2,"topCompetitor":{"asin":"B0CP8CNZYZ","title":"Gift Basket Hamper Basket Set of 2 with Net Cover – Basket for gifting, empty decorative gift basket","price":"₹198","rating":"3.0 out of 5 stars","reviews":"0"}},{"query":"bamboo gift basket hamper empty","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":426.67,"roas":13.15,"cpc":2.7,"ourRank":"> 72","ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"basket for hampers for gifting","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":426.67,"roas":62.29,"cpc":3.43,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"dry fruits gift basket","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":426.67,"roas":8.81,"cpc":1.94,"ourRank":45,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0G4VNTKYW","title":"","price":"₹899.","rating":"3.5 out of 5 stars.","reviews":"0"}},{"query":"ghat nariyal packing basket","type":"Customer Search Term","matchType":"PHRASE","orders":1,"sales":426.67,"roas":123.32,"cpc":3.46,"ourRank":2,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0G6LTCVJ1","title":"Gift Basket Hamper Basket Set of 2 with Net Cover – Basket for gifting, empty decorative gift basket","price":"₹198","rating":"3.0 out of 5 stars","reviews":"0"}},{"query":"gift basket empty","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":426.67,"roas":23,"cpc":2.32,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gift packing basket for baby shower","type":"Customer Search Term","matchType":"PHRASE","orders":1,"sales":426.67,"roas":26.85,"cpc":3.18,"ourRank":23,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0DHRS6T3W","title":"","price":"₹399.","rating":"4.5 out of 5 stars.","reviews":"0"}},{"query":"round net baskets for gift","type":"Customer Search Term","matchType":"PHRASE","orders":1,"sales":426.67,"roas":91.95,"cpc":4.64,"ourRank":19,"ourSponsoredRank":22,"topCompetitor":{"asin":"B0CZKXVGLF","title":"","price":"₹844.","rating":"4.8 out of 5 stars.","reviews":"0"}},{"query":"gift basket hamper empty small","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":423.81,"roas":209.81,"cpc":2.02,"ourRank":5,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"hamper for wedding baskets","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":423.81,"roas":242.18,"cpc":1.75,"ourRank":6,"ourSponsoredRank":7,"topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"wedding fruit basket","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":423.81,"roas":21.51,"cpc":2.19,"ourRank":8,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"gift packing","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":378.1,"roas":75.62,"cpc":1.67,"ourRank":"> 74","ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"basket for decoration","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":246.67,"roas":7.07,"cpc":2.91,"ourRank":"> 78","ourSponsoredRank":"None","topCompetitor":{"asin":"B0HBCVSRTM","title":"","price":"N/A","rating":"N/A","reviews":"0"}},{"query":"gift hamper baskets","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":246.67,"roas":22.73,"cpc":2.17,"ourRank":7,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"gift hampers paking","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":246.67,"roas":123.33,"cpc":2,"ourRank":"> 74","ourSponsoredRank":26,"topCompetitor":{"asin":"B0CCRW8N6P","title":"","price":"₹579.","rating":"4.2 out of 5 stars.","reviews":"0"}},{"query":"hamper boxes transparent for gift empty","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":246.67,"roas":120.92,"cpc":2.04,"ourRank":21,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"gifting baskets for packaging","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":245.71,"roas":9.21,"cpc":1.91,"ourRank":7,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"box for gift","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":189.52,"roas":37.16,"cpc":2.55,"ourRank":"> 76","ourSponsoredRank":"None","topCompetitor":{"asin":"B0DMJKYVTF","title":"","price":"₹523.","rating":"4.5 out of 5 stars.","reviews":"0"}},{"query":"dry fruits gift hamper box empty","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":189.52,"roas":94.76,"cpc":2,"ourRank":7,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}},{"query":"ceremony gift hamper","type":"Customer Search Term","matchType":"BROAD","orders":1,"sales":188.57,"roas":28.19,"cpc":3.35,"ourRank":25,"ourSponsoredRank":"None","topCompetitor":{"asin":"B0BGQ9RW1T","title":"","price":"₹269.","rating":"4.4 out of 5 stars.","reviews":"0"}}];
+    const rankingFirstData = [];
+
+    let currentTab = 'competitors';
+    let currentSortField = 'orders';
+    let currentSortDir = 'desc';
+    let activeFilters = {
+      search: '',
+      rankFilter: 'ALL',
+      occasion: 'ALL',
+      matchType: 'ALL'
+    };
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-view').forEach(v => v.style.display = 'none');
+
+      document.getElementById('tab-btn-' + tab).classList.add('active');
+      document.getElementById('view-' + tab).style.display = 'block';
+
+      const controls = document.getElementById('controlsPanel');
+      if (tab === 'rank1' || tab === 'matrix') {
+        controls.style.display = 'none';
+      } else {
+        controls.style.display = 'flex';
+        renderActiveTable();
+      }
+    }
+
+    function setFilter(type, value, el) {
+      activeFilters[type] = value;
+      el.parentElement.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      renderActiveTable();
+    }
+
+    function setSort(field, dir, el) {
+      currentSortField = field;
+      currentSortDir = dir;
+      if (el) {
+        el.parentElement.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        el.classList.add('active');
+      }
+      renderActiveTable();
+    }
+
+    function applyFilters() {
+      activeFilters.search = document.getElementById('searchInput').value.toLowerCase().trim();
+      renderActiveTable();
+    }
+
+    function sortTable(field) {
+      if (currentSortField === field) {
+        currentSortDir = currentSortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSortField = field;
+        currentSortDir = 'desc';
+      }
+      renderActiveTable();
+    }
+
+    function fmtINR(val) {
+      if (val === null || val === undefined || isNaN(val)) return '₹0.00';
+      return '₹' + Number(val).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function fmtNum(val) {
+      if (val === null || val === undefined || isNaN(val)) return '0';
+      return Number(val).toLocaleString('en-IN');
+    }
+
+    function copyText(txt) {
+      navigator.clipboard.writeText(txt).then(() => {
+        const toast = document.getElementById('toast');
+        toast.textContent = 'Copied: "' + txt + '"';
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 2500);
+      });
+    }
+
+    function getRankBadge(rank) {
+      if (rank === 1) return '<span class="badge badge-rank1">👑 RANK #1</span>';
+      if (typeof rank === 'number' && rank <= 5) return '<span class="badge badge-top5">🔥 RANK #' + rank + '</span>';
+      if (typeof rank === 'number' && rank <= 10) return '<span class="badge badge-top10">🎯 RANK #' + rank + '</span>';
+      if (typeof rank === 'number') return '<span class="badge badge-page2">RANK #' + rank + '</span>';
+      return '<span class="badge badge-page2">' + rank + '</span>';
+    }
+
+    function renderActiveTable() {
+      if (currentTab === 'competitors') {
+        renderCompetitorsTable();
+      } else if (currentTab === 'targets') {
+        renderTargetsTable();
+      } else if (currentTab === 'searchterms') {
+        renderSearchTermsTable();
+      }
+    }
+
+    function renderCompetitorsTable() {
+      const filtered = otherQueriesData.filter(d => {
+        const term = (d.query || '').toLowerCase();
+        const asin = (d.topCompetitor?.asin || '').toLowerCase();
+        const title = (d.topCompetitor?.title || '').toLowerCase();
+        const s = activeFilters.search;
+        if (s && !term.includes(s) && !asin.includes(s) && !title.includes(s)) return false;
+
+        if (activeFilters.rankFilter === 'top5') {
+          if (typeof d.ourRank !== 'number' || d.ourRank > 5) return false;
+        } else if (activeFilters.rankFilter === 'top10') {
+          if (typeof d.ourRank !== 'number' || d.ourRank < 6 || d.ourRank > 10) return false;
+        } else if (activeFilters.rankFilter === 'page2') {
+          if (typeof d.ourRank === 'number' && d.ourRank <= 10) return false;
+        }
+
+        if (activeFilters.occasion !== 'ALL') {
+          const occ = activeFilters.occasion;
+          if (occ === 'fruit' && !term.includes('fruit')) return false;
+          if (occ === 'wedding' && !term.includes('wedding') && !term.includes('engagement') && !term.includes('trousseau')) return false;
+          if (occ === 'hamper' && !term.includes('hamper') && !term.includes('box')) return false;
+          if (occ === 'festive' && !term.includes('diwali') && !term.includes('navratri') && !term.includes('ganpati') && !term.includes('teej')) return false;
+        }
+
+        return true;
+      });
+
+      const sorted = [...filtered].sort((a, b) => {
+        let valA = a[currentSortField];
+        let valB = b[currentSortField];
+
+        if (currentSortField === 'ourRank') {
+          valA = typeof a.ourRank === 'number' ? a.ourRank : 999;
+          valB = typeof b.ourRank === 'number' ? b.ourRank : 999;
+          return currentSortDir === 'asc' ? valA - valB : valB - valA;
+        }
+        if (currentSortField === 'competitorPrice') {
+          valA = parseFloat((a.topCompetitor?.price || '0').replace(/[^0-9.]/g, '')) || 0;
+          valB = parseFloat((b.topCompetitor?.price || '0').replace(/[^0-9.]/g, '')) || 0;
+          return currentSortDir === 'asc' ? valA - valB : valB - valA;
+        }
+
+        if (typeof valA === 'string') {
+          return currentSortDir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        valA = Number(valA) || 0;
+        valB = Number(valB) || 0;
+        return currentSortDir === 'asc' ? valA - valB : valB - valA;
+      });
+
+      const tbody = document.getElementById('competitorsTbody');
+      if (sorted.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding: 40px; color: var(--text-dim);">No queries match the active filter criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = sorted.map(d => {
+        const comp = d.topCompetitor || {};
+        const asinLink = comp.asin 
+          ? '<a href="https://www.amazon.in/dp/' + comp.asin + '" target="_blank" class="asin-link">' + comp.asin + ' ↗</a>' 
+          : 'N/A';
+
+        let actionHtml = '';
+        if (typeof d.ourRank === 'number' && d.ourRank <= 5) {
+          actionHtml = '<span style="color:#34D399; font-weight:600; font-size:12px;">⚡ Striking Distance! Nudge bid +₹0.20 to win #1</span>';
+        } else if (typeof d.ourRank === 'number' && d.ourRank <= 10) {
+          actionHtml = '<span style="color:#7DD3FC; font-size:12px;">🎯 Top 10 Page 1. Target exact match to overtake</span>';
+        } else {
+          actionHtml = '<span style="color:var(--text-muted); font-size:12px;">Conquest via PAT on ' + (comp.asin || 'competitor') + '</span>';
+        }
+
+        return '<tr>' +
+          '<td><div class="cell-term"><span>' + d.query + '</span><button class="copy-btn" onclick="copyText(\'' + d.query.replace(/'/g, "\\'") + '\')" title="Copy query">📋</button></div></td>' +
+          '<td>' + getRankBadge(d.ourRank) + (typeof d.ourSponsoredRank === 'number' ? ' <span style="font-size:10px; color:var(--text-dim);">(Sp #' + d.ourSponsoredRank + ')</span>' : '') + '</td>' +
+          '<td><div style="font-size:12px; font-weight:600; color:#FFF;">' + asinLink + '</div><div style="font-size:11px; color:var(--text-muted); max-width:280px; white-space:normal; line-height:1.3; margin-top:2px;" title="' + (comp.title || '') + '">' + (comp.title || 'Product details unavailable').slice(0, 55) + '...</div></td>' +
+          '<td class="cell-mono cell-sales">' + (comp.price || 'N/A') + '</td>' +
+          '<td><div style="font-size:12px; color:#FDE68A;">' + (comp.rating || '-') + '</div><div style="font-size:10px; color:var(--text-dim);">' + (comp.reviews || '0') + ' reviews</div></td>' +
+          '<td class="cell-mono cell-orders" style="color:#34D399;">' + fmtNum(d.orders) + '</td>' +
+          '<td class="cell-mono cell-sales">' + fmtINR(d.sales) + '</td>' +
+          '<td class="cell-mono cell-cpc">' + fmtINR(d.cpc) + '</td>' +
+          '<td><span class="cell-roas">' + d.roas.toFixed(2) + 'x</span></td>' +
+          '<td>' + actionHtml + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderTargetsTable() {
+      const tbody = document.getElementById('targetsTbody');
+      tbody.innerHTML = targetsData.map(d => {
+        return '<tr>' +
+          '<td><div class="cell-term"><span>' + d.targetingValue + '</span><button class="copy-btn" onclick="copyText(\'' + d.targetingValue.replace(/'/g, "\\'") + '\')">📋</button></div></td>' +
+          '<td><span class="badge badge-' + d.matchType.toLowerCase() + '">' + d.matchType + '</span></td>' +
+          '<td class="cell-mono cell-bid">' + (d.bid ? fmtINR(d.bid) : 'N/A') + '</td>' +
+          '<td class="cell-mono cell-cpc">' + fmtINR(d.cpc) + '</td>' +
+          '<td class="cell-mono">' + (d.bidCpcSpread <= 0 ? '<span class="spread-green">' + d.bidCpcSpread + '% under</span>' : '<span class="spread-orange">+' + d.bidCpcSpread + '% over</span>') + '</td>' +
+          '<td class="cell-mono cell-orders" style="color:#34D399;">' + fmtNum(d.orders) + '</td>' +
+          '<td class="cell-mono cell-sales">' + fmtINR(d.sales) + '</td>' +
+          '<td class="cell-mono">' + fmtNum(d.clicks) + '</td>' +
+          '<td class="cell-mono" style="color:var(--text-muted);">' + fmtNum(d.impressions) + '</td>' +
+          '<td><span class="badge badge-top5">' + d.volumeTier + '</span></td>' +
+          '<td class="cell-mono">' + d.ctr.toFixed(2) + '%</td>' +
+          '<td class="cell-mono">' + d.cvr.toFixed(2) + '%</td>' +
+          '<td class="cell-mono">' + fmtINR(d.spend) + '</td>' +
+          '<td class="cell-mono">' + d.acos.toFixed(2) + '%</td>' +
+          '<td><span class="cell-roas">' + d.roas.toFixed(2) + 'x</span></td>' +
+          '<td><div style="font-size:11px; color:var(--text-muted);">' + d.campaignName + '</div></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderSearchTermsTable() {
+      const tbody = document.getElementById('searchTermsTbody');
+      tbody.innerHTML = searchTermsData.map(d => {
+        return '<tr>' +
+          '<td><div class="cell-term"><span>' + d.searchTerm + '</span><button class="copy-btn" onclick="copyText(\'' + d.searchTerm.replace(/'/g, "\\'") + '\')">📋</button></div></td>' +
+          '<td><div style="font-size:12px; color:#E2E8F0;">' + (d.matchedTarget || '-') + '</div></td>' +
+          '<td><span class="badge badge-' + d.targetMatchType.toLowerCase() + '">' + d.targetMatchType + '</span></td>' +
+          '<td class="cell-mono cell-bid">' + (d.targetBid ? fmtINR(d.targetBid) : 'N/A') + '</td>' +
+          '<td class="cell-mono cell-cpc">' + fmtINR(d.cpc) + '</td>' +
+          '<td class="cell-mono">' + (d.bidCpcSpread <= 0 ? '<span class="spread-green">' + d.bidCpcSpread + '%</span>' : '<span class="spread-orange">+' + d.bidCpcSpread + '%</span>') + '</td>' +
+          '<td class="cell-mono cell-orders" style="color:#34D399;">' + fmtNum(d.orders) + '</td>' +
+          '<td class="cell-mono cell-sales">' + fmtINR(d.sales) + '</td>' +
+          '<td class="cell-mono">' + fmtNum(d.clicks) + '</td>' +
+          '<td class="cell-mono" style="color:var(--text-muted);">' + fmtNum(d.impressions) + '</td>' +
+          '<td><span class="badge badge-top5">' + d.volumeTier + '</span></td>' +
+          '<td class="cell-mono">' + d.ctr.toFixed(2) + '%</td>' +
+          '<td class="cell-mono">' + d.cvr.toFixed(2) + '%</td>' +
+          '<td class="cell-mono">' + fmtINR(d.spend) + '</td>' +
+          '<td class="cell-mono">' + d.acos.toFixed(2) + '%</td>' +
+          '<td><span class="cell-roas">' + d.roas.toFixed(2) + 'x</span></td>' +
+          '<td><div style="font-size:11px; color:var(--text-muted);">' + d.campaignName + '</div></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function exportCsv() {
+      const link = document.createElement("a");
+      link.setAttribute("href", "output/PPC_ROAS_5_PLUS_MINED_DATA/TOP_COMPETITOR_PRODUCTS_FOR_QUERIES.csv");
+      link.setAttribute("download", "TOP_COMPETITOR_PRODUCTS_FOR_QUERIES.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function copyTopVolumeTerms() {
+      const topTerms = otherQueriesData.filter(d => d.orders >= 2).map(d => d.query);
+      copyText(topTerms.join('
+'));
+    }
+
+    // Initial render
+    renderActiveTable();
+  </script>
+</body>
+</html>

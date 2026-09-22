@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Executive Remote // Second Brain</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #070a12;
+    --hud-cyan: #25d366; /* WhatsApp Green */
+    --hud-glow: rgba(37, 211, 102, 0.4);
+    --panel-bg: rgba(10, 20, 30, 0.85);
+    --panel-border: rgba(37, 211, 102, 0.3);
+    --text-primary: #e0f2fe;
+    --text-dim: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
+body {
+    background: var(--bg-dark);
+    background-image: radial-gradient(circle at 50% 50%, rgba(15, 35, 25, 0.7) 0%, rgba(7, 10, 18, 0.98) 80%);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px var(--hud-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  p.subtitle {
+    color: var(--hud-cyan);
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+  .card-container {
+    max-width: 850px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media(max-width: 768px) {
+    .card-container { grid-template-columns: 1fr; }
+  }
+  .hud-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 24px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+  .card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.05rem;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--panel-border);
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .qr-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 260px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px dashed var(--panel-border);
+  }
+  .qr-img {
+    width: 220px;
+    height: 220px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 8px;
+    box-shadow: 0 0 20px var(--hud-glow);
+  }
+  .status-badge {
+    margin-top: 14px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+  .status-waiting {
+    background: rgba(245, 175, 25, 0.15);
+    color: #f5af19;
+    border: 1px solid #f5af19;
+  }
+  .status-connected {
+    background: rgba(37, 211, 102, 0.2);
+    color: #25d366;
+    border: 1px solid #25d366;
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+  }
+  .step-list {
+    list-style: none;
+    margin-top: 10px;
+  }
+  .step-list li {
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    line-height: 1.4;
+    font-size: 0.95rem;
+  }
+  .step-num {
+    background: var(--hud-cyan);
+    color: #06101e;
+    font-weight: 800;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+  }
+  .cmd-box {
+    margin-top: 14px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+  }
+  .cmd-item {
+    margin-bottom: 8px;
+  }
+  .cmd-key {
+    color: var(--hud-cyan);
+    font-weight: 600;
+  }
+  .back-btn {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--panel-border);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    background: var(--hud-cyan);
+    color: #06101e;
+    box-shadow: 0 0 15px var(--hud-glow);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📱 WHATSAPP EXECUTIVE GATEWAY</h1>
+  <p class="subtitle">Direct Mobile Control // Second Brain AI Matrix</p>
+</header>
+
+<div class="card-container">
+  <div class="hud-card">
+    <div class="card-title">
+      <span>1. Scan QR to Pair Phone</span>
+      <span id="liveBadge" style="font-size:0.75rem; color:var(--hud-cyan);">POLLING LIVE</span>
+    </div>
+
+    <div class="qr-box" id="qrBox">
+      <div id="loadingText" style="color:var(--text-dim);">Initializing WhatsApp session...</div>
+      <img id="qrImage" class="qr-img" style="display:none;" alt="WhatsApp Pairing QR Code">
+      <div id="statusBadge" class="status-badge status-waiting">WAITING FOR PAIRING</div>
+    </div>
+
+    <div style="margin-top: 14px; font-size: 0.85rem; color: var(--text-dim); text-align: center;">
+      QR refreshes automatically. Scan once to maintain continuous access.
+    </div>
+  </div>
+
+  <div class="hud-card">
+    <div class="card-title">
+      <span>2. How to Link in 10 Seconds</span>
+    </div>
+
+    <ul class="step-list">
+      <li>
+        <span class="step-num">1</span>
+        <span>Open <strong>WhatsApp</strong> on your phone.</span>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <span>Tap <strong>Settings</strong> (iPhone) or <strong>⋮ 3 Dots</strong> (Android) &rarr; <strong>Linked Devices</strong>.</span>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <span>Tap <strong>Link a Device</strong> and scan the QR code on the left.</span>
+      </li>
+      <li>
+        <span class="step-num">4</span>
+        <span>Done! You can now text tasks to yourself or to the bot anytime.</span>
+      </li>
+    </ul>
+
+    <div class="card-title" style="margin-top: 20px;">
+      <span>3. Commands to Text from Your Phone</span>
+      <span style="font-size:0.7rem; color:#25d366; font-family:'JetBrains Mono';">PONYTAIL + CAVEMAN ENGINE</span>
+    </div>
+
+    <div class="cmd-box">
+      <div class="cmd-item"><span class="cmd-key">!status</span> — Live server, ad spend & PPC metrics</div>
+      <div class="cmd-item"><span class="cmd-key">!ppc</span> — Taarmi Baskets 4 campaigns breakdown</div>
+      <div class="cmd-item"><span class="cmd-key">!voice &lt;text&gt;</span> — Bot sends audio voice note back (Edge TTS)</div>
+      <div class="cmd-item"><span class="cmd-key">!switch max</span> — Switch to Max Verstappen persona</div>
+      <div class="cmd-item"><span class="cmd-key">!switch friday</span> — Switch to Friday persona</div>
+      <div class="cmd-item"><span class="cmd-key">!switch jarvis</span> — Switch to Jarvis persona</div>
+      <div class="cmd-item"><span class="cmd-key">Any text / question</span> — Instant Caveman answer (&lt;400ms, pure facts)</div>
+      <div class="cmd-item" style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 8px; margin-top: 8px;">
+        <span class="cmd-key">!send &lt;number&gt; &lt;text&gt;</span> — Message anyone else from your phone
+      </div>
+      <div style="font-size:0.75rem; color:#f5af19; margin-top:8px; line-height:1.4;">
+        🔒 <strong>Strict Privacy Lock:</strong> The bot is completely deaf and blind to your other contacts, family, and group chats. It ONLY listens inside your <em>"Message yourself"</em> chat.
+      </div>
+      <div style="font-size:0.75rem; color:#00f2fe; margin-top:6px; line-height:1.4;">
+        ⚡ <strong>Ponytail Engine:</strong> Native HTTP, 0 subprocesses, sub-400ms latency, zero token waste.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="display:flex; gap:16px; margin-top:24px;">
+  <a href="/" class="back-btn">&larr; Return to Master Portal</a>
+  <a href="/00_DASHBOARD_PORTAL.html" class="back-btn" style="border-color:#f59e0b; color:#f59e0b;">Master Dashboards Portal &rarr;</a>
+</div>
+
+<script>
+async function pollStatus() {
+  try {
+    const res = await fetch('/api/whatsapp/status');
+    const data = await res.json();
+
+    const qrImg = document.getElementById('qrImage');
+    const loadingText = document.getElementById('loadingText');
+    const statusBadge = document.getElementById('statusBadge');
+
+    if (data.connected) {
+      qrImg.style.display = 'none';
+      loadingText.innerHTML = '<div style=\"font-size:3rem;\">✅</div><div style=\"font-size:1.1rem; color:#25d366; font-weight:700; margin-top:8px;\">WHATSAPP CONNECTED & ACTIVE!</div><div style=\"color:#94a3b8; margin-top:4px;\">You can now send tasks from your phone anytime.</div>';
+      loadingText.style.display = 'block';
+      statusBadge.className = 'status-badge status-connected';
+      statusBadge.textContent = 'ONLINE // READY FOR TASKS';
+    } else if (data.qr) {
+      loadingText.style.display = 'none';
+      qrImg.src = data.qr;
+      qrImg.style.display = 'block';
+      statusBadge.className = 'status-badge status-waiting';
+      statusBadge.textContent = 'SCAN WITH WHATSAPP';
+    }
+  } catch(e) {
+    console.warn("Poll error:", e);
+  }
+}
+
+setInterval(pollStatus, 3000);
+pollStatus();
+</script>
+
+</body>
+</html>
