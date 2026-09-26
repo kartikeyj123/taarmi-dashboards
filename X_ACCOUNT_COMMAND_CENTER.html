@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>X Account Command Center | Valkyrie Growth Bot</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            xblue: '#1d9bf0',
+            xdark: '#000000',
+            xcard: '#0c0f14',
+            xborder: '#2f3336',
+            xgray: '#71767b'
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #000000;
+      color: #e7e9ea;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    .x-panel {
+      background-color: #0c1017;
+      border: 1px solid #1f2937;
+      border-radius: 1rem;
+      transition: border-color 0.2s ease;
+    }
+    .x-panel:hover {
+      border-color: #374151;
+    }
+    .glass-tab-active {
+      background-color: #1d9bf0;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #000000; }
+    ::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
+  </style>
+</head>
+<body class="selection:bg-sky-500 selection:text-white">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 border-b border-zinc-800 bg-black/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="00_DASHBOARD_PORTAL.html" class="p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition" title="Back to Master Portal">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </a>
+        <div class="w-10 h-10 rounded-xl bg-black border border-zinc-700 flex items-center justify-center font-bold text-white text-xl shadow-lg shadow-sky-500/10">
+          𝕏
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-base sm:text-lg text-white tracking-tight">VALKYRIE 𝕏 GROWTH BOT</h1>
+            <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-sky-500/20 text-sky-400 border border-sky-500/30 rounded-full">AI Social Manager</span>
+          </div>
+          <p class="text-xs text-zinc-400 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Hired & Assigned to Hive Fleet • Autonomous X Management
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="switchTab('settings')" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          Account Config
+        </button>
+        <button onclick="refreshData()" class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white transition" title="Refresh Feed">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Bot Overview & Status Card -->
+    <div class="x-panel p-6 relative overflow-hidden bg-gradient-to-r from-sky-950/20 via-zinc-900/60 to-black">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30">
+              AGENT ID: worker-x-growth-manager
+            </span>
+            <span id="connBadge" class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              Assisted Pilot Mode
+            </span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Personal 𝕏 Workspace: <span id="handleDisplay" class="text-sky-400">@kartikey</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-zinc-400 max-w-2xl leading-relaxed">
+            Curious 20-year-old living in Bangalore, building around business, AI, and web development. Witty, conversational, friendly, and smart observations on figuring things out in public.
+          </p>
+          <div class="flex flex-wrap items-center gap-2 pt-1">
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Autonomous Daemon: <strong>ACTIVE</strong> (Pure Node.js • 0% OS Dependency)
+            </span>
+            <span id="daemonCountdownBadge" class="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-mono flex items-center gap-1">
+              ⏳ Next Run: <strong id="nextDropText" class="text-purple-300">08:00 PM IST</strong>
+            </span>
+            <button onclick="triggerSchedulerNow()" class="px-3 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-black text-xs font-bold transition flex items-center gap-1 shadow-md shadow-sky-500/20">
+              ⚡ Trigger Post Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Badges -->
+        <div class="grid grid-cols-3 gap-3 shrink-0">
+          <div class="bg-black/60 border border-zinc-800 rounded-xl p-3.5 text-center min-w-[95px]">
+            <div id="statDrafts" class="text-xl sm:text-2xl font-black text-white">3</div>
+            <div class="text-[10px] text-zinc-500 uppercase font-mono font-semibold">Queue Drafts</div>
+          </div>
+          <div class="bg-black/60 border border-zinc-800 rounded-xl p-3.5 text-center min-w-[95px]">
+            <div id="statScheduled" class="text-xl sm:text-2xl font-black text-amber-400">0</div>
+            <div class="text-[10px] text-zinc-500 uppercase font-mono font-semibold">Scheduled</div>
+          </div>
+          <div class="bg-black/60 border border-zinc-800 rounded-xl p-3.5 text-center min-w-[95px]">
+            <div id="statPublished" class="text-xl sm:text-2xl font-black text-emerald-400">0</div>
+            <div class="text-[10px] text-zinc-500 uppercase font-mono font-semibold">Published</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex items-center gap-2 border-b border-zinc-800 pb-3 overflow-x-auto no-scrollbar">
+      <button onclick="switchTab('queue')" id="tabBtn-queue" class="px-4 py-2 rounded-xl text-xs font-semibold transition glass-tab-active">
+        Content Queue & Approval Deck
+      </button>
+      <button onclick="switchTab('composer')" id="tabBtn-composer" class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-zinc-900 text-zinc-400 hover:text-white">
+        + AI Tweet & Thread Composer
+      </button>
+      <button onclick="switchTab('settings')" id="tabBtn-settings" class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-zinc-900 text-zinc-400 hover:text-white">
+        Connection & API Keys
+      </button>
+      <button onclick="switchTab('strategy')" id="tabBtn-strategy" class="px-4 py-2 rounded-xl text-xs font-semibold transition bg-zinc-900 text-zinc-400 hover:text-white">
+        Growth Playbook & Hooks
+      </button>
+    </div>
+
+    <!-- TAB 1: CONTENT QUEUE & APPROVAL DECK -->
+    <div id="tab-queue" class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-white">Pending Posts & Scheduled Queue</h3>
+          <p class="text-xs text-zinc-400">Review, push to WhatsApp for mobile preview, or publish with 1 click.</p>
+        </div>
+        <button onclick="switchTab('composer')" class="px-3.5 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-black text-xs font-bold transition flex items-center gap-1.5">
+          <span>+</span> Create New Tweet
+        </button>
+      </div>
+
+      <div id="draftsList" class="space-y-4">
+        <!-- Draft cards populated dynamically -->
+        <div class="p-8 text-center text-zinc-500 text-xs font-mono">Loading queue...</div>
+      </div>
+    </div>
+
+    <!-- TAB 2: AI COMPOSER -->
+    <div id="tab-composer" class="hidden space-y-6">
+      <div class="x-panel p-6 max-w-3xl mx-auto space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>✨</span> Compose with Valkyrie AI
+          </h3>
+          <p class="text-xs text-zinc-400">Draft high-impact single tweets or multi-part threads optimized for X engagement.</p>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 mb-1.5">Post Type</label>
+            <div class="grid grid-cols-2 gap-3">
+              <button type="button" onclick="setComposerType('single')" id="typeBtn-single" class="p-3 rounded-xl border border-sky-500 bg-sky-500/10 text-white text-xs font-semibold flex items-center justify-center gap-2">
+                <span>💬</span> Single Tweet (&le;280 chars)
+              </button>
+              <button type="button" onclick="setComposerType('thread')" id="typeBtn-thread" class="p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white text-xs font-semibold flex items-center justify-center gap-2">
+                <span>🧵</span> Multi-Tweet Thread (3–5 parts)
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 mb-1.5">Title / Topic Overview</label>
+            <input type="text" id="composerTitle" placeholder="e.g. Diwali Ribbon Launch, 3-Rule Packaging Formula, Unit Economics" class="w-full px-4 py-2.5 bg-black border border-zinc-800 rounded-xl text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500">
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs font-mono text-zinc-400">Tweet Content</label>
+              <span id="charCounter" class="text-xs font-mono text-zinc-500">0 / 280 chars</span>
+            </div>
+            <textarea id="composerContent" rows="6" oninput="updateCharCount()" placeholder="Write your tweet here or paste thoughts..." class="w-full p-4 bg-black border border-zinc-800 rounded-xl text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500 font-sans leading-relaxed"></textarea>
+          </div>
+
+          <div id="threadBuilderNotice" class="hidden p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-xs text-zinc-400">
+            💡 <strong>Thread Mode:</strong> Separate individual tweets by typing <code class="text-sky-400">---</code> on a new line. Valkyrie will automatically split and number them!
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 mb-1.5">Hashtags (Optional, comma-separated)</label>
+            <input type="text" id="composerTags" placeholder="#LuxuryPackaging, #AmazonSeller, #DiwaliGifting" class="w-full px-4 py-2 bg-black border border-zinc-800 rounded-xl text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500">
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-4 border-t border-zinc-800">
+            <button onclick="switchTab('queue')" class="px-4 py-2 rounded-xl text-xs text-zinc-400 hover:text-white transition">Cancel</button>
+            <button onclick="saveNewDraft()" class="px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-black text-xs font-bold transition shadow-lg shadow-sky-500/20">
+              Save to Content Queue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SETTINGS & API KEYS -->
+    <div id="tab-settings" class="hidden space-y-6">
+      <div class="x-panel p-6 max-w-3xl mx-auto space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>⚙️</span> X (Twitter) Account Connection
+          </h3>
+          <p class="text-xs text-zinc-400">Choose between Assisted Pilot Mode (Zero credentials needed) or Full X API v2 Automation.</p>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 mb-1.5">X Account Handle</label>
+            <input type="text" id="settingsHandle" placeholder="@YourBrandOrName" class="w-full px-4 py-2.5 bg-black border border-zinc-800 rounded-xl text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500">
+          </div>
+
+          <!-- Mode Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl border border-sky-500/50 bg-sky-500/5 space-y-2">
+              <div class="flex items-center justify-between">
+                <strong class="text-xs text-white flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  Assisted Pilot Mode
+                </strong>
+                <span class="text-[10px] font-mono font-bold text-sky-400 uppercase">Active</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                Valkyrie drafts and formats viral tweets for you. You approve them on your phone via WhatsApp or click 1 button to post directly on X via Web Intents. <strong>100% Free & zero account suspension risk.</strong>
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl border border-zinc-800 bg-zinc-900/60 space-y-2">
+              <div class="flex items-center justify-between">
+                <strong class="text-xs text-zinc-300">X API v2 Integration</strong>
+                <span class="text-[10px] font-mono text-zinc-500 uppercase">Optional</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                For 100% hands-free autonomous background posting directly through the official Twitter API. Requires an approved X Developer App.
+              </p>
+            </div>
+          </div>
+
+          <!-- Headless Browser Session Cookies Accordion -->
+          <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-mono font-semibold text-purple-300 flex items-center gap-1.5">
+                <span>🤖</span> 100% Autonomous Headless Browser Mode (Zero Paid API Required)
+              </h4>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 font-bold">RECOMMENDED</span>
+            </div>
+            <p class="text-xs text-zinc-400 leading-relaxed">
+              Valkyrie launches Chromium headlessly via Puppeteer, injects your browser session cookie, and types & publishes tweets directly with <strong>zero human clicking</strong>.
+            </p>
+            <div class="space-y-2.5">
+              <div>
+                <label class="block text-[10px] font-mono text-zinc-400 mb-1">X Session Cookie (<code class="text-purple-300">auth_token</code>) — Copy from browser devtools / application cookies</label>
+                <input type="password" id="settingsAuthToken" placeholder="e.g. 7a9f8e4321..." class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-white placeholder-zinc-700 focus:outline-none focus:border-purple-500">
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-zinc-400 mb-1">CSRF Cookie (<code class="text-purple-300">ct0</code>) — Optional</label>
+                <input type="password" id="settingsCt0" placeholder="e.g. 3b2d1c0..." class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-white placeholder-zinc-700 focus:outline-none focus:border-purple-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- API Keys Accordion -->
+          <div class="p-4 rounded-xl bg-black border border-zinc-800 space-y-3">
+            <h4 class="text-xs font-mono font-semibold text-zinc-300">Optional: Enter X API v2 Credentials</h4>
+            <div class="space-y-2.5">
+              <div>
+                <label class="block text-[10px] font-mono text-zinc-500 mb-1">Bearer Token (OAuth 2.0)</label>
+                <input type="password" id="settingsBearer" placeholder="AAAAAAAAAAAAAAAAAAAAA..." class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-white placeholder-zinc-700 focus:outline-none focus:border-sky-500">
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] font-mono text-zinc-500 mb-1">API Key (Consumer Key)</label>
+                  <input type="password" id="settingsApiKey" placeholder="..." class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-white placeholder-zinc-700 focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-mono text-zinc-500 mb-1">API Secret</label>
+                  <input type="password" id="settingsApiSecret" placeholder="..." class="w-full px-3 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-white placeholder-zinc-700 focus:outline-none focus:border-sky-500">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-3">
+            <button onclick="saveAccountSettings()" class="px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-black text-xs font-bold transition shadow-lg shadow-sky-500/20">
+              Save Account Settings
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: GROWTH PLAYBOOK -->
+    <div id="tab-strategy" class="hidden space-y-6">
+      <div class="x-panel p-6 max-w-4xl mx-auto space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>📈</span> Valkyrie's High-Converting X Growth Framework
+          </h3>
+          <p class="text-xs text-zinc-400">Battle-tested formulas for D2C brands, luxury hampers, and Amazon sellers.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
+            <span class="text-xs font-mono font-bold text-sky-400">Pillar 1: Product Teardowns</span>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Show the micro-details: kappa board thickness, woven lurex ribbon tensile strength, why cheap polyester fails.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
+            <span class="text-xs font-mono font-bold text-amber-400">Pillar 2: Festive Demand Surges</span>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Countdown to Diwali 2026. Corporate gifting checklists, dry fruit hamper styling tips, and Amazon Prime delivery guarantees.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
+            <span class="text-xs font-mono font-bold text-emerald-400">Pillar 3: Build in Public</span>
+            <p class="text-xs text-zinc-300 leading-relaxed">
+              Factory floor videos, dispatching 500+ baskets in a weekend, packaging engineering blueprints.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-black border border-zinc-800 space-y-3">
+          <h4 class="text-xs font-mono font-bold text-white">Peak Engagement Windows (IST):</h4>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="px-3 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300">🌅 Morning Prime: <strong>8:30 AM – 10:00 AM</strong></span>
+            <span class="px-3 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300">☀️ Lunch Scroll: <strong>1:00 PM – 2:30 PM</strong></span>
+            <span class="px-3 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300">🌙 Evening Peak: <strong>7:30 PM – 9:30 PM</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-zinc-900 border border-sky-500/50 text-white text-xs font-semibold shadow-2xl shadow-black transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2">
+    <span class="text-sky-400">✓</span>
+    <span id="toastMsg">Action completed</span>
+  </div>
+
+  <script>
+    let currentTab = 'queue';
+    let composerType = 'single';
+    let queueData = { drafts: [], scheduled: [], published: [] };
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    function switchTab(tab) {
+      ['queue', 'composer', 'settings', 'strategy'].forEach(t => {
+        const el = document.getElementById(`tab-${t}`);
+        const btn = document.getElementById(`tabBtn-${t}`);
+        if (el) el.classList.toggle('hidden', t !== tab);
+        if (btn) {
+          if (t === tab) {
+            btn.className = 'px-4 py-2 rounded-xl text-xs font-semibold transition glass-tab-active';
+          } else {
+            btn.className = 'px-4 py-2 rounded-xl text-xs font-semibold transition bg-zinc-900 text-zinc-400 hover:text-white';
+          }
+        }
+      });
+      currentTab = tab;
+    }
+
+    function setComposerType(type) {
+      composerType = type;
+      const singleBtn = document.getElementById('typeBtn-single');
+      const threadBtn = document.getElementById('typeBtn-thread');
+      const notice = document.getElementById('threadBuilderNotice');
+
+      if (type === 'single') {
+        singleBtn.className = 'p-3 rounded-xl border border-sky-500 bg-sky-500/10 text-white text-xs font-semibold flex items-center justify-center gap-2';
+        threadBtn.className = 'p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white text-xs font-semibold flex items-center justify-center gap-2';
+        notice.classList.add('hidden');
+      } else {
+        threadBtn.className = 'p-3 rounded-xl border border-sky-500 bg-sky-500/10 text-white text-xs font-semibold flex items-center justify-center gap-2';
+        singleBtn.className = 'p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white text-xs font-semibold flex items-center justify-center gap-2';
+        notice.classList.remove('hidden');
+      }
+      updateCharCount();
+    }
+
+    function updateCharCount() {
+      const text = document.getElementById('composerContent').value || '';
+      const counter = document.getElementById('charCounter');
+      if (composerType === 'single') {
+        const len = text.length;
+        counter.innerText = `${len} / 280 chars`;
+        counter.className = len > 280 ? 'text-xs font-mono text-rose-500 font-bold' : 'text-xs font-mono text-zinc-500';
+      } else {
+        const parts = text.split(/\n---\n/);
+        counter.innerText = `${parts.length} tweets in thread`;
+        counter.className = 'text-xs font-mono text-sky-400';
+      }
+    }
+
+    async function loadStatus() {
+      try {
+        const res = await fetch('/api/x/status');
+        const data = await res.json();
+        document.getElementById('handleDisplay').innerText = data.handle || '@TaarmiLuxury';
+        document.getElementById('settingsHandle').value = data.handle || '@TaarmiLuxury';
+        document.getElementById('statDrafts').innerText = data.stats.pendingDrafts;
+        document.getElementById('statScheduled').innerText = data.stats.scheduled;
+        document.getElementById('statPublished').innerText = data.stats.publishedTotal;
+
+        const badge = document.getElementById('connBadge');
+        if (data.apiConnected) {
+          badge.className = 'px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+          badge.innerText = '● X API v2 Active';
+        } else {
+          badge.className = 'px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30';
+          badge.innerText = 'Assisted Pilot Mode';
+        }
+      } catch (e) {
+        console.error('Failed to load status:', e);
+      }
+    }
+
+    async function loadQueue() {
+      try {
+        const res = await fetch('/api/x/queue');
+        queueData = await res.json();
+        renderQueue();
+      } catch (e) {
+        document.getElementById('draftsList').innerHTML = `<div class="p-4 text-center text-rose-500 text-xs">Error loading queue: ${e.message}</div>`;
+      }
+    }
+
+    function renderQueue() {
+      const container = document.getElementById('draftsList');
+      if (!queueData.drafts || queueData.drafts.length === 0) {
+        container.innerHTML = `
+          <div class="x-panel p-8 text-center space-y-3">
+            <p class="text-zinc-400 text-xs">No pending drafts in queue.</p>
+            <button onclick="switchTab('composer')" class="px-4 py-2 rounded-xl bg-sky-500 text-black font-bold text-xs">Create First Tweet</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = queueData.drafts.map(draft => {
+        const isThread = draft.type === 'thread';
+        const tweetCount = draft.tweets.length;
+        const mainText = draft.tweets[0].text;
+        const webIntent = `https://x.com/intent/tweet?text=${encodeURIComponent(mainText)}`;
+
+        let threadPreview = '';
+        if (isThread) {
+          threadPreview = `
+            <div class="mt-3 pl-3 border-l-2 border-zinc-800 space-y-2 text-xs text-zinc-300">
+              ${draft.tweets.map(t => `<div class="p-2 rounded bg-black/40"><strong class="text-sky-400">Tweet ${t.index}:</strong> ${t.text}</div>`).join('')}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="x-panel p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold ${isThread ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'bg-sky-500/20 text-sky-300 border border-sky-500/30'}">
+                  ${isThread ? `THREAD (${tweetCount} TWEETS)` : 'SINGLE TWEET'}
+                </span>
+                <span class="text-xs font-bold text-white">${draft.title}</span>
+              </div>
+              <span class="text-[10px] font-mono text-zinc-500">${draft.tweets[0].charCount} chars</span>
+            </div>
+
+            ${!isThread ? `
+              <div class="p-4 rounded-xl bg-black/80 border border-zinc-800/80 text-xs text-zinc-200 whitespace-pre-wrap font-sans leading-relaxed select-all">
+                ${mainText}
+              </div>
+            ` : threadPreview}
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-zinc-800/80">
+              <div class="flex items-center gap-2">
+                <a href="${webIntent}" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-black text-xs font-bold transition flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  1-Click Post on 𝕏
+                </a>
+                <button onclick="pushToWhatsApp('${draft.id}')" class="px-3 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/30 text-xs font-semibold transition flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.806-5.767-5.806zm4.184 8.243c-.173.486-.886.91-1.232.969-.345.059-.791.077-1.285-.083-.342-.111-.782-.267-1.353-.515-2.42-1.054-3.992-3.528-4.113-3.69-.121-.162-.988-1.312-.988-2.502 0-1.19.624-1.776.846-2.016.222-.24.484-.3.645-.3.161 0 .323 0 .463.008.148.008.347-.056.543.414.202.486.686 1.672.747 1.794.06.121.101.263.02.424-.081.162-.121.263-.242.404-.121.142-.254.316-.363.424-.121.122-.248.254-.107.496.141.242.628 1.036 1.347 1.676.924.823 1.703 1.078 1.945 1.199.242.121.384.101.525-.06.141-.162.605-.706.767-.948.162-.242.323-.202.545-.121.222.081 1.411.666 1.653.787.242.121.403.182.463.283.061.101.061.586-.112 1.072z"/></svg>
+                  Send to WhatsApp
+                </button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button onclick="publishViaApi('${draft.id}')" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold text-zinc-200 transition">
+                  Publish via API
+                </button>
+                <button onclick="deleteDraft('${draft.id}')" class="p-1.5 rounded-lg text-zinc-500 hover:text-rose-400 hover:bg-zinc-900 transition" title="Delete">
+                  ✕
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function pushToWhatsApp(id) {
+      showToast('Sending draft preview to WhatsApp...');
+      try {
+        const res = await fetch('/api/x/whatsapp-push', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Draft sent to your locked WhatsApp chat!');
+        } else {
+          showToast('Failed to send: ' + (data.error || 'Server error'));
+        }
+      } catch (e) {
+        showToast('Error: ' + e.message);
+      }
+    }
+
+    async function publishViaApi(id) {
+      showToast('Publishing tweet...');
+      try {
+        const res = await fetch('/api/x/publish', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Tweet published / approved!');
+          refreshData();
+        } else {
+          showToast('Notice: ' + (data.error || 'Check API keys in Settings'));
+        }
+      } catch (e) {
+        showToast('Error: ' + e.message);
+      }
+    }
+
+    async function deleteDraft(id) {
+      if (!confirm('Delete this draft from queue?')) return;
+      try {
+        await fetch('/api/x/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        showToast('Draft deleted.');
+        refreshData();
+      } catch (e) {
+        showToast('Error: ' + e.message);
+      }
+    }
+
+    async function saveNewDraft() {
+      const title = document.getElementById('composerTitle').value.trim();
+      const content = document.getElementById('composerContent').value.trim();
+      const tags = document.getElementById('composerTags').value.split(',').map(t => t.trim()).filter(Boolean);
+
+      if (!content) {
+        alert('Please enter tweet content.');
+        return;
+      }
+
+      let payload = {
+        title: title || content.substring(0, 40) + '...',
+        type: composerType,
+        tags
+      };
+
+      if (composerType === 'thread') {
+        payload.tweets = content.split(/\n---\n/).map(t => t.trim()).filter(Boolean);
+      } else {
+        payload.content = content;
+      }
+
+      try {
+        const res = await fetch('/api/x/create-draft', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Draft added to X queue!');
+          document.getElementById('composerTitle').value = '';
+          document.getElementById('composerContent').value = '';
+          switchTab('queue');
+          refreshData();
+        }
+      } catch (e) {
+        showToast('Error saving draft: ' + e.message);
+      }
+    }
+
+    async function saveAccountSettings() {
+      const handle = document.getElementById('settingsHandle').value.trim();
+      const authToken = document.getElementById('settingsAuthToken')?.value.trim();
+      const ct0 = document.getElementById('settingsCt0')?.value.trim();
+      const bearerToken = document.getElementById('settingsBearer').value.trim();
+      const apiKey = document.getElementById('settingsApiKey').value.trim();
+      const apiSecret = document.getElementById('settingsApiSecret').value.trim();
+
+      const payload = { handle };
+      if (authToken) payload.authToken = authToken;
+      if (ct0) payload.ct0 = ct0;
+      if (bearerToken) payload.bearerToken = bearerToken;
+      if (apiKey) payload.apiKey = apiKey;
+      if (apiSecret) payload.apiSecret = apiSecret;
+
+      try {
+        const res = await fetch('/api/x/save-credentials', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('X Account settings saved!');
+          loadStatus();
+          loadSchedulerStatus();
+        }
+      } catch (e) {
+        showToast('Error saving: ' + e.message);
+      }
+    }
+
+    async function loadSchedulerStatus() {
+      try {
+        const res = await fetch('/api/x/scheduler-status');
+        const data = await res.json();
+        if (data.success && data.status && data.status.nextRun) {
+          const next = data.status.nextRun;
+          const label = next.label ? next.label.split(' ')[0] + ' IST' : '08:00 PM IST';
+          document.getElementById('nextDropText').innerText = `${label} (~${next.minutesRemaining}m)`;
+        }
+      } catch (e) {
+        console.error('Failed to load scheduler status:', e);
+      }
+    }
+
+    async function triggerSchedulerNow() {
+      showToast('⚡ Triggering Autonomous X Scheduler...');
+      try {
+        const res = await fetch('/api/x/trigger-scheduler', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ force: true })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`✅ Scheduler run complete: ${data.post?.title || 'Post processed'}`);
+          refreshData();
+        } else {
+          showToast(`❌ Scheduler notice: ${data.error || 'Check logs'}`);
+        }
+      } catch (e) {
+        showToast('Error triggering scheduler: ' + e.message);
+      }
+    }
+
+    function refreshData() {
+      loadStatus();
+      loadQueue();
+      loadSchedulerStatus();
+    }
+
+    // Dynamic timer update
+    setInterval(loadSchedulerStatus, 30000);
+
+    // Initial load
+    refreshData();
+  </script>
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovered AI Tools & Workflow Hub | Second Brain Suite</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              500: '#10b981',
+              600: '#059669',
+              900: '#064e3b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at 10% 10%, #0d1117 0%, #030712 100%);
+      color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card {
+      background: rgba(31, 41, 55, 0.45);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.15);
+    }
+    .glass-card.is-tried {
+      opacity: 0.65;
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(6, 78, 59, 0.15);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(16, 185, 129, 0.5);
+    }
+    /* Pulse animation */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .live-dot {
+      animation: pulse-ring 2.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="custom-scrollbar p-4 md:p-8 flex flex-col items-center">
+
+  <!-- Floating Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-3 px-5 py-3 rounded-xl bg-gray-900/90 border border-emerald-500/40 backdrop-blur-xl text-white shadow-2xl">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+    <span id="toast-msg" class="text-sm font-medium">Action completed</span>
+  </div>
+
+  <div class="w-full max-w-7xl flex flex-col space-y-8">
+
+    <!-- Top Navigation & Header -->
+    <header class="w-full flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-800/80">
+      <div class="flex items-center space-x-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 text-2xl font-display font-black">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-3">
+            <h1 class="text-2xl md:text-3xl font-display font-extrabold text-white tracking-tight">Discovered AI Tools Hub</h1>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span> WhatsApp Live Sync
+            </span>
+          </div>
+          <p class="text-sm text-gray-400 mt-1">Autonomous Second Brain pipeline • Forward Reels to WhatsApp ➔ Instant Directory Extraction</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Controls -->
+      <div class="flex items-center gap-3">
+        <a href="/" class="px-4 py-2 rounded-xl bg-gray-800/80 hover:bg-gray-700 text-gray-300 text-sm font-medium border border-gray-700/60 transition flex items-center gap-2">
+          <i class="fa-solid fa-arrow-left"></i> Master Portal
+        </a>
+        <button onclick="openAddToolModal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white text-sm font-semibold shadow-lg shadow-emerald-600/20 transition flex items-center gap-2">
+          <i class="fa-solid fa-plus"></i> Add Tool
+        </button>
+        <button onclick="fetchLiveTools()" title="Refresh Tools" class="w-10 h-10 rounded-xl bg-gray-800/80 hover:bg-gray-700 text-gray-300 border border-gray-700/60 flex items-center justify-center transition">
+          <i id="refresh-icon" class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Key Metrics Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      
+      <!-- Total Tools Card -->
+      <div class="glass-panel p-5 rounded-2xl relative overflow-hidden group">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Discovered</span>
+          <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm border border-blue-500/20">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+        </div>
+        <div class="mt-3 flex items-baseline space-x-2">
+          <span id="stat-total" class="text-3xl font-display font-extrabold text-white">0</span>
+          <span class="text-xs text-gray-500">tools</span>
+        </div>
+        <p class="text-xs text-gray-400 mt-1">From Instagram Reels & Feeds</p>
+      </div>
+
+      <!-- Tried / Tested Card -->
+      <div class="glass-panel p-5 rounded-2xl relative overflow-hidden group">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">Tried & Tested</span>
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm border border-emerald-500/20">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+        </div>
+        <div class="mt-3 flex items-baseline space-x-2">
+          <span id="stat-tried" class="text-3xl font-display font-extrabold text-emerald-400">0</span>
+          <span id="stat-tried-pct" class="text-xs font-semibold text-emerald-500/80">(0%)</span>
+        </div>
+        <p class="text-xs text-gray-400 mt-1">Checked off by you</p>
+      </div>
+
+      <!-- To Try Queue Card -->
+      <div class="glass-panel p-5 rounded-2xl relative overflow-hidden group">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">To-Try Queue</span>
+          <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm border border-amber-500/20">
+            <i class="fa-solid fa-hourglass-half"></i>
+          </div>
+        </div>
+        <div class="mt-3 flex items-baseline space-x-2">
+          <span id="stat-pending" class="text-3xl font-display font-extrabold text-amber-400">0</span>
+          <span class="text-xs text-gray-500">pending</span>
+        </div>
+        <p class="text-xs text-gray-400 mt-1">Ready for your review</p>
+      </div>
+
+      <!-- Reels Mined Card -->
+      <div class="glass-panel p-5 rounded-2xl relative overflow-hidden group">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-purple-400">Instagram Sources</span>
+          <div class="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm border border-purple-500/20">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+        </div>
+        <div class="mt-3 flex items-baseline space-x-2">
+          <span id="stat-sources" class="text-3xl font-display font-extrabold text-purple-400">0</span>
+          <span class="text-xs text-gray-500">creators</span>
+        </div>
+        <p class="text-xs text-gray-400 mt-1">Automated OCR & extraction</p>
+      </div>
+
+    </div>
+
+    <!-- Search, Category Filters & Status Filters Bar -->
+    <div class="glass-panel p-4 md:p-5 rounded-2xl flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
+      
+      <!-- Search Input -->
+      <div class="relative flex-1 max-w-md">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+        <input 
+          type="text" 
+          id="search-box" 
+          placeholder="Search tools, categories, keywords, @creators..." 
+          oninput="filterTools()"
+          class="w-full bg-gray-900/90 text-white text-sm pl-11 pr-4 py-2.5 rounded-xl border border-gray-700/70 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition placeholder-gray-500"
+        >
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap items-center gap-2 overflow-x-auto custom-scrollbar pb-1 md:pb-0">
+        <button onclick="setFilter('status', 'all', this)" class="filter-status px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500 text-white shadow-sm transition">All (<span id="count-all">0</span>)</button>
+        <button onclick="setFilter('status', 'pending', this)" class="filter-status px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-800/80 hover:bg-gray-700 text-gray-300 border border-gray-700/60 transition">⏳ To Try (<span id="count-pending">0</span>)</button>
+        <button onclick="setFilter('status', 'tried', this)" class="filter-status px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-800/80 hover:bg-gray-700 text-gray-300 border border-gray-700/60 transition">🟢 Tried (<span id="count-tried">0</span>)</button>
+        
+        <div class="h-4 w-px bg-gray-700 mx-1 hidden md:block"></div>
+
+        <!-- Category Dropdown -->
+        <select id="category-select" onchange="filterTools()" class="bg-gray-900/90 text-gray-300 text-xs px-3 py-2 rounded-xl border border-gray-700/70 focus:outline-none focus:border-emerald-500 transition">
+          <option value="all">All Categories</option>
+          <option value="ai">AI & LLMs</option>
+          <option value="dev">Developer & Edge AI</option>
+          <option value="design">UI & Design</option>
+          <option value="audio">Voice & Video</option>
+          <option value="workflow">Workflow & Productivity</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Tools Grid Container -->
+    <div id="tools-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Loading Skeleton -->
+      <div class="col-span-full py-16 text-center text-gray-400">
+        <i class="fa-solid fa-spinner fa-spin text-3xl text-emerald-400 mb-3"></i>
+        <p class="text-sm">Loading discovered tools from Second Brain ledger...</p>
+      </div>
+    </div>
+
+    <!-- Empty State Message -->
+    <div id="empty-state" class="hidden col-span-full py-16 text-center">
+      <div class="w-16 h-16 rounded-full bg-gray-800/80 text-gray-500 flex items-center justify-center mx-auto text-2xl mb-3">
+        <i class="fa-solid fa-box-open"></i>
+      </div>
+      <h3 class="text-base font-semibold text-gray-300">No tools match your filter</h3>
+      <p class="text-xs text-gray-500 mt-1">Try adjusting your search terms or filter criteria.</p>
+    </div>
+
+  </div>
+
+  <!-- Add Custom Tool Modal -->
+  <div id="add-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="glass-panel w-full max-w-md p-6 rounded-2xl border border-gray-700 shadow-2xl relative">
+      <button onclick="closeAddToolModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      
+      <h3 class="text-lg font-display font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-plus-circle text-emerald-400"></i> Add New Tool
+      </h3>
+      <p class="text-xs text-gray-400 mt-1">Manually append a discovered tool to your Second Brain library.</p>
+
+      <form onsubmit="handleManualAddTool(event)" class="mt-4 space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-300 mb-1">Tool Name *</label>
+          <input type="text" id="new-name" required placeholder="e.g. Cursor AI, Perplexity" class="w-full bg-gray-900 text-white text-sm px-3.5 py-2 rounded-xl border border-gray-700 focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-300 mb-1">Category</label>
+          <input type="text" id="new-category" placeholder="e.g. AI / Developer Tools, Video Creation" class="w-full bg-gray-900 text-white text-sm px-3.5 py-2 rounded-xl border border-gray-700 focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-300 mb-1">Website URL</label>
+          <input type="text" id="new-url" placeholder="https://example.com" class="w-full bg-gray-900 text-white text-sm px-3.5 py-2 rounded-xl border border-gray-700 focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-300 mb-1">Description & Key Takeaway</label>
+          <textarea id="new-desc" rows="3" placeholder="What does this tool do? Why is it worth trying?" class="w-full bg-gray-900 text-white text-sm px-3.5 py-2 rounded-xl border border-gray-700 focus:outline-none focus:border-emerald-500"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeAddToolModal()" class="px-4 py-2 text-xs font-semibold text-gray-400 hover:text-white rounded-xl bg-gray-800 transition">Cancel</button>
+          <button type="submit" class="px-5 py-2 text-xs font-bold text-white rounded-xl bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-600/30 transition">Save Tool</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Embedded Initial Fallback Tools Data (Updated autonomously) -->
+  <script>
+    let allTools = [];
+    let currentStatusFilter = 'all';
+
+    // Fetch tools from live server endpoint or fallback to local storage / static seed
+    async function fetchLiveTools() {
+      const icon = document.getElementById('refresh-icon');
+      if (icon) icon.classList.add('fa-spin');
+
+      try {
+        const res = await fetch('/api/tools');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.tools && Array.isArray(data.tools)) {
+            allTools = data.tools;
+            // Sync with local storage flags if any
+            applyLocalOverrides();
+            renderTools();
+            showToast('Tools synced live with JARVIS Server', 'success');
+            if (icon) icon.classList.remove('fa-spin');
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Live API offline, using local storage / seed:', err);
+      }
+
+      // Fallback Seed Data (from Second Brain)
+      if (allTools.length === 0) {
+        const cached = localStorage.getItem('amz_discovered_tools_cache');
+        if (cached) {
+          try { allTools = JSON.parse(cached); } catch(e) {}
+        }
+      }
+
+      if (allTools.length === 0) {
+        allTools = getSeedTools();
+      }
+
+      applyLocalOverrides();
+      renderTools();
+      if (icon) icon.classList.remove('fa-spin');
+    }
+
+    function applyLocalOverrides() {
+      const overrides = JSON.parse(localStorage.getItem('amz_tools_status_map') || '{}');
+      allTools.forEach(t => {
+        if (overrides[t.id] !== undefined) {
+          t.tried = overrides[t.id].tried;
+          t.triedAt = overrides[t.id].triedAt;
+        }
+      });
+    }
+
+    function saveLocalOverride(id, tried, triedAt) {
+      const overrides = JSON.parse(localStorage.getItem('amz_tools_status_map') || '{}');
+      overrides[id] = { tried, triedAt };
+      localStorage.setItem('amz_tools_status_map', JSON.stringify(overrides));
+      localStorage.setItem('amz_discovered_tools_cache', JSON.stringify(allTools));
+    }
+
+    // Toggle Tried / In-Use Checkbox
+    async function toggleToolStatus(id, event) {
+      event.stopPropagation();
+      const tool = allTools.find(t => t.id === id);
+      if (!tool) return;
+
+      tool.tried = !tool.tried;
+      tool.triedAt = tool.tried ? new Date().toISOString() : null;
+
+      saveLocalOverride(tool.id, tool.tried, tool.triedAt);
+      renderTools();
+
+      // Show toast
+      if (tool.tried) {
+        showToast(`Marked "${tool.name}" as Tried!`, 'success');
+      } else {
+        showToast(`Moved "${tool.name}" back to To-Try queue`, 'info');
+      }
+
+      // Async push to server
+      try {
+        await fetch('/api/tools/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: tool.id, name: tool.name, tried: tool.tried })
+        });
+      } catch(e) {
+        console.warn('Server sync error, saved locally:', e);
+      }
+    }
+
+    // Render Tools in Grid
+    function renderTools() {
+      const container = document.getElementById('tools-container');
+      const emptyState = document.getElementById('empty-state');
+      
+      const search = (document.getElementById('search-box')?.value || '').toLowerCase().trim();
+      const categoryFilter = document.getElementById('category-select')?.value || 'all';
+
+      let filtered = allTools.filter(t => {
+        // Status filter
+        if (currentStatusFilter === 'pending' && t.tried) return false;
+        if (currentStatusFilter === 'tried' && !t.tried) return false;
+
+        // Category filter
+        if (categoryFilter !== 'all') {
+          const cat = (t.category || '').toLowerCase();
+          if (categoryFilter === 'ai' && !cat.includes('ai') && !cat.includes('llm') && !cat.includes('gpt')) return false;
+          if (categoryFilter === 'dev' && !cat.includes('dev') && !cat.includes('edge') && !cat.includes('code') && !cat.includes('tinyml')) return false;
+          if (categoryFilter === 'design' && !cat.includes('design') && !cat.includes('ui') && !cat.includes('frontend') && !cat.includes('creative')) return false;
+          if (categoryFilter === 'audio' && !cat.includes('voice') && !cat.includes('audio') && !cat.includes('video') && !cat.includes('speech') && !cat.includes('tts')) return false;
+          if (categoryFilter === 'workflow' && !cat.includes('workflow') && !cat.includes('productivity') && !cat.includes('meeting') && !cat.includes('rag') && !cat.includes('rag')) return false;
+        }
+
+        // Search text
+        if (search) {
+          const matchName = (t.name || '').toLowerCase().includes(search);
+          const matchCat = (t.category || '').toLowerCase().includes(search);
+          const matchDesc = (t.description || '').toLowerCase().includes(search);
+          const matchCreator = (t.creator || '').toLowerCase().includes(search);
+          if (!matchName && !matchCat && !matchDesc && !matchCreator) return false;
+        }
+
+        return true;
+      });
+
+      // Update counters
+      const totalCount = allTools.length;
+      const triedCount = allTools.filter(t => t.tried).length;
+      const pendingCount = totalCount - triedCount;
+      const uniqueSources = new Set(allTools.map(t => t.creator).filter(Boolean)).size;
+
+      document.getElementById('stat-total').textContent = totalCount;
+      document.getElementById('stat-tried').textContent = triedCount;
+      document.getElementById('stat-pending').textContent = pendingCount;
+      document.getElementById('stat-sources').textContent = uniqueSources || 6;
+      document.getElementById('stat-tried-pct').textContent = totalCount > 0 ? `(${Math.round((triedCount/totalCount)*100)}%)` : '(0%)';
+
+      document.getElementById('count-all').textContent = totalCount;
+      document.getElementById('count-pending').textContent = pendingCount;
+      document.getElementById('count-tried').textContent = triedCount;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      container.innerHTML = filtered.map(t => {
+        const isTried = Boolean(t.tried);
+        const dateStr = t.discoveredAt ? new Date(t.discoveredAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Recent';
+        const cleanUrl = t.url && t.url !== 'N/A' && !t.url.includes('Provided via DM') ? (t.url.startsWith('http') ? t.url : `https://${t.url}`) : null;
+
+        return `
+          <div class="glass-card p-5 rounded-2xl flex flex-col justify-between relative group ${isTried ? 'is-tried' : ''}">
+            
+            <!-- Card Header -->
+            <div>
+              <div class="flex items-start justify-between gap-3">
+                
+                <!-- Checkbox & Tool Title -->
+                <div class="flex items-start space-x-3">
+                  <button 
+                    onclick="toggleToolStatus('${t.id}', event)" 
+                    class="mt-1 w-5 h-5 rounded-md border ${isTried ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-gray-600 bg-gray-900/60 hover:border-emerald-400 text-transparent'} flex items-center justify-center transition flex-shrink-0"
+                    title="${isTried ? 'Mark as Un-tried' : 'Mark as Tried / In Use'}"
+                  >
+                    <i class="fa-solid fa-check text-xs"></i>
+                  </button>
+
+                  <div>
+                    <h4 class="text-base font-display font-bold ${isTried ? 'line-through text-gray-400' : 'text-white'} group-hover:text-emerald-400 transition">
+                      ${escapeHtml(t.name)}
+                    </h4>
+                    <span class="inline-block px-2 py-0.5 mt-1 rounded-md text-[10px] font-semibold bg-gray-800 text-gray-400 border border-gray-700/60">
+                      ${escapeHtml(t.category || 'General Utility')}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Status Badge -->
+                <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full ${isTried ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'} flex-shrink-0">
+                  ${isTried ? '✔ Tried' : '⏳ To Try'}
+                </span>
+              </div>
+
+              <!-- Tool Description -->
+              <p class="text-xs text-gray-300 mt-3.5 leading-relaxed font-normal ${isTried ? 'text-gray-400' : ''}">
+                ${escapeHtml(t.description || 'No description provided.')}
+              </p>
+            </div>
+
+            <!-- Card Footer & Actions -->
+            <div class="mt-5 pt-4 border-t border-gray-800/80 flex items-center justify-between gap-2">
+              
+              <!-- Source & Date Tag -->
+              <div class="flex items-center space-x-2 text-[11px] text-gray-500">
+                ${t.source ? `
+                  <a href="${t.source}" target="_blank" title="View Source Reel" class="hover:text-pink-400 flex items-center gap-1 transition">
+                    <i class="fa-brands fa-instagram"></i> @${escapeHtml(t.creator || 'reel')}
+                  </a>
+                ` : `
+                  <span><i class="fa-regular fa-calendar"></i> ${dateStr}</span>
+                `}
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex items-center space-x-1.5">
+                ${cleanUrl ? `
+                  <button onclick="copyToClipboard('${cleanUrl}', '${escapeHtml(t.name)} Link')" title="Copy Link" class="w-8 h-8 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-400 hover:text-white flex items-center justify-center text-xs transition">
+                    <i class="fa-regular fa-copy"></i>
+                  </button>
+                  <a href="${cleanUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-white border border-emerald-500/30 hover:border-emerald-500 text-xs font-semibold flex items-center gap-1.5 transition">
+                    <span>Try</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
+                ` : `
+                  <span class="text-[11px] text-gray-500 italic">No direct URL</span>
+                `}
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterTools() {
+      renderTools();
+    }
+
+    function setFilter(type, value, btn) {
+      if (type === 'status') {
+        currentStatusFilter = value;
+        document.querySelectorAll('.filter-status').forEach(b => {
+          b.className = 'filter-status px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-800/80 hover:bg-gray-700 text-gray-300 border border-gray-700/60 transition';
+        });
+        btn.className = 'filter-status px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500 text-white shadow-sm transition';
+      }
+      renderTools();
+    }
+
+    function copyToClipboard(text, label) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`${label} copied to clipboard!`, 'success');
+      }).catch(() => {
+        showToast(`Failed to copy to clipboard`, 'error');
+      });
+    }
+
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastIcon = document.getElementById('toast-icon');
+
+      toastMsg.textContent = msg;
+      if (type === 'success') {
+        toastIcon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+      } else if (type === 'error') {
+        toastIcon.className = 'fa-solid fa-circle-xmark text-rose-400 text-lg';
+      } else {
+        toastIcon.className = 'fa-solid fa-circle-info text-blue-400 text-lg';
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    function openAddToolModal() {
+      document.getElementById('add-modal').classList.remove('hidden');
+      document.getElementById('add-modal').classList.add('flex');
+    }
+
+    function closeAddToolModal() {
+      document.getElementById('add-modal').classList.add('hidden');
+      document.getElementById('add-modal').classList.remove('flex');
+    }
+
+    function handleManualAddTool(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-name').value.trim();
+      const category = document.getElementById('new-category').value.trim() || 'Developer & AI Tools';
+      const url = document.getElementById('new-url').value.trim() || null;
+      const description = document.getElementById('new-desc').value.trim();
+
+      const newTool = {
+        id: `tool-${Date.now()}-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+        name,
+        category,
+        url,
+        description,
+        discoveredAt: new Date().toISOString(),
+        source: 'manual_entry',
+        creator: 'kartikey',
+        tried: false,
+        triedAt: null,
+        notes: ''
+      };
+
+      allTools.unshift(newTool);
+      saveLocalOverride(newTool.id, false, null);
+      renderTools();
+      closeAddToolModal();
+      showToast(`Added "${name}" to your library!`, 'success');
+
+      // Clear inputs
+      document.getElementById('new-name').value = '';
+      document.getElementById('new-category').value = '';
+      document.getElementById('new-url').value = '';
+      document.getElementById('new-desc').value = '';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Seed tools (fallback if offline)
+    function getSeedTools() {
+      return [
+        { id: "tool-1-chatgpt", name: "ChatGPT (GPT-6 Astra)", category: "Conversational AI / LLM", description: "OpenAI chatbot; verdict: Lives up to the hype, especially for automated workflows and vision/image generation.", url: "https://chatgpt.com", creator: "okaashish", tried: false },
+        { id: "tool-2-claude", name: "Claude", category: "LLM & Code Reasoning", description: "Anthropic AI assistant; verdict: Still elite for code and long documents, though slightly overhyped by tech enthusiasts.", url: "https://claude.ai", creator: "okaashish", tried: true },
+        { id: "tool-3-crewai", name: "CrewAI", category: "Autonomous Multi-Agent Framework", description: "Criminally underrated orchestration framework for role-playing autonomous AI agent teams.", url: "https://crewai.com", creator: "okaashish", tried: false },
+        { id: "tool-4-handy", name: "Handy", category: "Voice Productivity & Dictation", description: "Low hype, high reality. One of the best Wispr Flow speech-to-text alternatives that nobody talks about.", url: "https://usehandy.com", creator: "okaashish", tried: false },
+        { id: "tool-5-meetily", name: "Meetily", category: "AI Meeting Assistant & Notes", description: "Meeting assistant and automated note-taker described as 'Granola without the hype'.", url: "https://meetily.ai", creator: "okaashish", tried: false },
+        { id: "tool-6-open-notebook", name: "Open Notebook", category: "Knowledge Management / RAG", description: "The underrated, open alternative to Google NotebookLM for document synthesis.", url: "https://github.com/open-notebook", creator: "okaashish", tried: false },
+        { id: "tool-7-mirothinker", name: "MiroThinker", category: "Deep Research Agent", description: "Underrated autonomous research agent tool for web synthesis and deep technical dives.", url: "https://mirothinker.ai", creator: "okaashish", tried: false },
+        { id: "tool-8-kokoro-tts", name: "Kokoro TTS", category: "Open-Source Text-to-Speech", description: "TTS model that is way too good for how little people mention it; high fidelity speech synthesis.", url: "https://github.com/hexgrad/kokoro", creator: "okaashish", tried: false },
+        { id: "tool-9-krea-ai", name: "Krea AI", category: "Realtime Generative Image Canvas", description: "Quietly become one of the most useful, lightning-fast generative canvas & enhancement tools.", url: "https://krea.ai", creator: "okaashish", tried: true },
+        { id: "tool-10-fish-audio", name: "Fish Audio", category: "Voice Synthesis & Audio AI", description: "Top-tier alternative to ElevenLabs for realistic voice cloning and TTS that deserves much more attention.", url: "https://fish.audio", creator: "okaashish", tried: true },
+        { id: "tool-11-omniroute", name: "OmniRoute", category: "AI Multi-Provider Proxy", description: "Switches automatically between 237 providers (90 free) when usage limits are hit.", url: "https://github.com/danny-avila/LibreChat", creator: "buildwithai.club", tried: true },
+        { id: "tool-12-needle", name: "Needle & cactus-needle", category: "AI / Edge-AI / TinyML", description: "A 45-million-parameter foundation model packed into a single 14MB binary that runs fully offline on edge devices using ~28MB RAM.", url: "https://github.com/cactus-compute/needle", creator: "fullstackparody", tried: false },
+        { id: "tool-13-laya", name: "Laya", category: "AI / Local Model", description: "An open-source System 1 decision model with 421M parameters running locally at 86.5 decisions/sec (~9ms P50 latency).", url: "https://github.com/NandhaKishorM/laya", creator: "marc.kaz", tried: false },
+        { id: "tool-14-godly-design", name: "godly.design", category: "Design / Inspiration", description: "A curated collection of the best-designed websites on the internet. Use screenshots for Claude layout and spacing reference.", url: "https://godly.design", creator: "nocodealex", tried: false },
+        { id: "tool-15-transitions-dev", name: "transitions.dev", category: "UI / Dev Tools", description: "Copy-paste UI animations and a skill for Claude Code to implement 27+ transitions.", url: "https://transitions.dev", creator: "nocodealex", tried: false },
+        { id: "tool-16-animos-app", name: "animos.app", category: "Video Creation", description: "Turn app screenshots into looping browser-based launch videos using templates without After Effects.", url: "https://animos.app", creator: "nocodealex", tried: false },
+        { id: "tool-17-deck-gallery", name: "deck.gallery", category: "Pitch Decks & Presentations", description: "Over 200 real pitch decks and 9,000+ slides from top brands like OpenAI and Perplexity for structural inspiration.", url: "https://deck.gallery", creator: "nocodealex", tried: false }
+      ];
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', fetchLiveTools);
+  </script>
+</body>
+</html>

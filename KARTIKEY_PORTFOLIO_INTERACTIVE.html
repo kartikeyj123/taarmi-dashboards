@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Kartikey Jain — Portfolio Architect, Webflow Engineer & Marketplace Operator</title>
   <meta name="description" content="Personal portfolio and verified proof-of-work of Kartikey Jain: 19-year-old builder in Bangalore. High-craft Webflow development, ₹9L+ Amazon India scaling (5+ ROAS), video direction (50+ BTS interviews), and autonomous systems.">
   
@@ -1794,7 +1794,293 @@ body {
       .nav-center-status { display: none; }
       .search-filter-box { width: 100%; }
     }
-  </style>
+  
+/* === INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
+
+/* ==========================================================================
+   MASTER MOBILE-FIRST RESPONSIVE ENGINE (320px - 768px Breakpoints)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  /* Prevent horizontal document blowout */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    font-size: 13.5px !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
+  
+  body {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 10px !important;
+    padding-bottom: 85px !important;
+  }
+
+  /* Responsive Headers & Brand Bars */
+  header, .header, .header-container, .header-inner, .navbar, .top-bar {
+    padding: 12px 14px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .brand-area, .brand-group, .brand-wrap, .brand-text-group {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+  .brand-text h1, header h1, .brand-title, .app-title {
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+  }
+  .brand-text p, .brand-subtitle, .app-subtitle {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+  .header-actions, .header-pills, .section-tools, .header-right {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+  }
+  .header-pills .pill, .header-actions .badge {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  /* Main Containers & Layouts */
+  .container, main, .main-content, .app-container, .wrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* KPI / Metric Grids (2 columns on mobile) */
+  .kpi-grid, .summary-grid, .stats-grid, .metrics-grid, .matrix-grid, .kpi-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+  }
+  .kpi-card, .metric-card, .stat-card, .summary-card {
+    padding: 12px 10px !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .kpi-val, .kpi-value, .metric-val, .stat-number {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    word-break: break-word !important;
+    line-height: 1.2 !important;
+  }
+  .kpi-title, .kpi-label, .metric-label {
+    font-size: 10.5px !important;
+    letter-spacing: 0.02em !important;
+  }
+  .kpi-desc, .kpi-sub, .metric-sub {
+    font-size: 10px !important;
+  }
+
+  /* Cards, Panels & Glass Containers */
+  .card, .panel, .section-card, .glass-card, .dash-card, .hud-card, .glass-panel {
+    padding: 14px 12px !important;
+    border-radius: 14px !important;
+    margin-bottom: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .card-header, .panel-header, .section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 10px !important;
+  }
+  .card-title, .panel-title, .section-title h3, .section-title {
+    font-size: 15px !important;
+    line-height: 1.3 !important;
+  }
+  .card-actions, .panel-tools, .section-tools {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* Grids collapse to 1 column */
+  .section-grid, .grid-2col, .grid-3col, .stream-layout, .app-container, .two-col-grid, .speed-audit-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+
+  /* Touch-Friendly Smooth Horizontal Scroll Navigation Tabs */
+  .tabs-nav, .tab-bar, .nav-pills, .filter-tabs, .sp-tabs, .pill-nav, .category-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 6px !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 14px !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .tabs-nav::-webkit-scrollbar, .tab-bar::-webkit-scrollbar, .nav-pills::-webkit-scrollbar, .filter-tabs::-webkit-scrollbar {
+    display: none !important;
+    height: 0 !important;
+  }
+  .tab-btn, .pill-btn, .cat-btn, .filter-btn, .sp-tab-btn {
+    flex: 0 0 auto !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    min-height: 38px !important;
+    white-space: nowrap !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  /* Responsive Horizontal Scrollable Tables */
+  .table-responsive, .table-container, .table-wrap {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin-bottom: 12px !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-sizing: border-box !important;
+  }
+  table {
+    width: 100% !important;
+    min-width: 540px !important;
+    font-size: 11.5px !important;
+    border-collapse: collapse !important;
+  }
+  th, td {
+    padding: 8px 10px !important;
+    white-space: nowrap !important;
+  }
+  th {
+    font-size: 10.5px !important;
+  }
+  td.wrap-text, td.kw-col, td .kw-text, td .prod-title {
+    white-space: normal !important;
+    max-width: 160px !important;
+    word-break: break-word !important;
+  }
+
+  /* Full-width Touch Inputs, Selects & Buttons */
+  input[type="text"], input[type="search"], .table-search-input, select, textarea {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: 13px !important;
+    padding: 10px 12px !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
+  }
+  .btn, .btn-action, .copy-all-btn, .btn-copy, .btn-gold, .btn-primary {
+    min-height: 40px !important;
+    font-size: 12px !important;
+    padding: 8px 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Bulk paste & Textareas */
+  .bulk-area, textarea {
+    font-size: 11px !important;
+    padding: 10px !important;
+    height: 120px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Modals & Dialogs */
+  .modal-overlay {
+    padding: 12px !important;
+    align-items: flex-end !important;
+    box-sizing: border-box !important;
+  }
+  .modal-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+  }
+  .modal-footer {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .modal-footer .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Floating docks & Bottom Bars */
+  .floating-dock, .action-bar-fixed {
+    width: calc(100% - 20px) !important;
+    left: 10px !important;
+    bottom: 10px !important;
+    padding: 8px 12px !important;
+    gap: 6px !important;
+    justify-content: space-around !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Toasts & Alert Banners */
+  #toast, .toast, .alert-banner, .safety-banner {
+    padding: 12px 14px !important;
+    font-size: 12px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+  #toast, .toast {
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    right: 12px !important;
+    left: 12px !important;
+    max-width: calc(100% - 24px) !important;
+    text-align: center !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  /* Ultra-narrow devices (iPhone SE, Galaxy Fold outer) */
+  .kpi-grid, .summary-grid, .stats-grid, .metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .brand-text h1, header h1, .brand-title {
+    font-size: 15px !important;
+  }
+  .tab-btn, .pill-btn, .cat-btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* === END INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
+</style>
 </head>
 <body>
 
@@ -1831,7 +2117,6 @@ body {
           <div class="pulsing-dot"></div>
           Available for High-Craft Builds
         </div>
-      </div>
 
       <div class="nav-actions">
         <a href="00_DASHBOARD_PORTAL.html" class="btn-portal-back" title="Return to Live Dashboards Portal">
@@ -1876,7 +2161,6 @@ body {
             <span style="color:#34d399; font-family:var(--font-mono);">5+ ROAS</span>
           </div>
           <div class="proof-subdetail">60+ SKUs • 348% YoY • A10 SEO Matrix ➔</div>
-        </div>
 
         <div class="proof-item border-cyan" onclick="openDrawer('urban-vault')">
           <div class="proof-num">100/100 <span class="badge badge-cyan-soft">Webflow Craft</span></div>
@@ -1885,7 +2169,6 @@ body {
             <span style="color:#38bdf8; font-family:var(--font-mono);">Sub-1s</span>
           </div>
           <div class="proof-subdetail">Client-First CSS • 0.000 CLS • Bespoke UI ➔</div>
-        </div>
 
         <div class="proof-item border-amber" onclick="openDrawer('bts-media')">
           <div class="proof-num">50+ Live <span class="badge badge-amber-soft">Media Direction</span></div>
@@ -1894,7 +2177,6 @@ body {
             <span style="color:#fbbf24; font-family:var(--font-mono);">BTS Summit</span>
           </div>
           <div class="proof-subdetail">Same-day aftermovies • Broadcast lav audio ➔</div>
-        </div>
 
         <div class="proof-item border-violet" onclick="openDrawer('autonomous-brain')">
           <div class="proof-num">100% Local <span class="badge badge-violet-soft">Autonomous Systems</span></div>
@@ -1903,7 +2185,6 @@ body {
             <span style="color:#c084fc; font-family:var(--font-mono);">$0 Costs</span>
           </div>
           <div class="proof-subdetail">WhatsApp Baileys bridge • Live office nodes ➔</div>
-        </div>
       </div>
     </section>
 
@@ -1947,22 +2228,17 @@ body {
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#38bdf8;">100/100</div>
               <div class="sp-metric-lbl">Mobile Lighthouse</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#34d399;">0.000</div>
               <div class="sp-metric-lbl">Layout Shift (CLS)</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#fbbf24;">&lt; 0.8s</div>
               <div class="sp-metric-lbl">Page Load Speed</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#c084fc;">Finsweet</div>
               <div class="sp-metric-lbl">Client-First Standard</div>
-            </div>
           </div>
           <div class="sp-quote">"Websites should feel like physical luxury objects: razor-sharp, instant, and frictionless."</div>
-        </div>
       </div>
 
       <!-- Tab 2: Amazon Marketplace -->
@@ -1984,22 +2260,17 @@ body {
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#34d399;">₹9,00,000+</div>
               <div class="sp-metric-lbl">Gross Marketplace Sales</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#38bdf8;">5+ ROAS</div>
               <div class="sp-metric-lbl">Catalog Ad Efficiency</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#fbbf24;">348% YoY</div>
               <div class="sp-metric-lbl">Sales Trajectory</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#c084fc;">60+ SKUs</div>
               <div class="sp-metric-lbl">Gifting, Ribbons, Rangoli</div>
-            </div>
           </div>
           <div class="sp-quote">"E-commerce isn't guessing; it's clean keyword math, zero feed errors, and relentless conversion optimization."</div>
-        </div>
       </div>
 
       <!-- Tab 3: Media & Video -->
@@ -2021,22 +2292,17 @@ body {
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#fbbf24;">50+ Interviews</div>
               <div class="sp-metric-lbl">BLR Tech Summit</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#34d399;">RGB (255,255,255)</div>
               <div class="sp-metric-lbl">Amazon Pure White Hero</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#38bdf8;">15+ Brands</div>
               <div class="sp-metric-lbl">Video & Content Sprints</div>
-            </div>
             <div class="sp-metric-tile">
               <div class="sp-metric-val" style="color:#c084fc;">VP & Treasurer</div>
               <div class="sp-metric-lbl">Xavier's Photography Club</div>
-            </div>
           </div>
           <div class="sp-quote">"Visual clarity commands premium pricing. If customers misjudge dimensions, your returns will eat your margins."</div>
-        </div>
       </div>
 
       <!-- Tab 4: Experiential Dropout -->
@@ -2058,7 +2324,6 @@ body {
             Problem ➔ Research ➔ Strategy ➔ Creative Concept ➔ Execution ➔ Distribution ➔ Measurement ➔ Iterate
           </div>
           <div class="sp-quote">"Learning by doing isn't an aphorism—it's having real capital, real deadlines, and real users judging what you build."</div>
-        </div>
       </div>
     </section>
 
@@ -2096,7 +2361,6 @@ body {
             <span>☰ Table</span>
           </button>
         </div>
-      </div>
     </div>
 
     <!-- GRID VIEW -->
@@ -2118,11 +2382,9 @@ body {
                 <div>
                   <div style="font-size:12px; font-weight:700; color:#fff;">Lighthouse Score</div>
                   <div style="font-size:10px; font-family:var(--font-mono); color:#34d399;">0.6s FCP • 0.000 CLS</div>
-                </div>
               </div>
               <span style="font-size:11px; font-family:var(--font-mono); color:#38bdf8;">Webflow Studio</span>
             </div>
-          </div>
         </div>
         <div class="card-body">
           <div class="card-meta-row">
@@ -2145,7 +2407,6 @@ body {
             </button>
             <a href="#playground" class="btn-live-link" title="Test in Viewport Playground">Playground ↗</a>
           </div>
-        </div>
       </div>
 
       <!-- Project 2: Amazon Scale -->
@@ -2172,7 +2433,6 @@ body {
               <span class="amazon-tag-item">60+ SKUs</span>
               <span class="amazon-tag-item">5x249B A10 Matrix</span>
             </div>
-          </div>
         </div>
         <div class="card-body">
           <div class="card-meta-row">
@@ -2194,7 +2454,6 @@ body {
               <span>Inspect Case Study</span> ➔
             </button>
           </div>
-        </div>
       </div>
 
       <!-- Project 3: BTS Media -->
@@ -2215,7 +2474,6 @@ body {
             <div style="text-align:center;">
               <span style="font-size:12px; color:#fbbf24; font-weight:700;">50+ EXECUTIVE INTERVIEWS</span>
               <div style="font-size:10px; color:var(--text-dim); margin-top:2px;">BENGALURU TECH SUMMIT</div>
-            </div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:10px; color:var(--text-dim);">CH1 / CH2 LAV</span>
               <div class="vf-audio-vu">
@@ -2224,9 +2482,7 @@ body {
                 <div class="vu-bar" style="height:16px;"></div>
                 <div class="vu-bar" style="height:14px;"></div>
                 <div class="vu-bar" style="height:10px;"></div>
-              </div>
             </div>
-          </div>
         </div>
         <div class="card-body">
           <div class="card-meta-row">
@@ -2248,7 +2504,6 @@ body {
               <span>Inspect Case Study</span> ➔
             </button>
           </div>
-        </div>
       </div>
 
       <!-- Project 4: Commercial Photography -->
@@ -2268,7 +2523,6 @@ body {
               <span>Macro Weave Texture</span>
               <span style="color:#34d399;">Zero Returns</span>
             </div>
-          </div>
         </div>
         <div class="card-body">
           <div class="card-meta-row">
@@ -2289,7 +2543,6 @@ body {
               <span>Inspect Case Study</span> ➔
             </button>
           </div>
-        </div>
       </div>
 
       <!-- Project 5: Brand Campaigns -->
@@ -2312,7 +2565,6 @@ body {
             <div style="font-size:11px; font-family:var(--font-mono); color:var(--text-dim);">
               <span>Short-form Retention • Kinetic Pacing</span>
             </div>
-          </div>
         </div>
         <div class="card-body">
           <div class="card-meta-row">
@@ -2333,7 +2585,6 @@ body {
               <span>Inspect Case Study</span> ➔
             </button>
           </div>
-        </div>
       </div>
 
       <!-- Project 6: Autonomous Systems -->
@@ -2349,12 +2600,10 @@ body {
               <div>&gt; baileys-socket <span class="text-ok">[LISTENING]</span></div>
               <div class="text-dimmed">&gt; audio_ingest: 2.1s memo transcribed in 420ms</div>
               <div class="text-ok">&gt; latency: 3.8ms • local sandbox verified</div>
-            </div>
             <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-dim);">
               <span>PORT 4000</span>
               <span style="color:#34d399;">CPU 100% PRIVATE</span>
             </div>
-          </div>
         </div>
         <div class="card-body">
           <div class="card-meta-row">
@@ -2375,14 +2624,13 @@ body {
               <span>Inspect Case Study</span> ➔
             </button>
           </div>
-        </div>
       </div>
 
     </div>
 
     <!-- TABLE VIEW (INDEX) -->
     <div class="projects-table-container" id="projectsTable">
-      <table class="projects-table">
+      <div class="table-responsive"><table class="projects-table">
         <thead>
           <tr>
             <th>Year</th>
@@ -2396,7 +2644,7 @@ body {
         <tbody id="tableBody">
           <!-- Dynamically populated via JavaScript -->
         </tbody>
-      </table>
+      </table></div>
     </div>
 
     <!-- Interactive Viewport Playground Section -->
@@ -2417,7 +2665,6 @@ body {
             <button class="vp-btn" onclick="setFrameSize('768px', this)">Tablet (768px)</button>
             <button class="vp-btn" onclick="setFrameSize('375px', this)">Mobile (375px)</button>
           </div>
-        </div>
       </div>
 
       <div class="preview-frame-container">
@@ -2430,7 +2677,6 @@ body {
               <span>https://urbanvault.webflow.io</span>
               <span class="browser-status-tag" id="vpWidthReadout">1440px Viewport</span>
             </div>
-          </div>
           <div class="sandbox-content">
             <span class="token-overlay-tag" id="tokenTag1">.section_hero • clamp(22px, 4vw, 36px)</span>
             <h3 class="sandbox-hero-title">
@@ -2461,7 +2707,6 @@ body {
                 <h4>Maintainable CMS</h4>
                 <p>Structured schema for 1-click publishing by client teams.</p>
               </div>
-            </div>
           </div>
         </div>
 
@@ -2483,7 +2728,6 @@ body {
             <span class="cwv-title">Cumulative Layout Shift</span>
             <span class="cwv-val">0.000</span>
           </div>
-        </div>
       </div>
 
       <div class="speed-audit-grid">
@@ -2505,7 +2749,6 @@ body {
             • 0.8s Sub-Second Load • Clean Client-First CSS • Zero template bloat • 100% fluid mobile responsiveness • Pristine CMS handoff.
           </p>
         </div>
-      </div>
     </section>
 
     <!-- Timeline / Proof Changelog -->
@@ -2522,7 +2765,6 @@ body {
           <div class="timeline-desc">
             Built 100% local Whisper STT Second Brain with WhatsApp bridge running on CPU at $0 token cost. Engineered Windows Excel COM scripts automating 40-variant Amazon festive catalog injection directly into Seller Central feeds.
           </div>
-        </div>
 
         <div class="timeline-item">
           <div class="timeline-marker"></div>
@@ -2531,7 +2773,6 @@ body {
           <div class="timeline-desc">
             Scaled Taarmi catalog to ₹9L+ sales with 5+ ROAS and 348% YoY growth across 60+ SKUs. Shot 10-slot conversion photo suites with millimeter caliper overlays. Directed visual sprints and Webflow design builds for 15+ creator brands and D2C startups.
           </div>
-        </div>
 
         <div class="timeline-item">
           <div class="timeline-marker"></div>
@@ -2540,7 +2781,6 @@ body {
           <div class="timeline-desc">
             Dropped out of the traditional college track to pursue experiential building at The LIT School in Bangalore; completed 58 project challenges across product and e-commerce. Directed camera and 50+ on-camera founder interviews at Bengaluru Tech Summit with same-day recap films.
           </div>
-        </div>
 
         <div class="timeline-item">
           <div class="timeline-marker"></div>
@@ -2549,7 +2789,6 @@ body {
           <div class="timeline-desc">
             Completed Class 12 Commerce (IP) at St. Xavier's Senior Secondary School, Jaipur. Served as Vice President & Treasurer of Xavier's Photography Club: led team of 12, ran coverage for 15–20 events, and turned the club profitable with ₹15,000 net profit. Won school filmmaking competition.
           </div>
-        </div>
       </div>
     </section>
   </main>
@@ -2577,7 +2816,6 @@ body {
       <div class="cmd-results" id="cmdResults">
         <!-- Injected via JavaScript -->
       </div>
-    </div>
   </div>
 
   <!-- Contact & Availability Modal -->
@@ -2621,7 +2859,6 @@ body {
         </div>
         <span style="font-size:11px; font-family:var(--font-mono); color:#34d399;">Active Base</span>
       </div>
-    </div>
   </div>
 
   <!-- Floating Action Dock -->
@@ -2686,12 +2923,12 @@ body {
             'Zero Cumulative Layout Shift (CLS: 0.000) across all responsive breakpoints',
             'Structured reusable Webflow CMS collections for 1-click publishing'
           ],
-          codeSnippet: '/* Client-First CSS Fluid Scaling Example */
+          codeSnippet: `/* Client-First CSS Fluid Scaling Example */
 .text-size-display {
   font-size: clamp(2.25rem, 5vw, 4.5rem);
   line-height: 1.1;
   letter-spacing: -0.03em;
-}',
+}`,
           deliverable: 'Live Webflow Production URL & Figma Class Token System'
         }
       },
@@ -2715,10 +2952,10 @@ body {
             '348% Year-over-Year sales growth vs. prior-year baseline',
             '40-child festive catalog injected with 100% data validation compliance'
           ],
-          codeSnippet: '// Backend Keyword Matrix Format
+          codeSnippet: `// Backend Keyword Matrix Format
 // 5 inputs x 249 bytes (Deduplicated, zero punctuation)
 diwali gift hamper dry fruit basket wooden festive
-rangoli handmade home decor packaging brocade ribbon',
+rangoli handmade home decor packaging brocade ribbon`,
           deliverable: 'Seller Central Inventory Feeds & Active Storefront Catalog'
         }
       },
@@ -2740,10 +2977,10 @@ rangoli handmade home decor packaging brocade ribbon',
             'Same-day aftermovie turnaround for rapid social distribution',
             'Clean audio intelligibility recorded under 85dB+ ambient summit noise'
           ],
-          codeSnippet: '// Camera Workflow Protocol
+          codeSnippet: `// Camera Workflow Protocol
 Format: 4K UHD 60fps ProRes / Log
 Audio: Dual-channel 24-bit 48kHz wireless lavalier
-Export: Same-day 9:16 vertical reels + 16:9 recap film',
+Export: Same-day 9:16 vertical reels + 16:9 recap film`,
           deliverable: '50+ Executive Short-Form Reels & Official Summit Recap Films'
         }
       },
@@ -2765,10 +3002,10 @@ Export: Same-day 9:16 vertical reels + 16:9 recap film',
             'Zero listing suppressions or non-compliance flags from Amazon audits',
             'Significant drop in customer returns attributed to dimension confusion'
           ],
-          codeSnippet: '// Amazon Main Image Compliance Guide
+          codeSnippet: `// Amazon Main Image Compliance Guide
 RGB Background: Strictly (255, 255, 255)
 Frame Coverage: 85% to 90% of bounding box
-Zero text, zero watermarks, zero borders',
+Zero text, zero watermarks, zero borders`,
           deliverable: '10-Slot High-Resolution Conversion Image Suites'
         }
       },
@@ -2789,10 +3026,10 @@ Zero text, zero watermarks, zero borders',
             'Shipped assets across 15+ tech startups and creator brands',
             'High viewer retention and engagement on short-form creator reels'
           ],
-          codeSnippet: '// Short-Form Engagement Loop
+          codeSnippet: `// Short-Form Engagement Loop
 0-3s: Pattern interrupt visual hook
 4-12s: Core value proposition + problem
-13-15s: Clear conversion CTA',
+13-15s: Clear conversion CTA`,
           deliverable: 'Social Video Campaigns & Creative Brand Assets'
         }
       },
@@ -2814,10 +3051,10 @@ Zero text, zero watermarks, zero borders',
             'Sub-5ms response time on local status endpoints',
             'Air-tight sandboxing keeping all audio files strictly on local hardware'
           ],
-          codeSnippet: '// Local Whisper Pipeline
+          codeSnippet: `// Local Whisper Pipeline
 import { pipeline } from "@xenova/transformers";
 const transcriber = await pipeline("automatic-speech-recognition", "Xenova/whisper-tiny");
-const result = await transcriber(audioBuffer);',
+const result = await transcriber(audioBuffer);`,
           deliverable: 'Local JARVIS Server & Live Office Dashboard Nodes'
         }
       }
@@ -2988,7 +3225,6 @@ const result = await transcriber(audioBuffer);',
             <h4>Core Bottleneck & Context</h4>
             <p style="color:var(--text-main); font-size:14px; line-height:1.6;">${project.fullStory.problem}</p>
           </div>
-        </div>
 
         <div class="drawer-section">
           <h4>What Was Engineered & Shipped</h4>
@@ -3002,7 +3238,6 @@ const result = await transcriber(audioBuffer);',
               ${project.fullStory.proof.map(pt => `<li><span class="check">✓</span><span>${pt}</span></li>`).join('')}
             </ul>
           </div>
-        </div>
 
         <div class="drawer-section">
           <h4>Technical Blueprint / Code Token</h4>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Amazon Review Solicitation Automation Engine | Taarmi Baskets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              gold: '#F59E0B',
+              'gold-light': '#FDE68A',
+              amber: '#D97706',
+              emerald: '#10B981',
+              cyan: '#06B6D4',
+              sky: '#0EA5E9',
+              indigo: '#6366F1',
+              purple: '#8B5CF6',
+              rose: '#F43F5E',
+              dark: '#0B0F19',
+              surface: '#111827',
+              card: '#1F2937'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg-base: #070B14;
+      --bg-surface: #0F172A;
+      --bg-card: #1E293B;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(245, 158, 11, 0.35);
+    }
+    body {
+      background-color: var(--bg-base);
+      color: #F8FAFC;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .font-heading { font-family: 'Outfit', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    
+    .bg-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    .ambient-glow {
+      position: fixed;
+      top: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1100px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.09) 0%, rgba(99, 102, 241, 0.05) 45%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070B14; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10B981; }
+  </style>
+</head>
+<body class="bg-grid relative">
+  <div class="ambient-glow"></div>
+
+  <!-- STICKY TOP NAV -->
+  <header class="sticky top-0 z-50 glass-card border-b border-white/10 px-6 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-black font-extrabold text-xl font-heading">
+          ★
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-heading font-black text-lg md:text-xl tracking-wide text-white">AMAZON REVIEW SOLICITATION OS</h1>
+            <span class="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">STRICT DAY 5 POST-DELIVERY</span>
+            <span class="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30">100% COMPLIANT SP-API</span>
+          </div>
+          <p class="text-xs text-slate-400">Official Solicitations API v1 Engine • Safety-Filtered (Excludes Replacements, Refunds & Delays)</p>
+        </div>
+      </div>
+
+      <!-- Action & Navigation Bar -->
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <a href="AMAZON_GROWTH_MASTER_PLAYBOOK_DASHBOARD.html" class="px-3.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-semibold text-slate-300 border border-slate-700 transition flex items-center gap-1.5">
+          <span>←</span> Growth Playbook
+        </a>
+        <a href="00_DASHBOARD_PORTAL.html" class="px-3.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-semibold text-slate-300 border border-slate-700 transition">
+          Hub Portal
+        </a>
+        <button onclick="refreshData()" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-xs font-mono text-emerald-300 border border-emerald-500/40 transition flex items-center gap-1.5">
+          <span>🔄</span> Refresh Status
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 md:px-6 py-8 space-y-8 relative z-10">
+
+    <!-- KPI SUMMARY STRIP -->
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div class="glass-card rounded-xl p-4 border-l-4 border-l-emerald-400 space-y-1">
+        <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">Day 5 Target Window</span>
+        <div id="stat-golden-count" class="font-heading font-black text-2xl md:text-3xl text-emerald-400">0</div>
+        <p class="text-[11px] text-slate-400">Ready for Day 5 trigger</p>
+      </div>
+      <div class="glass-card rounded-xl p-4 border-l-4 border-l-sky-400 space-y-1">
+        <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">Upcoming Pipeline</span>
+        <div id="stat-upcoming-count" class="font-heading font-black text-2xl md:text-3xl text-sky-400">54</div>
+        <p class="text-[11px] text-slate-400">Counting down to Day 5</p>
+      </div>
+      <div class="glass-card rounded-xl p-4 border-l-4 border-l-amber-400 space-y-1">
+        <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">Window (Day 6–30)</span>
+        <div id="stat-eligible-count" class="font-heading font-black text-2xl md:text-3xl text-amber-400">0</div>
+        <p class="text-[11px] text-slate-400">Secondary eligible orders</p>
+      </div>
+      <div class="glass-card rounded-xl p-4 border-l-4 border-l-rose-400 space-y-1">
+        <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">Safety Excluded</span>
+        <div id="stat-excluded-count" class="font-heading font-black text-2xl md:text-3xl text-rose-400">34</div>
+        <p class="text-[11px] text-slate-400">Replacements / in-transit risk</p>
+      </div>
+      <div class="glass-card rounded-xl p-4 border-l-4 border-l-purple-400 space-y-1">
+        <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">Solicited in Ledger</span>
+        <div id="stat-ledger-count" class="font-heading font-black text-2xl md:text-3xl text-purple-400">0</div>
+        <p class="text-[11px] text-slate-400">Zero duplicates guaranteed</p>
+      </div>
+    </div>
+
+    <!-- DATE SIMULATOR & CONTROL BANNER -->
+    <div class="glass-card rounded-2xl p-5 border border-emerald-500/30 bg-gradient-to-r from-emerald-950/20 via-slate-900/80 to-slate-900/80 flex flex-wrap items-center justify-between gap-4">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="text-emerald-400 text-lg">⚡</span>
+          <h2 class="font-heading font-bold text-base text-white">Automated Review Solicitation Dispatcher</h2>
+        </div>
+        <p class="text-xs text-slate-300">
+          The background daemon scans orders every 6 hours and dispatches compliant Amazon review requests on Day 5 post-delivery. Use the simulation controls below to preview Day 5 transitions.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3 flex-wrap">
+        <div class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-white/10 text-xs font-mono">
+          <span class="text-slate-400">Simulate Date:</span>
+          <select id="simDateSelect" onchange="handleDateSelect(this.value)" class="bg-slate-800 text-amber-300 px-2 py-1 rounded border border-slate-700 outline-none">
+            <option value="2026-09-25T12:00:00Z" selected>Today (25 Sep 2026)</option>
+            <option value="2026-09-28T12:00:00Z">28 Sep (1 Order Reaches Day 5)</option>
+            <option value="2026-09-29T12:00:00Z">29 Sep (4 Orders Delivered Yesterday Hit Day 5)</option>
+            <option value="2026-09-30T12:00:00Z">30 Sep (11 Orders Hit Day 5)</option>
+            <option value="2026-10-01T12:00:00Z">01 Oct (Peak Orders Hit Day 5)</option>
+          </select>
+        </div>
+
+        <button onclick="triggerBatch()" id="btnBatchTrigger" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 font-bold text-xs transition shadow-lg shadow-emerald-500/20 flex items-center gap-1.5">
+          <span>⚡</span> Trigger All Day 5 Orders
+        </button>
+      </div>
+    </div>
+
+    <!-- TABS FOR QUEUES -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2 border-b border-white/10 pb-2 flex-wrap">
+        <button onclick="switchQueueTab('tab-golden')" id="btn-tab-golden" class="queue-tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+          Priority Day 5 Post-Delivery (<span id="tab-count-golden">0</span>)
+        </button>
+        <button onclick="switchQueueTab('tab-upcoming')" id="btn-tab-upcoming" class="queue-tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+          Upcoming Pipeline (<span id="tab-count-upcoming">54</span>)
+        </button>
+        <button onclick="switchQueueTab('tab-eligible')" id="btn-tab-eligible" class="queue-tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+          Secondary Window (Day 6–30) (<span id="tab-count-eligible">0</span>)
+        </button>
+        <button onclick="switchQueueTab('tab-excluded')" id="btn-tab-excluded" class="queue-tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+          Safety Exclusions & Risk Filter (<span id="tab-count-excluded">34</span>)
+        </button>
+        <button onclick="switchQueueTab('tab-history')" id="btn-tab-history" class="queue-tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+          Audit Ledger (<span id="tab-count-history">0</span>)
+        </button>
+      </div>
+
+      <!-- QUEUE 1: DAY 5 TARGET -->
+      <div id="tab-golden" class="queue-content space-y-3">
+        <div id="golden-empty" class="glass-card rounded-xl p-8 text-center space-y-2">
+          <div class="text-3xl">⏳</div>
+          <h3 class="font-heading font-bold text-base text-white">0 Orders at Day 5 Right Now</h3>
+          <p class="text-xs text-slate-400 max-w-lg mx-auto">
+            Your recent 88 orders were delivered between Sept 24–Oct 01. The first order reaches <strong>Day 5 on September 29, 2026</strong>. Select a future date from the simulator above to preview the automated Day 5 queue!
+          </p>
+        </div>
+        <div id="golden-table-container" class="hidden overflow-x-auto glass-card rounded-xl border border-white/10">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-900/90 text-slate-400 border-b border-white/10 text-[11px] uppercase">
+              <tr>
+                <th class="p-3">Order ID</th>
+                <th class="p-3">Delivered Date</th>
+                <th class="p-3">Elapsed</th>
+                <th class="p-3">Destination</th>
+                <th class="p-3">Items</th>
+                <th class="p-3">Type</th>
+                <th class="p-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="golden-tbody" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- QUEUE 2: UPCOMING PIPELINE -->
+      <div id="tab-upcoming" class="queue-content hidden space-y-3">
+        <div class="overflow-x-auto glass-card rounded-xl border border-white/10">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-900/90 text-slate-400 border-b border-white/10 text-[11px] uppercase">
+              <tr>
+                <th class="p-3">Order ID</th>
+                <th class="p-3">Delivery Date</th>
+                <th class="p-3">Countdown to Day 5</th>
+                <th class="p-3">Destination</th>
+                <th class="p-3">Items</th>
+                <th class="p-3">Auto-Schedule Date (Day 5)</th>
+              </tr>
+            </thead>
+            <tbody id="upcoming-tbody" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- QUEUE 3: SECONDARY WINDOW (Day 6–30) -->
+      <div id="tab-eligible" class="queue-content hidden space-y-3">
+        <div id="eligible-empty" class="glass-card rounded-xl p-8 text-center space-y-2">
+          <div class="text-3xl">📦</div>
+          <h3 class="font-heading font-bold text-base text-white">0 Orders in Secondary Window</h3>
+          <p class="text-xs text-slate-400">Orders delivered 6 to 30 days ago that remain eligible for compliant review solicitation appear here.</p>
+        </div>
+        <div id="eligible-table-container" class="hidden overflow-x-auto glass-card rounded-xl border border-white/10">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-900/90 text-slate-400 border-b border-white/10 text-[11px] uppercase">
+              <tr>
+                <th class="p-3">Order ID</th>
+                <th class="p-3">Delivered Date</th>
+                <th class="p-3">Elapsed</th>
+                <th class="p-3">Destination</th>
+                <th class="p-3">Items</th>
+                <th class="p-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="eligible-tbody" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- QUEUE 4: SAFETY EXCLUSIONS -->
+      <div id="tab-excluded" class="queue-content hidden space-y-3">
+        <div class="overflow-x-auto glass-card rounded-xl border border-white/10">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-900/90 text-slate-400 border-b border-white/10 text-[11px] uppercase">
+              <tr>
+                <th class="p-3">Order ID</th>
+                <th class="p-3">State</th>
+                <th class="p-3">Safety Compliance Exclusion Reason</th>
+                <th class="p-3 text-right">Protection Rationale</th>
+              </tr>
+            </thead>
+            <tbody id="excluded-tbody" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- QUEUE 5: AUDIT LEDGER -->
+      <div id="tab-history" class="queue-content hidden space-y-3">
+        <div id="history-empty" class="glass-card rounded-xl p-8 text-center space-y-2">
+          <div class="text-3xl">📋</div>
+          <h3 class="font-heading font-bold text-base text-white">No Review Solicitations Logged Yet</h3>
+          <p class="text-xs text-slate-400">Triggered review requests are recorded here permanently to ensure no customer is ever solicited twice.</p>
+        </div>
+        <div id="history-table-container" class="hidden overflow-x-auto glass-card rounded-xl border border-white/10">
+          <table class="w-full text-left text-xs font-mono">
+            <thead class="bg-slate-900/90 text-slate-400 border-b border-white/10 text-[11px] uppercase">
+              <tr>
+                <th class="p-3">Order ID</th>
+                <th class="p-3">Requested Timestamp</th>
+                <th class="p-3">Trigger Method</th>
+                <th class="p-3">Status</th>
+                <th class="p-3 text-right">Channel</th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPLIANCE & SAFETY ARCHITECTURE BOX -->
+    <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="text-amber-400 text-lg">🛡️</span>
+        <h3 class="font-heading font-bold text-base text-white">Amazon Solicitations API v1 Compliance Guardrails</h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5 space-y-1">
+          <span class="font-mono font-bold text-emerald-400">1. Why Strict Day 5 Post-Delivery?</span>
+          <p class="text-slate-300">Days 1–4 give customers time to receive, unbox, and experience the product. Requesting too early causes friction, while waiting beyond Day 7 leads to memory decay. Day 5 represents the calibrated sweet spot capturing peak customer delight with maximum review conversion.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5 space-y-1">
+          <span class="font-mono font-bold text-rose-400">2. Replacement & Return Filtering</span>
+          <p class="text-slate-300">Sending a review request to a customer who initiated a return or replacement triggers immediate 1-star reviews. The engine strictly excludes any order flagged with return/replacement risks.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-white/5 space-y-1">
+          <span class="font-mono font-bold text-sky-400">3. 100% Policy-Safe Format</span>
+          <p class="text-slate-300">Amazon prohibits asking for positive reviews or offering incentives. This engine uses Amazon's official standard email template containing neutral Product and Seller star ratings.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT CLIENT ENGINE -->
+  <script>
+    let currentData = null;
+
+    async function fetchData(refDate = null) {
+      try {
+        let url = '/api/reviews/status';
+        if (refDate) url += '?refDate=' + encodeURIComponent(refDate);
+        const res = await fetch(url);
+        currentData = await res.json();
+        renderDashboard(currentData);
+      } catch (err) {
+        console.error('Error fetching review status:', err);
+      }
+    }
+
+    function renderDashboard(data) {
+      if (!data) return;
+
+      const day5Count = (data.counts.priorityDay5 !== undefined) ? data.counts.priorityDay5 : data.counts.priorityGoldenWindow;
+
+      // Update Top KPIs
+      document.getElementById('stat-golden-count').innerText = day5Count;
+      document.getElementById('stat-upcoming-count').innerText = data.counts.upcomingPipeline;
+      document.getElementById('stat-eligible-count').innerText = data.counts.eligibleWindow;
+      document.getElementById('stat-excluded-count').innerText = data.counts.excluded;
+      document.getElementById('stat-ledger-count').innerText = data.counts.previouslyRequested;
+
+      // Update Tab Badges
+      document.getElementById('tab-count-golden').innerText = day5Count;
+      document.getElementById('tab-count-upcoming').innerText = data.counts.upcomingPipeline;
+      if (document.getElementById('tab-count-eligible')) {
+        document.getElementById('tab-count-eligible').innerText = data.counts.eligibleWindow;
+      }
+      document.getElementById('tab-count-excluded').innerText = data.counts.excluded;
+      document.getElementById('tab-count-history').innerText = data.counts.previouslyRequested;
+
+      // Render Queue 1: Day 5 Target Window
+      const goldenTbody = document.getElementById('golden-tbody');
+      const goldenContainer = document.getElementById('golden-table-container');
+      const goldenEmpty = document.getElementById('golden-empty');
+      goldenTbody.innerHTML = '';
+
+      const day5Orders = data.priorityDay5 || data.priorityGoldenWindow || [];
+      if (day5Orders.length > 0) {
+        goldenEmpty.classList.add('hidden');
+        goldenContainer.classList.remove('hidden');
+
+        day5Orders.forEach(order => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-white/5 transition';
+          tr.innerHTML = `
+            <td class="p-3 text-amber-300 font-bold">${order.orderId}</td>
+            <td class="p-3 text-slate-300">${order.deliveryDate.slice(0, 10)}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">Day 5 Today</span></td>
+            <td class="p-3 text-slate-300">${order.state}</td>
+            <td class="p-3 text-slate-300">${order.itemsCount} Unit(s)</td>
+            <td class="p-3 text-slate-400">${order.isBusinessOrder ? 'B2B Corporate' : 'Consumer'}</td>
+            <td class="p-3 text-right">
+              <button onclick="triggerSingle('${order.orderId}')" class="px-3 py-1 rounded bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow transition">
+                Trigger Day 5 Request
+              </button>
+            </td>
+          `;
+          goldenTbody.appendChild(tr);
+        });
+      } else {
+        goldenEmpty.classList.remove('hidden');
+        goldenContainer.classList.add('hidden');
+      }
+
+      // Render Queue 2: Upcoming Pipeline
+      const upcomingTbody = document.getElementById('upcoming-tbody');
+      upcomingTbody.innerHTML = '';
+      data.upcomingPipeline.slice(0, 60).forEach(order => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-white/5 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-sky-300 font-semibold">${order.orderId}</td>
+          <td class="p-3 text-slate-300">${order.deliveryDate.slice(0, 10)}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 font-semibold">${order.statusNote || (order.daysUntilDay5 ? 'Hits Day 5 in ' + order.daysUntilDay5 + ' Day(s)' : '')}</span></td>
+          <td class="p-3 text-slate-300">${order.state}</td>
+          <td class="p-3 text-slate-300">${order.itemsCount}</td>
+          <td class="p-3 text-amber-300 font-bold">${order.day5TargetDate || order.goldenWindowEntryDate || 'In Transit'}</td>
+        `;
+        upcomingTbody.appendChild(tr);
+      });
+
+      // Render Queue 3: Secondary Window (Day 6-30)
+      const eligibleTbody = document.getElementById('eligible-tbody');
+      const eligibleContainer = document.getElementById('eligible-table-container');
+      const eligibleEmpty = document.getElementById('eligible-empty');
+      if (eligibleTbody) {
+        eligibleTbody.innerHTML = '';
+        if (data.eligibleWindow && data.eligibleWindow.length > 0) {
+          if (eligibleEmpty) eligibleEmpty.classList.add('hidden');
+          if (eligibleContainer) eligibleContainer.classList.remove('hidden');
+          data.eligibleWindow.forEach(order => {
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-white/5 transition';
+            tr.innerHTML = `
+              <td class="p-3 text-amber-300 font-semibold">${order.orderId}</td>
+              <td class="p-3 text-slate-300">${order.deliveryDate.slice(0, 10)}</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400">${order.daysSinceDelivery} Days Ago</span></td>
+              <td class="p-3 text-slate-300">${order.state}</td>
+              <td class="p-3 text-slate-300">${order.itemsCount} Unit(s)</td>
+              <td class="p-3 text-right">
+                <button onclick="triggerSingle('${order.orderId}')" class="px-3 py-1 rounded bg-amber-500/80 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow transition">
+                  Trigger
+                </button>
+              </td>
+            `;
+            eligibleTbody.appendChild(tr);
+          });
+        } else {
+          if (eligibleEmpty) eligibleEmpty.classList.remove('hidden');
+          if (eligibleContainer) eligibleContainer.classList.add('hidden');
+        }
+      }
+
+      // Render Queue 4: Safety Excluded
+      const excludedTbody = document.getElementById('excluded-tbody');
+      excludedTbody.innerHTML = '';
+      data.excluded.slice(0, 50).forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-white/5 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-slate-400 font-mono">${item.orderId}</td>
+          <td class="p-3 text-slate-400">${item.state}</td>
+          <td class="p-3 text-rose-400 font-semibold">${item.reason}</td>
+          <td class="p-3 text-right text-slate-400">Protects Account Health & Prevents Negative Reviews</td>
+        `;
+        excludedTbody.appendChild(tr);
+      });
+
+      // Render Queue 5: Audit History Ledger
+      const historyTbody = document.getElementById('history-tbody');
+      const historyContainer = document.getElementById('history-table-container');
+      const historyEmpty = document.getElementById('history-empty');
+      historyTbody.innerHTML = '';
+
+      if (data.history && data.history.length > 0) {
+        historyEmpty.classList.add('hidden');
+        historyContainer.classList.remove('hidden');
+
+        data.history.forEach(entry => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-white/5 transition';
+          tr.innerHTML = `
+            <td class="p-3 text-emerald-400 font-bold">${entry.orderId}</td>
+            <td class="p-3 text-slate-300">${new Date(entry.requestedAt).toLocaleString('en-IN')}</td>
+            <td class="p-3 text-slate-300 font-mono text-[11px]">${entry.triggeredBy}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">${entry.status}</span></td>
+            <td class="p-3 text-right text-slate-400">${entry.channel}</td>
+          `;
+          historyTbody.appendChild(tr);
+        });
+      } else {
+        historyEmpty.classList.remove('hidden');
+        historyContainer.classList.add('hidden');
+      }
+    }
+
+    async function triggerSingle(orderId) {
+      if (!confirm(`Trigger official Amazon review request for Order ${orderId}?`)) return;
+      try {
+        const res = await fetch('/api/reviews/trigger?orderId=' + encodeURIComponent(orderId) + '&triggeredBy=DASHBOARD_1CLICK');
+        const data = await res.json();
+        alert(data.message || 'Review request submitted!');
+        const refDate = document.getElementById('simDateSelect').value;
+        fetchData(refDate);
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    async function triggerBatch() {
+      const day5Count = currentData ? ((currentData.counts.priorityDay5 !== undefined) ? currentData.counts.priorityDay5 : currentData.counts.priorityGoldenWindow) : 0;
+      if (day5Count === 0) {
+        alert('No orders currently at Day 5 for the selected date. Choose a future simulated date (e.g. 29 Sep or 30 Sep) to test batch execution!');
+        return;
+      }
+      if (!confirm(`Trigger batch Amazon review requests for ${day5Count} orders currently at Day 5 post-delivery?`)) return;
+      try {
+        const res = await fetch('/api/reviews/trigger?batch=true&triggeredBy=DASHBOARD_BATCH');
+        const data = await res.json();
+        alert(`Successfully processed ${data.totalProcessed} review solicitations!`);
+        const refDate = document.getElementById('simDateSelect').value;
+        fetchData(refDate);
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    function handleDateSelect(val) {
+      fetchData(val);
+    }
+
+    function refreshData() {
+      const refDate = document.getElementById('simDateSelect').value;
+      fetchData(refDate);
+    }
+
+    function switchQueueTab(tabId) {
+      document.querySelectorAll('.queue-content').forEach(c => c.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+
+      document.querySelectorAll('.queue-tab-btn').forEach(b => {
+        b.classList.remove('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
+        b.classList.add('bg-slate-800/60', 'text-slate-400', 'border-transparent');
+      });
+
+      const activeBtn = document.getElementById('btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
+        activeBtn.classList.remove('bg-slate-800/60', 'text-slate-400', 'border-transparent');
+      }
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchData();
+    });
+  </script>
+</body>
+</html>

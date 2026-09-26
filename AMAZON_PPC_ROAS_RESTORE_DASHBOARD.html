@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>Amazon PPC // ROAS Restoration & Governance Console</title>
 
 
@@ -577,53 +577,292 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
     gap: 20px;
   }
-/* Responsive Overrides */
-@media (max-width: 1024px) {
-  .kpi-grid, .grid-container, .metrics-grid, .kpi-row, .kpi-container {
-    grid-template-columns: repeat(2, 1fr) !important;
+
+/* === INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
+
+/* ==========================================================================
+   MASTER MOBILE-FIRST RESPONSIVE ENGINE (320px - 768px Breakpoints)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  /* Prevent horizontal document blowout */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    font-size: 13.5px !important;
+    -webkit-text-size-adjust: 100% !important;
   }
-  .controls, .controls-panel, .filters-container, .table-controls {
-    display: flex !important;
+  
+  body {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 10px !important;
+    padding-bottom: 85px !important;
+  }
+
+  /* Responsive Headers & Brand Bars */
+  header, .header, .header-container, .header-inner, .navbar, .top-bar {
+    padding: 12px 14px !important;
     flex-direction: column !important;
-    gap: 10px;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
-  .search-box, .search-container, input[type='text'], .search-input {
+  .brand-area, .brand-group, .brand-wrap, .brand-text-group {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+  .brand-text h1, header h1, .brand-title, .app-title {
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+  }
+  .brand-text p, .brand-subtitle, .app-subtitle {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+  .header-actions, .header-pills, .section-tools, .header-right {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+  }
+  .header-pills .pill, .header-actions .badge {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  /* Main Containers & Layouts */
+  .container, main, .main-content, .app-container, .wrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* KPI / Metric Grids (2 columns on mobile) */
+  .kpi-grid, .summary-grid, .stats-grid, .metrics-grid, .matrix-grid, .kpi-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
     width: 100% !important;
   }
-  .matrix-grid, .strategic-matrix {
-    grid-template-columns: 1fr !important;
+  .kpi-card, .metric-card, .stat-card, .summary-card {
+    padding: 12px 10px !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
   }
-}
-@media (max-width: 768px) {
-  header, .top-bar, .app-header {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
+  .kpi-val, .kpi-value, .metric-val, .stat-number {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    word-break: break-word !important;
+    line-height: 1.2 !important;
   }
-  header button, .top-bar button, .header-actions button, .action-btn {
+  .kpi-title, .kpi-label, .metric-label {
+    font-size: 10.5px !important;
+    letter-spacing: 0.02em !important;
+  }
+  .kpi-desc, .kpi-sub, .metric-sub {
+    font-size: 10px !important;
+  }
+
+  /* Cards, Panels & Glass Containers */
+  .card, .panel, .section-card, .glass-card, .dash-card, .hud-card, .glass-panel {
+    padding: 14px 12px !important;
+    border-radius: 14px !important;
+    margin-bottom: 14px !important;
     width: 100% !important;
-    margin-top: 10px !important;
+    box-sizing: border-box !important;
   }
-  .kpi-grid, .grid-container, .metrics-grid, .kpi-row, .kpi-container {
+  .card-header, .panel-header, .section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 10px !important;
+  }
+  .card-title, .panel-title, .section-title h3, .section-title {
+    font-size: 15px !important;
+    line-height: 1.3 !important;
+  }
+  .card-actions, .panel-tools, .section-tools {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* Grids collapse to 1 column */
+  .section-grid, .grid-2col, .grid-3col, .stream-layout, .app-container, .two-col-grid, .speed-audit-grid {
+    display: grid !important;
     grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
   }
-  .kpi-card, .metric-card, .stat-card {
-    padding: 14px !important;
-  }
-  .table-container, .data-table-wrapper, .table-responsive {
+
+  /* Touch-Friendly Smooth Horizontal Scroll Navigation Tabs */
+  .tabs-nav, .tab-bar, .nav-pills, .filter-tabs, .sp-tabs, .pill-nav, .category-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
+    gap: 6px !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 14px !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
-  .tabs, .tab-navigation, .nav-tabs {
-    display: flex !important;
-    overflow-x: auto !important;
-    white-space: nowrap !important;
-    flex-wrap: nowrap !important;
+  .tabs-nav::-webkit-scrollbar, .tab-bar::-webkit-scrollbar, .nav-pills::-webkit-scrollbar, .filter-tabs::-webkit-scrollbar {
+    display: none !important;
+    height: 0 !important;
   }
-  table, th, td, .data-table {
+  .tab-btn, .pill-btn, .cat-btn, .filter-btn, .sp-tab-btn {
+    flex: 0 0 auto !important;
+    padding: 8px 12px !important;
     font-size: 12px !important;
+    min-height: 38px !important;
+    white-space: nowrap !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  /* Responsive Horizontal Scrollable Tables */
+  .table-responsive, .table-container, .table-wrap {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin-bottom: 12px !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-sizing: border-box !important;
+  }
+  table {
+    width: 100% !important;
+    min-width: 540px !important;
+    font-size: 11.5px !important;
+    border-collapse: collapse !important;
+  }
+  th, td {
+    padding: 8px 10px !important;
+    white-space: nowrap !important;
+  }
+  th {
+    font-size: 10.5px !important;
+  }
+  td.wrap-text, td.kw-col, td .kw-text, td .prod-title {
+    white-space: normal !important;
+    max-width: 160px !important;
+    word-break: break-word !important;
+  }
+
+  /* Full-width Touch Inputs, Selects & Buttons */
+  input[type="text"], input[type="search"], .table-search-input, select, textarea {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: 13px !important;
+    padding: 10px 12px !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
+  }
+  .btn, .btn-action, .copy-all-btn, .btn-copy, .btn-gold, .btn-primary {
+    min-height: 40px !important;
+    font-size: 12px !important;
+    padding: 8px 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Bulk paste & Textareas */
+  .bulk-area, textarea {
+    font-size: 11px !important;
+    padding: 10px !important;
+    height: 120px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Modals & Dialogs */
+  .modal-overlay {
+    padding: 12px !important;
+    align-items: flex-end !important;
+    box-sizing: border-box !important;
+  }
+  .modal-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+  }
+  .modal-footer {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .modal-footer .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Floating docks & Bottom Bars */
+  .floating-dock, .action-bar-fixed {
+    width: calc(100% - 20px) !important;
+    left: 10px !important;
+    bottom: 10px !important;
+    padding: 8px 12px !important;
+    gap: 6px !important;
+    justify-content: space-around !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Toasts & Alert Banners */
+  #toast, .toast, .alert-banner, .safety-banner {
+    padding: 12px 14px !important;
+    font-size: 12px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+  #toast, .toast {
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    right: 12px !important;
+    left: 12px !important;
+    max-width: calc(100% - 24px) !important;
+    text-align: center !important;
   }
 }
+
+@media screen and (max-width: 400px) {
+  /* Ultra-narrow devices (iPhone SE, Galaxy Fold outer) */
+  .kpi-grid, .summary-grid, .stats-grid, .metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .brand-text h1, header h1, .brand-title {
+    font-size: 15px !important;
+  }
+  .tab-btn, .pill-btn, .cat-btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* === END INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
 </style>
 </head>
 <body>
@@ -640,7 +879,6 @@ body {
         </h1>
         <p>Market Flooding Strategy &bull; Funnel Isolation &bull; Keyword Decision Control</p>
       </div>
-    </div>
     <div class="header-nav">
       <a href="/00_DASHBOARD_PORTAL.html" class="nav-btn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -680,7 +918,6 @@ body {
           <strong>Market Flooding SKU Architecture</strong>
           Multiple listings of the same product flood search results without repeating niche keywords, ensuring full catalog coverage without self-competition.
         </div>
-      </div>
     </div>
   </div>
 
@@ -693,7 +930,6 @@ body {
       </div>
       <div class="kpi-metric" style="color:var(--rose-light);">4.33x</div>
       <div class="kpi-desc">Spend: ₹11,397 &bull; Sales: ₹49,315</div>
-    </div>
 
     <div class="kpi-card kpi-amber">
       <div class="kpi-top">
@@ -702,7 +938,6 @@ body {
       </div>
       <div class="kpi-metric" style="color:var(--amber-light);">5.60x</div>
       <div class="kpi-desc">Broad Campaign hit <strong>7.66x ROAS</strong></div>
-    </div>
 
     <div class="kpi-card kpi-emerald">
       <div class="kpi-top">
@@ -711,7 +946,6 @@ body {
       </div>
       <div class="kpi-metric" style="color:var(--emerald-light);">7.85x</div>
       <div class="kpi-desc">Unblocking ₹50k August anchors</div>
-    </div>
 
     <div class="kpi-card kpi-purple">
       <div class="kpi-top">
@@ -720,7 +954,6 @@ body {
       </div>
       <div class="kpi-metric" style="color:#c084fc;">7.96%</div>
       <div class="kpi-desc">Store Revenue: ₹1,43,175 (383 units)</div>
-    </div>
 
     <div class="kpi-card kpi-sky">
       <div class="kpi-top">
@@ -729,7 +962,6 @@ body {
       </div>
       <div class="kpi-metric" style="color:var(--sky-light);">₹93,860</div>
       <div class="kpi-desc">Pure organic brand sales (Zero ad cost)</div>
-    </div>
   </div>
 
   <!-- Segmented Navigation Pills -->
@@ -842,12 +1074,10 @@ body {
                 • <strong>High-Volume Strain:</strong> <span style="color: #fbbf24; font-weight: 700;">`basket for wedding`</span> burned ₹1,086.84 at 2.83x ROAS. Recommended action: calibrate bid down from ₹3.00 to ₹2.10.<br>
                 • <strong>Rule 3 Isolation:</strong> All 10 Exact campaign keywords are negated as Negative Exact below to prevent impression siphoning.
               </div>
-            </div>
             <div style="text-align: right; background: rgba(0,0,0,0.3); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.5px;">Optimized Target ROAS</div>
               <div style="font-size: 24px; font-weight: 800; color: #34d399; font-family: var(--font-mono);">7.45x</div>
               <div style="font-size: 11px; color: #a7f3d0;">+₹14,500/mo margin recovery</div>
-            </div>
           </div>
         </div>
 
@@ -861,7 +1091,7 @@ body {
             <button class="pill-btn" style="padding: 6px 12px; font-size: 12px;" onclick="copyText('broad_targets_text')">📋 Copy Broad Keywords (No Bids)</button>
           </div>
           <div class="table-container" style="max-height: 420px; overflow-y: auto;">
-            <table class="gov-table" style="font-size: 12.5px;">
+            <div class="table-responsive"><table class="gov-table" style="font-size: 12.5px;">
               <thead>
                 <tr>
                   <th>#</th>
@@ -1061,7 +1291,7 @@ body {
                   <td><button class="pill-btn" style="padding: 3px 8px; font-size: 11px;" onclick="copySingle('shagun packing')">Copy</button></td>
                 </tr>
               </tbody>
-            </table>
+            </table></div>
           </div>
           <!-- Hidden copy buffer -->
           <textarea id="broad_targets_text" style="display: none;">fruit basket with net cover
@@ -1212,7 +1442,6 @@ wire basket
 metal basket
 wooden basket</textarea>
           </div>
-        </div>
       </div>
 
       <!-- ========================================================================= -->
@@ -1232,12 +1461,10 @@ wooden basket</textarea>
                 • <strong>Top Converter:</strong> <span style="color: #34d399; font-weight: 700;">`fruit basket for wedding`</span> is hitting 9.24x ROAS (₹851.43 sales on ₹92 spend). Keep bid at ₹3.00.<br>
                 • <strong>Volume Bleeder:</strong> <span style="color: #fbbf24; font-weight: 700;">`packing basket`</span> burned ₹1,054.38 at 3.91x ROAS. Calibrate bid from ₹3.00 to ₹2.60.
               </div>
-            </div>
             <div style="text-align: right; background: rgba(0,0,0,0.3); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.5px;">Optimized Target ROAS</div>
               <div style="font-size: 24px; font-weight: 800; color: #34d399; font-family: var(--font-mono);">7.20x</div>
               <div style="font-size: 11px; color: #a7f3d0;">Unchoke +35% buyer traffic</div>
-            </div>
           </div>
         </div>
 
@@ -1251,7 +1478,7 @@ wooden basket</textarea>
             <button class="pill-btn" style="padding: 6px 12px; font-size: 12px;" onclick="copyText('phrase_targets_text')">📋 Copy Phrase Keywords (No Bids)</button>
           </div>
           <div class="table-container" style="max-height: 420px; overflow-y: auto;">
-            <table class="gov-table" style="font-size: 12.5px;">
+            <div class="table-responsive"><table class="gov-table" style="font-size: 12.5px;">
               <thead>
                 <tr>
                   <th>#</th>
@@ -1521,7 +1748,7 @@ wooden basket</textarea>
 </td>
                 </tr>
               </tbody>
-            </table>
+            </table></div>
           </div>
           <!-- Hidden copy buffer -->
           <textarea id="phrase_targets_text" style="display: none;">fruit basket for wedding
@@ -1653,7 +1880,6 @@ wooden
 with lid
 basket for storage</textarea>
           </div>
-        </div>
       </div>
 
       <!-- ========================================================================= -->
@@ -1672,12 +1898,10 @@ basket for storage</textarea>
                 • <strong style="color: #34d399;">GRADUATION OPPORTUNITY:</strong> Add <span style="color: #34d399; font-weight: 700;">`fruit basket with net cover`</span> (43.6x ROAS in Broad) and <span style="color: #34d399; font-weight: 700;">`fruit basket for wedding`</span> (9.24x ROAS in Phrase) as dedicated new Exact targets!<br>
                 • <strong>Bleeder Trimming:</strong> <span style="color: #fbbf24; font-weight: 700;">`fruit basket for gift`</span> (₹152 spend, 0 orders) lowered from ₹3.00 to ₹2.00; <span style="color: #fbbf24; font-weight: 700;">`decorative basket for gift packing`</span> (₹145 spend, 0 orders) lowered to ₹1.70.
               </div>
-            </div>
             <div style="text-align: right; background: rgba(0,0,0,0.3); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.5px;">Optimized Target ROAS</div>
               <div style="font-size: 24px; font-weight: 800; color: #34d399; font-family: var(--font-mono);">8.50x+</div>
               <div style="font-size: 11px; color: #a7f3d0;">Highest margin conversion tier</div>
-            </div>
           </div>
         </div>
 
@@ -1691,7 +1915,7 @@ basket for storage</textarea>
             <button class="pill-btn" style="padding: 6px 12px; font-size: 12px;" onclick="copyText('exact_targets_text')">📋 Copy Exact Keywords (No Bids)</button>
           </div>
           <div class="table-container" style="max-height: 420px; overflow-y: auto;">
-            <table class="gov-table" style="font-size: 12.5px;">
+            <div class="table-responsive"><table class="gov-table" style="font-size: 12.5px;">
               <thead>
                 <tr>
                   <th>#</th>
@@ -1925,7 +2149,7 @@ basket for storage</textarea>
 </td>
                 </tr>
               </tbody>
-            </table>
+            </table></div>
           </div>
           <!-- Hidden copy buffer -->
           <textarea id="exact_targets_text" style="display: none;">baskets for gift packing
@@ -1993,7 +2217,6 @@ clothes
 vegetable
 kitchen</textarea>
           </div>
-        </div>
       </div>
 
       <!-- ========================================================================= -->
@@ -2012,12 +2235,10 @@ kitchen</textarea>
                 • <strong style="color: #f87171;">RULE 3 ISOLATION MISSING:</strong> The 10 Exact keywords are currently not negated in Festive Broad. Add them below so high-intent exact clicks do not spill into this seasonal pool.<br>
                 • <strong>Confectionery &amp; Sweet Exclusion:</strong> Negative phrases protect against people searching for sweets, dry fruits, and gold/silver coins directly.
               </div>
-            </div>
             <div style="text-align: right; background: rgba(0,0,0,0.3); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.5px;">Seasonal Multiplier</div>
               <div style="font-size: 24px; font-weight: 800; color: #fbbf24; font-family: var(--font-mono);">3.5x Volume</div>
               <div style="font-size: 11px; color: #fde68a;">Oct-Nov Festival Peak</div>
-            </div>
           </div>
         </div>
 
@@ -2031,7 +2252,7 @@ kitchen</textarea>
             <button class="pill-btn" style="padding: 6px 12px; font-size: 12px;" onclick="copyText('festive_targets_text')">📋 Copy Festive Keywords (No Bids)</button>
           </div>
           <div class="table-container">
-            <table class="gov-table" style="font-size: 12.5px;">
+            <div class="table-responsive"><table class="gov-table" style="font-size: 12.5px;">
               <thead>
                 <tr>
                   <th>#</th>
@@ -2099,7 +2320,7 @@ kitchen</textarea>
                   <td><button class="pill-btn" style="padding: 3px 8px; font-size: 11px;" onclick="copySingle('bhai dooj celebratory sweet tray')">Copy</button></td>
                 </tr>
               </tbody>
-            </table>
+            </table></div>
           </div>
           <textarea id="festive_targets_text" style="display: none;">diwali empty dryfruit hamper organizer
 deepawali corporate luxury packing box
@@ -2212,7 +2433,6 @@ plastic
 steel
 laundry</textarea>
           </div>
-        </div>
       </div>
 
     
@@ -2234,12 +2454,10 @@ laundry</textarea>
                 • <strong>Recommended Placement Multiplier:</strong> +35% on <em>Product Pages</em> with <strong>Dynamic Bids - Down Only</strong> to capture shoppers reading competitor 3-star reviews.<br>
                 • <strong>Defensive Shield:</strong> Also includes your 5 live Taarmi ASINs for cross-selling larger pack sizes (Pack of 2 ➔ Pack of 6) to keep rivals off your detail pages.
               </div>
-            </div>
             <div style="text-align: right; background: rgba(0,0,0,0.3); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.5px;">Target ACoS</div>
               <div style="font-size: 24px; font-weight: 800; color: #34d399; font-family: var(--font-mono);">&le; 16.5%</div>
               <div style="font-size: 11px; color: #a7f3d0;">High Conversion Product Pages</div>
-            </div>
           </div>
         </div>
 
@@ -2258,7 +2476,7 @@ laundry</textarea>
 
         <!-- Competitor Baskets Table -->
         <div class="table-container" style="margin-bottom: 24px;">
-          <table class="gov-table" style="font-size: 12.5px;">
+          <div class="table-responsive"><table class="gov-table" style="font-size: 12.5px;">
             <thead>
               <tr>
                 <th>#</th>
@@ -2494,7 +2712,7 @@ laundry</textarea>
                 <td><button class="pill-btn" style="padding: 3px 8px; font-size: 11px;" onclick="copySingle('B0HJ9TNMTX')">Copy</button></td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
         </div>
 
         <!-- Defensive Cross-Selling Card -->
@@ -2514,27 +2732,22 @@ laundry</textarea>
               <span style="font-family: var(--font-mono); font-weight: 700; color: #38bdf8;">B0HJNBGL3B</span>
               <div style="font-size: 11.5px; color: #cbd5e1; margin-top: 2px;">Taarmi Golden Wire Square Basket with Net 6x6" (2PK)</div>
               <div style="font-size: 11px; color: #10b981; font-weight: 700; margin-top: 4px;">Live: ₹199</div>
-            </div>
             <div style="background: rgba(0,0,0,0.35); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <span style="font-family: var(--font-mono); font-weight: 700; color: #38bdf8;">B0HJBDGX56</span>
               <div style="font-size: 11.5px; color: #cbd5e1; margin-top: 2px;">Taarmi Small Square Baskets with Net 6x6" (2PK)</div>
               <div style="font-size: 11px; color: #10b981; font-weight: 700; margin-top: 4px;">Live: ₹199</div>
-            </div>
             <div style="background: rgba(0,0,0,0.35); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <span style="font-family: var(--font-mono); font-weight: 700; color: #38bdf8;">B0HJBK841G</span>
               <div style="font-size: 11.5px; color: #cbd5e1; margin-top: 2px;">Taarmi Medium Square Baskets with Net 8x8" (2PK)</div>
               <div style="font-size: 11px; color: #10b981; font-weight: 700; margin-top: 4px;">Live: ₹259</div>
-            </div>
             <div style="background: rgba(0,0,0,0.35); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <span style="font-family: var(--font-mono); font-weight: 700; color: #38bdf8;">B0HJBK1PLC</span>
               <div style="font-size: 11.5px; color: #cbd5e1; margin-top: 2px;">Taarmi Medium Square Baskets with Net 8x8" (6PK)</div>
               <div style="font-size: 11px; color: #10b981; font-weight: 700; margin-top: 4px;">Live: ₹729</div>
-            </div>
             <div style="background: rgba(0,0,0,0.35); padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
               <span style="font-family: var(--font-mono); font-weight: 700; color: #38bdf8;">B0DHRXT2BD</span>
               <div style="font-size: 11.5px; color: #cbd5e1; margin-top: 2px;">Fancy Baskets Small Rectangle Gifting Basket (6PK)</div>
               <div style="font-size: 11px; color: #10b981; font-weight: 700; margin-top: 4px;">Live: ₹449</div>
-            </div>
           </div>
         </div>
 
@@ -2576,18 +2789,15 @@ B0DHRXT2BD</textarea>
                 <h4 style="margin: 0; font-size: 14.5px; font-weight: 700; color: #fff;">Interactive Funnel Demotion &amp; Bleeder Pruning Ledger</h4>
                 <p style="margin: 2px 0 0; font-size: 11.5px; color: var(--text-dim);">Track real-time keyword movements across campaign funnels (Exact ➔ Phrase, Phrase ➔ Broad) and negated bleeder discards.</p>
               </div>
-            </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
               <button class="pill-btn" style="padding: 5px 12px; font-size: 11.5px; border-color: rgba(59, 130, 246, 0.4); color: #60a5fa;" onclick="copyDemotedList('phrase')">📋 Copy Demoted to Phrase (<span id="countDemotedPhrase">0</span>)</button>
               <button class="pill-btn" style="padding: 5px 12px; font-size: 11.5px; border-color: rgba(168, 85, 247, 0.4); color: #c084fc;" onclick="copyDemotedList('broad')">📋 Copy Demoted to Broad (<span id="countDemotedBroad">0</span>)</button>
               <button class="pill-btn" style="padding: 5px 12px; font-size: 11.5px; border-color: rgba(239, 68, 68, 0.4); color: #f87171;" onclick="copyDemotedList('discard')">📋 Copy Discarded Negatives (<span id="countDiscarded">0</span>)</button>
               <button class="pill-btn" style="padding: 5px 12px; font-size: 11.5px;" onclick="resetAllDemotions()">🔄 Reset All</button>
             </div>
-          </div>
           <div id="demotionLedgerList" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px 14px; min-height: 42px; display: flex; align-items: center;">
             <em>No demotions performed yet in this session. Click 📉 Demote on any Exact or Phrase target to adjust funnel placement.</em>
           </div>
-        </div>
 </div>
   </div>
 
@@ -3832,7 +4042,6 @@ B0DHRXT2BD</textarea>
           </tbody>
         </table>
       </div>
-    </div>
   </div>
 
   <!-- ==================== TAB 1: PLAYBOOK ==================== -->
@@ -3843,7 +4052,6 @@ B0DHRXT2BD</textarea>
           <h3>⚡ Action Playbook &amp; Implementation Roadmap</h3>
           <p>Strictly aligned with Rule 1 (Broad Exploration), Rule 2 (0% Overlap), and Rule 3 (Exact Negation in Other Campaigns)</p>
         </div>
-      </div>
 
       <div class="playbook-step" style="border-left-color: var(--emerald);">
         <div class="step-head">
@@ -3853,9 +4061,7 @@ B0DHRXT2BD</textarea>
               <h4>Unblock the ₹49,992 Blocked August Winning Keywords</h4>
               <p>Delete toxic negative phrases &amp; unblock "fruit basket for gift" from Broad negative exact.</p>
             </div>
-          </div>
           <div class="step-nav-tag">Amazon Ads &rarr; Negative Targeting</div>
-        </div>
 
         <div class="action-row">
           <div class="action-left">
@@ -3882,7 +4088,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           </div>
           <button class="btn-action-copy" onclick="copySnippet('fruit basket for gift', 'Copied Keyword!')">Copy Keyword</button>
         </div>
-      </div>
 
       <div class="playbook-step" style="border-left-color: var(--sky);">
         <div class="step-head">
@@ -3892,9 +4097,7 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
               <h4>Apply Rule 3: Negate Exact Targets in Other Campaigns</h4>
               <p>"Whatever is in my Exact targeting, I negate that exact keyword in other campaigns."</p>
             </div>
-          </div>
           <div class="step-nav-tag">Rule 3 Funnel Isolation</div>
-        </div>
 
         <div class="action-row">
           <div class="action-left">
@@ -3906,7 +4109,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           </div>
           <button class="btn-action-copy" onclick="copyApprovedGraduates()">Copy Exact Targets</button>
         </div>
-      </div>
     </div>
   </div>
 
@@ -3918,7 +4120,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           <h3>Macro Trajectory: August vs September PPC Comparison</h3>
           <p>Official data extracted from verified Amazon Advertising reports</p>
         </div>
-      </div>
       <div class="table-responsive">
         <table>
           <thead>
@@ -3957,7 +4158,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           </tbody>
         </table>
       </div>
-    </div>
   </div>
 
   <!-- ==================== TAB 3: PLACEMENTS & TOS TRAP ==================== -->
@@ -3968,7 +4168,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           <h3>Placement Slot Efficiency Breakdown</h3>
           <p>Revealing where spend converts into profit vs where CPCs get inflated</p>
         </div>
-      </div>
       <div class="table-responsive">
         <table>
           <thead>
@@ -4017,7 +4216,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           </tbody>
         </table>
       </div>
-    </div>
   </div>
 
   <!-- ==================== TAB 4: STORE HEALTH & SKU FLOODING ==================== -->
@@ -4029,7 +4227,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
             <h3>The Market Flooding Theory</h3>
             <p>Deploying multiple product listings with non-overlapping niche keywords</p>
           </div>
-        </div>
         <div style="font-size:13px; line-height:1.6; color:var(--text-secondary);">
           <p style="margin-bottom:12px;">
             <strong style="color:var(--amber-light);">🌊 Search Real Estate Domination:</strong> By creating multiple distinct listings for the same product line (e.g. 2-pack, 4-pack, 6-pack, square, rectangle), Taarmi captures multiple sponsored and organic spots on the search results page.
@@ -4038,7 +4235,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
             <strong style="color:var(--emerald-light);">🎯 Zero Internal Cannibalization:</strong> Niche keywords are strictly partitioned across listings. Listing A targets <code style="color:var(--text-primary);">basket for wedding</code>; Listing B targets <code style="color:var(--text-primary);">gift packing basket</code>. Only universal superstars (like <code style="color:var(--emerald-light);">fruit basket for gift</code>) are shared.
           </p>
         </div>
-      </div>
 
       <div class="section-card">
         <div class="section-header">
@@ -4046,8 +4242,7 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
             <h3>Whole-Store Economics</h3>
             <p>September 1 – September 18, 2026</p>
           </div>
-        </div>
-        <table>
+        <div class="table-responsive"><table>
           <tbody>
             <tr>
               <td><strong>Total Store Sales</strong></td>
@@ -4066,8 +4261,7 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
               <td class="num-cell"><strong style="color:var(--emerald-light); font-size:18px;">7.96%</strong> (High Profit Margin)</td>
             </tr>
           </tbody>
-        </table>
-      </div>
+        </table></div>
     </div>
   </div>
 
@@ -4079,7 +4273,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           <h3>Lifetime Statistical Anchors (Proven Multi-Order Winners)</h3>
           <p>Keywords meeting Rule 1 for Exact graduation (multi-orders &ge; 2 across multiple dates)</p>
         </div>
-      </div>
       <div class="table-responsive">
         <table>
           <thead>
@@ -4128,7 +4321,6 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           </tbody>
         </table>
       </div>
-    </div>
   </div>
 
   <!-- ==================== TAB 6: SIMULATOR ==================== -->
@@ -4139,26 +4331,20 @@ foldable', 'Copied Negative Phrases!')">Copy List</button>
           <h3>Interactive ROAS Rebound Simulator</h3>
           <p>Preview projected monthly ad spend, sales, and ROAS</p>
         </div>
-      </div>
       <div style="background:linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(56, 189, 248, 0.04)); border:1px solid var(--emerald-border); border-radius:14px; padding:24px; display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:20px; text-align:center;">
         <div>
           <div style="font-size:11px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase;">Projected Spend</div>
           <div style="font-size:32px; font-weight:800; font-family:var(--font-display); color:var(--amber-light);">₹10,057</div>
-        </div>
         <div>
           <div style="font-size:11px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase;">Projected Sales</div>
           <div style="font-size:32px; font-weight:800; font-family:var(--font-display); color:var(--text-primary);">₹66,315</div>
-        </div>
         <div>
           <div style="font-size:11px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase;">Projected ACOS</div>
           <div style="font-size:32px; font-weight:800; font-family:var(--font-display); color:var(--emerald-light);">15.2%</div>
-        </div>
         <div>
           <div style="font-size:11px; font-family:var(--font-mono); color:var(--text-secondary); text-transform:uppercase;">Projected ROAS</div>
           <div style="font-size:38px; font-weight:800; font-family:var(--font-display); color:var(--emerald-light); text-shadow:0 0 20px rgba(16,185,129,0.4);">6.59x</div>
-        </div>
       </div>
-    </div>
   </div>
 
 </div>
@@ -4224,9 +4410,8 @@ function copyApprovedNegatives() {
     showToast('No keywords selected for negation');
     return;
   }
-  const text = list.join('
-');
-  copySnippet(text, `Copied ${list.length} Approved Negatives!`);
+  const text = list.join('\n');
+  copySnippet(text, 'Copied ' + allKeywords.length + ' Unique Clean Keywords (No Bids)!');
 }
 
 function copyApprovedGraduates() {
@@ -4240,9 +4425,8 @@ function copyApprovedGraduates() {
     showToast('No keywords selected for graduation');
     return;
   }
-  const text = list.join('
-');
-  copySnippet(text, `Copied ${list.length} Approved Exact Graduates!`);
+  const text = list.join('\n');
+  copySnippet(text, 'Copied ' + allKeywords.length + ' Unique Clean Keywords (No Bids)!');
 }
 
 function fallbackCopy(text, msg) {
@@ -4297,8 +4481,7 @@ function copySingle(text) {
 function sanitizeKeywordsOnly(text) {
   if (!text) return '';
   return text
-    .split('
-')
+    .split('\n')
     .map(line => {
       // Remove trailing tab or spaces with numeric bid (e.g. \t2.20 or \t₹2.20)
       let cleaned = line.replace(/[\t\s]+(?:₹|Rs\.?|INR)?\s*\d+(?:\.\d{1,2})?\s*$/i, '');
@@ -4309,8 +4492,7 @@ function sanitizeKeywordsOnly(text) {
       return cleaned.trim();
     })
     .filter(l => l.length > 0)
-    .join('
-');
+    .join('\n');
 }
 
 function copyText(target, customMsg) {
@@ -4334,9 +4516,8 @@ function copyText(target, customMsg) {
     return;
   }
 
-  const lines = val.split('
-').filter(l => l.trim().length > 0);
-  const msg = customMsg || (lines.length > 1 ? `Copied ${lines.length} keywords (clean / no bids)!` : (lines[0].length > 40 ? 'Copied keyword!' : `Copied: "${lines[0]}"`));
+  const lines = val.split('\n').filter(l => l.trim().length > 0);
+  const msg = customMsg || (lines.length > 1 ? ('Copied ' + lines.length + ' keywords (clean / no bids)!') : (lines[0].length > 40 ? 'Copied keyword!' : ('Copied: ' + lines[0])));
 
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(val)
@@ -4354,8 +4535,7 @@ function copyAllCleanTargets() {
     const el = document.getElementById(id);
     if (el) {
       const clean = sanitizeKeywordsOnly(el.value || el.innerText || '');
-      const lines = clean.split('
-').map(l => l.trim()).filter(Boolean);
+      const lines = clean.split('\n').map(l => l.trim()).filter(Boolean);
       lines.forEach(k => {
         if (!allKeywords.includes(k)) allKeywords.push(k);
       });
@@ -4365,9 +4545,8 @@ function copyAllCleanTargets() {
     showToast('No keywords found!');
     return;
   }
-  const text = allKeywords.join('
-');
-  copySnippet(text, `Copied ${allKeywords.length} Unique Clean Keywords (No Bids)!`);
+  const text = allKeywords.join('\n');
+  copySnippet(text, 'Copied ' + allKeywords.length + ' Unique Clean Keywords (No Bids)!');
 }
 
 function showToast(msg) {
@@ -4396,27 +4575,30 @@ function copyTaarmiDefensiveAsins() {
 }
 
 function downloadBasketPatCsv() {
-  const csvContent = `ASIN,Brand,Product Title,Basket Type,Live Price,Rec Bid
-B0DJGSY4FC,SANWALSA,"(Set of 3 - 8, 10, 12 inch) MDF Base Designer Gift Hamper Baskets with Net Cover",MDF Jute Net Basket,799,2.80
-B0DQT9648X,Vayu Art,"Pine Wood Gift Hamper Basket with Handle with Decoration Net (12x12x2)",Pinewood Net Basket,396,2.40
-B0F1MWYYLB,Vayu Art,"Octagonal Decorated Net Gift Hamper Wedding Basket (12x12x2.25)",Octagonal Net Basket,339,2.30
-B0DG5QBH28,KYNA,"Designer Gift Hamper Packaging Baskets With Net Cover (Pack Of 4)",Bucket Net Basket,448,2.40
-B0CT5SZCDF,Wizme,"Decorative Wedding Basket / Net Basket Gift Hamper (Set Of 6)",Wire Net Hamper Basket,597,2.50
-B0G1K3LHC1,NBH / Generic,"Premium Shagun Basket Set of 5 (25x25cm) for Wedding Gift Packing",Shagun Tokri Basket,279,2.10
-B0HK1B74NH,Generic,"Golden Decorative Metal Wire Basket with Floral Handle (20cm)",Golden Wire Fruit Basket,289,2.50
-B0HHYXGRZ1,CHIDDHAN,"Rose Gold Metal Wire Fruit Basket Bowl for Tabletop & Gifting",Metal Wire Fruit Basket,350,2.30
-B0HJHFVFRR,Khojon,"Set of 2 (12) Wedding Return Gift Basket with Net Cover",Large 12 Net Basket,362,2.40
-B0HJHRG6WT,Khojon,"Set of 5 (10) Wedding Return Gift Basket with Net Cover",10 Net Return Gift Basket,470,2.40
-B0HJHCXLX5,Khojon,"Set of 2 (12) Decorative Gift Basket with Net Cover for Diwali",12 Festive Net Basket,494,2.30
-B0HJHFXVV6,Khojon,"Set of 6 (7x7x3) Fruit Basket / Gift Hamper with Net",7x7 Small Net Basket,446,2.50
-B0HJHDX1K8,Khojon,"Set of 5 (7x7x3) Decorative Gift Basket with Net Cover",7x7 Small Net Basket,470,2.40
-B0HJHB2844,Khojon,"Set of 3 (9x11x3) Decorative Fruit Basket with Net Cover",Medium Hamper Basket,431,2.30
-B0HJHHCNFW,Khojon,"Set of 5 (12) Shagun Basket, Wedding Gift Packing Hampers",12 Shagun Tokri Basket,435,2.40
-B0HJHMZ3KN,Khojon,"Set of 5 (12) Decorative Wedding Basket / Shagun Gift Basket",12 Wedding Hamper Basket,458,2.40
-B0HJHGMRSD,Khojon,"Set of 4 (10) Decorative Gift Hamper Baskets for Return Gifts",Plastic & Net Basket,399,2.20
-B0HJHP8HK6,Khojon,"Set of 5 (9x11x3) Square Fancy Baskets for Wedding/Fruit Packing",Square Fancy Basket,525,2.30
-B0HKFYDGDH,Generic,"Decorative Handmade Potli Gift Basket with Net Cover (Red Oval)",Handmade Potli Basket,498,2.20
-B0HJ9TNMTX,Generic,"Decorative Handmade Potli Gift Basket with Net Cover (Red Oval)",Handmade Potli Basket,498,2.20`;
+  const csvLines = [
+    'ASIN,Brand,Product Title,Basket Type,Live Price,Rec Bid',
+    'B0DJGSY4FC,SANWALSA,"(Set of 3 - 8, 10, 12 inch) MDF Base Designer Gift Hamper Baskets with Net Cover",MDF Jute Net Basket,799,2.80',
+    'B0DQT9648X,Vayu Art,"Pine Wood Gift Hamper Basket with Handle with Decoration Net (12x12x2)",Pinewood Net Basket,396,2.40',
+    'B0F1MWYYLB,Vayu Art,"Octagonal Decorated Net Gift Hamper Wedding Basket (12x12x2.25)",Octagonal Net Basket,339,2.30',
+    'B0DG5QBH28,KYNA,"Designer Gift Hamper Packaging Baskets With Net Cover (Pack Of 4)",Bucket Net Basket,448,2.40',
+    'B0CT5SZCDF,Wizme,"Decorative Wedding Basket / Net Basket Gift Hamper (Set Of 6)",Wire Net Hamper Basket,597,2.50',
+    'B0G1K3LHC1,NBH / Generic,"Premium Shagun Basket Set of 5 (25x25cm) for Wedding Gift Packing",Shagun Tokri Basket,279,2.10',
+    'B0HK1B74NH,Generic,"Golden Decorative Metal Wire Basket with Floral Handle (20cm)",Golden Wire Fruit Basket,289,2.50',
+    'B0HHYXGRZ1,CHIDDHAN,"Rose Gold Metal Wire Fruit Basket Bowl for Tabletop & Gifting",Metal Wire Fruit Basket,350,2.30',
+    'B0HJHFVFRR,Khojon,"Set of 2 (12) Wedding Return Gift Basket with Net Cover",Large 12 Net Basket,362,2.40',
+    'B0HJHRG6WT,Khojon,"Set of 5 (10) Wedding Return Gift Basket with Net Cover",10 Net Return Gift Basket,470,2.40',
+    'B0HJHCXLX5,Khojon,"Set of 2 (12) Decorative Gift Basket with Net Cover for Diwali",12 Festive Net Basket,494,2.30',
+    'B0HJHFXVV6,Khojon,"Set of 6 (7x7x3) Fruit Basket / Gift Hamper with Net",7x7 Small Net Basket,446,2.50',
+    'B0HJHDX1K8,Khojon,"Set of 5 (7x7x3) Decorative Gift Basket with Net Cover",7x7 Small Net Basket,470,2.40',
+    'B0HJHB2844,Khojon,"Set of 3 (9x11x3) Decorative Fruit Basket with Net Cover",Medium Hamper Basket,431,2.30',
+    'B0HJHHCNFW,Khojon,"Set of 5 (12) Shagun Basket, Wedding Gift Packing Hampers",12 Shagun Tokri Basket,435,2.40',
+    'B0HJHMZ3KN,Khojon,"Set of 5 (12) Decorative Wedding Basket / Shagun Gift Basket",12 Wedding Hamper Basket,458,2.40',
+    'B0HJHGMRSD,Khojon,"Set of 4 (10) Decorative Gift Hamper Baskets for Return Gifts",Plastic & Net Basket,399,2.20',
+    'B0HJHP8HK6,Khojon,"Set of 5 (9x11x3) Square Fancy Baskets for Wedding/Fruit Packing",Square Fancy Basket,525,2.30',
+    'B0HKFYDGDH,Generic,"Decorative Handmade Potli Gift Basket with Net Cover (Red Oval)",Handmade Potli Basket,498,2.20',
+    'B0HJ9TNMTX,Generic,"Decorative Handmade Potli Gift Basket with Net Cover (Red Oval)",Handmade Potli Basket,498,2.20'
+  ];
+  const csvContent = csvLines.join('\n');
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -4457,233 +4639,235 @@ function runCampaignOptimizationSimulation() {
 }
 
 function copyAll4CampaignsExport() {
-  const masterSummary = `=============================================================
-TAARMI AMAZON PPC 4-CAMPAIGN RESTRUCTURE & ACTION BLUEPRINT
-=============================================================
-
-1. BROAD CAMPAIGN (Match Type: Broad)
---------------------------------------
-Target Keywords (Clean - Ready to Paste into Amazon):
-fruit basket with net cover
-gift packing basket
-hamper basket
-gifting basket
-basket for wedding
-gifting basket for diwali and navratri
-gift hamper
-dry fruit basket
-engagement basket
-wedding return gift basket
-trousseau packing
-pooja basket
-tokri for gifting
-shagun packing
-
-Bid Calibration Reference (Set in Campaign Settings):
-- fruit basket with net cover: ₹2.20
-- gift packing basket: ₹2.00
-- hamper basket: ₹2.00
-- gifting basket: ₹2.00
-- basket for wedding: ₹2.10 (Calibrated from ₹3.00)
-- gifting basket for diwali and navratri: ₹2.20
-- gift hamper: ₹1.40 (Calibrated from ₹2.00 to stop bleed)
-- dry fruit basket: ₹1.60
-- engagement basket: ₹1.80
-- wedding return gift basket: ₹2.00
-- trousseau packing: ₹1.50
-- pooja basket: ₹1.50
-- tokri for gifting: ₹1.50
-- shagun packing: ₹1.50
-
-Negative Exact (Rule 3 Enforced):
-baskets for gift packing
-gift packing box for hamper
-fruit basket for gift
-decorative basket for gift packing
-gifting basket
-fruits packing basket
-decorative gift packing baskets
-fruit gift basket with net cover
-room hamper basket for wedding
-small basket for wedding gifts
-gift hamper box with net cover
-wedding basket for gifting
-small basket for gifting
-basket for hamper
-dry fruit basket for gifting
-fancy fruit basket for gifting
-plastic basket
-laundry basket
-vegetable basket
-shopping basket
-toy basket
-cycle basket
-bicycle basket
-kitchen basket
-
-Negative Phrase:
-plastic, wire, steel, laundry, clothes, vegetable, kitchen, cycle, bike, dog, cat, toy, picnic, with lid, wedding dress, acrylic box, bamboo, paper, jute, foldable
-
--------------------------------------------------------------
-2. PHRASE CAMPAIGN (Match Type: Phrase)
----------------------------------------
-Target Keywords (Clean - Ready to Paste into Amazon):
-fruit basket for wedding
-fruits packing basket
-packing basket
-tokri basket for gifting
-fancy basket for gifting
-gift packing basket
-room hamper basket
-fancy baskets for gifts
-hamper basket for gifting
-room hamper basket for wedding
-small basket for wedding gifts
-gift hamper box empty
-empty basket for fruits gift packing
-gift packing baskets pack of 3
-
-Bid Calibration Reference (Set in Campaign Settings):
-- fruit basket for wedding: ₹3.00
-- fruits packing basket: ₹2.80
-- packing basket: ₹2.60 (Calibrated from ₹3.00)
-- tokri basket for gifting: ₹2.20
-- fancy basket for gifting: ₹2.00
-- gift packing basket: ₹2.20
-- room hamper basket: ₹2.00
-- fancy baskets for gifts: ₹2.00
-- hamper basket for gifting: ₹1.80
-- room hamper basket for wedding: ₹2.20
-- small basket for wedding gifts: ₹1.80
-- gift hamper box empty: ₹1.80
-- empty basket for fruits gift packing: ₹1.80
-- gift packing baskets pack of 3: ₹1.80
-
-Negative Exact (MANDATORY RULE 3 ISOLATION - ADD TO LIVE):
-baskets for gift packing
-gift packing box for hamper
-fruit basket for gift
-decorative basket for gift packing
-gifting basket
-fruits packing basket
-decorative gift packing baskets
-fruit gift basket with net cover
-room hamper basket for wedding
-small basket for wedding gifts
-plastic basket, laundry basket, vegetable basket, shopping basket, toy basket, cycle basket, bicycle basket, kitchen basket
-
-Negative Phrase (CRITICAL ACTION: DELETE "large", "big", "metal", "kg" from Seller Central):
-plastic, wire, steel, laundry, clothes, vegetable, kitchen, cycle, bike, dog, cat, toy, picnic, tray, wooden, with lid, basket for storage
-
--------------------------------------------------------------
-3. EXACT CAMPAIGN (Match Type: Exact)
--------------------------------------
-Target Keywords (Clean - Ready to Paste into Amazon):
-baskets for gift packing
-fruit basket with net cover
-fruit basket for wedding
-gift packing box for hamper
-fruit basket for gift
-decorative basket for gift packing
-gifting basket
-fruits packing basket
-decorative gift packing baskets
-fruit gift basket with net cover
-room hamper basket for wedding
-small basket for wedding gifts
-
-Bid Calibration Reference (Set in Campaign Settings):
-- baskets for gift packing: ₹3.80 (Core Cash Cow, 19 orders!)
-- fruit basket with net cover: ₹2.80 (GRADUATED FROM BROAD 43.6x ROAS)
-- fruit basket for wedding: ₹3.10 (GRADUATED FROM PHRASE 9.24x ROAS)
-- gift packing box for hamper: ₹2.20
-- fruit basket for gift: ₹2.00 (Calibrated down from ₹3.00)
-- decorative basket for gift packing: ₹1.70 (Calibrated down from ₹2.00)
-- gifting basket: ₹2.00
-- fruits packing basket: ₹2.00
-- decorative gift packing baskets: ₹1.80
-- fruit gift basket with net cover: ₹2.00
-- room hamper basket for wedding: ₹2.00
-- small basket for wedding gifts: ₹1.80
-
-Negative Exact:
-wedding basket for gifting
-small basket for gifting
-fancy fruit basket for gifting
-
-Negative Phrase:
-plastic, wire, steel, laundry, clothes, vegetable, kitchen
-
--------------------------------------------------------------
-4. FESTIVE BROAD CAMPAIGN (Match Type: Broad)
-----------------------------------------------
-Target Keywords (Clean - Ready to Paste into Amazon):
-diwali empty dryfruit hamper organizer
-deepawali corporate luxury packing box
-navratri garba return favor tokri
-kanya pujan kanjak ashtami basket
-dhanteras laxmi pooja shagun platter
-bhai dooj celebratory sweet tray
-
-Bid Calibration Reference (Set in Campaign Settings):
-- diwali empty dryfruit hamper organizer: ₹2.00
-- deepawali corporate luxury packing box: ₹2.00
-- navratri garba return favor tokri: ₹2.00
-- kanya pujan kanjak ashtami basket: ₹2.00
-- dhanteras laxmi pooja shagun platter: ₹2.00
-- bhai dooj celebratory sweet tray: ₹2.00
-
-Negative Exact (Rule 3 Enforced):
-baskets for gift packing
-gift packing box for hamper
-fruit basket for gift
-decorative basket for gift packing
-gifting basket
-fruits packing basket
-decorative gift packing baskets
-fruit gift basket with net cover
-room hamper basket for wedding
-small basket for wedding gifts
-
-Negative Phrase:
-sweets, mithai, cadbury, haldiram, with dry fruits, 1kg, 500g, lights, led, diya, diyas, candles, dress, clothes, kurti, saree, crackers, patakha, silver coin, gold coin, real silver, pure brass, plastic, steel, laundry
-
--------------------------------------------------------------
-5. COMPETITOR PAT (BASKETS) CAMPAIGN (Match Type: ASIN_SAME_AS)
--------------------------------------------------------------
-Target ASINs (Clean - Ready to Paste into Amazon Product Targeting):
-B0DJGSY4FC
-B0DQT9648X
-B0F1MWYYLB
-B0DG5QBH28
-B0CT5SZCDF
-B0G1K3LHC1
-B0HK1B74NH
-B0HHYXGRZ1
-B0HJHFVFRR
-B0HJHRG6WT
-B0HJHCXLX5
-B0HJHFXVV6
-B0HJHDX1K8
-B0HJHB2844
-B0HJHHCNFW
-B0HJHMZ3KN
-B0HJHGMRSD
-B0HJHP8HK6
-B0HKFYDGDH
-B0HJ9TNMTX
-
-Defensive Cross-Sell ASINs (Taarmi Own Brand):
-B0HJNBGL3B
-B0HJBDGX56
-B0HJBK841G
-B0HJBK1PLC
-B0DHRXT2BD
-
-Suggested Bids: ₹2.10 - ₹2.80 (Default: ₹2.40)
-Placement Strategy: +35% on Product Pages`;
-
-  copySnippet(masterSummary, 'Copied Master 5-Campaign Blueprint!');
+  const summaryText = [
+    "=============================================================",
+    "TAARMI AMAZON PPC 4-CAMPAIGN RESTRUCTURE & ACTION BLUEPRINT",
+    "=============================================================",
+    "",
+    "1. BROAD CAMPAIGN (Match Type: Broad)",
+    "--------------------------------------",
+    "Target Keywords (Clean - Ready to Paste into Amazon):",
+    "fruit basket with net cover",
+    "gift packing basket",
+    "hamper basket",
+    "gifting basket",
+    "basket for wedding",
+    "gifting basket for diwali and navratri",
+    "gift hamper",
+    "dry fruit basket",
+    "engagement basket",
+    "wedding return gift basket",
+    "trousseau packing",
+    "pooja basket",
+    "tokri for gifting",
+    "shagun packing",
+    "",
+    "Bid Calibration Reference (Set in Campaign Settings):",
+    "- fruit basket with net cover: ₹2.20",
+    "- gift packing basket: ₹2.00",
+    "- hamper basket: ₹2.00",
+    "- gifting basket: ₹2.00",
+    "- basket for wedding: ₹2.10 (Calibrated from ₹3.00)",
+    "- gifting basket for diwali and navratri: ₹2.20",
+    "- gift hamper: ₹1.40 (Calibrated from ₹2.00 to stop bleed)",
+    "- dry fruit basket: ₹1.60",
+    "- engagement basket: ₹1.80",
+    "- wedding return gift basket: ₹2.00",
+    "- trousseau packing: ₹1.50",
+    "- pooja basket: ₹1.50",
+    "- tokri for gifting: ₹1.50",
+    "- shagun packing: ₹1.50",
+    "",
+    "Negative Exact (Rule 3 Enforced):",
+    "baskets for gift packing",
+    "gift packing box for hamper",
+    "fruit basket for gift",
+    "decorative basket for gift packing",
+    "gifting basket",
+    "fruits packing basket",
+    "decorative gift packing baskets",
+    "fruit gift basket with net cover",
+    "room hamper basket for wedding",
+    "small basket for wedding gifts",
+    "gift hamper box with net cover",
+    "wedding basket for gifting",
+    "small basket for gifting",
+    "basket for hamper",
+    "dry fruit basket for gifting",
+    "fancy fruit basket for gifting",
+    "plastic basket",
+    "laundry basket",
+    "vegetable basket",
+    "shopping basket",
+    "toy basket",
+    "cycle basket",
+    "bicycle basket",
+    "kitchen basket",
+    "",
+    "Negative Phrase:",
+    "plastic, wire, steel, laundry, clothes, vegetable, kitchen, cycle, bike, dog, cat, toy, picnic, with lid, wedding dress, acrylic box, bamboo, paper, jute, foldable",
+    "",
+    "-------------------------------------------------------------",
+    "2. PHRASE CAMPAIGN (Match Type: Phrase)",
+    "---------------------------------------",
+    "Target Keywords (Clean - Ready to Paste into Amazon):",
+    "fruit basket for wedding",
+    "fruits packing basket",
+    "packing basket",
+    "tokri basket for gifting",
+    "fancy basket for gifting",
+    "gift packing basket",
+    "room hamper basket",
+    "fancy baskets for gifts",
+    "hamper basket for gifting",
+    "room hamper basket for wedding",
+    "small basket for wedding gifts",
+    "gift hamper box empty",
+    "empty basket for fruits gift packing",
+    "gift packing baskets pack of 3",
+    "",
+    "Bid Calibration Reference (Set in Campaign Settings):",
+    "- fruit basket for wedding: ₹3.00",
+    "- fruits packing basket: ₹2.80",
+    "- packing basket: ₹2.60 (Calibrated from ₹3.00)",
+    "- tokri basket for gifting: ₹2.20",
+    "- fancy basket for gifting: ₹2.00",
+    "- gift packing basket: ₹2.20",
+    "- room hamper basket: ₹2.00",
+    "- fancy baskets for gifts: ₹2.00",
+    "- hamper basket for gifting: ₹1.80",
+    "- room hamper basket for wedding: ₹2.20",
+    "- small basket for wedding gifts: ₹1.80",
+    "- gift hamper box empty: ₹1.80",
+    "- empty basket for fruits gift packing: ₹1.80",
+    "- gift packing baskets pack of 3: ₹1.80",
+    "",
+    "Negative Exact (MANDATORY RULE 3 ISOLATION - ADD TO LIVE):",
+    "baskets for gift packing",
+    "gift packing box for hamper",
+    "fruit basket for gift",
+    "decorative basket for gift packing",
+    "gifting basket",
+    "fruits packing basket",
+    "decorative gift packing baskets",
+    "fruit gift basket with net cover",
+    "room hamper basket for wedding",
+    "small basket for wedding gifts",
+    "plastic basket, laundry basket, vegetable basket, shopping basket, toy basket, cycle basket, bicycle basket, kitchen basket",
+    "",
+    "Negative Phrase (CRITICAL ACTION: DELETE \"large\", \"big\", \"metal\", \"kg\" from Seller Central):",
+    "plastic, wire, steel, laundry, clothes, vegetable, kitchen, cycle, bike, dog, cat, toy, picnic, tray, wooden, with lid, basket for storage",
+    "",
+    "-------------------------------------------------------------",
+    "3. EXACT CAMPAIGN (Match Type: Exact)",
+    "-------------------------------------",
+    "Target Keywords (Clean - Ready to Paste into Amazon):",
+    "baskets for gift packing",
+    "fruit basket with net cover",
+    "fruit basket for wedding",
+    "gift packing box for hamper",
+    "fruit basket for gift",
+    "decorative basket for gift packing",
+    "gifting basket",
+    "fruits packing basket",
+    "decorative gift packing baskets",
+    "fruit gift basket with net cover",
+    "room hamper basket for wedding",
+    "small basket for wedding gifts",
+    "",
+    "Bid Calibration Reference (Set in Campaign Settings):",
+    "- baskets for gift packing: ₹3.80 (Core Cash Cow, 19 orders!)",
+    "- fruit basket with net cover: ₹2.80 (GRADUATED FROM BROAD 43.6x ROAS)",
+    "- fruit basket for wedding: ₹3.10 (GRADUATED FROM PHRASE 9.24x ROAS)",
+    "- gift packing box for hamper: ₹2.20",
+    "- fruit basket for gift: ₹2.00 (Calibrated down from ₹3.00)",
+    "- decorative basket for gift packing: ₹1.70 (Calibrated down from ₹2.00)",
+    "- gifting basket: ₹2.00",
+    "- fruits packing basket: ₹2.00",
+    "- decorative gift packing baskets: ₹1.80",
+    "- fruit gift basket with net cover: ₹2.00",
+    "- room hamper basket for wedding: ₹2.00",
+    "- small basket for wedding gifts: ₹1.80",
+    "",
+    "Negative Exact:",
+    "wedding basket for gifting",
+    "small basket for gifting",
+    "fancy fruit basket for gifting",
+    "",
+    "Negative Phrase:",
+    "plastic, wire, steel, laundry, clothes, vegetable, kitchen",
+    "",
+    "-------------------------------------------------------------",
+    "4. FESTIVE BROAD CAMPAIGN (Match Type: Broad)",
+    "----------------------------------------------",
+    "Target Keywords (Clean - Ready to Paste into Amazon):",
+    "diwali empty dryfruit hamper organizer",
+    "deepawali corporate luxury packing box",
+    "navratri garba return favor tokri",
+    "kanya pujan kanjak ashtami basket",
+    "dhanteras laxmi pooja shagun platter",
+    "bhai dooj celebratory sweet tray",
+    "",
+    "Bid Calibration Reference (Set in Campaign Settings):",
+    "- diwali empty dryfruit hamper organizer: ₹2.00",
+    "- deepawali corporate luxury packing box: ₹2.00",
+    "- navratri garba return favor tokri: ₹2.00",
+    "- kanya pujan kanjak ashtami basket: ₹2.00",
+    "- dhanteras laxmi pooja shagun platter: ₹2.00",
+    "- bhai dooj celebratory sweet tray: ₹2.00",
+    "",
+    "Negative Exact (Rule 3 Enforced):",
+    "baskets for gift packing",
+    "gift packing box for hamper",
+    "fruit basket for gift",
+    "decorative basket for gift packing",
+    "gifting basket",
+    "fruits packing basket",
+    "decorative gift packing baskets",
+    "fruit gift basket with net cover",
+    "room hamper basket for wedding",
+    "small basket for wedding gifts",
+    "",
+    "Negative Phrase:",
+    "sweets, mithai, cadbury, haldiram, with dry fruits, 1kg, 500g, lights, led, diya, diyas, candles, dress, clothes, kurti, saree, crackers, patakha, silver coin, gold coin, real silver, pure brass, plastic, steel, laundry",
+    "",
+    "-------------------------------------------------------------",
+    "5. COMPETITOR PAT (BASKETS) CAMPAIGN (Match Type: ASIN_SAME_AS)",
+    "-------------------------------------------------------------",
+    "Target ASINs (Clean - Ready to Paste into Amazon Product Targeting):",
+    "B0DJGSY4FC",
+    "B0DQT9648X",
+    "B0F1MWYYLB",
+    "B0DG5QBH28",
+    "B0CT5SZCDF",
+    "B0G1K3LHC1",
+    "B0HK1B74NH",
+    "B0HHYXGRZ1",
+    "B0HJHFVFRR",
+    "B0HJHRG6WT",
+    "B0HJHCXLX5",
+    "B0HJHFXVV6",
+    "B0HJHDX1K8",
+    "B0HJHB2844",
+    "B0HJHHCNFW",
+    "B0HJHMZ3KN",
+    "B0HJHGMRSD",
+    "B0HJHP8HK6",
+    "B0HKFYDGDH",
+    "B0HJ9TNMTX",
+    "",
+    "Defensive Cross-Sell ASINs (Taarmi Own Brand):",
+    "B0HJNBGL3B",
+    "B0HJBDGX56",
+    "B0HJBK841G",
+    "B0HJBK1PLC",
+    "B0DHRXT2BD",
+    "",
+    "Suggested Bids: ₹2.10 - ₹2.80 (Default: ₹2.40)",
+    "Placement Strategy: +35% on Product Pages",
+    "",
+  ].join('\n');
+  copySnippet(summaryText, 'Copied Master 5-Campaign Blueprint!');
 }
 
 
@@ -4849,31 +5033,26 @@ function syncTargetBuffers() {
 
   const currentExact = baseExact.filter(k => !demotionState.exactToPhrase.includes(k));
   const exactEl = document.getElementById('exact_targets_text');
-  if (exactEl) exactEl.value = currentExact.join('
-');
+  if (exactEl) exactEl.value = currentExact.join('\n');
 
   let currentPhrase = [...basePhrase];
   demotionState.exactToPhrase.forEach(k => { if (!currentPhrase.includes(k)) currentPhrase.push(k); });
   currentPhrase = currentPhrase.filter(k => !demotionState.phraseToBroad.includes(k) && !demotionState.phraseDiscarded.includes(k));
   const phraseEl = document.getElementById('phrase_targets_text');
-  if (phraseEl) phraseEl.value = currentPhrase.join('
-');
+  if (phraseEl) phraseEl.value = currentPhrase.join('\n');
 
   let currentBroad = [...baseBroad];
   demotionState.phraseToBroad.forEach(k => { if (!currentBroad.includes(k)) currentBroad.push(k); });
   const broadEl = document.getElementById('broad_targets_text');
-  if (broadEl) broadEl.value = currentBroad.join('
-');
+  if (broadEl) broadEl.value = currentBroad.join('\n');
 
   const negExactEl = document.getElementById('phrase_neg_exact_text');
   if (negExactEl) {
-    const lines = negExactEl.value.split('
-').filter(Boolean);
+    const lines = negExactEl.value.split('\n').filter(Boolean);
     demotionState.phraseDiscarded.forEach(k => {
       if (!lines.includes(k)) lines.push(k);
     });
-    negExactEl.value = lines.join('
-');
+    negExactEl.value = lines.join('\n');
   }
 }
 
@@ -4934,8 +5113,7 @@ function copyDemotedList(type) {
     showToast('No keywords in ' + name + ' list!');
     return;
   }
-  copySnippet(list.join('
-'), 'Copied ' + list.length + ' ' + name + ' keywords!');
+  copySnippet(list.join('\n'), 'Copied ' + list.length + ' ' + name + ' keywords!');
 }
 
 function resetAllDemotions() {
@@ -5008,8 +5186,6 @@ function resetAllDemotions() {
     <div style="margin-top: 18px; text-align: right;">
       <button class="pill-btn" onclick="closePhraseDemoteModal()" style="padding: 6px 14px; font-size: 12px;">Cancel</button>
     </div>
-  </div>
 </div>
 </body>
 </html>
-

@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Amazon Growth Master Playbook & Executive To-Do Dashboard | Taarmi Baskets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              gold: '#F59E0B',
+              'gold-light': '#FDE68A',
+              amber: '#D97706',
+              emerald: '#10B981',
+              cyan: '#06B6D4',
+              sky: '#0EA5E9',
+              indigo: '#6366F1',
+              purple: '#8B5CF6',
+              rose: '#F43F5E',
+              dark: '#0B0F19',
+              surface: '#111827',
+              card: '#1F2937'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg-base: #070B14;
+      --bg-surface: #0F172A;
+      --bg-card: #1E293B;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(245, 158, 11, 0.35);
+    }
+    body {
+      background-color: var(--bg-base);
+      color: #F8FAFC;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .font-heading { font-family: 'Outfit', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    
+    .bg-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    .ambient-glow {
+      position: fixed;
+      top: -15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1100px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.09) 0%, rgba(99, 102, 241, 0.05) 45%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .glass-card-interactive {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      transition: all 0.25s ease;
+    }
+    .glass-card-interactive:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+
+    /* Custom Checkbox */
+    .task-checkbox {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.6);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .task-checkbox:checked {
+      background: #10B981;
+      border-color: #10B981;
+    }
+    .task-checkbox:checked::after {
+      content: '✓';
+      font-size: 14px;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+    .task-checkbox:hover {
+      border-color: #F59E0B;
+    }
+
+    .task-item {
+      transition: all 0.25s ease;
+    }
+    .task-item.completed {
+      opacity: 0.55;
+    }
+    .task-item.completed .task-title {
+      text-decoration: line-through;
+      color: #94A3B8;
+    }
+
+    /* VIEW MODES: Hide completed items when showing only unchecked */
+    body.filter-show-unchecked .task-item.completed {
+      display: none !important;
+    }
+    body.filter-show-completed .task-item:not(.completed) {
+      display: none !important;
+    }
+
+    /* Smooth fading out when task is checked in unchecked mode */
+    .task-item.leaving {
+      opacity: 0;
+      transform: scale(0.96) translateY(-6px);
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    input[type=range] {
+      accent-color: #F59E0B;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070B14; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #F59E0B; }
+  </style>
+</head>
+<body class="bg-grid relative filter-show-unchecked">
+  <div class="ambient-glow"></div>
+
+  <!-- STICKY TOP NAV -->
+  <header class="sticky top-0 z-50 glass-card border-b border-white/10 px-6 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-black font-extrabold text-xl font-heading">
+          T
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-heading font-black text-lg md:text-xl tracking-wide text-white">TAARMI MASTER GROWTH OS</h1>
+            <span class="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">SYNTHESIS V3</span>
+            <span class="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">5 PLAYBOOKS MERGED</span>
+          </div>
+          <p class="text-xs text-slate-400">Synthesized 5-Source Amazon.in Growth Playbook, COSMO/Rufus Optimization & Interactive Master To-Do Engine</p>
+        </div>
+      </div>
+
+      <!-- Action & Navigation Bar -->
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <a href="00_DASHBOARD_PORTAL.html" class="px-3.5 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-semibold text-slate-300 border border-slate-700 transition flex items-center gap-1.5">
+          <span>←</span> Hub Portal
+        </a>
+        <a href="TAARMI_PPC_EXECUTIVE_DASHBOARD.html" class="px-3.5 py-1.5 rounded-lg bg-indigo-900/40 hover:bg-indigo-900/60 text-xs font-semibold text-indigo-300 border border-indigo-700/50 transition">
+          PPC Command
+        </a>
+        <a href="BASKET_LAB_STUDIO.html" class="px-3.5 py-1.5 rounded-lg bg-purple-900/40 hover:bg-purple-900/60 text-xs font-semibold text-purple-300 border border-purple-700/50 transition">
+          3D Basket Studio
+        </a>
+        <button onclick="resetAllTasks()" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-xs font-mono text-rose-400 border border-rose-500/30 transition">
+          Reset Tasks
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 md:px-6 py-8 space-y-8 relative z-10">
+
+    <!-- HERO METRIC BANNER & SYNTHESIS PILL -->
+    <div class="glass-card rounded-2xl p-6 border border-amber-500/30 bg-gradient-to-r from-amber-950/30 via-slate-900/80 to-indigo-950/30">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div class="lg:col-span-7 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-400/10 text-amber-300 border border-amber-400/20">
+            <span>⚡</span> CORE OBJECTIVE: SCALING HERO SKUs WITHOUT KILLING PROFITABILITY
+          </div>
+          <h2 class="font-heading font-extrabold text-2xl md:text-3xl text-white tracking-tight leading-tight">
+            The Master Gifting Acceleration Engine
+          </h2>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Synthesizing 5 advanced guides into one executable system for <strong class="text-amber-400">Taarmi Baskets & Luxury Packaging</strong>. Your store is already winning <span class="text-white font-semibold">71,992 monthly sessions</span> with a strong <span class="text-emerald-400 font-semibold">5.06x ROAS</span>. The bottleneck is <strong class="text-rose-400">conversion rate (0.41%)</strong>. Elevating CVR to just <strong class="text-amber-400">1.5%</strong> will 4x total sales to <strong class="text-emerald-400 font-mono">₹5,00,000+/mo</strong> with zero extra ad spend.
+          </p>
+          <div class="flex items-center gap-4 pt-2 text-xs font-mono text-slate-400 flex-wrap">
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> COSMO/Rufus Indexing</span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-400"></span> 4-Tier PPC Funnel</span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Coupon & Deal Stacking</span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400"></span> 10% BRB Flywheel</span>
+            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-400"></span> FBT Hijacking</span>
+          </div>
+        </div>
+
+        <!-- OVERALL PROGRESS CARD -->
+        <div class="lg:col-span-5 bg-slate-900/90 rounded-xl p-5 border border-white/10 space-y-4 shadow-xl">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold tracking-wider text-slate-400 uppercase">Master To-Do Completion</span>
+            <span id="overallProgressBadge" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-400">0% COMPLETE</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-3.5 overflow-hidden p-0.5 border border-white/10">
+            <div id="overallProgressBar" class="bg-gradient-to-r from-amber-500 via-emerald-400 to-emerald-500 h-full rounded-full transition-all duration-500 w-0"></div>
+          </div>
+          <div class="grid grid-cols-3 gap-2 pt-2 border-t border-white/10 text-center font-mono">
+            <div>
+              <div id="statTotalTasks" class="text-lg font-extrabold text-white">36</div>
+              <div class="text-[10px] text-slate-400 uppercase">Total Tasks</div>
+            </div>
+            <div>
+              <div id="statCompletedTasks" class="text-lg font-extrabold text-emerald-400">0</div>
+              <div class="text-[10px] text-slate-400 uppercase">Completed</div>
+            </div>
+            <div>
+              <div id="statPendingTasks" class="text-lg font-extrabold text-amber-400">36</div>
+              <div class="text-[10px] text-slate-400 uppercase">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB NAVIGATION FOR SECTIONS -->
+    <div class="flex items-center gap-2 border-b border-white/10 pb-2 overflow-x-auto">
+      <button onclick="switchTab('tab-todos')" id="btn-tab-todos" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/40">
+        <span>📋</span> Master Action To-Do Engine
+      </button>
+      <button onclick="switchTab('tab-simulator')" id="btn-tab-simulator" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+        <span>🧮</span> Dynamic Revenue & CVR Simulator
+      </button>
+      <button onclick="switchTab('tab-economics')" id="btn-tab-economics" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+        <span>💰</span> SKU Unit Economics & Guardrails
+      </button>
+      <button onclick="switchTab('tab-ppc')" id="btn-tab-ppc" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+        <span>🎯</span> 4-Tier PPC Architecture
+      </button>
+      <button onclick="switchTab('tab-cosmo')" id="btn-tab-cosmo" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+        <span>🤖</span> COSMO, Rufus & 9-Image Blueprint
+      </button>
+      <button onclick="switchTab('tab-cadence')" id="btn-tab-cadence" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
+        <span>📅</span> Mon–Fri Operating Cadence
+      </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 1: MASTER ACTION TO-DO ENGINE -->
+    <!-- ========================================== -->
+    <div id="tab-todos" class="tab-content space-y-6">
+      
+      <!-- CONTROLS & FILTER BAR -->
+      <div class="glass-card rounded-xl p-4 flex flex-wrap items-center justify-between gap-4">
+        <!-- Sprint Filters -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-xs font-mono font-bold text-slate-400 uppercase mr-1">Sprint:</span>
+          <button onclick="filterSprint('all')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/40" data-sprint="all">All Sprints</button>
+          <button onclick="filterSprint('48h')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="48h">⚡ 48-Hour Wins</button>
+          <button onclick="filterSprint('w1')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="w1">Week 1: Structure</button>
+          <button onclick="filterSprint('w2')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="w2">Week 2: Listing CVR</button>
+          <button onclick="filterSprint('w3')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="w3">Week 3: Traffic & FBT</button>
+          <button onclick="filterSprint('w4')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="w4">Week 4: Off-Amazon</button>
+          <button onclick="filterSprint('weekly')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="weekly">Weekly Rhythm</button>
+        </div>
+
+        <!-- Status View Selector (Unchecked vs All vs Completed) & Bulk Actions -->
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-1 p-1 rounded-xl bg-slate-900/90 border border-white/10 shadow-inner">
+            <button onclick="setStatusView('unchecked')" id="btn-status-unchecked" class="status-view-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center gap-1.5 transition">
+              <span>⚡ Only Unchecked</span>
+              <span id="badge-unchecked-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-500/30 text-amber-300 font-mono font-bold">36</span>
+            </button>
+            <button onclick="setStatusView('all')" id="btn-status-all" class="status-view-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white flex items-center gap-1.5 transition">
+              <span>All Items</span>
+              <span id="badge-all-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-800 text-slate-400 font-mono font-bold">36</span>
+            </button>
+            <button onclick="setStatusView('completed')" id="btn-status-completed" class="status-view-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white flex items-center gap-1.5 transition">
+              <span>Completed</span>
+              <span id="badge-completed-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 font-mono font-bold">0</span>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="toggleAllTasks(true)" class="px-2.5 py-1 text-xs font-mono bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded border border-emerald-500/30">Check All</button>
+            <button onclick="toggleAllTasks(false)" class="px-2.5 py-1 text-xs font-mono bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700">Uncheck All</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPRINT 1: IMMEDIATE 48-HOUR HIGH IMPACT WINS -->
+      <div class="sprint-group glass-card rounded-2xl p-6 border-l-4 border-l-amber-500 space-y-4" data-sprint-group="48h">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-amber-400 text-lg">⚡</span>
+              <h3 class="font-heading font-extrabold text-lg text-white">Sprint 1: Immediate 48-Hour High-Impact Quick Wins</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-400">IMMEDIATE ROI</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">Zero code, immediate Seller Central adjustments that activate algorithm badges and plug immediate revenue leaks.</p>
+          </div>
+          <div class="sprint-progress font-mono text-xs text-slate-400" id="progress-48h">0/7 Done</div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <!-- Task 1 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-1" data-id="1">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(1)">
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="task-title font-semibold text-sm text-white">Launch the "Double Badge" Stacking Glitch (PED + Clip Coupon)</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">+180% CTR</span>
+              </div>
+              <p class="text-xs text-slate-300">Set a 10% Prime Exclusive Discount (PED) on <code class="text-amber-300 bg-black/40 px-1 py-0.5 rounded">B0DHRXT2BD</code> alongside your existing ₹50 Clip Coupon. Amazon mobile search renders <strong>both</strong> the Red Deal banner and Green Coupon badge simultaneously, dominating search visibility.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 flex items-center gap-3">
+                <span>📍 Seller Central > Advertising > Prime Exclusive Discounts</span>
+                <button onclick="copySnippet('ped-coupon')" class="text-amber-400 hover:underline">Copy Strategy Note</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 2 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-2" data-id="2">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(2)">
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="task-title font-semibold text-sm text-white">File Browse Node Repositioning Case for #1 Best Seller Badge</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">ORANGE BADGE</span>
+              </div>
+              <p class="text-xs text-slate-300">Shift ASIN out of generic <code class="text-slate-300">Home & Kitchen > Storage & Baskets</code> into <code class="text-amber-300 bg-black/40 px-1 py-0.5 rounded">Party Favours / Gift Baskets</code> or <code class="text-amber-300 bg-black/40 px-1 py-0.5 rounded">Packaging & Shipping Supplies > Gift Wrap Supplies > Gift Baskets</code>. 15-20 orders/day wins the #1 Best Seller badge here!</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 flex items-center gap-3">
+                <span>📍 Seller Central > Help > Change Product Browse Node</span>
+                <button onclick="copySnippet('browse-node-ticket')" class="text-amber-400 hover:underline">Copy Support Ticket Template</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 3 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-3" data-id="3">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(3)">
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="task-title font-semibold text-sm text-white">Enable "Gift Messaging (Free)" & "Gift Wrap" in FBM Settings</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30">CVR TRUST</span>
+              </div>
+              <p class="text-xs text-slate-300">Under <code class="text-slate-300">Settings > Gift Options</code>, enable Free Gift Messaging and optional ₹40 Gift Wrap. Displays the "Gift options available at checkout" icon on the PDP, removing checkout friction for corporate and family senders.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Seller Central > Settings > Gift Options > Gift Messaging (Enabled)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 4 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-4" data-id="4">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(4)">
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="task-title font-semibold text-sm text-white">Launch Defensive ASIN Ring-Fencing Campaign (SP & SD Self-Targeting)</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">DEFENSE</span>
+              </div>
+              <p class="text-xs text-slate-300">Target your own 13 ASINs with low-bid (₹1.50–₹2.50) Sponsored Products PAT and Sponsored Display. Completely fill the *"Products related to this item"* carousel under <code class="text-amber-300 bg-black/40 px-1 py-0.5 rounded">B0DHRXT2BD</code> to prevent competitors from stealing your 50,000 monthly visitors.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Campaign Manager > Sponsored Products > Manual > Product Targeting > Own ASIN List</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 5 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-5" data-id="5">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(5)">
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="task-title font-semibold text-sm text-white">Zero-Waste 250-Byte Backend Search Term Overhaul</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">A10 INDEXING</span>
+              </div>
+              <p class="text-xs text-slate-300">Replace repetitive terms with a precise 250-byte ASCII set without commas: festive use cases, wedding terms, and Hindi intent (<code class="text-slate-300">sagan bhari tray roka return gift empty diwali dry fruit hamper basket gotawork</code>). Zero wasted bytes.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 flex items-center gap-3">
+                <span>📍 Inventory > Edit Listing > Keywords > Generic Keywords (Max 250 Bytes)</span>
+                <button onclick="copySnippet('backend-keywords')" class="text-amber-400 hover:underline">Copy 250-Byte Clean String</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 6 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-6" data-id="6">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(6)">
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="task-title font-semibold text-sm text-white">Activate Amazon Business (B2B) Quantity Tier Discounts</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30">BULK AOV</span>
+              </div>
+              <p class="text-xs text-slate-300">Enable Business Pricing and Tiered Quantity Discounts: 5–9 units: 5% off, 10–24 units: 8% off, 25+ units: 12% off. Unlocks the "Bulk Savings" badge for corporate Diwali/wedding gift procurement.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Manage Inventory > Business Price > Quantity Discounts (Percent off model)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 7 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-7" data-id="7">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(7)">
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="task-title font-semibold text-sm text-white">Dayparting Dead-Zone Bid Suppression (12 AM - 5 AM)</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">-15% AD WASTE</span>
+              </div>
+              <p class="text-xs text-slate-300">In Campaign Manager rules or SellerMate automated schedules, reduce bids by 35%–50% between 12:00 AM and 05:00 AM IST. Reallocate budget to the 11:00 AM – 4:00 PM and 7:00 PM – 11:00 PM festive peak buying windows.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Campaign Manager > Automated Rules > Schedule Rules (Time-of-day bid adjustments)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPRINT 2: WEEK 1 — CORE ARCHITECTURE & FINANCIAL GUARDRAILS -->
+      <div class="sprint-group glass-card rounded-2xl p-6 border-l-4 border-l-sky-500 space-y-4" data-sprint-group="w1">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-sky-400 text-lg">🏛️</span>
+              <h3 class="font-heading font-extrabold text-lg text-white">Sprint 2: Week 1 — Core Architecture & Financial Guardrails</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-500/20 text-sky-400">STRUCTURE</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">Establish unit contribution floors, separate campaign funnels, and harvest high-intent search queries.</p>
+          </div>
+          <div class="sprint-progress font-mono text-xs text-slate-400" id="progress-w1">0/6 Done</div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <!-- Task 8 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-8" data-id="8">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(8)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Establish SKU-Level Pre-Ad Contribution Margin & Target ACoS Guardrail</span>
+              <p class="text-xs text-slate-300">Calculate net proceeds after GST, 13.5% Amazon referral fee, Sept 2026 updated closing fees, shipping, and landed COGS. For ₹899 6-pack (pre-ad margin ~38%), cap target ACoS at 20% to guarantee 18% post-ad profit buffer.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Formula: Pre-Ad Contribution = Selling Price - Fees - Shipping - COGS | Break-even ACoS = Margin %</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 9 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-9" data-id="9">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(9)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Execute Search Query Performance (SQP) 4-Quadrant Funnel Triage</span>
+              <p class="text-xs text-slate-300">Pull 30-day SQP report from Brand Analytics. Isolate terms where <strong class="text-emerald-400">Purchase Share > 15%</strong> but Impression Share &lt; 40% into dedicated Exact SKAGs with a +40% Top-of-Search placement multiplier.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Brand Analytics > Search Query Performance > ASIN View</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 10 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-10" data-id="10">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(10)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Enforce 4-Tier PPC Funnel Separation (Discovery → Validation → Scale)</span>
+              <p class="text-xs text-slate-300">Never mix match types in one campaign. Segment into: <strong>1) SP Auto Discovery</strong>, <strong>2) SP Broad / Phrase Validation</strong>, <strong>3) SP Exact Scale</strong>, and <strong>4) SP Product Targeting (PAT)</strong>. Budget exact campaigns first.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Budget Allocation: Exact Scale (50%), Broad/Phrase (25%), Auto & PAT (20%), Defense (5%)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 11 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-11" data-id="11">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(11)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Implement "Harvest & Negate" Query Ownership System</span>
+              <p class="text-xs text-slate-300">When an Auto or Broad search term generates 2+ orders at target ACoS, graduate it to Exact match and immediately add it as a <strong>Negative Exact</strong> in the discovery campaign to eliminate self-cannibalization.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Rule: Discovery Finds → Exact Owns → Negative Prevents Internal Bidding War</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 12 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-12" data-id="12">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(12)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Build Parent-Child Variation Structure (Pack of 2, 4, 6)</span>
+              <p class="text-xs text-slate-300">Merge single and multi-packs of Rectangle 8x6" and Square 8x8" under a unified Parent ASIN using `PackageQuantity` and `Size/Shape`. Pools review count and prevents traffic bounce when buyers prefer a 2-pack or 4-pack.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Catalog > Add Products via Upload > Variation Wizard</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 13 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-13" data-id="13">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(13)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Configure Brand Tailored Promotions (Cart Abandoners & Repeat Buyers)</span>
+              <p class="text-xs text-slate-300">Navigate to <code class="text-slate-300">Advertising > Brand Tailored Promotions</code>. Create an exclusive 12% discount badge for "Cart Abandoners" (shoppers who added your basket to cart in last 90 days but didn't buy) and "High-Spend Repeat Customers".</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Advertising > Brand Tailored Promotions > Create Promotion</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPRINT 3: WEEK 2 — LISTING CONVERSION & COSMO/RUFUS -->
+      <div class="sprint-group glass-card rounded-2xl p-6 border-l-4 border-l-emerald-500 space-y-4" data-sprint-group="w2">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-400 text-lg">🎨</span>
+              <h3 class="font-heading font-extrabold text-lg text-white">Sprint 3: Week 2 — Listing Conversion & COSMO/Rufus Optimization</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400">CVR MULTIPLIER</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">Solve the 0.41% conversion leak by aligning detail page assets with Amazon's AI shopping assistant (Rufus) and buyer expectations.</p>
+          </div>
+          <div class="sprint-progress font-mono text-xs text-slate-400" id="progress-w2">0/6 Done</div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <!-- Task 14 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-14" data-id="14">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(14)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Rewrite Bullets with COSMO Semantic Anchors (Problem + Environment + Solution)</span>
+              <p class="text-xs text-slate-300">Format every bullet as <code class="text-emerald-300 bg-black/40 px-1 py-0.5 rounded">[BENEFIT IN CAPS]: [What it does] — [Why it matters]</code>. Rufus parses bullets to answer conversational customer queries (e.g. *"Can this hold 1kg dry fruit jars?"*).</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 flex items-center gap-3">
+                <span>📍 Manage Inventory > Edit Listing > Description > Bullet Points</span>
+                <button onclick="copySnippet('semantic-bullets')" class="text-amber-400 hover:underline">Copy 5 Semantic Bullets</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 15 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-15" data-id="15">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(15)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Deploy 9-Image Visual Conversion Sequence (Hero fills ≥85% Canvas)</span>
+              <p class="text-xs text-slate-300">Utilize all 9 image slots: 1. Main White BG Hero, 2. Festive In-Use, 3. Dimension & Exact Millimeter Specs, 4. Capacity Infographic, 5. What's Included / Props Disclaimer, 6. Kappa Board vs Flimsy Box, 7. Mughal Art Close-up, 8. Pack Count Display, 9. Unboxing Demo.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Requirement: High-res (2000x2000px) enabling Amazon zoom function</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 16 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-16" data-id="16">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(16)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Add "Capacity & Props Not Included" Disclaimer on Image #2 & #3</span>
+              <p class="text-xs text-slate-300">Add bold badge on secondary infographic: <strong class="text-amber-300 bg-black/40 px-1 py-0.5 rounded">"Hamper Baskets Only — Dry Fruits / Jars Shown For Display Only"</strong>. Also display: *"Holds 2x 250g Dry Fruit Jars or 1x 500g Mithai Box"*. Slashes 21% return rate immediately.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Solves the #1 buyer objection causing checkout hesitation and refunds</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 17 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-17" data-id="17">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(17)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Upload 30–45s Problem/Solution Video into Slot 2/3</span>
+              <p class="text-xs text-slate-300">Upload video showing: 1. Flat basket unfolding/opening, 2. Packing cashews & almonds inside, 3. Tying the golden gota ribbon. Increases buyer Dwell Time by 40%+, signaling high relevance to organic algorithm.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Manage Inventory > Upload & Manage Videos > Link ASIN B0DHRXT2BD</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 18 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-18" data-id="18">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(18)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Deploy Premium A+ Content with Interactive Comparison Chart</span>
+              <p class="text-xs text-slate-300">Create A+ Content featuring: Hero Brand Story, Technical Kappa Board Durability Callout, Visual Comparison Chart linking Rectangle 8x6", Square 8x8", and Square 6x6" variants, and FAQ Objection-Handling module.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Advertising > A+ Content Manager > Create New A+ (Apply to all 13 ASINs)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 19 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-19" data-id="19">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(19)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Launch Main Image A/B Split Test via Manage Your Experiments (MYE)</span>
+              <p class="text-xs text-slate-300">Run a 4-week MYE experiment testing: Version A (Pure white studio hero) vs Version B (Angled hero showing golden gota scalloped trim & ribbon bow). Track Session Lift and Unit Sales Lift.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Brands > Manage Your Experiments > Main Image Experiment</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPRINT 4: WEEK 3 — TRAFFIC & FBT HIJACKING -->
+      <div class="sprint-group glass-card rounded-2xl p-6 border-l-4 border-l-purple-500 space-y-4" data-sprint-group="w3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-purple-400 text-lg">🚀</span>
+              <h3 class="font-heading font-extrabold text-lg text-white">Sprint 4: Week 3 — Demand Expansion & FBT Hijacking</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-400">ORGANIC EXPANSION</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">Hijack high-velocity dry-fruit and chocolate traffic, launch Amazon Posts, and create Virtual Bundles.</p>
+          </div>
+          <div class="sprint-progress font-mono text-xs text-slate-400" id="progress-w3">0/5 Done</div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <!-- Task 20 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-20" data-id="20">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(20)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Launch FBT Hijacking PAT Campaign on Top 5 Dry Fruit & Chocolate ASINs</span>
+              <p class="text-xs text-slate-300">Target Happilo California Almonds 1kg, Farmley W240 Cashews, Nutraj Walnuts, and Cadbury Celebrations Gift Pack with Sponsored Products PAT (+50% Product Pages placement adjustment). When 15 shoppers buy both in one cart, Amazon locks your basket into their "Frequently Bought Together" widget!</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Ad Campaign: SP PAT > Target Category Bestseller ASINs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 21 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-21" data-id="21">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(21)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Publish 2 Daily Lifestyle Visuals on Amazon Posts (posts.amazon.in)</span>
+              <p class="text-xs text-slate-300">Upload high-res lifestyle photography of decorated baskets with diyas, flowers, and sweets on <code class="text-purple-300 bg-black/40 px-1 py-0.5 rounded">posts.amazon.in</code>. Amazon displays these posts for free in a "Related Posts" carousel directly on competitor PDPs!</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 100% Free Placement on Competitor Detail Pages (Brand Registry required)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 22 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-22" data-id="22">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(22)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Launch Sponsored Brands Video (SBV) Mobile Search Campaign</span>
+              <p class="text-xs text-slate-300">Create an autoplaying 15-second SBV ad targeting high-intent festive keywords (<code class="text-slate-300">diwali gift hamper basket</code>, <code class="text-slate-300">wedding trousseau tray</code>). SBV commands 3x higher CTR than static sponsored products in mobile search feeds.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Advertising > Sponsored Brands > Video format</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 23 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-23" data-id="23">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(23)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Create Virtual Bundles (Basket + Ribbon / Shredded Grass)</span>
+              <p class="text-xs text-slate-300">In <code class="text-slate-300">Brands > Virtual Bundles</code>, create multi-item bundles pairing your baskets with accessories or multi-size combos without physically repacking inventory in warehouse. Occupies prime mobile real estate above bullet points.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Brands > Virtual Product Bundles</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 24 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-24" data-id="24">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(24)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Curate Amazon Brand Store "Diwali & Wedding Gifting" Sub-Page</span>
+              <p class="text-xs text-slate-300">Design a dedicated festive sub-page in your Brand Store. Route all broad Sponsored Brands headline ads here instead of a single product page to reduce bounce rates and showcase the complete catalog collection.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Stores > Manage Stores > Edit Store > Add Sub-Page "Diwali Hampers"</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPRINT 5: WEEK 4 — OFF-AMAZON & B2B -->
+      <div class="sprint-group glass-card rounded-2xl p-6 border-l-4 border-l-rose-500 space-y-4" data-sprint-group="w4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-rose-400 text-lg">🌐</span>
+              <h3 class="font-heading font-extrabold text-lg text-white">Sprint 5: Week 4 — Off-Amazon Traffic Flywheel & B2B Expansion</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-500/20 text-rose-400">EXTERNAL SCALE</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">Leverage 10% Brand Referral Bonus, institutional B2B orders, and automated review acceleration.</p>
+          </div>
+          <div class="sprint-progress font-mono text-xs text-slate-400" id="progress-w4">0/6 Done</div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <!-- Task 25 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-25" data-id="25">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(25)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Enroll in Amazon Brand Referral Bonus (BRB) for 10% Fee Rebates</span>
+              <p class="text-xs text-slate-300">Enroll your brand in BRB. Amazon reimburses ~10% of gross sales value on all orders driven via Amazon Attribution tags. Drops net referral fee from 13.5% to just ~3.5%!</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Brands > Brand Referral Bonus > Register</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 26 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-26" data-id="26">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(26)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Generate Amazon Attribution Deep Links for Social Media & WhatsApp</span>
+              <p class="text-xs text-slate-300">In <code class="text-slate-300">Advertising > Amazon Attribution</code>, generate unique tracking tags for Instagram bio, WhatsApp catalog, and Meta ads. Formatted as deep links so mobile users land straight inside the Amazon app.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Drives external velocity surge which triggers organic page 1 rank boosts</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 27 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-27" data-id="27">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(27)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Produce 7-Second Short-Form DIY Hamper Packing UGC Reels</span>
+              <p class="text-xs text-slate-300">Film 3 rapid viral-format reels: *"How to pack a ₹1,200 Luxury Dry Fruit Hamper at home for under ₹450"*. Overlay Amazon search prompt + Attribution link in bio to channel external shoppers.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Organic reach on Instagram/YouTube Shorts converts high-intent festive buyers</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 28 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-28" data-id="28">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(28)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Bid on Amazon Business Request for Quote (RFQ) Corporate Inquiries</span>
+              <p class="text-xs text-slate-300">Check the Amazon Business RFQ portal weekly. Submit custom pricing proposals for bulk corporate orders (50–500 units) from Indian enterprise accounts seeking customized festive hampers.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 B2B > Quotes & Quantity Pricing > View RFQs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 29 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4 border border-emerald-500/20" id="task-29" data-id="29">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(29)">
+            <div class="flex-1 space-y-2">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="task-title font-semibold text-sm text-white">Automate Compliant "Request a Review" API Workflow (Strict Day 5 Post-Delivery)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">ONLINE & RUNNING</span>
+              </div>
+              <p class="text-xs text-slate-300">Background engine monitors delivered orders and automatically triggers Amazon's official Solicitations API v1 request strictly on Day 5 post-delivery. Excludes replacement, refund, and delayed shipments. Tracks all requests in an immutable audit ledger.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1 flex items-center gap-3 flex-wrap">
+                <span>📍 Engine: engine/review_solicitation_automation.js (Every 6h Cron)</span>
+                <a href="AMAZON_REVIEW_AUTOMATION_STUDIO.html" class="px-2.5 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold transition flex items-center gap-1">
+                  <span>⚡</span> Launch Review Automation Studio →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task 30 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-30" data-id="30">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(30)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Send 100-Unit Test Shipment of Hero 2-Pack & 6-Pack to Amazon FBA</span>
+              <p class="text-xs text-slate-300">Your inventory is currently 100% FBM. Sending just 100 units of <code class="text-amber-300 bg-black/40 px-1 py-0.5 rounded">B0DHRXT2BD</code> into FBA unlocks the Prime badge and Next-Day delivery for Delhi-NCR/Metro zones, tripling conversion rate overnight.</p>
+              <div class="text-[11px] font-mono text-slate-400 pt-1">
+                <span>📍 Inventory > Send/Replenish Inventory > Create FBA Inbound Shipment</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPRINT 6: ONGOING WEEKLY OPERATING CADENCE -->
+      <div class="sprint-group glass-card rounded-2xl p-6 border-l-4 border-l-amber-400 space-y-4" data-sprint-group="weekly">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-amber-400 text-lg">📅</span>
+              <h3 class="font-heading font-extrabold text-lg text-white">Sprint 6: Ongoing Weekly Operating Rhythm (Mon–Fri Cadence)</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-400/20 text-amber-400">OPERATING OS</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">The structured weekly protocol to ensure consistent account health, harvesting, and profit protection.</p>
+          </div>
+          <div class="sprint-progress font-mono text-xs text-slate-400" id="progress-weekly">0/6 Done</div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <!-- Task 31 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-31" data-id="31">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(31)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Monday: Search-Term Mining & Negative Keyword Audit</span>
+              <p class="text-xs text-slate-300">Download 30-day Sponsored Products search-term report. Classify queries into Green (Scale to Exact), Yellow (Gather data), Red (Negative Exact/Phrase), and Blue (Strategic test).</p>
+            </div>
+          </div>
+
+          <!-- Task 32 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-32" data-id="32">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(32)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Tuesday: Campaign Optimization & Placement Multiplier Review</span>
+              <p class="text-xs text-slate-300">Adjust bids in gradual 10%–15% increments on proven exact targets. Reallocate budget from exhausted non-converting campaigns to top-performing exact campaigns.</p>
+            </div>
+          </div>
+
+          <!-- Task 33 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-33" data-id="33">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(33)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Wednesday: Listing Conversion & Review Objection Inspection</span>
+              <p class="text-xs text-slate-300">Review unit session percentage (CVR) and inspect 1–3 star customer reviews or return reasons. Update bullet points or A+ FAQs to eliminate recurring objections.</p>
+            </div>
+          </div>
+
+          <!-- Task 34 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-34" data-id="34">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(34)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Thursday: Competitor Intelligence & Shelf Share Monitoring</span>
+              <p class="text-xs text-slate-300">Track top 5 competitor prices, active coupons, stockouts, and sponsored placements. Spot competitor stockouts to aggressively conquest their search terms.</p>
+            </div>
+          </div>
+
+          <!-- Task 35 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-35" data-id="35">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(35)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Friday: Master Financial & TACoS Reconciliation</span>
+              <p class="text-xs text-slate-300">Reconcile total Amazon sales vs ad spend. Ensure blended TACoS stays between 8%–14%. Calculate Marginal ROAS on any incremental ad budget spent during the week.</p>
+            </div>
+          </div>
+
+          <!-- Task 36 -->
+          <div class="task-item glass-card-interactive rounded-xl p-4 flex items-start gap-4" id="task-36" data-id="36">
+            <input type="checkbox" class="task-checkbox mt-1" onchange="handleTaskChange(36)">
+            <div class="flex-1 space-y-1">
+              <span class="task-title font-semibold text-sm text-white">Weekend: Inventory Run-Rate & Safety Threshold Check</span>
+              <p class="text-xs text-slate-300">Verify days-of-supply across all 13 SKUs against upcoming weekend peak sales velocity. Trigger warehouse kappa board assembly if inventory dips below 20 days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: REVENUE & CVR SIMULATOR -->
+    <!-- ========================================== -->
+    <div id="tab-simulator" class="tab-content hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 text-xl">🧮</span>
+            <h3 class="font-heading font-extrabold text-xl text-white">Dynamic Amazon Revenue Growth Simulator</h3>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Based on the Core Growth Equation: <code class="text-amber-400 font-mono">Revenue = Sessions × CVR × ASP × Buy Box Win Rate</code>. Adjust the sliders below to see how incremental conversion lifts compound your sales.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Sliders -->
+          <div class="lg:col-span-7 space-y-5 bg-slate-900/60 p-5 rounded-xl border border-white/5">
+            <!-- Sessions Slider -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-300">Monthly Sessions (Traffic)</span>
+                <span id="val-sessions" class="text-amber-400 font-bold">71,992</span>
+              </div>
+              <input type="range" id="slider-sessions" min="30000" max="150000" step="1000" value="71992" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer" oninput="calculateSimulator()">
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                <span>30k</span>
+                <span>Current: ~72k</span>
+                <span>150k</span>
+              </div>
+            </div>
+
+            <!-- CVR Slider -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-300">Conversion Rate (Unit Session %)</span>
+                <span id="val-cvr" class="text-emerald-400 font-bold">0.41%</span>
+              </div>
+              <input type="range" id="slider-cvr" min="0.2" max="3.0" step="0.05" value="0.41" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer" oninput="calculateSimulator()">
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                <span>0.2% (Current leak)</span>
+                <span>1.0% (Target)</span>
+                <span>3.0% (Category Hero)</span>
+              </div>
+            </div>
+
+            <!-- ASP Slider -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-300">Average Selling Price (ASP)</span>
+                <span id="val-asp" class="text-sky-400 font-bold">₹474</span>
+              </div>
+              <input type="range" id="slider-asp" min="350" max="1200" step="10" value="474" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer" oninput="calculateSimulator()">
+              <div class="flex justify-between text-[10px] text-slate-500 font-mono">
+                <span>₹350 (2-Pack)</span>
+                <span>Current: ₹474</span>
+                <span>₹1,200 (Multi-packs / Bundles)</span>
+              </div>
+            </div>
+
+            <!-- Buy Box Win Rate -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-300">Buy Box Win Rate %</span>
+                <span id="val-buybox" class="text-purple-400 font-bold">100%</span>
+              </div>
+              <input type="range" id="slider-buybox" min="60" max="100" step="1" value="100" class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer" oninput="calculateSimulator()">
+            </div>
+          </div>
+
+          <!-- Dynamic Output Card -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="glass-card rounded-xl p-5 border border-amber-500/40 bg-gradient-to-b from-amber-500/10 to-transparent space-y-3">
+              <span class="text-xs font-mono font-bold tracking-wider text-amber-400 uppercase">Projected Monthly Revenue</span>
+              <div id="sim-projected-revenue" class="font-heading font-black text-3xl md:text-4xl text-white tracking-tight">₹1,39,890</div>
+              <div class="flex items-center gap-2 text-xs font-mono text-slate-300">
+                <span>vs Baseline:</span>
+                <span id="sim-revenue-lift" class="font-bold text-emerald-400">+0.0% (+₹0)</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="glass-card rounded-xl p-4 border border-white/5 space-y-1 text-center">
+                <span class="text-[10px] font-mono uppercase text-slate-400">Monthly Orders</span>
+                <div id="sim-projected-orders" class="font-heading font-bold text-xl text-white">295</div>
+                <div class="text-[10px] text-slate-400 font-mono" id="sim-units-diff">~10 orders/day</div>
+              </div>
+              <div class="glass-card rounded-xl p-4 border border-white/5 space-y-1 text-center">
+                <span class="text-[10px] font-mono uppercase text-slate-400">Projected Pre-Ad Margin</span>
+                <div id="sim-projected-profit" class="font-heading font-bold text-xl text-emerald-400">₹53,158</div>
+                <div class="text-[10px] text-slate-400 font-mono">@ 38% contribution</div>
+              </div>
+            </div>
+
+            <!-- Quick Scenario Presets -->
+            <div class="flex items-center gap-2 pt-2">
+              <button onclick="setScenario('baseline')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] font-mono text-slate-300 border border-slate-700">Baseline (Current)</button>
+              <button onclick="setScenario('cvr-1')" class="px-2.5 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-[11px] font-mono text-amber-300 border border-amber-500/40">1.0% CVR Milestone</button>
+              <button onclick="setScenario('festive-peak')" class="px-2.5 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-[11px] font-mono text-emerald-300 border border-emerald-500/40">Diwali Peak (1.5% CVR + 100k)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: SKU UNIT ECONOMICS & GUARDRAILS -->
+    <!-- ========================================== -->
+    <div id="tab-economics" class="tab-content hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-emerald-400 text-xl">💰</span>
+            <h3 class="font-heading font-extrabold text-xl text-white">SKU Unit Economics & Break-Even Guardrail Engine</h3>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Updated for Amazon India September 2026 closing fee schedules. Protect your post-ad contribution margin.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Inputs Form -->
+          <div class="lg:col-span-6 space-y-4 bg-slate-900/60 p-5 rounded-xl border border-white/5">
+            <h4 class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider">Unit Cost & Pricing Parameters</h4>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">Customer Price (₹)</label>
+                <input type="number" id="econ-price" value="899" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 font-mono text-sm text-white" oninput="calculateEconomics()">
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">Landed COGS (₹)</label>
+                <input type="number" id="econ-cogs" value="310" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 font-mono text-sm text-white" oninput="calculateEconomics()">
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">Referral Fee %</label>
+                <input type="number" id="econ-ref-pct" value="13.5" step="0.5" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 font-mono text-sm text-white" oninput="calculateEconomics()">
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">Closing Fee (₹)</label>
+                <input type="number" id="econ-closing" value="50" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 font-mono text-sm text-white" oninput="calculateEconomics()">
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">Shipping / Weight (₹)</label>
+                <input type="number" id="econ-shipping" value="85" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 font-mono text-sm text-white" oninput="calculateEconomics()">
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-slate-300 mb-1">Desired Profit Buffer (₹)</label>
+                <input type="number" id="econ-profit-buffer" value="120" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 font-mono text-sm text-white" oninput="calculateEconomics()">
+              </div>
+            </div>
+          </div>
+
+          <!-- Economics Output -->
+          <div class="lg:col-span-6 space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="glass-card rounded-xl p-4 border border-white/5 space-y-1">
+                <span class="text-[10px] font-mono text-slate-400 uppercase">Pre-Ad Contribution</span>
+                <div id="econ-pre-ad-margin" class="font-heading font-extrabold text-2xl text-emerald-400">₹332.64</div>
+                <div id="econ-pre-ad-pct" class="text-[11px] font-mono text-emerald-300">37.0% margin</div>
+              </div>
+              <div class="glass-card rounded-xl p-4 border border-rose-500/30 space-y-1">
+                <span class="text-[10px] font-mono text-slate-400 uppercase">Break-Even ACoS (Ceiling)</span>
+                <div id="econ-breakeven-acos" class="font-heading font-extrabold text-2xl text-rose-400">37.0%</div>
+                <div class="text-[11px] font-mono text-rose-300">Zero profit point</div>
+              </div>
+              <div class="glass-card rounded-xl p-4 border border-amber-500/30 space-y-1">
+                <span class="text-[10px] font-mono text-slate-400 uppercase">Target ACoS Guardrail</span>
+                <div id="econ-target-acos" class="font-heading font-extrabold text-2xl text-amber-400">23.7%</div>
+                <div class="text-[11px] font-mono text-amber-300">Guarantees ₹120 profit/unit</div>
+              </div>
+              <div class="glass-card rounded-xl p-4 border border-sky-500/30 space-y-1">
+                <span class="text-[10px] font-mono text-slate-400 uppercase">Max Permissible CPC</span>
+                <div id="econ-max-cpc" class="font-heading font-extrabold text-2xl text-sky-400">₹4.26</div>
+                <div class="text-[11px] font-mono text-sky-300">@ 2.0% expected CVR</div>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/80 border border-white/10 text-xs text-slate-300 space-y-2">
+              <div class="font-semibold text-white flex items-center gap-1.5">
+                <span>🛡️</span> The Rule of Bidding Discipline:
+              </div>
+              <p>Never scale any keyword at your Break-Even ACoS (37%) just because it isn't losing money. Always bid against your <strong class="text-amber-400">Target ACoS (23.7%)</strong> to absorb customer returns, coupon clip fees, and festive inventory holding.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: 4-TIER PPC ARCHITECTURE -->
+    <!-- ========================================== -->
+    <div id="tab-ppc" class="tab-content hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-sky-400 text-xl">🎯</span>
+            <h3 class="font-heading font-extrabold text-xl text-white">4-Tier PPC Funnel Architecture</h3>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Treat PPC as a demand discovery and organic rank-building engine rather than an isolated ad expense.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Tier 1 -->
+          <div class="glass-card-interactive rounded-xl p-5 border-t-4 border-t-amber-400 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-amber-400">TIER 1</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">15% Budget</span>
+            </div>
+            <h4 class="font-heading font-bold text-base text-white">SP Auto Discovery</h4>
+            <p class="text-xs text-slate-300">Mines new customer search queries and competitor ASINs without explicit targeting.</p>
+            <ul class="text-xs text-slate-400 space-y-1 list-disc list-inside">
+              <li>Low bids (₹1.50–₹2.50)</li>
+              <li>Close match & Loose match enabled</li>
+              <li>Add converting queries to Exact</li>
+              <li>Weekly negative targeting</li>
+            </ul>
+          </div>
+
+          <!-- Tier 2 -->
+          <div class="glass-card-interactive rounded-xl p-5 border-t-4 border-t-sky-400 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-sky-400">TIER 2</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/20 text-sky-300">25% Budget</span>
+            </div>
+            <h4 class="font-heading font-bold text-base text-white">Broad & Phrase Research</h4>
+            <p class="text-xs text-slate-300">Validates keyword themes and long-tail festive modifiers (<code class="text-slate-300">diwali dry fruit basket</code>).</p>
+            <ul class="text-xs text-slate-400 space-y-1 list-disc list-inside">
+              <li>Medium bids (₹3.00–₹4.50)</li>
+              <li>20–30 curated root themes</li>
+              <li>Negative exact winning terms</li>
+              <li>Isolate high-converting modifiers</li>
+            </ul>
+          </div>
+
+          <!-- Tier 3 -->
+          <div class="glass-card-interactive rounded-xl p-5 border-t-4 border-t-emerald-400 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-emerald-400">TIER 3</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">50% Budget</span>
+            </div>
+            <h4 class="font-heading font-bold text-base text-white">Exact Match SKAGs</h4>
+            <p class="text-xs text-slate-300">Controls and scales proven winners. Drives sales velocity to push organic search rank.</p>
+            <ul class="text-xs text-slate-400 space-y-1 list-disc list-inside">
+              <li>Aggressive bids (₹5.00–₹8.00)</li>
+              <li>+30% to +50% Top of Search boost</li>
+              <li>1–3 keywords per ad group</li>
+              <li>Protected daily budget allocation</li>
+            </ul>
+          </div>
+
+          <!-- Tier 4 -->
+          <div class="glass-card-interactive rounded-xl p-5 border-t-4 border-t-purple-400 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-purple-400">TIER 4</span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300">10% Budget</span>
+            </div>
+            <h4 class="font-heading font-bold text-base text-white">PAT & Defense</h4>
+            <p class="text-xs text-slate-300">Defends own detail pages and conquests complementary dry fruit and chocolate bestsellers.</p>
+            <ul class="text-xs text-slate-400 space-y-1 list-disc list-inside">
+              <li>Self-ASIN ring-fencing</li>
+              <li>FBT dry fruit brand targets</li>
+              <li>Sponsored Display under Buy Box</li>
+              <li>Sponsored Brands Video on mobile</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 5: COSMO, RUFUS & 9-IMAGE BLUEPRINT -->
+    <!-- ========================================== -->
+    <div id="tab-cosmo" class="tab-content hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-emerald-400 text-xl">🤖</span>
+            <h3 class="font-heading font-extrabold text-xl text-white">COSMO, Rufus & Visual PDP Conversion Blueprint</h3>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Optimizing for Amazon's next-generation conversational AI shopping assistant and visual mobile dwell time.</p>
+        </div>
+
+        <!-- 250-Byte Validator Tool -->
+        <div class="bg-slate-900/80 rounded-xl p-5 border border-white/10 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-mono text-xs font-bold text-amber-400 uppercase">Interactive 250-Byte Backend Search Term Validator</h4>
+            <span id="byte-counter-badge" class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">198 / 250 Bytes Used</span>
+          </div>
+          <textarea id="backend-input" rows="3" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 font-mono text-xs text-white" oninput="updateByteCount()">diwali dry fruit hamper empty basket wedding trousseau packing tray sagan bhari return gift box gotawork gota patti decorative net kappa board sweet packaging</textarea>
+          <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+            <span>Rules: ASCII text, space-separated, no commas, no repeat words from title/bullets</span>
+            <button onclick="copyCurrentBackend()" class="text-amber-400 hover:underline">Copy Clean String</button>
+          </div>
+        </div>
+
+        <!-- The 9-Image Slot Standard -->
+        <div class="space-y-3">
+          <h4 class="font-mono text-xs font-bold text-white uppercase tracking-wider">The 9-Image Conversion Sequence (Full Gallery Utilization)</h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-amber-400 font-bold">Slot 1: Main Hero</span>
+              <p class="text-slate-300">Pure white background. Product occupies ≥85% of frame. Crisp contrast on golden gota scalloped trim.</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-sky-400 font-bold">Slot 2: Festive Lifestyle</span>
+              <p class="text-slate-300">Styled on Diwali/wedding festive table with brass diyas, marigold flowers, and dry fruits in glass jars.</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-emerald-400 font-bold">Slot 3: Capacity & Sizing</span>
+              <p class="text-slate-300">Exact dimensions (8x6x3.5") + infographic showing it fits 2x 250g dry fruit jars or 1x 500g sweets box.</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-rose-400 font-bold">Slot 4: What's in the Box</span>
+              <p class="text-slate-300">Bold callout: "Empty Basket + Attached Net Cover + Golden Ribbon Only. Dry fruits for illustration only."</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-purple-400 font-bold">Slot 5: Material & Durability</span>
+              <p class="text-slate-300">Heavy-duty 1.8mm Kappa board vs cheap folding cardboard boxes. Holds up to 2.5 kg weight without bending.</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-indigo-400 font-bold">Slot 6: Pack Variants</span>
+              <p class="text-slate-300">Comparison graphic showing Pack of 2 (Family), Pack of 4 (Festive), and Pack of 6 (Bulk Corporate).</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-amber-400 font-bold">Slot 7: Handcrafted Art</span>
+              <p class="text-slate-300">Macro close-up of Mughal floral gold-foil stamping, premium ivory velvet texture, and stitched lace.</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-sky-400 font-bold">Slot 8: Multi-Occasion</span>
+              <p class="text-slate-300">4-grid montage: Diwali Dry Fruit Hamper, Sagan/Roka Ceremony, Baby Shower Favour, Corporate Gift.</p>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900/60 border border-white/5 space-y-1">
+              <span class="text-emerald-400 font-bold">Slot 9 / Video: 30s Demo</span>
+              <p class="text-slate-300">Satisfying 30-second ASMR packing video: placing dry fruit jars, closing net, and tying the golden ribbon.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 6: OPERATING CADENCE -->
+    <!-- ========================================== -->
+    <div id="tab-cadence" class="tab-content hidden space-y-6">
+      <div class="glass-card rounded-2xl p-6 border border-white/10 space-y-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 text-xl">📅</span>
+            <h3 class="font-heading font-extrabold text-xl text-white">The Weekly Operational Operating Rhythm</h3>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Execute fixed disciplined tasks every day of the week instead of making chaotic daily bid changes.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div class="glass-card rounded-xl p-4 border-t-2 border-t-amber-400 space-y-2">
+            <span class="text-xs font-mono font-bold text-amber-400">MONDAY</span>
+            <h4 class="font-heading font-bold text-sm text-white">Query Mining</h4>
+            <p class="text-xs text-slate-300">Export 30-day search term report. Harvest 2+ order winners into Exact. Add negative exacts to Auto/Broad.</p>
+          </div>
+          <div class="glass-card rounded-xl p-4 border-t-2 border-t-sky-400 space-y-2">
+            <span class="text-xs font-mono font-bold text-sky-400">TUESDAY</span>
+            <h4 class="font-heading font-bold text-sm text-white">Bids & Placements</h4>
+            <p class="text-xs text-slate-300">Adjust bids in 10%–15% increments on proven terms. Adjust Top-of-Search placement multipliers based on CVR.</p>
+          </div>
+          <div class="glass-card rounded-xl p-4 border-t-2 border-t-emerald-400 space-y-2">
+            <span class="text-xs font-mono font-bold text-emerald-400">WEDNESDAY</span>
+            <h4 class="font-heading font-bold text-sm text-white">Listing & Objections</h4>
+            <p class="text-xs text-slate-300">Inspect unit session conversion. Read 1–3 star customer reviews and return reports. Update image callouts & A+ FAQs.</p>
+          </div>
+          <div class="glass-card rounded-xl p-4 border-t-2 border-t-purple-400 space-y-2">
+            <span class="text-xs font-mono font-bold text-purple-400">THURSDAY</span>
+            <h4 class="font-heading font-bold text-sm text-white">Competitor Intel</h4>
+            <p class="text-xs text-slate-300">Monitor top 5 competitor pricing, lightning deals, and out-of-stock items. Launch conquest ads on stocked-out rivals.</p>
+          </div>
+          <div class="glass-card rounded-xl p-4 border-t-2 border-t-rose-400 space-y-2">
+            <span class="text-xs font-mono font-bold text-rose-400">FRIDAY</span>
+            <h4 class="font-heading font-bold text-sm text-white">TACoS Reconciliation</h4>
+            <p class="text-xs text-slate-300">Reconcile total revenue vs ad spend. Confirm blended TACoS is between 8%–14%. Review inventory days of supply.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // TASK STATE MANAGEMENT (LOCAL STORAGE)
+    const STORAGE_KEY = 'taarmi_master_playbook_tasks_v3';
+    let taskState = {};
+    let currentStatusView = 'unchecked'; // Default to showing only unchecked items
+
+    function initTasks() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try { taskState = JSON.parse(saved); } catch(e) { taskState = {}; }
+      }
+
+      const savedView = localStorage.getItem('taarmi_status_view_mode') || 'unchecked';
+      setStatusView(savedView);
+
+      const checkboxes = document.querySelectorAll('.task-checkbox');
+      checkboxes.forEach(cb => {
+        const taskId = cb.closest('.task-item').dataset.id;
+        if (taskState[taskId]) {
+          cb.checked = true;
+          cb.closest('.task-item').classList.add('completed');
+        }
+      });
+      updateProgressMetrics();
+    }
+
+    function setStatusView(mode) {
+      currentStatusView = mode;
+      localStorage.setItem('taarmi_status_view_mode', mode);
+
+      document.body.classList.remove('filter-show-unchecked', 'filter-show-completed');
+      if (mode === 'unchecked') {
+        document.body.classList.add('filter-show-unchecked');
+      } else if (mode === 'completed') {
+        document.body.classList.add('filter-show-completed');
+      }
+
+      document.querySelectorAll('.status-view-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
+        btn.classList.add('text-slate-400', 'border-transparent');
+      });
+
+      const activeBtn = document.getElementById('btn-status-' + mode);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
+        activeBtn.classList.remove('text-slate-400', 'border-transparent');
+      }
+
+      updateProgressMetrics();
+    }
+
+    function handleTaskChange(id) {
+      const taskEl = document.getElementById('task-' + id);
+      const cb = taskEl.querySelector('.task-checkbox');
+      if (cb.checked) {
+        taskState[id] = true;
+        taskEl.classList.add('completed');
+        if (currentStatusView === 'unchecked') {
+          taskEl.classList.add('leaving');
+          setTimeout(() => {
+            taskEl.classList.remove('leaving');
+            updateProgressMetrics();
+          }, 280);
+        }
+      } else {
+        delete taskState[id];
+        taskEl.classList.remove('completed');
+        if (currentStatusView === 'completed') {
+          taskEl.classList.add('leaving');
+          setTimeout(() => {
+            taskEl.classList.remove('leaving');
+            updateProgressMetrics();
+          }, 280);
+        }
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(taskState));
+      updateProgressMetrics();
+    }
+
+    function updateProgressMetrics() {
+      const allTasks = document.querySelectorAll('.task-item');
+      const total = allTasks.length;
+      let completed = 0;
+      
+      allTasks.forEach(task => {
+        const id = task.dataset.id;
+        if (taskState[id]) completed++;
+      });
+
+      const pending = total - completed;
+      const pct = Math.round((completed / total) * 100);
+
+      document.getElementById('statTotalTasks').innerText = total;
+      document.getElementById('statCompletedTasks').innerText = completed;
+      document.getElementById('statPendingTasks').innerText = pending;
+      document.getElementById('overallProgressBar').style.width = pct + '%';
+      document.getElementById('overallProgressBadge').innerText = pct + '% COMPLETE';
+
+      // Update control bar status badges
+      const bUnchecked = document.getElementById('badge-unchecked-count');
+      const bAll = document.getElementById('badge-all-count');
+      const bCompleted = document.getElementById('badge-completed-count');
+      if (bUnchecked) bUnchecked.innerText = pending;
+      if (bAll) bAll.innerText = total;
+      if (bCompleted) bCompleted.innerText = completed;
+
+      // Update individual sprint counts & empty sprint state banners
+      ['48h', 'w1', 'w2', 'w3', 'w4', 'weekly'].forEach(sprint => {
+        const group = document.querySelector(`[data-sprint-group="${sprint}"]`);
+        if (group) {
+          const sprintTasks = group.querySelectorAll('.task-item');
+          let sCompleted = 0;
+          sprintTasks.forEach(t => { if (taskState[t.dataset.id]) sCompleted++; });
+          const sPending = sprintTasks.length - sCompleted;
+
+          const progEl = document.getElementById(`progress-${sprint}`);
+          if (progEl) {
+            if (currentStatusView === 'unchecked') {
+              progEl.innerText = `${sPending} Pending (${sCompleted} Done)`;
+            } else if (currentStatusView === 'completed') {
+              progEl.innerText = `${sCompleted} Completed`;
+            } else {
+              progEl.innerText = `${sCompleted}/${sprintTasks.length} Done`;
+            }
+
+            if (sPending === 0 && sprintTasks.length > 0) {
+              progEl.classList.add('text-emerald-400');
+            } else {
+              progEl.classList.remove('text-emerald-400');
+            }
+          }
+
+          // Handle sprint empty state banner in 'unchecked' view
+          let emptyNotice = group.querySelector('.sprint-empty-notice');
+          if (currentStatusView === 'unchecked' && sPending === 0) {
+            if (!emptyNotice) {
+              emptyNotice = document.createElement('div');
+              emptyNotice.className = 'sprint-empty-notice py-4 px-5 text-center text-xs font-mono text-emerald-300 bg-emerald-500/10 rounded-xl border border-emerald-500/20 flex items-center justify-center gap-2 mt-2';
+              emptyNotice.innerHTML = '<span>🎉</span> <span>All tasks in this sprint are complete! (Switch to "All Items" to view)</span>';
+              group.querySelector('.space-y-3').appendChild(emptyNotice);
+            } else {
+              emptyNotice.style.display = 'flex';
+            }
+          } else if (emptyNotice) {
+            emptyNotice.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    function toggleAllTasks(check) {
+      const checkboxes = document.querySelectorAll('.task-checkbox');
+      checkboxes.forEach(cb => {
+        cb.checked = check;
+        const taskEl = cb.closest('.task-item');
+        const id = taskEl.dataset.id;
+        if (check) {
+          taskState[id] = true;
+          taskEl.classList.add('completed');
+        } else {
+          delete taskState[id];
+          taskEl.classList.remove('completed');
+        }
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(taskState));
+      updateProgressMetrics();
+    }
+
+    function resetAllTasks() {
+      if (confirm('Reset all task checkboxes to 0%?')) {
+        taskState = {};
+        localStorage.removeItem(STORAGE_KEY);
+        document.querySelectorAll('.task-checkbox').forEach(cb => {
+          cb.checked = false;
+          cb.closest('.task-item').classList.remove('completed');
+        });
+        updateProgressMetrics();
+      }
+    }
+
+    function filterSprint(sprint) {
+      document.querySelectorAll('.sprint-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
+        btn.classList.add('bg-slate-800', 'text-slate-400');
+      });
+      event.target.classList.add('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
+      event.target.classList.remove('bg-slate-800', 'text-slate-400');
+
+      const sprintGroups = document.querySelectorAll('.sprint-group');
+      sprintGroups.forEach(group => {
+        if (sprint === 'all' || group.dataset.sprintGroup === sprint) {
+          group.classList.remove('hidden');
+        } else {
+          group.classList.add('hidden');
+        }
+      });
+    }
+
+    // TAB SWITCHING
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
+        b.classList.add('bg-slate-800/60', 'text-slate-400', 'border-transparent');
+      });
+
+      const activeBtn = document.getElementById('btn-' + tabId);
+      activeBtn.classList.add('bg-amber-500/20', 'text-amber-400', 'border-amber-500/40');
+      activeBtn.classList.remove('bg-slate-800/60', 'text-slate-400', 'border-transparent');
+    }
+
+    // DYNAMIC SIMULATOR
+    function calculateSimulator() {
+      const sessions = parseFloat(document.getElementById('slider-sessions').value);
+      const cvr = parseFloat(document.getElementById('slider-cvr').value) / 100;
+      const asp = parseFloat(document.getElementById('slider-asp').value);
+      const buybox = parseFloat(document.getElementById('slider-buybox').value) / 100;
+
+      document.getElementById('val-sessions').innerText = sessions.toLocaleString('en-IN');
+      document.getElementById('val-cvr').innerText = (cvr * 100).toFixed(2) + '%';
+      document.getElementById('val-asp').innerText = '₹' + asp;
+      document.getElementById('val-buybox').innerText = Math.round(buybox * 100) + '%';
+
+      const projectedOrders = Math.round(sessions * cvr * buybox);
+      const projectedRevenue = Math.round(projectedOrders * asp);
+      const baselineRevenue = 139817;
+      const revenueDiff = projectedRevenue - baselineRevenue;
+      const pctDiff = ((revenueDiff / baselineRevenue) * 100).toFixed(1);
+      const projectedProfit = Math.round(projectedRevenue * 0.38);
+
+      document.getElementById('sim-projected-revenue').innerText = '₹' + projectedRevenue.toLocaleString('en-IN');
+      document.getElementById('sim-projected-orders').innerText = projectedOrders.toLocaleString('en-IN');
+      document.getElementById('sim-projected-profit').innerText = '₹' + projectedProfit.toLocaleString('en-IN');
+
+      const liftEl = document.getElementById('sim-revenue-lift');
+      if (revenueDiff >= 0) {
+        liftEl.className = 'font-bold text-emerald-400';
+        liftEl.innerText = `+${pctDiff}% (+₹${revenueDiff.toLocaleString('en-IN')})`;
+      } else {
+        liftEl.className = 'font-bold text-rose-400';
+        liftEl.innerText = `${pctDiff}% (-₹${Math.abs(revenueDiff).toLocaleString('en-IN')})`;
+      }
+
+      document.getElementById('sim-units-diff').innerText = `~${Math.round(projectedOrders / 30)} orders/day`;
+    }
+
+    function setScenario(type) {
+      if (type === 'baseline') {
+        document.getElementById('slider-sessions').value = 71992;
+        document.getElementById('slider-cvr').value = 0.41;
+        document.getElementById('slider-asp').value = 474;
+        document.getElementById('slider-buybox').value = 100;
+      } else if (type === 'cvr-1') {
+        document.getElementById('slider-sessions').value = 72000;
+        document.getElementById('slider-cvr').value = 1.0;
+        document.getElementById('slider-asp').value = 520;
+        document.getElementById('slider-buybox').value = 100;
+      } else if (type === 'festive-peak') {
+        document.getElementById('slider-sessions').value = 110000;
+        document.getElementById('slider-cvr').value = 1.6;
+        document.getElementById('slider-asp').value = 650;
+        document.getElementById('slider-buybox').value = 100;
+      }
+      calculateSimulator();
+    }
+
+    // SKU ECONOMICS
+    function calculateEconomics() {
+      const price = parseFloat(document.getElementById('econ-price').value) || 0;
+      const cogs = parseFloat(document.getElementById('econ-cogs').value) || 0;
+      const refPct = (parseFloat(document.getElementById('econ-ref-pct').value) || 0) / 100;
+      const closing = parseFloat(document.getElementById('econ-closing').value) || 0;
+      const shipping = parseFloat(document.getElementById('econ-shipping').value) || 0;
+      const buffer = parseFloat(document.getElementById('econ-profit-buffer').value) || 0;
+
+      const refFee = price * refPct;
+      const totalFees = refFee + closing + shipping;
+      const preAdContribution = price - totalFees - cogs;
+      const marginPct = price > 0 ? (preAdContribution / price) * 100 : 0;
+      const breakevenAcos = marginPct;
+      const targetSpendPerOrder = Math.max(0, preAdContribution - buffer);
+      const targetAcos = price > 0 ? (targetSpendPerOrder / price) * 100 : 0;
+      const maxCpc = targetSpendPerOrder * 0.02; // Assuming 2.0% CVR
+
+      document.getElementById('econ-pre-ad-margin').innerText = '₹' + preAdContribution.toFixed(2);
+      document.getElementById('econ-pre-ad-pct').innerText = marginPct.toFixed(1) + '% pre-ad margin';
+      document.getElementById('econ-breakeven-acos').innerText = breakevenAcos.toFixed(1) + '%';
+      document.getElementById('econ-target-acos').innerText = targetAcos.toFixed(1) + '%';
+      document.getElementById('econ-max-cpc').innerText = '₹' + maxCpc.toFixed(2);
+    }
+
+    // BYTE COUNTER FOR BACKEND
+    function updateByteCount() {
+      const text = document.getElementById('backend-input').value;
+      const bytes = new TextEncoder().encode(text).length;
+      const badge = document.getElementById('byte-counter-badge');
+      badge.innerText = `${bytes} / 250 Bytes Used`;
+      if (bytes > 250) {
+        badge.className = 'font-mono text-xs px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold';
+      } else {
+        badge.className = 'font-mono text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold';
+      }
+    }
+
+    function copyCurrentBackend() {
+      const text = document.getElementById('backend-input').value;
+      navigator.clipboard.writeText(text).then(() => alert('Copied backend search terms to clipboard!'));
+    }
+
+    // COPY SNIPPETS
+    function copySnippet(type) {
+      let text = '';
+      if (type === 'ped-coupon') {
+        text = 'Strategy: Set 10% Prime Exclusive Discount (PED) on B0DHRXT2BD + ₹50 Clip Coupon. Triggers dual Red Deal Banner + Green Coupon Tag on mobile search results.';
+      } else if (type === 'browse-node-ticket') {
+        text = 'Please update the browse node for ASIN B0DHRXT2BD from generic Storage Baskets to: Home & Kitchen > Event & Party Supplies > Party Favours / Gift Baskets (Node ID: Party Favours). This is a luxury handcrafted gifting hamper with net and gota lace, not a household storage utility basket.';
+      } else if (type === 'backend-keywords') {
+        text = 'diwali dry fruit hamper empty basket wedding trousseau packing tray sagan bhari return gift box gotawork gota patti decorative net kappa board sweet packaging';
+      } else if (type === 'semantic-bullets') {
+        text = `1. READY-TO-GIFT FESTIVE HAMPER BASKET: Handcrafted with traditional Mughal peacock & gold motifs with scalloped golden gota lace trim, designed specifically for Indian festive celebrations and wedding trousseau presentation.
+2. OPTIMAL DRY FRUIT & SWEET CAPACITY: Measures 8 x 6 x 3.5 inches, perfectly accommodating 2x 250g dry fruit jars or a 500g sweet box. Attached sheer net cover with golden satin ribbon cinch secures contents elegantly.
+3. PREMIUM 1.8MM RIGID KAPPA BOARD: Constructed from high-density rigid kappa board capable of supporting up to 2.5 kg weight without buckling or warping, far superior to flimsy folding cardboard boxes.
+4. MULTI-OCCASION CEREMONIAL USE: Ideal for Diwali dry fruit gifting, Sagan and Roka ceremonies, wedding trousseau packing, baby shower favors, and corporate Diwali hampers.
+5. COMPLETE READY PACKAGE: Package includes handcrafted hamper basket with pre-attached decorative net and metallic ribbon tie. (Dry fruits, jars, and decorative props shown for illustration only).`;
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard!\n\n' + text.substring(0, 100) + '...');
+      });
+    }
+
+    // INIT ON LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+      initTasks();
+      calculateSimulator();
+      calculateEconomics();
+      updateByteCount();
+    });
+  </script>
+</body>
+</html>

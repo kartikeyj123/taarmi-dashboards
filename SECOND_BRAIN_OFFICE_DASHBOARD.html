@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Second Brain Office Command Center | Kartikey Jain</title>
   
   
@@ -212,7 +212,293 @@ body {
     .inspector-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 190; display: none; }
     .inspector-overlay.open { display: block; }
     .inspector-close { position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: #fff; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-  </style>
+  
+/* === INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
+
+/* ==========================================================================
+   MASTER MOBILE-FIRST RESPONSIVE ENGINE (320px - 768px Breakpoints)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  /* Prevent horizontal document blowout */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    font-size: 13.5px !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
+  
+  body {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 10px !important;
+    padding-bottom: 85px !important;
+  }
+
+  /* Responsive Headers & Brand Bars */
+  header, .header, .header-container, .header-inner, .navbar, .top-bar {
+    padding: 12px 14px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .brand-area, .brand-group, .brand-wrap, .brand-text-group {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+  .brand-text h1, header h1, .brand-title, .app-title {
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+  }
+  .brand-text p, .brand-subtitle, .app-subtitle {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+  .header-actions, .header-pills, .section-tools, .header-right {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+  }
+  .header-pills .pill, .header-actions .badge {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+
+  /* Main Containers & Layouts */
+  .container, main, .main-content, .app-container, .wrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* KPI / Metric Grids (2 columns on mobile) */
+  .kpi-grid, .summary-grid, .stats-grid, .metrics-grid, .matrix-grid, .kpi-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+  }
+  .kpi-card, .metric-card, .stat-card, .summary-card {
+    padding: 12px 10px !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .kpi-val, .kpi-value, .metric-val, .stat-number {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    word-break: break-word !important;
+    line-height: 1.2 !important;
+  }
+  .kpi-title, .kpi-label, .metric-label {
+    font-size: 10.5px !important;
+    letter-spacing: 0.02em !important;
+  }
+  .kpi-desc, .kpi-sub, .metric-sub {
+    font-size: 10px !important;
+  }
+
+  /* Cards, Panels & Glass Containers */
+  .card, .panel, .section-card, .glass-card, .dash-card, .hud-card, .glass-panel {
+    padding: 14px 12px !important;
+    border-radius: 14px !important;
+    margin-bottom: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .card-header, .panel-header, .section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 10px !important;
+  }
+  .card-title, .panel-title, .section-title h3, .section-title {
+    font-size: 15px !important;
+    line-height: 1.3 !important;
+  }
+  .card-actions, .panel-tools, .section-tools {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* Grids collapse to 1 column */
+  .section-grid, .grid-2col, .grid-3col, .stream-layout, .app-container, .two-col-grid, .speed-audit-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+
+  /* Touch-Friendly Smooth Horizontal Scroll Navigation Tabs */
+  .tabs-nav, .tab-bar, .nav-pills, .filter-tabs, .sp-tabs, .pill-nav, .category-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 6px !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 14px !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .tabs-nav::-webkit-scrollbar, .tab-bar::-webkit-scrollbar, .nav-pills::-webkit-scrollbar, .filter-tabs::-webkit-scrollbar {
+    display: none !important;
+    height: 0 !important;
+  }
+  .tab-btn, .pill-btn, .cat-btn, .filter-btn, .sp-tab-btn {
+    flex: 0 0 auto !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    min-height: 38px !important;
+    white-space: nowrap !important;
+    border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  /* Responsive Horizontal Scrollable Tables */
+  .table-responsive, .table-container, .table-wrap {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin-bottom: 12px !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-sizing: border-box !important;
+  }
+  table {
+    width: 100% !important;
+    min-width: 540px !important;
+    font-size: 11.5px !important;
+    border-collapse: collapse !important;
+  }
+  th, td {
+    padding: 8px 10px !important;
+    white-space: nowrap !important;
+  }
+  th {
+    font-size: 10.5px !important;
+  }
+  td.wrap-text, td.kw-col, td .kw-text, td .prod-title {
+    white-space: normal !important;
+    max-width: 160px !important;
+    word-break: break-word !important;
+  }
+
+  /* Full-width Touch Inputs, Selects & Buttons */
+  input[type="text"], input[type="search"], .table-search-input, select, textarea {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    font-size: 13px !important;
+    padding: 10px 12px !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
+  }
+  .btn, .btn-action, .copy-all-btn, .btn-copy, .btn-gold, .btn-primary {
+    min-height: 40px !important;
+    font-size: 12px !important;
+    padding: 8px 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Bulk paste & Textareas */
+  .bulk-area, textarea {
+    font-size: 11px !important;
+    padding: 10px !important;
+    height: 120px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Modals & Dialogs */
+  .modal-overlay {
+    padding: 12px !important;
+    align-items: flex-end !important;
+    box-sizing: border-box !important;
+  }
+  .modal-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+  }
+  .modal-footer {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .modal-footer .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Floating docks & Bottom Bars */
+  .floating-dock, .action-bar-fixed {
+    width: calc(100% - 20px) !important;
+    left: 10px !important;
+    bottom: 10px !important;
+    padding: 8px 12px !important;
+    gap: 6px !important;
+    justify-content: space-around !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Toasts & Alert Banners */
+  #toast, .toast, .alert-banner, .safety-banner {
+    padding: 12px 14px !important;
+    font-size: 12px !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+  #toast, .toast {
+    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+    right: 12px !important;
+    left: 12px !important;
+    max-width: calc(100% - 24px) !important;
+    text-align: center !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  /* Ultra-narrow devices (iPhone SE, Galaxy Fold outer) */
+  .kpi-grid, .summary-grid, .stats-grid, .metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .brand-text h1, header h1, .brand-title {
+    font-size: 15px !important;
+  }
+  .tab-btn, .pill-btn, .cat-btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* === END INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
+</style>
 </head>
 <body>
 
@@ -224,7 +510,6 @@ body {
         <h1>SECOND BRAIN COMMAND CENTER</h1>
         <p>AUTONOMOUS AGENT FLOOR // F:\\\\ai office\\\\Amazon office</p>
       </div>
-    </div>
     <div class="nav-stats">
       <div class="status-pill">
         <span class="status-dot"></span>
@@ -250,27 +535,22 @@ body {
           <div class="tier-label tier-1">Priority 1 // Active Sprint</div>
           <div class="tier-name">Content Creation</div>
           <div class="tier-desc">14-day omnichannel queue &amp; resonance engine</div>
-        </div>
         <div class="tier-card">
           <div class="tier-label tier-2">Priority 2 // Active Sprint</div>
           <div class="tier-name">Client Outreach</div>
           <div class="tier-desc">25 D2C brands audit &amp; pitch pipeline</div>
-        </div>
         <div class="tier-card">
           <div class="tier-label tier-3">Priority 3 // Steady-State</div>
           <div class="tier-name">Amazon Storefront</div>
           <div class="tier-desc">₹9L baseline, 64 SKUs, negative shields</div>
-        </div>
         <div class="tier-card">
           <div class="tier-label tier-4">Priority 4 // Research</div>
           <div class="tier-name">Web &amp; Product Lab</div>
           <div class="tier-desc">Sezard / Moxie / Pista Barfi extraction</div>
-        </div>
         <div class="tier-card">
           <div class="tier-label tier-5">Priority 5 // Watchdog</div>
           <div class="tier-name">Systems &amp; Fleet QA</div>
           <div class="tier-desc">5x Gemini Pro keys, $0 budget watchdog</div>
-        </div>
       </div>
     </section>
 
@@ -295,7 +575,6 @@ body {
           <div style="font-size: 11px; font-family: var(--font-mono); color: var(--gold-accent); font-weight: 700; text-transform: uppercase;">Apex // Founder</div>
           <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; margin: 4px 0;">Kartikey Jain</div>
           <div style="font-size: 12px; color: var(--text-muted);">Principal / Visionary / Polymath Operator</div>
-        </div>
 
         <div class="connector-line"></div>
 
@@ -303,7 +582,6 @@ body {
           <div style="font-size: 11px; font-family: var(--font-mono); color: var(--cyan-glow); font-weight: 700; text-transform: uppercase;">Level 0 // Floor Orchestrator</div>
           <div style="font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #fff; margin: 4px 0;">Michael ('god')</div>
           <div style="font-size: 12px; color: #cbd5e1;">Chief Orchestrator, Second Brain &amp; Autonomous Cycle Director</div>
-        </div>
 
         <div class="connector-line"></div>
 
@@ -318,15 +596,12 @@ body {
               <div class="clone-item" data-agent="clone-1a" onclick="inspectAgent('clone-1a', this)">
                 <div class="clone-name"><span>Clone 1A: Resonant Content Researcher</span> <span>→</span></div>
                 <div class="clone-role">Octalysis, polymath builder, &amp; founder signals</div>
-              </div>
               <div class="clone-item" data-agent="clone-1b" onclick="inspectAgent('clone-1b', this)">
                 <div class="clone-name"><span>Clone 1B: Multi-Platform Master Copywriter</span> <span>→</span></div>
                 <div class="clone-role">Punch &amp; Prove framework, anti-AI human tone</div>
-              </div>
               <div class="clone-item" data-agent="clone-1c" onclick="inspectAgent('clone-1c', this)">
                 <div class="clone-name"><span>Clone 1C: Platform Strategist</span> <span>→</span></div>
                 <div class="clone-role">LinkedIn carousels, X threads, Instagram visual reels</div>
-              </div>
             </div>
           </div>
 
@@ -340,15 +615,12 @@ body {
               <div class="clone-item" data-agent="clone-2a" onclick="inspectAgent('clone-2a', this)">
                 <div class="clone-name"><span>Clone 2A: High-Ticket D2C Strategist</span> <span>→</span></div>
                 <div class="clone-role">25 D2C brands outbound &amp; friction audits</div>
-              </div>
               <div class="clone-item" data-agent="clone-2b" onclick="inspectAgent('clone-2b', this)">
                 <div class="clone-name"><span>Clone 2B: Creator &amp; Barter Manager</span> <span>→</span></div>
                 <div class="clone-role">LIT School model: gifting &amp; sub-₹5k partnerships</div>
-              </div>
               <div class="clone-item" data-agent="clone-2c" onclick="inspectAgent('clone-2c', this)">
                 <div class="clone-name"><span>Clone 2C: Proposal &amp; Octalysis Craftsman</span> <span>→</span></div>
                 <div class="clone-role">Interactive Figma decks &amp; behavioral CRO models</div>
-              </div>
             </div>
           </div>
 
@@ -362,19 +634,15 @@ body {
               <div class="clone-item" data-agent="clone-3a" onclick="inspectAgent('clone-3a', this)">
                 <div class="clone-name"><span>Clone 3A: Amazon PPC Strategist</span> <span>→</span></div>
                 <div class="clone-role">Search-term harvesting &amp; negative keyword shields</div>
-              </div>
               <div class="clone-item" data-agent="clone-3b" onclick="inspectAgent('clone-3b', this)">
                 <div class="clone-name"><span>Clone 3B: Catalog &amp; SEO Copywriter</span> <span>→</span></div>
                 <div class="clone-role">Mobile-first titles &amp; 5x249B backend keywords</div>
-              </div>
               <div class="clone-item" data-agent="clone-3c" onclick="inspectAgent('clone-3c', this)">
                 <div class="clone-name"><span>Clone 3C: Visual Asset Director</span> <span>→</span></div>
                 <div class="clone-role">Pure white RGB 255 heroes &amp; caliper dimension guides</div>
-              </div>
               <div class="clone-item" data-agent="clone-3d" onclick="inspectAgent('clone-3d', this)">
                 <div class="clone-name"><span>Clone 3D: Flat-File &amp; Excel COM Automator</span> <span>→</span></div>
                 <div class="clone-role">Native COM automation, 5665 generic bypass</div>
-              </div>
             </div>
           </div>
 
@@ -388,19 +656,15 @@ body {
               <div class="clone-item" data-agent="clone-4a" onclick="inspectAgent('clone-4a', this)">
                 <div class="clone-name"><span>Clone 4A: Shopify/Webflow/Framer Dev</span> <span>→</span></div>
                 <div class="clone-role">Client-First builds, 3.4% CVR Urban Vault benchmark</div>
-              </div>
               <div class="clone-item" data-agent="clone-4b" onclick="inspectAgent('clone-4b', this)">
                 <div class="clone-name"><span>Clone 4B: Figma UI/UX Architect</span> <span>→</span></div>
                 <div class="clone-role">Design systems, dark luxury space aesthetics</div>
-              </div>
               <div class="clone-item" data-agent="clone-4c" onclick="inspectAgent('clone-4c', this)">
                 <div class="clone-name"><span>Clone 4C: Competitive Intel Scraper</span> <span>→</span></div>
                 <div class="clone-role">Firecrawl CLI v1.23.3 &amp; Tavily market intel</div>
-              </div>
               <div class="clone-item" data-agent="clone-4d" onclick="inspectAgent('clone-4d', this)">
                 <div class="clone-name"><span>Clone 4D: Octalysis Game Designer</span> <span>→</span></div>
                 <div class="clone-role">Applied 8 Core Drives &amp; behavioral gamification</div>
-              </div>
             </div>
           </div>
 
@@ -414,15 +678,11 @@ body {
               <div class="clone-item" data-agent="clone-5a" onclick="inspectAgent('clone-5a', this)">
                 <div class="clone-name"><span>Clone 5A: Bug Root-Cause Investigator</span> <span>→</span></div>
                 <div class="clone-role">Reproduction, isolation, minimal verified diffs</div>
-              </div>
               <div class="clone-item" data-agent="clone-5b" onclick="inspectAgent('clone-5b', this)">
                 <div class="clone-name"><span>Clone 5B: Multi-Key Quota Watchdog</span> <span>→</span></div>
                 <div class="clone-role">5 Gemini Pro keys rotation &amp; power-cut recovery</div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- TAB 2: LIVE STREAM -->
@@ -440,7 +700,6 @@ body {
               <h4>14-Day Content Queue &amp; Outreach Playbooks Deployed</h4>
               <p>Michael structured complete operational playbooks (05_CONTENT_CREATION &amp; 06_CLIENT_OUTREACH). Established 14 drop-in posts across LinkedIn, X, and Instagram, plus 25 curated D2C target brands.</p>
               <div class="log-meta">20:55 IST // Executed autonomously by Michael ('god')</div>
-            </div>
           </div>
 
           <div class="log-card">
@@ -449,7 +708,6 @@ body {
               <h4>Aesthetic Benchmarks Codified: Sezard, Moxie, Pista Barfi</h4>
               <p>Deconstructed visual luxury benchmarks in Section 10 of Canonical Profile. Documented dark space luxury, micro-interaction physics, and festive Indian confectionery craft.</p>
               <div class="log-meta">20:50 IST // Section 10 added to 00_CANONICAL_PROFILE_KARTIKEY.md</div>
-            </div>
           </div>
 
           <div class="log-card">
@@ -458,7 +716,6 @@ body {
               <h4>Education Directive Confirmed: Online B.Com Strictly Excluded</h4>
               <p>Permanently resolved profile uncertainties. Manipal B.Com excluded from all public bios and pitches. Kartikey positioned strictly as an experiential builder/dropout.</p>
               <div class="log-meta">20:45 IST // Canonical profile verified</div>
-            </div>
           </div>
 
           <div class="log-card">
@@ -467,7 +724,6 @@ body {
               <h4>Floor Standup Completed // Backlog at 0</h4>
               <p>Processed inbox event 2026-09-12T14-49-10-237Z-20a5a4.json. Fleet circuit breakers healthy across all 5 agents. Zero compute spend maintained.</p>
               <div class="log-meta">20:20 IST // All background tasks synced</div>
-            </div>
           </div>
 
           <div class="log-card">
@@ -476,7 +732,6 @@ body {
               <h4>LinkedIn Profile Comprehensive Audit Deployed</h4>
               <p>Outcome-first headline makeover, full drop-in About story rewrite, Taarmi Amazon operator role creation, and Urban Vault / Xavier's club metric upgrades ready in second_brain/04_LINKEDIN_PROFILE_AUDIT.md.</p>
               <div class="log-meta">07:34 IST // Task-409 completed</div>
-            </div>
           </div>
 
           <div class="log-card">
@@ -485,38 +740,29 @@ body {
               <h4>Catalog Overhaul: 64 SKUs, 22-Image Suite, Excel COM Files</h4>
               <p>Completed 13 Baskets, 35 Rangoli, 6 Ribbons, and B0DHRXT2BD return-slashing package. Negative phrase shields deployed. Transitioned to steady-state monitoring.</p>
               <div class="log-meta">Previous // 100% ready for Seller Central upload</div>
-            </div>
           </div>
-        </div>
 
         <div class="compute-box">
           <h3 style="font-family: var(--font-display); font-size: 15px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px;">Compute &amp; Tooling Status</h3>
           <div class="compute-item">
             <div class="compute-item-head"><span>Google AI Studio (Gemini Pro)</span><span style="color: var(--green-status);">5 Keys Active</span></div>
             <div class="compute-item-sub">Round-robin pool on gemini-3.6-flash ($0.00 cost)</div>
-          </div>
           <div class="compute-item">
             <div class="compute-item-head"><span>Groq Cloud Inference</span><span style="color: var(--green-status);">Online</span></div>
             <div class="compute-item-sub">gpt-oss-120b &amp; qwen3.8-27b high-speed text</div>
-          </div>
           <div class="compute-item">
             <div class="compute-item-head"><span>OpenRouter Free Hub</span><span style="color: var(--green-status);">Standby</span></div>
             <div class="compute-item-sub">nemotron-3-super-120b:free zero-cost backup</div>
-          </div>
           <div class="compute-item">
             <div class="compute-item-head"><span>Tavily Web Search</span><span style="color: var(--green-status);">Ready</span></div>
             <div class="compute-item-sub">1,000 free live market verification queries</div>
-          </div>
           <div class="compute-item">
             <div class="compute-item-head"><span>Firecrawl CLI</span><span style="color: var(--green-status);">v1.23.3 Active</span></div>
             <div class="compute-item-sub">Global CLI tool for competitor markdown scraping</div>
-          </div>
           <div class="compute-item">
             <div class="compute-item-head"><span>Munder Difflin Supervisor</span><span style="color: var(--green-status);">v0.5.2 Running</span></div>
             <div class="compute-item-sub">Autonomous multi-agent floor orchestration</div>
-          </div>
         </div>
-      </div>
     </section>
 
     <!-- TAB 3: WORKSTREAMS -->
@@ -543,7 +789,6 @@ body {
           </div>
           <p class="task-desc">Autonomous cycle director. Enforcing Priority 1 (Content) and Priority 2 (Outreach). Tracking floor deliverables and updating Second Brain vault.</p>
           <div class="task-links"><a class="file-ref" href="03_ACTIVE_PROJECT_REGISTRY.md" target="_blank">📄 03_ACTIVE_PROJECT_REGISTRY.md ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept1">
           <div class="task-card-head">
@@ -552,7 +797,6 @@ body {
           </div>
           <p class="task-desc">Filtering web signals across 5 resonance pillars: Octalysis in e-commerce, polymath builder advantage, and luxury craft benchmarks.</p>
           <div class="task-links"><a class="file-ref" href="../01_content_creation/05_CONTENT_CREATION_DEPARTMENT_PLAYBOOK.md" target="_blank">📄 05_CONTENT_CREATION_PLAYBOOK.md ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept1">
           <div class="task-card-head">
@@ -561,7 +805,6 @@ body {
           </div>
           <p class="task-desc">Writing 14-day omnichannel queue using the 'Punch &amp; Prove' model. Banning corporate filler; ensuring punchy, human Gen Z builder voice.</p>
           <div class="task-links"><a class="file-ref" href="../01_content_creation/05_CONTENT_CREATION_DEPARTMENT_PLAYBOOK.md" target="_blank">📄 05_CONTENT_CREATION_PLAYBOOK.md ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept1">
           <div class="task-card-head">
@@ -570,7 +813,6 @@ body {
           </div>
           <p class="task-desc">Formatting LinkedIn PDF carousels, unhinged X build-in-public threads, and Instagram visual design reels showcasing photography + Figma.</p>
           <div class="task-links"><a class="file-ref" href="../01_content_creation/05_CONTENT_CREATION_DEPARTMENT_PLAYBOOK.md" target="_blank">📄 05_CONTENT_CREATION_PLAYBOOK.md ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept2">
           <div class="task-card-head">
@@ -579,7 +821,6 @@ body {
           </div>
           <p class="task-desc">Curating 25 high-potential D2C brands across Beauty (Moxie peers), Gifting (Pista Barfi peers), and Lifestyle (Sezard peers). Drafting friction audits.</p>
           <div class="task-links"><a class="file-ref" href="../02_client_outreach/06_CLIENT_OUTREACH_DEPARTMENT_PLAYBOOK.md" target="_blank">📄 06_CLIENT_OUTREACH_PLAYBOOK.md ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept2">
           <div class="task-card-head">
@@ -588,7 +829,6 @@ body {
           </div>
           <p class="task-desc">Executing low-cost/barter creator outreach derived from LIT School campaign (20+ collabs under ₹5,000/creator; artisanal gifting hampers).</p>
           <div class="task-links"><a class="file-ref" href="../02_client_outreach/06_CLIENT_OUTREACH_DEPARTMENT_PLAYBOOK.md" target="_blank">📄 06_CLIENT_OUTREACH_PLAYBOOK.md ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept2">
           <div class="task-card-head">
@@ -597,7 +837,6 @@ body {
           </div>
           <p class="task-desc">Designing interactive Figma pitch decks that visually prove how Octalysis behavioral triggers and Sezard/Moxie aesthetics lift AOV and conversions.</p>
           <div class="task-links"><a class="file-ref" href="../02_client_outreach/06_CLIENT_OUTREACH_DEPARTMENT_PLAYBOOK.md" target="_blank">📄 06_CLIENT_OUTREACH_PLAYBOOK.md ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept3">
           <div class="task-card-head">
@@ -606,7 +845,6 @@ body {
           </div>
           <p class="task-desc">Monitoring Broad Match campaign, negative phrase shields ('powder', 'stencil', 'satyam kraft'), and graduating converting search terms.</p>
           <div class="task-links"><a class="file-ref" href="../03_amazon_storefront/STOREFRONT_INTERACTIVE_DASHBOARD.html" target="_blank">📊 Storefront Interactive Dashboard ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept3">
           <div class="task-card-head">
@@ -615,7 +853,6 @@ body {
           </div>
           <p class="task-desc">Photographer &amp; ImageForge subagents. 22-render commercial suite verified (pure white RGB 255 heroes, caliper dimension overlays, luxury lifestyles).</p>
           <div class="task-links"><a class="file-ref" href="../03_amazon_storefront/TAARMI_CATALOG_MASTER_SUMMARY_64_SKUS.md" target="_blank">🖼️ Master 64-SKU Catalog ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept4">
           <div class="task-card-head">
@@ -624,7 +861,6 @@ body {
           </div>
           <p class="task-desc">Deconstructing Sezard Watches micro-interactions and Moxie Beauty D2C layout into a reusable high-converting component kit for agency pitches.</p>
           <div class="task-links"><a class="file-ref" href="../04_web_and_product_lab/ELITE_AESTHETIC_BENCHMARKS_DECONSTRUCTION.md" target="_blank">🎨 Taste Deconstruction Vault ↗</a></div>
-        </div>
 
         <div class="task-card" data-dept="dept5">
           <div class="task-card-head">
@@ -633,7 +869,6 @@ body {
           </div>
           <p class="task-desc">Investigating technical issues with confirmed root causes. Managing fallback chains across Groq, OpenRouter, and rotating 5 Gemini Pro keys.</p>
           <div class="task-links"><a class="file-ref" href="../05_systems_and_reliability/AI_MODELS_DASHBOARD.html" target="_blank">⚡ AI Models &amp; Fleet Dashboard ↗</a></div>
-        </div>
       </div>
     </section>
 
@@ -680,7 +915,6 @@ body {
             <li><strong>Takeaway:</strong> Direct blueprint for Taarmi's festive hampers, rangolis, and gifting baskets.</li>
           </ul>
         </div>
-      </div>
 
       <div class="section-head">
         <h2>The Polymath Capability Matrix</h2>
@@ -712,7 +946,6 @@ body {
           <h4>Octalysis Gamification</h4>
           <p>Applied 8 Core Drives: endowment effect (CD4), honest batch scarcity (CD6), unboxing curiosity (CD7).</p>
         </div>
-      </div>
     </section>
 
     <!-- TAB 5: 1-CLICK COPY VAULT -->
@@ -744,7 +977,6 @@ One shipped project teaches you more about unit economics, user psychology, and 
 Build things that exist in the real world. That's the only resume that matters in 2026.
 
 What was the first project you shipped that taught you more than school ever did?</div>
-        </div>
 
         <div class="copy-card">
           <div class="copy-card-head">
@@ -769,7 +1001,6 @@ We killed the giant 8-field form at the bottom. Instead, we used a progressive 2
 People don't read feature lists; they scan for social and physical proof. We placed verified floor plan metrics and real photos above the fold.
 
 Conversion rate optimization isn't guessing. It's removing every microscopic friction point between curiosity and commitment.</div>
-        </div>
 
         <div class="copy-card">
           <div class="copy-card-head">
@@ -794,7 +1025,6 @@ Want me to send over the quick screen recording? Zero pitch, just thought it'd b
 Best,
 Kartikey Jain
 Webflow / Shopify Operator &amp; Builder</div>
-        </div>
 
         <div class="copy-card">
           <div class="copy-card-head">
@@ -811,7 +1041,6 @@ Mind if I drop the Figma link here?
 
 Cheers,
 Kartikey</div>
-        </div>
       </div>
     </section>
 
@@ -1222,7 +1451,7 @@ Kartikey</div>
       });
 
       // 5. Check URL hash for initial tab deep-link
-      const hash = window.location.hash.replace('#', '');
+      const hash = (window.location.hash || "").replace('#', '');
       if (hash && document.getElementById(hash)) {
         switchTab(hash);
       }

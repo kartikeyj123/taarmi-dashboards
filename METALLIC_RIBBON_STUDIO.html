@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Metallic Lurex Shimmer Ribbon Studio | Taarmi Luxury Packaging</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+              700: '#a16207',
+            },
+            silver: {
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+            }
+          },
+          fontFamily: {
+            heading: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #030712;
+      color: #f8fafc;
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .bg-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.25s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(234, 179, 8, 0.35);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6), 0 0 24px rgba(234, 179, 8, 0.12);
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #ca8a04 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .silver-gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Image zoom preview styling */
+    .img-zoom-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+    .img-zoom-container img {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .img-zoom-container:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+  </style>
+</head>
+<body class="bg-grid selection:bg-amber-500 selection:text-black">
+
+  <!-- Top Ambient Glow -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-amber-500/10 via-amber-600/5 to-transparent blur-3xl pointer-events-none -z-10"></div>
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="00_DASHBOARD_PORTAL.html" class="p-2 rounded-xl bg-slate-900 border border-white/10 hover:border-amber-500/50 text-slate-300 hover:text-white transition" title="Back to Executive OS">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </a>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-300 via-amber-500 to-amber-600 flex items-center justify-center font-heading font-black text-slate-950 text-xl shadow-lg shadow-amber-500/20">
+          ✨
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-heading font-extrabold text-base sm:text-lg text-white tracking-tight">METALLIC SHIMMER RIBBON STUDIO</h1>
+            <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-full">Diwali 2026 Commercial Suite</span>
+          </div>
+          <p class="text-xs text-slate-400">Metallic Gold & Silver Lurex Ribbon Rolls • 1 Inch (25mm) × 25 Metres (27 Yards)</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex items-center gap-2">
+        <a href="#listing-copy" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white hover:border-amber-500/50 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          Amazon Copy Kit
+        </a>
+        <button onclick="sendAllPreviewsToWhatsApp()" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/25 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.806-5.767-5.806zm4.184 8.243c-.173.486-.886.91-1.232.969-.345.059-.791.077-1.285-.083-.342-.111-.782-.267-1.353-.515-2.42-1.054-3.992-3.528-4.113-3.69-.121-.162-.988-1.312-.988-2.502 0-1.19.624-1.776.846-2.016.222-.24.484-.3.645-.3.161 0 .323 0 .463.008.148.008.347-.056.543.414.202.486.686 1.672.747 1.794.06.121.101.263.02.424-.081.162-.121.263-.242.404-.121.142-.254.316-.363.424-.121.122-.248.254-.107.496.141.242.628 1.036 1.347 1.676.924.823 1.703 1.078 1.945 1.199.242.121.384.101.525-.06.141-.162.605-.706.767-.948.162-.242.323-.202.545-.121.222.081 1.411.666 1.653.787.242.121.403.182.463.283.061.101.061.586-.112 1.072z"/></svg>
+          Push to WhatsApp
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+    <!-- Hero Value Prop & Specs Banner -->
+    <div class="glass-card rounded-2xl p-6 sm:p-8 border-2 border-amber-500/30 relative overflow-hidden bg-gradient-to-r from-amber-500/10 via-slate-900/90 to-slate-900/90 shadow-2xl shadow-amber-500/10">
+      <div class="max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-mono font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          OFFICIAL COMMERCIAL ASSET PACK • 6 IMAGES READY
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-heading font-black text-white tracking-tight leading-tight">
+          High-Converting Amazon Listing Image Suite: <br>
+          <span class="gold-gradient-text">Metallic Gold</span> & <span class="silver-gradient-text">Silver Shimmer</span> Ribbon Rolls
+        </h2>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          Engineered to maximize Click-Through Rate (CTR) and Festive Diwali conversion. Features pure white RGB (255,255,255) compliant hero photography, ultra-close macro shimmer weave, luxury gift hamper lifestyle styling, and high-impact dimension badges.
+        </p>
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <div class="px-3 py-1.5 rounded-lg bg-slate-950/80 border border-white/10 text-xs font-mono text-slate-300">
+            <span class="text-amber-400 font-bold">Width:</span> 1 Inch (25mm)
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-slate-950/80 border border-white/10 text-xs font-mono text-slate-300">
+            <span class="text-amber-400 font-bold">Length:</span> 25 Metres / 27 Yards
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-slate-950/80 border border-white/10 text-xs font-mono text-slate-300">
+            <span class="text-amber-400 font-bold">Material:</span> Metallic Lurex Sparkle Weave
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-slate-950/80 border border-white/10 text-xs font-mono text-slate-300">
+            <span class="text-amber-400 font-bold">Resolution:</span> 1024×1024 (Amazon Compliant 1:1)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6-Image Amazon Listing Matrix -->
+    <div class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-heading font-bold text-white flex items-center gap-2">
+            Amazon Listing Gallery (Slots 1 to 6)
+          </h3>
+          <p class="text-xs text-slate-400">Click any image to expand high-res zoom preview or download directly.</p>
+        </div>
+        <button onclick="downloadAllImages()" class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-white/10 hover:border-amber-500/50 text-xs font-semibold text-slate-300 hover:text-white transition">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          Download Assets Pack
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- SLOT 1: MAIN HERO -->
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">SLOT 01 • MAIN HERO</span>
+              <span class="text-[10px] text-slate-400 font-mono">RGB 255 White BG</span>
+            </div>
+            <div class="img-zoom-container bg-white p-2 rounded-xl cursor-pointer" onclick="openLightbox('assets/ribbons/01_hero_gold_silver_rolls.jpg', 'Slot 1: Main Amazon Hero (Gold & Silver Duo Rolls on Pure White)')">
+              <img src="assets/ribbons/01_hero_gold_silver_rolls.jpg" alt="Metallic Gold and Silver Shimmer Ribbon Rolls Hero" class="w-full aspect-square object-contain rounded-lg">
+            </div>
+            <div class="mt-4">
+              <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-400 transition">Main Amazon Hero Image</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Presents both Gold & Silver spools side-by-side on 100% pure seamless white background with flowing spiral tails. Maximizes search SERP CTR.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-white/10">
+            <a href="assets/ribbons/01_hero_gold_silver_rolls.jpg" download="01_hero_gold_silver_rolls.jpg" class="flex-1 py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-center text-xs font-medium text-slate-300 hover:text-white transition">
+              Download
+            </a>
+            <button onclick="sendSingleToWhatsApp('assets/ribbons/01_hero_gold_silver_rolls.jpg', 'Slot 1: Metallic Ribbon Hero Pack')" class="p-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/30 transition" title="Send to WhatsApp">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.806-5.767-5.806zm4.184 8.243c-.173.486-.886.91-1.232.969-.345.059-.791.077-1.285-.083-.342-.111-.782-.267-1.353-.515-2.42-1.054-3.992-3.528-4.113-3.69-.121-.162-.988-1.312-.988-2.502 0-1.19.624-1.776.846-2.016.222-.24.484-.3.645-.3.161 0 .323 0 .463.008.148.008.347-.056.543.414.202.486.686 1.672.747 1.794.06.121.101.263.02.424-.081.162-.121.263-.242.404-.121.142-.254.316-.363.424-.121.122-.248.254-.107.496.141.242.628 1.036 1.347 1.676.924.823 1.703 1.078 1.945 1.199.242.121.384.101.525-.06.141-.162.605-.706.767-.948.162-.242.323-.202.545-.121.222.081 1.411.666 1.653.787.242.121.403.182.463.283.061.101.061.586-.112 1.072z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- SLOT 2: TEXTURE MACRO -->
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">SLOT 02 • TEXTURE MACRO</span>
+              <span class="text-[10px] text-slate-400 font-mono">Micro-Weave Zoom</span>
+            </div>
+            <div class="img-zoom-container bg-slate-900 p-2 rounded-xl cursor-pointer" onclick="openLightbox('assets/ribbons/02_texture_macro_sparkle.jpg', 'Slot 2: Ultra-Fine Woven Lurex Glitter Macro')">
+              <img src="assets/ribbons/02_texture_macro_sparkle.jpg" alt="Metallic Shimmer Ribbon Texture Macro" class="w-full aspect-square object-cover rounded-lg">
+            </div>
+            <div class="mt-4">
+              <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-400 transition">Lurex Sparkle & Finished Edges</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Highlights the glistening metallic shimmer, densely woven yarn, non-flaking glitter, and smooth fray-resistant edge borders.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-white/10">
+            <a href="assets/ribbons/02_texture_macro_sparkle.jpg" download="02_texture_macro_sparkle.jpg" class="flex-1 py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-center text-xs font-medium text-slate-300 hover:text-white transition">
+              Download
+            </a>
+            <button onclick="sendSingleToWhatsApp('assets/ribbons/02_texture_macro_sparkle.jpg', 'Slot 2: Texture Macro')" class="p-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/30 transition" title="Send to WhatsApp">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.806-5.767-5.806zm4.184 8.243c-.173.486-.886.91-1.232.969-.345.059-.791.077-1.285-.083-.342-.111-.782-.267-1.353-.515-2.42-1.054-3.992-3.528-4.113-3.69-.121-.162-.988-1.312-.988-2.502 0-1.19.624-1.776.846-2.016.222-.24.484-.3.645-.3.161 0 .323 0 .463.008.148.008.347-.056.543.414.202.486.686 1.672.747 1.794.06.121.101.263.02.424-.081.162-.121.263-.242.404-.121.142-.254.316-.363.424-.121.122-.248.254-.107.496.141.242.628 1.036 1.347 1.676.924.823 1.703 1.078 1.945 1.199.242.121.384.101.525-.06.141-.162.605-.706.767-.948.162-.242.323-.202.545-.121.222.081 1.411.666 1.653.787.242.121.403.182.463.283.061.101.061.586-.112 1.072z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- SLOT 3: LUXURY GIFT BOX -->
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">SLOT 03 • LUXURY GIFTING</span>
+              <span class="text-[10px] text-slate-400 font-mono">Bow Memory Demo</span>
+            </div>
+            <div class="img-zoom-container bg-slate-900 p-2 rounded-xl cursor-pointer" onclick="openLightbox('assets/ribbons/03_luxury_gift_box_bow.jpg', 'Slot 3: Luxury Gift Box Dual-Tone Bow Demonstration')">
+              <img src="assets/ribbons/03_luxury_gift_box_bow.jpg" alt="Luxury Gift Box with Metallic Ribbon Bow" class="w-full aspect-square object-cover rounded-lg">
+            </div>
+            <div class="mt-4">
+              <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-400 transition">Voluminous Bow & Gift Box Demo</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Demonstrates how easily the ribbon ties into voluminous, structured 3D bows with curled flowing tails on luxury matte packaging.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-white/10">
+            <a href="assets/ribbons/03_luxury_gift_box_bow.jpg" download="03_luxury_gift_box_bow.jpg" class="flex-1 py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-center text-xs font-medium text-slate-300 hover:text-white transition">
+              Download
+            </a>
+            <button onclick="sendSingleToWhatsApp('assets/ribbons/03_luxury_gift_box_bow.jpg', 'Slot 3: Luxury Gift Box Bow')" class="p-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/30 transition" title="Send to WhatsApp">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.806-5.767-5.806zm4.184 8.243c-.173.486-.886.91-1.232.969-.345.059-.791.077-1.285-.083-.342-.111-.782-.267-1.353-.515-2.42-1.054-3.992-3.528-4.113-3.69-.121-.162-.988-1.312-.988-2.502 0-1.19.624-1.776.846-2.016.222-.24.484-.3.645-.3.161 0 .323 0 .463.008.148.008.347-.056.543.414.202.486.686 1.672.747 1.794.06.121.101.263.02.424-.081.162-.121.263-.242.404-.121.142-.254.316-.363.424-.121.122-.248.254-.107.496.141.242.628 1.036 1.347 1.676.924.823 1.703 1.078 1.945 1.199.242.121.384.101.525-.06.141-.162.605-.706.767-.948.162-.242.323-.202.545-.121.222.081 1.411.666 1.653.787.242.121.403.182.463.283.061.101.061.586-.112 1.072z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- SLOT 4: DIWALI HAMPER LIFESTYLE -->
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">SLOT 04 • DIWALI LIFESTYLE</span>
+              <span class="text-[10px] text-slate-400 font-mono">Festive Hamper</span>
+            </div>
+            <div class="img-zoom-container bg-slate-900 p-2 rounded-xl cursor-pointer" onclick="openLightbox('assets/ribbons/04_diwali_hamper_lifestyle.jpg', 'Slot 4: Diwali Festive Dry Fruit Hamper with Brass Diyas & Flowers')">
+              <img src="assets/ribbons/04_diwali_hamper_lifestyle.jpg" alt="Diwali Festive Hamper Ribbon Lifestyle" class="w-full aspect-square object-cover rounded-lg">
+            </div>
+            <div class="mt-4">
+              <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-400 transition">Festive Diwali Hamper Lifestyle</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Handcrafted dry-fruit hamper wrapped in net and tied with the metallic ribbon, accented by warm glowing brass diyas and marigold garlands.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-white/10">
+            <a href="assets/ribbons/04_diwali_hamper_lifestyle.jpg" download="04_diwali_hamper_lifestyle.jpg" class="flex-1 py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-center text-xs font-medium text-slate-300 hover:text-white transition">
+              Download
+            </a>
+            <button onclick="sendSingleToWhatsApp('assets/ribbons/04_diwali_hamper_lifestyle.jpg', 'Slot 4: Festive Diwali Hamper')" class="p-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/30 transition" title="Send to WhatsApp">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.806-5.767-5.806zm4.184 8.243c-.173.486-.886.91-1.232.969-.345.059-.791.077-1.285-.083-.342-.111-.782-.267-1.353-.515-2.42-1.054-3.992-3.528-4.113-3.69-.121-.162-.988-1.312-.988-2.502 0-1.19.624-1.776.846-2.016.222-.24.484-.3.645-.3.161 0 .323 0 .463.008.148.008.347-.056.543.414.202.486.686 1.672.747 1.794.06.121.101.263.02.424-.081.162-.121.263-.242.404-.121.142-.254.316-.363.424-.121.122-.248.254-.107.496.141.242.628 1.036 1.347 1.676.924.823 1.703 1.078 1.945 1.199.242.121.384.101.525-.06.141-.162.605-.706.767-.948.162-.242.323-.202.545-.121.222.081 1.411.666 1.653.787.242.121.403.182.463.283.061.101.061.586-.112 1.072z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- SLOT 5: DIMENSIONS INFOGRAPHIC -->
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">SLOT 05 • DIMENSIONS GUIDE</span>
+              <span class="text-[10px] text-slate-400 font-mono">1 Inch × 25m Specs</span>
+            </div>
+            <div class="img-zoom-container bg-white p-2 rounded-xl cursor-pointer" onclick="openLightbox('assets/ribbons/05_dimensions_spec_infographic.jpg', 'Slot 5: Precision Measurement Infographic & Technical Badges')">
+              <img src="assets/ribbons/05_dimensions_spec_infographic.jpg" alt="Metallic Ribbon Dimensions Infographic" class="w-full aspect-square object-contain rounded-lg">
+            </div>
+            <div class="mt-4">
+              <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-400 transition">Dimensions & Quality Badges</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Visual measurement ruler confirming 1 Inch (25mm) width and 25m spool length. Badges highlight Non-Shedding Weave and Reinforced Edges.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-white/10">
+            <a href="assets/ribbons/05_dimensions_spec_infographic.jpg" download="05_dimensions_spec_infographic.jpg" class="flex-1 py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-center text-xs font-medium text-slate-300 hover:text-white transition">
+              Download
+            </a>
+            <button onclick="sendSingleToWhatsApp('assets/ribbons/05_dimensions_spec_infographic.jpg', 'Slot 5: Dimensions Infographic')" class="p-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/30 transition" title="Send to WhatsApp">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.806-5.767-5.806zm4.184 8.243c-.173.486-.886.91-1.232.969-.345.059-.791.077-1.285-.083-.342-.111-.782-.267-1.353-.515-2.42-1.054-3.992-3.528-4.113-3.69-.121-.162-.988-1.312-.988-2.502 0-1.19.624-1.776.846-2.016.222-.24.484-.3.645-.3.161 0 .323 0 .463.008.148.008.347-.056.543.414.202.486.686 1.672.747 1.794.06.121.101.263.02.424-.081.162-.121.263-.242.404-.121.142-.254.316-.363.424-.121.122-.248.254-.107.496.141.242.628 1.036 1.347 1.676.924.823 1.703 1.078 1.945 1.199.242.121.384.101.525-.06.141-.162.605-.706.767-.948.162-.242.323-.202.545-.121.222.081 1.411.666 1.653.787.242.121.403.182.463.283.061.101.061.586-.112 1.072z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- SLOT 6: MULTI-OCCASION COLLAGE -->
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">SLOT 06 • 4-IN-1 VERSATILITY</span>
+              <span class="text-[10px] text-slate-400 font-mono">Multi-Occasion</span>
+            </div>
+            <div class="img-zoom-container bg-slate-900 p-2 rounded-xl cursor-pointer" onclick="openLightbox('assets/ribbons/06_multi_use_styling_collage.jpg', 'Slot 6: 4-Quadrant Versatility Collage (Gift, Festive, Floral, DIY)')">
+              <img src="assets/ribbons/06_multi_use_styling_collage.jpg" alt="Metallic Ribbon Multi-Use Collage" class="w-full aspect-square object-cover rounded-lg">
+            </div>
+            <div class="mt-4">
+              <h4 class="font-heading font-bold text-sm text-white group-hover:text-amber-400 transition">Multi-Occasion Styling Collage</h4>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                4-quadrant visual showcase: 1. Luxury Gift Wrapping, 2. Diwali & Festive Decor, 3. Floral Bouquets, 4. DIY Crafting & Wedding Trousseau.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-white/10">
+            <a href="assets/ribbons/06_multi_use_styling_collage.jpg" download="06_multi_use_styling_collage.jpg" class="flex-1 py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-center text-xs font-medium text-slate-300 hover:text-white transition">
+              Download
+            </a>
+            <button onclick="sendSingleToWhatsApp('assets/ribbons/06_multi_use_styling_collage.jpg', 'Slot 6: Multi-Use Collage')" class="p-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/30 transition" title="Send to WhatsApp">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.82 2.791.82 3.181 0 5.767-2.587 5.767-5.766.001-3.182-2.585-5.806-5.767-5.806zm4.184 8.243c-.173.486-.886.91-1.232.969-.345.059-.791.077-1.285-.083-.342-.111-.782-.267-1.353-.515-2.42-1.054-3.992-3.528-4.113-3.69-.121-.162-.988-1.312-.988-2.502 0-1.19.624-1.776.846-2.016.222-.24.484-.3.645-.3.161 0 .323 0 .463.008.148.008.347-.056.543.414.202.486.686 1.672.747 1.794.06.121.101.263.02.424-.081.162-.121.263-.242.404-.121.142-.254.316-.363.424-.121.122-.248.254-.107.496.141.242.628 1.036 1.347 1.676.924.823 1.703 1.078 1.945 1.199.242.121.384.101.525-.06.141-.162.605-.706.767-.948.162-.242.323-.202.545-.121.222.081 1.411.666 1.653.787.242.121.403.182.463.283.061.101.061.586-.112 1.072z"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Amazon Listing Copy & SEO Kit Section -->
+    <div id="listing-copy" class="glass-card rounded-2xl p-6 sm:p-8 space-y-8 border-t-2 border-amber-500/30">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            OPTIMIZED AMAZON LISTING COPY (INDIA & GLOBAL)
+          </span>
+          <h3 class="text-2xl font-heading font-black text-white mt-1">Ready-to-Upload Listing Metadata</h3>
+          <p class="text-xs text-slate-400">Character-counted, COSMO/Rufus compliant, keyword enriched for high organic rank.</p>
+        </div>
+        <button onclick="copyAllListingData()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-amber-500/20 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          Copy Entire Listing Pack
+        </button>
+      </div>
+
+      <!-- Optimized Title -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <label class="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider">Product Title (188 / 200 chars)</label>
+          <button onclick="copyElementText('titleText')" class="text-xs text-slate-400 hover:text-amber-400 transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            Copy Title
+          </button>
+        </div>
+        <div id="titleText" class="p-3.5 rounded-xl bg-slate-950/80 border border-white/10 text-sm text-slate-200 font-sans leading-relaxed select-all">
+          Taarmi Metallic Shimmer Ribbon Roll (1 Inch × 25 Metres / 27 Yards) Sparkle Lurex Glitter Ribbon for Gift Wrapping, Diwali Hampers, Wedding Trousseau, Floral Bouquets & DIY Crafts
+        </div>
+      </div>
+
+      <!-- 5 Key Feature Bullet Points -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <label class="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider">5 High-Conversion Bullet Points</label>
+          <button onclick="copyElementText('bulletContainer')" class="text-xs text-slate-400 hover:text-amber-400 transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            Copy All Bullets
+          </button>
+        </div>
+
+        <div id="bulletContainer" class="space-y-2.5">
+          <div class="p-3 rounded-xl bg-slate-950/70 border border-white/10 text-xs text-slate-300 leading-relaxed">
+            <strong class="text-amber-300">✨ DAZZLING METALLIC LUREX SHIMMER:</strong> Woven from premium high-density metallic lurex yarn that catches light from every angle, imparting an opulent, celebratory sparkle to your gift boxes, festive hampers, and event decor without shedding messy loose glitter flakes.
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/70 border border-white/10 text-xs text-slate-300 leading-relaxed">
+            <strong class="text-amber-300">📏 GENEROUS 25-METRE VALUE SPOOL:</strong> Measuring 1 Inch (25mm) in width and a full 25 Metres (27 Yards) in continuous length on a durable white flange spool, providing ample material to wrap dozens of gift boxes, party favors, and festive Diwali hampers without running short.
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/70 border border-white/10 text-xs text-slate-300 leading-relaxed">
+            <strong class="text-amber-300">🎀 HOLDS STRUCTURE & TIES EFFORTLESSLY:</strong> Crafted with crisp shape memory and soft woven edges that fold cleanly, tie into voluminous 3D double bows, and hold elegant flowing spirals without wilting, fraying, or unraveling at the cut ends.
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/70 border border-white/10 text-xs text-slate-300 leading-relaxed">
+            <strong class="text-amber-300">🪔 PERFECT FOR DIWALI, WEDDINGS & FESTIVE OCCASIONS:</strong> Ideal accent for Diwali dry fruit hampers, wedding trousseau trays, festive mithai boxes, bridal bouquets, Pooja thali decoration, Christmas trees, greeting cards, and boutique corporate packaging.
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950/70 border border-white/10 text-xs text-slate-300 leading-relaxed">
+            <strong class="text-amber-300">🛡️ FRAY-RESISTANT & TEAR-PROOF EDGES:</strong> Reinforced finished selvage edges resist snags and fraying when trimmed with scissors, ensuring razor-sharp chevron or diagonal ribbon tails for professional, salon-grade presentation every single time.
+          </div>
+        </div>
+      </div>
+
+      <!-- Backend Search Terms (Generic Keywords) -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <label class="text-xs font-mono font-semibold text-amber-400 uppercase tracking-wider">Amazon Backend Search Terms (238 / 249 bytes)</label>
+          <button onclick="copyElementText('backendKeywords')" class="text-xs text-slate-400 hover:text-amber-400 transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            Copy Backend Terms
+          </button>
+        </div>
+        <div id="backendKeywords" class="p-3 rounded-xl bg-slate-950/80 border border-white/10 text-xs text-slate-300 font-mono select-all">
+          metallic ribbon gold silver glitter shimmer lurex 1 inch 25mm craft roll hamper packing diwali trousseau wedding bouquet gift wrapping lace tape bow maker scrapbooking festive decorative border shiny party favor
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- High-Res Lightbox Modal -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeLightbox(event)">
+    <div class="relative max-w-4xl w-full bg-slate-900 border border-white/10 rounded-2xl overflow-hidden p-4 shadow-2xl flex flex-col items-center" onclick="event.stopPropagation()">
+      <div class="w-full flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+        <h4 id="lightboxCaption" class="text-sm font-heading font-bold text-white">Image Preview</h4>
+        <button onclick="closeLightboxDirect()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
+      </div>
+      <div class="max-h-[75vh] overflow-auto flex items-center justify-center bg-black/40 rounded-xl w-full p-2">
+        <img id="lightboxImg" src="" alt="High-Res Preview" class="max-h-[70vh] object-contain rounded-lg">
+      </div>
+      <div class="w-full flex items-center justify-between pt-3 mt-3 border-t border-white/10">
+        <span class="text-xs text-slate-400 font-mono">1:1 Square Amazon Standard</span>
+        <div class="flex items-center gap-2">
+          <a id="lightboxDownloadBtn" href="" download class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white transition">Download High-Res</a>
+          <button id="lightboxWaBtn" onclick="" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white transition flex items-center gap-1">
+            Send via WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-amber-500/50 text-white text-xs font-semibold shadow-2xl shadow-black transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2">
+    <span class="text-amber-400">✓</span>
+    <span id="toastMsg">Action completed</span>
+  </div>
+
+  <script>
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    function copyElementText(id) {
+      const el = document.getElementById(id);
+      const text = el.innerText || el.textContent;
+      navigator.clipboard.writeText(text.trim()).then(() => {
+        showToast('Copied to clipboard!');
+      }).catch(err => {
+        showToast('Copy failed: ' + err.message);
+      });
+    }
+
+    function copyAllListingData() {
+      const title = document.getElementById('titleText').innerText.trim();
+      const bullets = document.getElementById('bulletContainer').innerText.trim();
+      const keywords = document.getElementById('backendKeywords').innerText.trim();
+      
+      const fullCopy = `TITLE:\n${title}\n\nBULLET POINTS:\n${bullets}\n\nBACKEND SEARCH TERMS:\n${keywords}`;
+      navigator.clipboard.writeText(fullCopy).then(() => {
+        showToast('Entire Amazon Listing Kit copied!');
+      });
+    }
+
+    function openLightbox(src, caption) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxCaption').innerText = caption;
+      document.getElementById('lightboxDownloadBtn').href = src;
+      document.getElementById('lightboxDownloadBtn').setAttribute('download', src.split('/').pop());
+      document.getElementById('lightboxWaBtn').onclick = () => sendSingleToWhatsApp(src, caption);
+      document.getElementById('lightboxModal').classList.remove('hidden');
+    }
+
+    function closeLightbox(e) {
+      document.getElementById('lightboxModal').classList.add('hidden');
+    }
+
+    function closeLightboxDirect() {
+      document.getElementById('lightboxModal').classList.add('hidden');
+    }
+
+    async function sendSingleToWhatsApp(imgPath, caption) {
+      showToast('Sending image to WhatsApp...');
+      try {
+        const fullServerPath = 'F:/ai office/Amazon office/' + imgPath.replace(/^\//, '');
+        const res = await fetch(`/api/whatsapp/send-image?path=${encodeURIComponent(fullServerPath)}&caption=${encodeURIComponent('✨ ' + caption)}`);
+        const json = await res.json();
+        if (json.success) {
+          showToast('Image sent to WhatsApp chat!');
+        } else {
+          showToast('WhatsApp send notice: check pairing status');
+        }
+      } catch (e) {
+        showToast('Error: ' + e.message);
+      }
+    }
+
+    async function sendAllPreviewsToWhatsApp() {
+      showToast('Pushing suite highlights to WhatsApp...');
+      try {
+        const heroPath = 'F:/ai office/Amazon office/LIVE_DASHBOARDS/assets/ribbons/01_hero_gold_silver_rolls.jpg';
+        const res = await fetch(`/api/whatsapp/send-image?path=${encodeURIComponent(heroPath)}&caption=${encodeURIComponent('✨ Taarmi Metallic Lurex Shimmer Ribbon — 6-Slot Commercial Amazon Listing Image Suite is ready! View full studio at http://localhost:4000/METALLIC_RIBBON_STUDIO.html')}`);
+        const json = await res.json();
+        if (json.success) {
+          showToast('Listing suite summary dispatched to WhatsApp!');
+        } else {
+          showToast('WhatsApp send notice: check connection');
+        }
+      } catch (e) {
+        showToast('Error: ' + e.message);
+      }
+    }
+
+    function downloadAllImages() {
+      const images = [
+        '01_hero_gold_silver_rolls.jpg',
+        '02_texture_macro_sparkle.jpg',
+        '03_luxury_gift_box_bow.jpg',
+        '04_diwali_hamper_lifestyle.jpg',
+        '05_dimensions_spec_infographic.jpg',
+        '06_multi_use_styling_collage.jpg'
+      ];
+      images.forEach((img, idx) => {
+        setTimeout(() => {
+          const a = document.createElement('a');
+          a.href = 'assets/ribbons/' + img;
+          a.download = img;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }, idx * 300);
+      });
+      showToast('Downloading all 6 listing images...');
+    }
+  </script>
+</body>
+</html>
