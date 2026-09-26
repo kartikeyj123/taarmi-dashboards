@@ -290,6 +290,12 @@
             <p class="text-xs text-zinc-400 leading-relaxed">
               Valkyrie launches Chromium headlessly via Puppeteer, injects your browser session cookie, and types & publishes tweets directly with <strong>zero human clicking</strong>.
             </p>
+            <div class="flex items-center gap-3 py-1">
+              <button type="button" onclick="launchBrowserLogin()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition shadow-lg shadow-purple-500/20 flex items-center gap-1.5">
+                <span>🔑</span> Launch Browser to Connect (Automatic)
+              </button>
+              <span class="text-[11px] text-zinc-500">or paste <code class="text-purple-300">auth_token</code> below manually</span>
+            </div>
             <div class="space-y-2.5">
               <div>
                 <label class="block text-[10px] font-mono text-zinc-400 mb-1">X Session Cookie (<code class="text-purple-300">auth_token</code>) — Copy from browser devtools / application cookies</label>
@@ -675,6 +681,31 @@
         }
       } catch (e) {
         showToast('Error saving: ' + e.message);
+      }
+    }
+
+    async function launchBrowserLogin() {
+      showToast('Opening browser window to log in to X...');
+      try {
+        const res = await fetch('/api/x/launch-login');
+        const data = await res.json();
+        if (data.success) {
+          showToast('Browser launched! Log in on desktop and it saves automatically.');
+          // Poll status every 4 seconds to detect when login succeeds
+          const poll = setInterval(async () => {
+            const sRes = await fetch('/api/x/status');
+            const sData = await sRes.json();
+            if (sData.mode === 'headless_browser') {
+              clearInterval(poll);
+              showToast('🎉 Connected successfully! Autonomous posting is live.');
+              loadStatus();
+            }
+          }, 4000);
+        } else {
+          showToast('Error: ' + data.error);
+        }
+      } catch (e) {
+        showToast('Error launching browser: ' + e.message);
       }
     }
 
