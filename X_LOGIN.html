@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Connect 𝕏 Account // Second Brain</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #070a12;
+    --hud-sky: #38bdf8;
+    --hud-glow: rgba(56, 189, 248, 0.35);
+    --panel-bg: rgba(10, 20, 32, 0.9);
+    --panel-border: rgba(56, 189, 248, 0.25);
+    --text-primary: #e0f2fe;
+    --text-dim: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-dark);
+    background-image: radial-gradient(circle at 50% 25%, rgba(14, 40, 65, 0.6) 0%, rgba(7, 10, 18, 0.98) 80%);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+  }
+  .login-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    max-width: 520px;
+    width: 100%;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+  }
+  p.subtitle {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .tab-buttons {
+    display: flex;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .tab-btn.active {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--hud-sky);
+    border: 1px solid var(--panel-border);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+  input:focus {
+    border-color: var(--hud-sky);
+    box-shadow: 0 0 12px var(--hud-glow);
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #0284c7, #38bdf8);
+    color: #030712;
+    font-weight: 800;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 8px 24px var(--hud-glow);
+    transition: all 0.2s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(56, 189, 248, 0.5);
+  }
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .popup-btn {
+    width: 100%;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--hud-sky);
+    color: var(--hud-sky);
+    font-weight: 800;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .popup-btn:hover {
+    background: rgba(56, 189, 248, 0.15);
+    box-shadow: 0 0 20px var(--hud-glow);
+  }
+  .instructions-box {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 16px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    line-height: 1.6;
+  }
+  .instructions-box ol {
+    margin-left: 18px;
+    margin-top: 6px;
+  }
+  .instructions-box code {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--hud-sky);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .security-note {
+    margin-top: 20px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .status-msg {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    text-align: center;
+    display: none;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+  }
+</style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="header-logo">
+    <span style="font-size:1.8rem;">🐦</span>
+    <h1>Connect 𝕏 Account</h1>
+  </div>
+  <p class="subtitle">
+    Pair your account once. Your Second Brain runs locally and posts 100% autonomously on schedule.
+  </p>
+
+  <div class="tab-buttons">
+    <button class="tab-btn active" onclick="switchTab('tab-token')">🔑 Paste Session Token</button>
+    <button class="tab-btn" onclick="switchTab('tab-popup')">🖥️ 1-Click Popup</button>
+    <button class="tab-btn" onclick="switchTab('tab-form')">📝 Direct Credentials</button>
+  </div>
+
+  <!-- TAB 1: PASTE TOKEN (EASIEST IF ALREADY LOGGED IN) -->
+  <div id="tab-token" class="tab-content active">
+    <div class="instructions-box">
+      <strong>Already logged in on 𝕏 in Arc / Chrome?</strong>
+      <ol>
+        <li>Go to <code>x.com</code> and press <code>F12</code> (Inspect).</li>
+        <li>Click <strong>Application</strong> &rarr; <strong>Cookies</strong> &rarr; <code>https://x.com</code>.</li>
+        <li>Double-click the value of <code>auth_token</code>, copy it, and paste it below:</li>
+      </ol>
+    </div>
+
+    <form onsubmit="handleTokenSubmit(event)">
+      <div class="form-group">
+        <label>𝕏 Handle / Username</label>
+        <input type="text" id="tokenHandle" placeholder="@Chill_kirdaar" value="@Chill_kirdaar" required>
+      </div>
+
+      <div class="form-group">
+        <label>Session Auth Token (auth_token)</label>
+        <input type="password" id="authTokenInput" placeholder="e.g. 7a8b9c0d1e2f3a4b..." required>
+      </div>
+
+      <button type="submit" id="tokenSubmitBtn" class="submit-btn">
+        <span>🚀 Save & Activate Autonomous Bot</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- TAB 2: POPUP WINDOW -->
+  <div id="tab-popup" class="tab-content">
+    <div class="instructions-box">
+      Click below to open a real browser window on your desktop. Simply log into 𝕏 once. The system will automatically capture the session token, save it, and close the window!
+    </div>
+
+    <button onclick="handleLaunchPopup()" id="popupBtn" class="popup-btn">
+      <span>🖥️ Launch 1-Click Desktop Login Window</span>
+    </button>
+  </div>
+
+  <!-- TAB 3: DIRECT CREDENTIALS FORM -->
+  <div id="tab-form" class="tab-content">
+    <form onsubmit="handleFormLogin(event)">
+      <div class="form-group">
+        <label>𝕏 Username / Handle / Email</label>
+        <input type="text" id="formUsername" placeholder="@Chill_kirdaar" value="@Chill_kirdaar" required>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="formPassword" placeholder="••••••••••••" required>
+      </div>
+
+      <div class="form-group">
+        <label>Phone / Email (If 2FA challenge)</label>
+        <input type="text" id="formEmail" placeholder="kartikeyjain14@gmail.com">
+      </div>
+
+      <button type="submit" id="formSubmitBtn" class="submit-btn">
+        <span>🚀 Log In Automatically</span>
+      </button>
+    </form>
+  </div>
+
+  <div id="statusMsg" class="status-msg"></div>
+
+  <div class="security-note">
+    🔒 <strong>100% Localhost Execution:</strong> Tokens are stored locally in <code>x_credentials.json</code> on your PC. No third-party servers ever touch your session.
+  </div>
+</div>
+
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+    const msg = document.getElementById('statusMsg');
+    msg.style.display = 'none';
+  }
+
+  async function handleTokenSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('tokenSubmitBtn');
+    const msg = document.getElementById('statusMsg');
+    const handle = document.getElementById('tokenHandle').value.trim();
+    const token = document.getElementById('authTokenInput').value.trim();
+
+    btn.disabled = true;
+    btn.innerText = '⏳ Verifying & saving...';
+    msg.style.display = 'block';
+    msg.style.color = '#38bdf8';
+    msg.innerText = 'Saving session credentials to Second Brain...';
+
+    try {
+      const res = await fetch('/api/x/save-cookies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ authToken: token, handle: handle })
+      });
+      const data = await res.json();
+      if (data.success) {
+        msg.style.color = '#10b981';
+        msg.innerText = `🎉 Successfully connected as ${handle}! Autonomous posting is now 100% ACTIVE.`;
+        btn.innerText = '✅ Activated!';
+        setTimeout(() => { window.location.href = '/x'; }, 1500);
+      } else {
+        msg.style.color = '#f43f5e';
+        msg.innerText = `❌ Error: ${data.error || 'Failed to save token'}`;
+        btn.disabled = false;
+        btn.innerText = '🚀 Try Again';
+      }
+    } catch(err) {
+      msg.style.color = '#f43f5e';
+      msg.innerText = `❌ Connection error: ${err.message}`;
+      btn.disabled = false;
+      btn.innerText = '🚀 Try Again';
+    }
+  }
+
+  async function handleLaunchPopup() {
+    const btn = document.getElementById('popupBtn');
+    const msg = document.getElementById('statusMsg');
+    btn.disabled = true;
+    btn.innerText = '⏳ Opening login window on desktop...';
+    msg.style.display = 'block';
+    msg.style.color = '#38bdf8';
+    msg.innerText = 'Check your desktop/taskbar for the opened browser window. Once you log in, this page will auto-update!';
+
+    try {
+      const res = await fetch('/api/x/launch-login');
+      const data = await res.json();
+      if (data.success) {
+        // Poll for connection
+        const pollTimer = setInterval(async () => {
+          try {
+            const check = await fetch('/api/x/scheduler-status');
+            const cdata = await check.json();
+            const credsRes = await fetch('/api/x/status');
+            const creds = await credsRes.json();
+            if (creds.mode === 'headless_browser' || creds.apiConnected) {
+              clearInterval(pollTimer);
+              msg.style.color = '#10b981';
+              msg.innerText = `🎉 Successfully paired! Account is now ACTIVE.`;
+              setTimeout(() => { window.location.href = '/x'; }, 1500);
+            }
+          } catch(e) {}
+        }, 2000);
+      } else {
+        msg.style.color = '#f43f5e';
+        msg.innerText = `❌ Error: ${data.error}`;
+        btn.disabled = false;
+        btn.innerText = '🖥️ Launch 1-Click Desktop Login Window';
+      }
+    } catch(err) {
+      msg.style.color = '#f43f5e';
+      msg.innerText = `❌ Error: ${err.message}`;
+      btn.disabled = false;
+      btn.innerText = '🖥️ Launch 1-Click Desktop Login Window';
+    }
+  }
+
+  async function handleFormLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('formSubmitBtn');
+    const msg = document.getElementById('statusMsg');
+    const u = document.getElementById('formUsername').value.trim();
+    const p = document.getElementById('formPassword').value.trim();
+    const em = document.getElementById('formEmail').value.trim();
+
+    btn.disabled = true;
+    btn.innerText = '⏳ Logging in & capturing session...';
+    msg.style.display = 'block';
+    msg.style.color = '#38bdf8';
+    msg.innerText = 'Launching local worker to log in... This takes ~15 seconds.';
+
+    try {
+      const res = await fetch('/api/x/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p, email: em })
+      });
+      const data = await res.json();
+      if (data.success) {
+        msg.style.color = '#10b981';
+        msg.innerText = `🎉 Successfully connected as ${data.handle}! Autonomous posting is now ACTIVE.`;
+        btn.innerText = '✅ Connected & Active!';
+        setTimeout(() => { window.location.href = '/x'; }, 1500);
+      } else {
+        msg.style.color = '#f43f5e';
+        msg.innerText = `❌ ${data.error || 'Login failed. If X prompted a verification, please use the "Paste Session Token" tab above!'}`;
+        btn.disabled = false;
+        btn.innerText = '🚀 Try Again';
+      }
+    } catch(err) {
+      msg.style.color = '#f43f5e';
+      msg.innerText = `❌ Connection error: ${err.message}`;
+      btn.disabled = false;
+      btn.innerText = '🚀 Try Again';
+    }
+  }
+</script>
+</body>
+</html>

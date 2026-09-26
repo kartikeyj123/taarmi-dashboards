@@ -715,8 +715,7 @@
         const data = await res.json();
         if (data.success && data.status && data.status.nextRun) {
           const next = data.status.nextRun;
-          const label = next.label ? next.label.split(' ')[0] + ' IST' : '08:00 PM IST';
-          document.getElementById('nextDropText').innerText = `${label} (~${next.minutesRemaining}m)`;
+          document.getElementById('nextDropText').innerText = `${next.label} (${next.minutesRemaining}m)`;
         }
       } catch (e) {
         console.error('Failed to load scheduler status:', e);

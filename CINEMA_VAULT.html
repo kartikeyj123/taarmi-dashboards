@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Cinema Vault — Prestige Film & Series Repository</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            cinema: ['Cinzel', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            vault: {
+              black: '#06070a',
+              darker: '#090c12',
+              dark: '#0e121a',
+              card: 'rgba(15, 20, 30, 0.75)',
+              border: 'rgba(255, 255, 255, 0.08)',
+              gold: '#f59e0b',
+              'gold-glow': '#fbbf24',
+              cyan: '#06b6d4',
+              neon: '#38bdf8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --glow-color: rgba(245, 158, 11, 0.2);
+    }
+    body {
+      background-color: #06070a;
+      color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse 90% 60% at 50% -15%, rgba(245, 158, 11, 0.09), transparent 75%),
+        radial-gradient(circle at 10% 40%, rgba(6, 182, 212, 0.05), transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.05), transparent 45%);
+      background-attachment: fixed;
+    }
+
+    /* Ambient Cinema Screen Glow */
+    .ambient-screen-glow {
+      position: fixed;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85vw;
+      height: 400px;
+      background: radial-gradient(ellipse at center, var(--glow-color) 0%, rgba(0,0,0,0) 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      transition: background 0.8s ease;
+      opacity: 0.65;
+    }
+
+    /* Glass Panels */
+    .glass-panel {
+      background: rgba(14, 18, 27, 0.72);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .glass-card {
+      background: linear-gradient(180deg, rgba(22, 28, 42, 0.7) 0%, rgba(12, 16, 25, 0.8) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(245, 158, 11, 0.15);
+    }
+
+    /* Holographic Specular Sheen */
+    .specular-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .specular-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.02) 40%,
+        transparent 70%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .specular-wrap:hover::before {
+      opacity: 1;
+    }
+
+    /* Ticket Stub Mode */
+    .ticket-stub {
+      background: linear-gradient(135deg, #161b26 0%, #0d111a 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+    .ticket-stub::before, .ticket-stub::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 22px;
+      height: 22px;
+      background-color: #06070a;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+    }
+    .ticket-stub::before { left: -11px; border-right: 1px solid rgba(255, 255, 255, 0.1); }
+    .ticket-stub::after { right: -11px; border-left: 1px solid rgba(255, 255, 255, 0.1); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #06070a; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+  </style>
+</head>
+<body class="selection:bg-amber-500 selection:text-black antialiased relative">
+  <div class="ambient-screen-glow" id="ambientGlow"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-vault-black/85 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-black font-cinema font-bold text-xl">
+          🎬
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-cinema font-bold text-lg sm:text-xl tracking-wider text-white">CINEMA VAULT</h1>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">PRESTIGE ARCHIVE</span>
+          </div>
+          <p class="text-xs text-slate-400 hidden sm:block">Auteur Filmography, Prestige Television & Curated Critical Takes</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors flex items-center gap-1.5">
+          <span>←</span> <span class="hidden sm:inline">Command Portal</span>
+        </a>
+        <button onclick="openAddModal()" class="px-4 py-1.5 rounded-lg text-xs font-semibold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-md shadow-amber-500/20 transition-all flex items-center gap-1.5 focus:ring-2 focus:ring-amber-400 focus:outline-none">
+          <span>+</span> <span>Log Cinema</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10 space-y-8">
+    
+    <!-- Hero Spotlight Marquee -->
+    <section id="heroMarquee" class="relative rounded-2xl overflow-hidden glass-panel border border-white/10 min-h-[360px] flex flex-col justify-end p-6 sm:p-10 shadow-2xl transition-all duration-700">
+      <div id="heroBackdrop" class="absolute inset-0 bg-cover bg-center transition-all duration-700 scale-105 opacity-35 filter blur-[1px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-vault-black via-vault-black/70 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-vault-black via-vault-black/50 to-transparent"></div>
+
+      <div class="relative z-10 max-w-3xl space-y-4">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <span class="px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 backdrop-blur-md flex items-center gap-1">
+            <span>⭐</span> <span id="heroRating">9.8</span>
+          </span>
+          <span id="heroTypeBadge" class="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-white/10 text-slate-200 border border-white/10 backdrop-blur-md">Movie</span>
+          <span id="heroYear" class="text-xs font-mono text-slate-400">2014</span>
+          <span class="text-slate-600">•</span>
+          <span id="heroRuntime" class="text-xs font-mono text-slate-400">169 min</span>
+          <span class="text-slate-600">•</span>
+          <span id="heroPlatform" class="text-xs font-medium text-cyan-400">70mm IMAX</span>
+        </div>
+
+        <h2 id="heroTitle" class="text-3xl sm:text-5xl font-cinema font-extrabold text-white tracking-wide drop-shadow-md">
+          Interstellar
+        </h2>
+        
+        <p id="heroTagline" class="text-sm sm:text-base text-amber-200/90 font-medium italic">
+          "Existential Yearning & Cosmic Grief"
+        </p>
+
+        <p id="heroHotTake" class="text-xs sm:text-sm text-slate-300 line-clamp-2 leading-relaxed">
+          Hans Zimmer's organ chords could physically propel a rocket into orbit. The docking sequence remains the greatest tension masterpiece in 21st-century cinema.
+        </p>
+
+        <div class="pt-2 flex flex-wrap items-center gap-3">
+          <button onclick="openHeroDetails()" class="px-4 py-2 rounded-xl text-xs font-semibold text-black bg-amber-400 hover:bg-amber-300 transition-colors shadow-lg shadow-amber-500/20 flex items-center gap-2">
+            <span>📖 Full Filmography Dossier</span>
+          </button>
+          <a id="heroTrailerLink" href="https://www.youtube.com/results?search_query=Interstellar+trailer" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl text-xs font-medium text-slate-200 bg-white/10 hover:bg-white/15 border border-white/10 transition-colors flex items-center gap-2">
+            <span>▶ Watch Trailer</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Telemetry & Live KPI Strip -->
+    <section class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="glass-panel rounded-xl p-4 border border-white/5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xl text-amber-400 font-bold">
+          🎞️
+        </div>
+        <div>
+          <div class="text-2xl font-display font-bold text-white" id="statTotalTitles">18</div>
+          <div class="text-xs text-slate-400">Curated Titles</div>
+        </div>
+      </div>
+
+      <div class="glass-panel rounded-xl p-4 border border-white/5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-xl text-cyan-400 font-bold">
+          ⏱️
+        </div>
+        <div>
+          <div class="text-2xl font-display font-bold text-white" id="statTotalHours">284 hrs</div>
+          <div class="text-xs text-slate-400">Runtime Logged</div>
+        </div>
+      </div>
+
+      <div class="glass-panel rounded-xl p-4 border border-white/5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-xl text-emerald-400 font-bold">
+          ⭐
+        </div>
+        <div>
+          <div class="text-2xl font-display font-bold text-white" id="statAvgRating">9.6</div>
+          <div class="text-xs text-slate-400">Avg Prestige Rating</div>
+        </div>
+      </div>
+
+      <div class="glass-panel rounded-xl p-4 border border-white/5 flex items-center gap-4">
+        <div class="w-12 h-12 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-xl text-purple-400 font-bold">
+          🔖
+        </div>
+        <div>
+          <div class="text-2xl font-display font-bold text-white" id="statWatchlistCount">4</div>
+          <div class="text-xs text-slate-400">In Watchlist Staging</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Search, Tabs & Filter Command Bar -->
+    <section class="glass-panel rounded-2xl p-5 border border-white/10 space-y-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Search Input -->
+        <div class="relative flex-1">
+          <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search by title, director, memorable quote, genre, or vibe... (Press '/' to search)"
+            class="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
+            oninput="handleSearch()"
+          >
+          <kbd class="hidden sm:inline-block absolute right-3.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded text-[10px] font-mono text-slate-400 bg-white/10 border border-white/10">/</kbd>
+        </div>
+
+        <!-- View Mode Switcher -->
+        <div class="flex items-center gap-1.5 bg-black/40 p-1 rounded-xl border border-white/10 self-start md:self-auto">
+          <button onclick="setViewMode('grid')" id="viewBtnGrid" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            🎴 Posters
+          </button>
+          <button onclick="setViewMode('tickets')" id="viewBtnTickets" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white">
+            🎟️ Tickets
+          </button>
+          <button onclick="setViewMode('list')" id="viewBtnList" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white">
+            📋 Table
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Controls & Filter Pills -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/5">
+        <!-- Category Tabs -->
+        <div class="flex flex-wrap items-center gap-1.5" id="tabPills">
+          <button onclick="setFilterTab('all')" class="tab-pill px-3 py-1 rounded-lg text-xs font-medium transition-all bg-white/10 text-white border border-white/15" data-tab="all">All Titles (<span id="countAll">0</span>)</button>
+          <button onclick="setFilterTab('watched')" class="tab-pill px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white border border-transparent" data-tab="watched">Watched (<span id="countWatched">0</span>)</button>
+          <button onclick="setFilterTab('watchlist')" class="tab-pill px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white border border-transparent" data-tab="watchlist">Watchlist (<span id="countWatchlist">0</span>)</button>
+          <button onclick="setFilterTab('masterpiece')" class="tab-pill px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white border border-transparent" data-tab="masterpiece">⭐ 9.5+ Hall of Fame</button>
+          <button onclick="setFilterTab('series')" class="tab-pill px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white border border-transparent" data-tab="series">TV & Miniseries</button>
+        </div>
+
+        <!-- Dropdown Filters -->
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <!-- Genre Filter -->
+          <select id="genreFilter" onchange="applyFilters()" class="bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-amber-500">
+            <option value="all">All Genres</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Drama">Drama</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Crime">Crime</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Romance">Romance</option>
+            <option value="Horror">Horror</option>
+            <option value="Biography">Biography</option>
+          </select>
+
+          <!-- Platform Filter -->
+          <select id="platformFilter" onchange="applyFilters()" class="bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-amber-500">
+            <option value="all">All Platforms</option>
+            <option value="Theater">Theaters / 70mm IMAX</option>
+            <option value="Netflix">Netflix</option>
+            <option value="HBO">HBO Max / JioCinema</option>
+            <option value="Apple">Apple TV+</option>
+            <option value="Prime">Prime Video</option>
+            <option value="Physical">Physical 4K UHD</option>
+          </select>
+
+          <!-- Sort Order -->
+          <select id="sortFilter" onchange="applyFilters()" class="bg-white/5 border border-white/10 rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-amber-500">
+            <option value="rating_desc">Highest Rated</option>
+            <option value="year_desc">Latest Release</option>
+            <option value="year_asc">Oldest Release</option>
+            <option value="title_asc">Title (A-Z)</option>
+            <option value="runtime_desc">Longest Runtime</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cinema Card Container (Grid / Tickets / Table) -->
+    <section id="cinemaContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Injected via JavaScript -->
+    </section>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-16 space-y-4 glass-panel rounded-2xl border border-white/5">
+      <div class="text-4xl">🎬</div>
+      <h3 class="text-lg font-cinema font-bold text-slate-200">No Titles Matched Your Query</h3>
+      <p class="text-xs text-slate-400 max-w-md mx-auto">Try broadening your search term, clearing your active genre/platform filter, or log a new masterpiece directly into the vault.</p>
+      <button onclick="resetFilters()" class="px-4 py-1.5 rounded-lg text-xs font-medium text-amber-400 bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500/20 transition-colors">
+        Clear All Filters
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Detail Dossier Modal -->
+  <div id="detailModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-vault-darker rounded-2xl border border-white/15 shadow-2xl overflow-hidden my-8" onclick="event.stopPropagation()">
+      <!-- Modal Header Banner -->
+      <div class="relative h-48 sm:h-56 bg-cover bg-center overflow-hidden" id="modalBackdrop">
+        <div class="absolute inset-0 bg-gradient-to-t from-vault-darker via-vault-darker/60 to-transparent"></div>
+        <button onclick="closeDetailModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/60 text-white hover:bg-black/80 border border-white/10 flex items-center justify-center text-sm font-bold z-20 focus:outline-none">
+          ✕
+        </button>
+      </div>
+
+      <div class="p-6 sm:p-8 -mt-20 relative z-10 space-y-6">
+        <div class="flex flex-col sm:flex-row gap-6 items-start">
+          <img id="modalPoster" src="" alt="Poster" class="w-32 h-48 sm:w-40 sm:h-60 rounded-xl object-cover shadow-2xl border border-white/15 shrink-0 bg-black/50">
+          
+          <div class="space-y-2.5 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span id="modalRatingBadge" class="px-2.5 py-0.5 rounded-md text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">⭐ 9.8</span>
+              <span id="modalTypeBadge" class="px-2.5 py-0.5 rounded-md text-xs font-mono text-slate-300 bg-white/10">Movie</span>
+              <span id="modalYear" class="text-xs font-mono text-slate-400">2014</span>
+              <span id="modalRuntime" class="text-xs font-mono text-slate-400">169 min</span>
+            </div>
+
+            <h3 id="modalTitle" class="text-2xl sm:text-3xl font-cinema font-bold text-white tracking-wide">Interstellar</h3>
+            
+            <p id="modalDirector" class="text-xs text-slate-400 font-medium">Directed by <span class="text-slate-200">Christopher Nolan</span></p>
+
+            <div id="modalGenres" class="flex flex-wrap gap-1.5 pt-1"></div>
+
+            <p id="modalEmotionalTag" class="text-xs text-amber-300/90 font-medium italic pt-1"></p>
+          </div>
+        </div>
+
+        <!-- Hot Take & Quote -->
+        <div class="space-y-4 pt-2">
+          <div class="glass-panel p-4 rounded-xl border border-white/5 space-y-2">
+            <h4 class="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">Curator's Unfiltered Hot Take</h4>
+            <p id="modalHotTake" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
+          </div>
+
+          <div id="modalQuoteContainer" class="p-4 rounded-xl bg-white/5 border-l-2 border-amber-400 text-xs sm:text-sm text-slate-300 italic">
+            "<span id="modalQuote"></span>"
+          </div>
+        </div>
+
+        <!-- Interactive Watch Status & Rating Slider -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-black/40 border border-white/5">
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-400">Status:</span>
+            <select id="modalStatusSelect" onchange="updateModalStatus()" class="bg-white/10 border border-white/10 rounded-lg px-2.5 py-1 text-xs text-slate-200 focus:outline-none">
+              <option value="watched">✅ Watched</option>
+              <option value="watchlist">🔖 In Watchlist</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <a id="modalStreamingLink" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 hover:bg-cyan-500/20 transition-colors flex items-center gap-1.5">
+              <span>📺</span> <span id="modalPlatform">Stream on Platform</span>
+            </a>
+            <a id="modalTrailerBtn" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-black bg-amber-400 hover:bg-amber-300 transition-colors flex items-center gap-1.5">
+              <span>▶</span> <span>Trailer</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add New Cinema Modal -->
+  <div id="addModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-xl bg-vault-darker rounded-2xl border border-white/15 p-6 sm:p-8 shadow-2xl space-y-6 my-8" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div>
+          <h3 class="font-cinema font-bold text-xl text-white">Log Cinema to Vault</h3>
+          <p class="text-xs text-slate-400">Add a film, miniseries, or prestige show to your permanent archive</p>
+        </div>
+        <button onclick="closeAddModal()" class="w-8 h-8 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center text-sm font-bold">
+          ✕
+        </button>
+      </div>
+
+      <form id="addCinemaForm" onsubmit="submitNewCinema(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-300 mb-1 font-medium">Title *</label>
+          <input type="text" id="addTitle" required placeholder="e.g. Blade Runner 2049" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1 font-medium">Type</label>
+            <select id="addType" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-amber-500">
+              <option value="Movie">Movie</option>
+              <option value="TV Series">TV Series</option>
+              <option value="Miniseries">Miniseries</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1 font-medium">Release Year</label>
+            <input type="text" id="addYear" placeholder="e.g. 2017" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1 font-medium">Director / Creator</label>
+            <input type="text" id="addDirector" placeholder="e.g. Denis Villeneuve" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1 font-medium">Rating (1.0 - 10.0)</label>
+            <input type="number" step="0.1" min="1" max="10" id="addRating" placeholder="e.g. 9.7" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1 font-medium">Genres (comma separated)</label>
+            <input type="text" id="addGenres" placeholder="e.g. Sci-Fi, Neo-Noir, Mystery" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1 font-medium">Platform</label>
+            <input type="text" id="addPlatform" placeholder="e.g. 70mm IMAX / Netflix" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-medium">Poster Image URL (optional)</label>
+          <input type="url" id="addPosterUrl" placeholder="https://... (auto-fetched if left blank)" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-medium">Emotional Tag / Vibe</label>
+          <input type="text" id="addEmotionalTag" placeholder="e.g. Sublime Melancholy Cyberpunk" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-medium">Personal Hot Take / Review</label>
+          <textarea id="addHotTake" rows="2" placeholder="What makes this film unforgettable?" class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1 font-medium">Iconic Quote</label>
+          <input type="text" id="addQuote" placeholder="e.g. All the best memories are hers." class="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+          <button type="button" onclick="closeAddModal()" class="px-4 py-2 rounded-lg text-slate-300 bg-white/5 hover:bg-white/10 border border-white/10">Cancel</button>
+          <button type="submit" id="submitAddBtn" class="px-5 py-2 rounded-lg font-semibold text-black bg-amber-400 hover:bg-amber-300 shadow-md shadow-amber-500/20">Archive Cinema</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Embedded High-Fidelity Dataset fallback for offline/GitHub Pages compatibility
+    const EMBEDDED_CINEMA_DB = [
+      {
+        id: "cv-01",
+        title: "Interstellar",
+        type: "Movie",
+        year: 2014,
+        director: "Christopher Nolan",
+        rating: 9.8,
+        rewatchCount: 6,
+        runtimeMinutes: 169,
+        runtimeStr: "169 min",
+        genres: ["Sci-Fi", "Drama", "Adventure"],
+        emotionalTag: "Existential Yearning & Cosmic Grief",
+        hotTake: "Hans Zimmer's organ chords could physically propel a rocket into orbit. The docking sequence remains the greatest tension masterpiece in 21st-century cinema.",
+        quote: "Do not go gentle into that good night. Rage, rage against the dying of the light.",
+        platform: "Theater / 70mm IMAX",
+        posterUrl: "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+        accentColor: "#0284c7",
+        ticketSeat: "IMAX ROW F-12",
+        watchedDate: "2024-08-15",
+        status: "watched"
+      },
+      {
+        id: "cv-02",
+        title: "Succession",
+        type: "TV Series",
+        year: "2018-2023",
+        director: "Jesse Armstrong",
+        rating: 9.9,
+        rewatchCount: 3,
+        runtimeMinutes: 2340,
+        runtimeStr: "4 Seasons (39 Eps)",
+        genres: ["Drama", "Satire", "Corporate"],
+        emotionalTag: "Shakespearean Corporate Brutality",
+        hotTake: "A masterclass in horrible billionaires making each other cry in luxury Tuscan villas. Jeremy Strong gave up his actual soul to play Kendall Roy.",
+        quote: "I love you, but you are not serious people.",
+        platform: "HBO Max / JioCinema",
+        posterUrl: "https://static.tvmaze.com/uploads/images/original_untouched/453/1134275.jpg",
+        accentColor: "#d97706",
+        ticketSeat: "WAYSTAR PEN 88",
+        watchedDate: "2024-06-20",
+        status: "watched"
+      },
+      {
+        id: "cv-03",
+        title: "Inception",
+        type: "Movie",
+        year: 2010,
+        director: "Christopher Nolan",
+        rating: 9.7,
+        rewatchCount: 5,
+        runtimeMinutes: 148,
+        runtimeStr: "148 min",
+        genres: ["Sci-Fi", "Action", "Thriller", "Heist"],
+        emotionalTag: "Subconscious Heist & Labyrinthine Regret",
+        hotTake: "A clockwork puzzle box wrapped in brass horns and dream architecture. Hans Zimmer's 'Time' alone rewired cinematic crescendo forever.",
+        quote: "An idea is like a virus. Resilient. Highly contagious.",
+        platform: "Netflix / JioCinema",
+        posterUrl: "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
+        accentColor: "#0ea5e9",
+        ticketSeat: "DREAM LEVEL 3",
+        watchedDate: "2024-05-18",
+        status: "watched"
+      },
+      {
+        id: "cv-04",
+        title: "Yeh Jawaani Hai Deewani",
+        type: "Movie",
+        year: 2013,
+        director: "Ayan Mukerji",
+        rating: 9.4,
+        rewatchCount: 6,
+        runtimeMinutes: 160,
+        runtimeStr: "160 min",
+        genres: ["Romance", "Drama", "Comedy", "Coming-of-Age"],
+        emotionalTag: "Bittersweet Wanderlust & Ephemeral Youth",
+        hotTake: "Pritam's greatest sonic odyssey married with Ranbir & Deepika's peak emotional chemistry. An immortal anthem for wanderlust, friendships, and growing up.",
+        quote: "Kahin pahunchne ke liye, kahin se nikalna bahut zaroori hota hai.",
+        platform: "Netflix / Prime Video",
+        posterUrl: "https://upload.wikimedia.org/wikipedia/en/1/15/Yeh_jawani_hai_deewani.jpg",
+        accentColor: "#f59e0b",
+        ticketSeat: "MANALI CAMP 07",
+        watchedDate: "2024-07-22",
+        status: "watched"
+      },
+      {
+        id: "cv-05",
+        title: "Severance",
+        type: "TV Series",
+        year: "2022-",
+        director: "Ben Stiller",
+        rating: 9.7,
+        rewatchCount: 2,
+        runtimeMinutes: 480,
+        runtimeStr: "1 Season (9 Eps)",
+        genres: ["Sci-Fi", "Thriller", "Mystery"],
+        emotionalTag: "Dystopian Corporate Dissociation",
+        hotTake: "The scariest thing about Lumon isn't the brain chip—it's how relatable the waffle party and desk finger traps feel after a 10-hour sprint.",
+        quote: "Please try to enjoy each fact equally, and not show preference for any over the others.",
+        platform: "Apple TV+",
+        posterUrl: "https://static.tvmaze.com/uploads/images/original_untouched/548/1371406.jpg",
+        accentColor: "#06b6d4",
+        ticketSeat: "MDR DESK B-04",
+        watchedDate: "2024-05-10",
+        status: "watched"
+      },
+      {
+        id: "cv-06",
+        title: "Whiplash",
+        type: "Movie",
+        year: 2014,
+        director: "Damien Chazelle",
+        rating: 9.6,
+        rewatchCount: 5,
+        runtimeMinutes: 107,
+        runtimeStr: "107 min",
+        genres: ["Drama", "Music", "Psychological"],
+        emotionalTag: "Feverish Artistic Obsession",
+        hotTake: "Not a music film. A full-blown psychological horror film about drumming until your hands bleed for a psychopath in a tight black polo shirt.",
+        quote: "There are no two words in the English language more harmful than 'good job.'",
+        platform: "Physical 4K UHD / Prime",
+        posterUrl: "https://m.media-amazon.com/images/M/MV5BMDFjOWFkYzktYzhhMC00NmYyLTkwY2EtYjViMDhmNzg0OGFkXkEyXkFqcGc@._V1_SX300.jpg",
+        accentColor: "#ef4444",
+        ticketSeat: "STUDIO A-01",
+        watchedDate: "2024-07-04",
+        status: "watched"
+      },
+      {
+        id: "cv-07",
+        title: "Blade Runner 2049",
+        type: "Movie",
+        year: 2017,
+        director: "Denis Villeneuve",
+        rating: 9.7,
+        rewatchCount: 4,
+        runtimeMinutes: 164,
+        runtimeStr: "164 min",
+        genres: ["Sci-Fi", "Neo-Noir", "Mystery"],
+        emotionalTag: "Sublime Melancholy Cyberpunk",
+        hotTake: "Roger Deakins painted every frame with amber neon and existential loneliness. K discovering he isn't special is the most devastating twist in modern sci-fi.",
+        quote: "All the best memories are hers.",
+        platform: "Theater / 70mm IMAX",
+        posterUrl: "https://m.media-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+        accentColor: "#f59e0b",
+        ticketSeat: "IMAX ROW H-22",
+        watchedDate: "2024-04-12",
+        status: "watched"
+      },
+      {
+        id: "cv-08",
+        title: "Dark",
+        type: "TV Series",
+        year: "2017-2020",
+        director: "Baran bo Odar",
+        rating: 9.6,
+        rewatchCount: 2,
+        runtimeMinutes: 1560,
+        runtimeStr: "3 Seasons (26 Eps)",
+        genres: ["Sci-Fi", "Mystery", "Thriller"],
+        emotionalTag: "Cerebral Temporal Dread",
+        hotTake: "You need a PhD and a family tree whiteboard just to survive episode 4. The cleanest, most tightly constructed time travel paradox in human storytelling.",
+        quote: "What we know is a drop, what we don't know is an ocean.",
+        platform: "Netflix",
+        posterUrl: "https://static.tvmaze.com/uploads/images/original_untouched/504/1262352.jpg",
+        accentColor: "#eab308",
+        ticketSeat: "WINDEN CAVE 33",
+        watchedDate: "2024-03-25",
+        status: "watched"
+      },
+      {
+        id: "cv-09",
+        title: "Fight Club",
+        type: "Movie",
+        year: 1999,
+        director: "David Fincher",
+        rating: 9.5,
+        rewatchCount: 7,
+        runtimeMinutes: 139,
+        runtimeStr: "139 min",
+        genres: ["Drama", "Psychological", "Satire"],
+        emotionalTag: "Anarchist Consumerist Breakdown",
+        hotTake: "Fincher's editing is so surgical that every cigarette burn frame transition feels intentional. The ultimate satire of toxic corporate apathy and male isolation.",
+        quote: "The things you own end up owning you.",
+        platform: "Physical 4K UHD",
+        posterUrl: "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg",
+        accentColor: "#10b981",
+        ticketSeat: "BASEMENT 01",
+        watchedDate: "2024-02-18",
+        status: "watched"
+      },
+      {
+        id: "cv-10",
+        title: "The Social Network",
+        type: "Movie",
+        year: 2010,
+        director: "David Fincher",
+        rating: 9.6,
+        rewatchCount: 5,
+        runtimeMinutes: 120,
+        runtimeStr: "120 min",
+        genres: ["Drama", "Biography", "Tech"],
+        emotionalTag: "Cold Machiavellian Ambition",
+        hotTake: "Sorkin's rat-a-tat dialogue plus Trent Reznor's synths make typing PHP in a snowy Harvard dorm look like storming the beaches of Normandy.",
+        quote: "A million dollars isn't cool. You know what's cool? A billion dollars.",
+        platform: "Netflix",
+        posterUrl: "https://m.media-amazon.com/images/M/MV5BMjlkNTE5ZTUtNGEwNy00MGVhLThmZjMtZjU1NDE5Zjk1NDZkXkEyXkFqcGc@._V1_SX300.jpg",
+        accentColor: "#3b82f6",
+        ticketSeat: "KIRKLAND H-33",
+        watchedDate: "2024-01-30",
+        status: "watched"
+      },
+      {
+        id: "cv-11",
+        title: "The Office",
+        type: "TV Series",
+        year: "2005-2013",
+        director: "Greg Daniels",
+        rating: 9.4,
+        rewatchCount: 8,
+        runtimeMinutes: 4420,
+        runtimeStr: "9 Seasons (201 Eps)",
+        genres: ["Comedy", "Mockumentary", "Workplace"],
+        emotionalTag: "Comforting Chaotic Wholesome",
+        hotTake: "Dinner Party is the highest form of comedic cringe television will ever achieve. You can rewatch it indefinitely without fatigue.",
+        quote: "I wish there was a way to know you're in the good old days before you've actually left them.",
+        platform: "Prime Video / JioCinema",
+        posterUrl: "https://static.tvmaze.com/uploads/images/original_untouched/481/1204342.jpg",
+        accentColor: "#6366f1",
+        ticketSeat: "SCRANTON DESK 1",
+        watchedDate: "2024-09-01",
+        status: "watched"
+      },
+      {
+        id: "cv-12",
+        title: "Chernobyl",
+        type: "Miniseries",
+        year: 2019,
+        director: "Craig Mazin",
+        rating: 9.8,
+        rewatchCount: 2,
+        runtimeMinutes: 330,
+        runtimeStr: "5 Episodes (Miniseries)",
+        genres: ["Drama", "Historical", "Thriller"],
+        emotionalTag: "Haunting Institutional Betrayal",
+        hotTake: "The Geiger counter clicking sound design is more terrifying than any monster in Hollywood. Every bureaucrat on earth should be forced to watch this.",
+        quote: "Every lie we tell incurs a debt to the truth. Sooner or later, that debt is paid.",
+        platform: "HBO Max / JioCinema",
+        posterUrl: "https://static.tvmaze.com/uploads/images/original_untouched/193/482599.jpg",
+        accentColor: "#84cc16",
+        ticketSeat: "REACTOR 4 ROW C",
+        watchedDate: "2024-08-05",
+        status: "watched"
+      },
+      {
+        id: "cv-13",
+        title: "Oppenheimer",
+        type: "Movie",
+        year: 2023,
+        director: "Christopher Nolan",
+        rating: 9.5,
+        rewatchCount: 3,
+        runtimeMinutes: 180,
+        runtimeStr: "180 min",
+        genres: ["Biography", "Drama", "History"],
+        emotionalTag: "Promethean Dread & Atomic Guilt",
+        hotTake: "The Trinity test sequence has zero CGI, yet it feels like the heavens cracked open. The auditory silence before the shockwave is pure cinema.",
+        quote: "Now I am become Death, the destroyer of worlds.",
+        platform: "Theater / 70mm IMAX",
+        posterUrl: "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+        accentColor: "#f97316",
+        ticketSeat: "IMAX ROW D-15",
+        watchedDate: "2023-08-11",
+        status: "watched"
+      },
+      {
+        id: "cv-14",
+        title: "Dune: Part Two",
+        type: "Movie",
+        year: 2024,
+        director: "Denis Villeneuve",
+        rating: 9.6,
+        rewatchCount: 3,
+        runtimeMinutes: 166,
+        runtimeStr: "166 min",
+        genres: ["Sci-Fi", "Adventure", "Epic"],
+        emotionalTag: "Mesmerizing Prophetic Warfare",
+        hotTake: "Austin Butler as Feyd-Rautha in infrared Giedi Prime looked like an alien nightmare in the best possible way. The definitive modern sci-fi epic.",
+        quote: "May thy knife chip and shatter.",
+        platform: "Theater / 70mm IMAX",
+        posterUrl: "https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+        accentColor: "#ec4899",
+        ticketSeat: "IMAX ROW E-18",
+        watchedDate: "2024-03-08",
+        status: "watched"
+      },
+      {
+        id: "cv-15",
+        title: "The Dark Knight",
+        type: "Movie",
+        year: 2008,
+        director: "Christopher Nolan",
+        rating: 9.9,
+        rewatchCount: 9,
+        runtimeMinutes: 152,
+        runtimeStr: "152 min",
+        genres: ["Action", "Crime", "Drama", "Thriller"],
+        emotionalTag: "Nihilistic Anarchy & Moral Crucible",
+        hotTake: "Heath Ledger didn't just play the Joker; he created the most indelible force of philosophical chaos in cinematic history. Flawless pacing from the bank heist to the credits.",
+        quote: "You either die a hero, or you live long enough to see yourself become the villain.",
+        platform: "Netflix / JioCinema",
+        posterUrl: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg",
+        accentColor: "#64748b",
+        ticketSeat: "GOTHAM ROW B-01",
+        watchedDate: "2024-02-01",
+        status: "watched"
+      },
+      {
+        id: "cv-16",
+        title: "Tumbbad",
+        type: "Movie",
+        year: 2018,
+        director: "Rahi Anil Barve",
+        rating: 9.6,
+        rewatchCount: 4,
+        runtimeMinutes: 104,
+        runtimeStr: "104 min",
+        genres: ["Horror", "Fantasy", "Mythological", "Drama"],
+        emotionalTag: "Atmospheric Rain-Drenched Greed",
+        hotTake: "The greatest Indian horror film ever crafted. Jesper Kyd's haunting score and Pankaj Kumar's monsoon cinematography create an unshakeable mythological dread.",
+        quote: "Soja varna Hastar aa jayega.",
+        platform: "Prime Video",
+        posterUrl: "https://upload.wikimedia.org/wikipedia/en/4/41/Tumbbad_poster.jpg",
+        accentColor: "#b45309",
+        ticketSeat: "WADA CELLAR 01",
+        watchedDate: "2024-09-14",
+        status: "watched"
+      },
+      {
+        id: "cv-wl-01",
+        title: "Challengers",
+        type: "Movie",
+        year: 2024,
+        director: "Luca Guadagnino",
+        rating: null,
+        rewatchCount: 0,
+        runtimeMinutes: 131,
+        runtimeStr: "131 min",
+        genres: ["Drama", "Romance", "Sport"],
+        emotionalTag: "Feverish Kinetic Tension",
+        hotTake: "High on priority watchlist: Reznor & Ross techno score backing intense baseline dynamics and high-stakes court drama.",
+        quote: "We are talking about tennis, right?",
+        platform: "Prime Video / 4K UHD",
+        posterUrl: "https://upload.wikimedia.org/wikipedia/en/b/b4/Challengers_2024_poster.jpeg",
+        accentColor: "#ec4899",
+        ticketSeat: "CENTER STALL Q-08",
+        watchedDate: null,
+        status: "watchlist"
+      },
+      {
+        id: "cv-wl-02",
+        title: "The Penguin",
+        type: "TV Series",
+        year: "2024",
+        director: "Lauren LeFranc",
+        rating: null,
+        rewatchCount: 0,
+        runtimeMinutes: 480,
+        runtimeStr: "1 Season (8 Eps)",
+        genres: ["Crime", "Drama", "Noir"],
+        emotionalTag: "Gritty Gotham Underworld Supremacy",
+        hotTake: "High on priority watchlist: Colin Farrell in complete transformative prosthetic mastery continuing Matt Reeves Batverse saga.",
+        quote: "The world ain't built for guys like us. That's why we gotta take it.",
+        platform: "HBO Max / JioCinema",
+        posterUrl: "https://static.tvmaze.com/uploads/images/original_untouched/536/1340329.jpg",
+        accentColor: "#8b5cf6",
+        ticketSeat: "ICEBERG LOUNGE 01",
+        watchedDate: null,
+        status: "watchlist"
+      },
+      {
+        id: "cv-wl-03",
+        title: "Dune: Prophecy",
+        type: "TV Series",
+        year: "2024",
+        director: "Alison Schapker",
+        rating: null,
+        rewatchCount: 0,
+        runtimeMinutes: 360,
+        runtimeStr: "1 Season (6 Eps)",
+        genres: ["Sci-Fi", "Drama", "Epic"],
+        emotionalTag: "Bene Gesserit Political Mysticism",
+        hotTake: "High on priority watchlist: 10,000 years before Paul Atreides, exploring the sisterhood political machinations and spice origins.",
+        quote: "The mind is the only true weapon.",
+        platform: "HBO Max / JioCinema",
+        posterUrl: "https://static.tvmaze.com/uploads/images/original_untouched/543/1358056.jpg",
+        accentColor: "#d97706",
+        ticketSeat: "ARRAKEEN BOX 04",
+        watchedDate: null,
+        status: "watchlist"
+      },
+      {
+        id: "cv-wl-04",
+        title: "Mickey 17",
+        type: "Movie",
+        year: 2025,
+        director: "Bong Joon-ho",
+        rating: null,
+        rewatchCount: 0,
+        runtimeMinutes: 139,
+        runtimeStr: "139 min",
+        genres: ["Sci-Fi", "Comedy", "Adventure"],
+        emotionalTag: "Existential Dark Satire & Clone Chaos",
+        hotTake: "High on priority watchlist: Bong Joon-ho post-Parasite directing Robert Pattinson in an existential space colonization satire.",
+        quote: "I die, therefore I am.",
+        platform: "Theater / 70mm IMAX",
+        posterUrl: "https://upload.wikimedia.org/wikipedia/en/2/2d/Mickey_17_film_poster.png",
+        accentColor: "#10b981",
+        ticketSeat: "EXPEDITION POD 17",
+        watchedDate: null,
+        status: "watchlist"
+      }
+    ];
+
+    let cinemaDatabase = [];
+    let currentTab = 'all';
+    let currentView = 'grid';
+    let currentActiveModalItem = null;
+
+    // 1. Initialize & Fetch Database
+    async function initCinemaVault() {
+      try {
+        const res = await fetch('http://localhost:4000/api/cinema');
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            cinemaDatabase = data;
+          } else {
+            cinemaDatabase = loadLocalCache();
+          }
+        } else {
+          cinemaDatabase = loadLocalCache();
+        }
+      } catch (err) {
+        cinemaDatabase = loadLocalCache();
+      }
+
+      updateStatistics();
+      setupHeroSpotlight();
+      renderCinemaCards();
+      setupMousePhysics();
+      setupKeyboardShortcuts();
+    }
+
+    function loadLocalCache() {
+      const cached = localStorage.getItem('cinema_vault_data');
+      if (cached) {
+        try { return JSON.parse(cached); } catch(e) {}
+      }
+      return EMBEDDED_CINEMA_DB;
+    }
+
+    function saveLocalCache() {
+      localStorage.setItem('cinema_vault_data', JSON.stringify(cinemaDatabase));
+    }
+
+    // 2. Telemetry & Stats Calculations
+    function updateStatistics() {
+      document.getElementById('statTotalTitles').textContent = cinemaDatabase.length;
+      
+      const watchedItems = cinemaDatabase.filter(m => m.status === 'watched');
+      const totalMins = watchedItems.reduce((sum, m) => sum + (Number(m.runtimeMinutes) || 120), 0);
+      const totalHours = Math.round(totalMins / 60);
+      document.getElementById('statTotalHours').textContent = `${totalHours} hrs`;
+
+      const ratedItems = cinemaDatabase.filter(m => m.rating && Number(m.rating) > 0);
+      const avg = ratedItems.length > 0 
+        ? (ratedItems.reduce((sum, m) => sum + Number(m.rating), 0) / ratedItems.length).toFixed(1)
+        : '9.6';
+      document.getElementById('statAvgRating').textContent = avg;
+
+      const wlCount = cinemaDatabase.filter(m => m.status === 'watchlist').length;
+      document.getElementById('statWatchlistCount').textContent = wlCount;
+
+      document.getElementById('countAll').textContent = cinemaDatabase.length;
+      document.getElementById('countWatched').textContent = watchedItems.length;
+      document.getElementById('countWatchlist').textContent = wlCount;
+    }
+
+    // 3. Hero Spotlight
+    function setupHeroSpotlight() {
+      const hero = cinemaDatabase.find(m => m.id === 'cv-01') || cinemaDatabase[0];
+      if (!hero) return;
+
+      document.getElementById('heroTitle').textContent = hero.title;
+      document.getElementById('heroRating').textContent = hero.rating ? `⭐ ${hero.rating}` : 'UNWATCHED';
+      document.getElementById('heroTypeBadge').textContent = hero.type;
+      document.getElementById('heroYear').textContent = hero.year;
+      document.getElementById('heroRuntime').textContent = hero.runtimeStr || `${hero.runtimeMinutes || 120} min`;
+      document.getElementById('heroPlatform').textContent = hero.platform || 'IMAX';
+      document.getElementById('heroTagline').textContent = hero.emotionalTag ? `"${hero.emotionalTag}"` : '';
+      document.getElementById('heroHotTake').textContent = hero.hotTake;
+      document.getElementById('heroTrailerLink').href = `https://www.youtube.com/results?search_query=${encodeURIComponent(hero.title + ' official trailer')}`;
+      
+      if (hero.posterUrl) {
+        document.getElementById('heroBackdrop').style.backgroundImage = `url('${hero.posterUrl}')`;
+      }
+    }
+
+    function openHeroDetails() {
+      const hero = cinemaDatabase.find(m => m.id === 'cv-01') || cinemaDatabase[0];
+      if (hero) openDetailModal(hero.id);
+    }
+
+    // 4. Filtering & Sorting Engine
+    function getFilteredList() {
+      const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+      const genre = document.getElementById('genreFilter').value;
+      const platform = document.getElementById('platformFilter').value;
+      const sort = document.getElementById('sortFilter').value;
+
+      return cinemaDatabase.filter(item => {
+        // Tab Filter
+        if (currentTab === 'watched' && item.status !== 'watched') return false;
+        if (currentTab === 'watchlist' && item.status !== 'watchlist') return false;
+        if (currentTab === 'masterpiece' && (!item.rating || Number(item.rating) < 9.5)) return false;
+        if (currentTab === 'series' && item.type !== 'TV Series' && item.type !== 'Miniseries') return false;
+
+        // Genre Filter
+        if (genre !== 'all') {
+          const itemGenres = Array.isArray(item.genres) ? item.genres.map(g => g.toLowerCase()) : [];
+          if (!itemGenres.some(g => g.includes(genre.toLowerCase()))) return false;
+        }
+
+        // Platform Filter
+        if (platform !== 'all') {
+          const itemPlatform = (item.platform || '').toLowerCase();
+          if (!itemPlatform.includes(platform.toLowerCase())) return false;
+        }
+
+        // Search Filter
+        if (search) {
+          const title = (item.title || '').toLowerCase();
+          const director = (item.director || '').toLowerCase();
+          const hotTake = (item.hotTake || '').toLowerCase();
+          const quote = (item.quote || '').toLowerCase();
+          const emo = (item.emotionalTag || '').toLowerCase();
+          const genres = Array.isArray(item.genres) ? item.genres.join(' ').toLowerCase() : '';
+          
+          if (!title.includes(search) && 
+              !director.includes(search) && 
+              !hotTake.includes(search) && 
+              !quote.includes(search) && 
+              !emo.includes(search) && 
+              !genres.includes(search)) {
+            return false;
+          }
+        }
+
+        return true;
+      }).sort((a, b) => {
+        if (sort === 'rating_desc') return (Number(b.rating) || 0) - (Number(a.rating) || 0);
+        if (sort === 'year_desc') return (parseInt(b.year) || 0) - (parseInt(a.year) || 0);
+        if (sort === 'year_asc') return (parseInt(a.year) || 0) - (parseInt(b.year) || 0);
+        if (sort === 'title_asc') return (a.title || '').localeCompare(b.title || '');
+        if (sort === 'runtime_desc') return (Number(b.runtimeMinutes) || 0) - (Number(a.runtimeMinutes) || 0);
+        return 0;
+      });
+    }
+
+    function renderCinemaCards() {
+      const container = document.getElementById('cinemaContainer');
+      const emptyState = document.getElementById('emptyState');
+      const list = getFilteredList();
+
+      if (list.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      if (currentView === 'grid') {
+        container.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6";
+        container.innerHTML = list.map(item => createGridCardHtml(item)).join('');
+      } else if (currentView === 'tickets') {
+        container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+        container.innerHTML = list.map(item => createTicketCardHtml(item)).join('');
+      } else {
+        container.className = "space-y-3";
+        container.innerHTML = createTableHtml(list);
+      }
+    }
+
+    function createGridCardHtml(item) {
+      const ratingDisplay = item.rating 
+        ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">⭐ ${item.rating}</span>`
+        : `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30">STAGED</span>`;
+      
+      const isWatched = item.status === 'watched';
+      const statusBadge = isWatched
+        ? `<span class="text-[10px] font-mono text-emerald-400 font-semibold flex items-center gap-1">✔ Watched</span>`
+        : `<span class="text-[10px] font-mono text-purple-400 font-semibold flex items-center gap-1">🔖 Watchlist</span>`;
+
+      return `
+        <div class="glass-card specular-wrap rounded-2xl overflow-hidden flex flex-col cursor-pointer group" onclick="openDetailModal('${item.id}')">
+          <div class="relative h-72 bg-black/60 overflow-hidden">
+            <img 
+              src="${item.posterUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500'}" 
+              alt="${item.title}" 
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-vault-darker via-transparent to-transparent opacity-90"></div>
+            
+            <div class="absolute top-3 left-3 right-3 flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-black/70 text-slate-200 backdrop-blur-md border border-white/10">
+                ${item.type}
+              </span>
+              ${ratingDisplay}
+            </div>
+
+            <div class="absolute bottom-3 left-3 right-3">
+              <div class="text-[11px] font-mono text-amber-400/90 font-medium truncate">${item.emotionalTag || ''}</div>
+              <h3 class="text-lg font-cinema font-bold text-white truncate drop-shadow-md">${item.title}</h3>
+            </div>
+          </div>
+
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3 bg-vault-darker/60">
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span>${item.year}</span>
+                <span>•</span>
+                <span>${item.director || 'Auteur'}</span>
+                <span>•</span>
+                <span>${item.runtimeStr || `${item.runtimeMinutes}m`}</span>
+              </div>
+              <p class="text-xs text-slate-300 line-clamp-2 italic leading-relaxed pt-1">
+                "${item.hotTake || 'A breathtaking cinematic work.'}"
+              </p>
+            </div>
+
+            <div class="pt-2 border-t border-white/5 flex items-center justify-between">
+              ${statusBadge}
+              <button onclick="event.stopPropagation(); toggleWatchStatus('${item.id}')" class="text-[11px] font-medium text-slate-400 hover:text-amber-400 transition-colors">
+                ${isWatched ? 'Mark Watchlist' : 'Mark Watched'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function createTicketCardHtml(item) {
+      return `
+        <div class="ticket-stub rounded-2xl p-5 cursor-pointer hover:border-amber-500/30 transition-all space-y-4" onclick="openDetailModal('${item.id}')">
+          <div class="flex items-start justify-between border-b border-dashed border-white/10 pb-3">
+            <div>
+              <span class="text-[10px] font-mono tracking-widest uppercase text-amber-400 font-bold">CINEMA VAULT PASS // ${item.ticketSeat || 'ROW A-01'}</span>
+              <h3 class="text-xl font-cinema font-bold text-white truncate">${item.title}</h3>
+            </div>
+            <span class="text-xs font-mono font-bold text-amber-400">${item.rating ? `⭐ ${item.rating}` : 'STAGED'}</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 text-xs font-mono text-slate-400 py-1">
+            <div><span class="text-[10px] text-slate-500 block">YEAR</span> ${item.year}</div>
+            <div><span class="text-[10px] text-slate-500 block">RUNTIME</span> ${item.runtimeStr || `${item.runtimeMinutes}m`}</div>
+            <div><span class="text-[10px] text-slate-500 block">FORMAT</span> ${item.platform ? item.platform.split('/')[0] : 'Digital'}</div>
+          </div>
+
+          <p class="text-xs text-slate-300 italic border-l-2 border-amber-500/50 pl-2.5 py-0.5 line-clamp-2">
+            "${item.quote || item.hotTake}"
+          </p>
+
+          <div class="flex items-center justify-between pt-2 text-xs font-mono border-t border-white/5">
+            <span class="text-slate-400">${item.director}</span>
+            <span class="text-amber-400 font-semibold hover:underline">View Pass →</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function createTableHtml(list) {
+      return `
+        <div class="glass-panel rounded-2xl overflow-hidden border border-white/10">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-black/50 text-slate-400 font-mono uppercase tracking-wider border-b border-white/10">
+                <tr>
+                  <th class="p-3.5">Title</th>
+                  <th class="p-3.5">Type</th>
+                  <th class="p-3.5">Year</th>
+                  <th class="p-3.5">Director</th>
+                  <th class="p-3.5">Rating</th>
+                  <th class="p-3.5">Platform</th>
+                  <th class="p-3.5 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5 text-slate-300 font-medium">
+                ${list.map(item => `
+                  <tr class="hover:bg-white/5 transition-colors cursor-pointer" onclick="openDetailModal('${item.id}')">
+                    <td class="p-3.5 font-cinema font-bold text-white text-sm">${item.title}</td>
+                    <td class="p-3.5 font-mono text-slate-400">${item.type}</td>
+                    <td class="p-3.5 font-mono">${item.year}</td>
+                    <td class="p-3.5">${item.director}</td>
+                    <td class="p-3.5 font-mono font-bold text-amber-400">${item.rating ? `⭐ ${item.rating}` : '—'}</td>
+                    <td class="p-3.5 text-cyan-400">${item.platform || 'N/A'}</td>
+                    <td class="p-3.5 text-right font-mono text-slate-400 hover:text-amber-400">View Dossier →</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. Modal Operations
+    function openDetailModal(id) {
+      const item = cinemaDatabase.find(m => m.id === id);
+      if (!item) return;
+
+      currentActiveModalItem = item;
+      document.getElementById('modalTitle').textContent = item.title;
+      document.getElementById('modalRatingBadge').textContent = item.rating ? `⭐ ${item.rating}` : 'UNRATED';
+      document.getElementById('modalTypeBadge').textContent = item.type;
+      document.getElementById('modalYear').textContent = item.year;
+      document.getElementById('modalRuntime').textContent = item.runtimeStr || `${item.runtimeMinutes || 120} min`;
+      document.getElementById('modalDirector').innerHTML = `Directed by <span class="text-slate-100 font-semibold">${item.director || 'Auteur'}</span>`;
+      document.getElementById('modalEmotionalTag').textContent = item.emotionalTag ? `"${item.emotionalTag}"` : '';
+      document.getElementById('modalHotTake').textContent = item.hotTake || 'A breathtaking cinematic masterpiece.';
+      
+      const quoteEl = document.getElementById('modalQuote');
+      const quoteWrap = document.getElementById('modalQuoteContainer');
+      if (item.quote) {
+        quoteEl.textContent = item.quote;
+        quoteWrap.classList.remove('hidden');
+      } else {
+        quoteWrap.classList.add('hidden');
+      }
+
+      document.getElementById('modalPoster').src = item.posterUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500';
+      document.getElementById('modalBackdrop').style.backgroundImage = `url('${item.posterUrl || ''}')`;
+      document.getElementById('modalStatusSelect').value = item.status || 'watched';
+
+      const genresWrap = document.getElementById('modalGenres');
+      const genresList = Array.isArray(item.genres) ? item.genres : ['Cinema'];
+      genresWrap.innerHTML = genresList.map(g => `<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/10 text-slate-300 border border-white/10">${g}</span>`).join('');
+
+      document.getElementById('modalPlatform').textContent = item.platform || 'Stream Online';
+      document.getElementById('modalStreamingLink').href = `https://www.google.com/search?q=where+to+watch+${encodeURIComponent(item.title)}`;
+      document.getElementById('modalTrailerBtn').href = `https://www.youtube.com/results?search_query=${encodeURIComponent(item.title + ' official trailer')}`;
+
+      // Update ambient background glow color
+      const glow = item.accentColor || '#f59e0b';
+      document.getElementById('ambientGlow').style.background = `radial-gradient(ellipse at center, ${glow}40 0%, rgba(0,0,0,0) 70%)`;
+
+      document.getElementById('detailModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    function updateModalStatus() {
+      if (!currentActiveModalItem) return;
+      const newStatus = document.getElementById('modalStatusSelect').value;
+      currentActiveModalItem.status = newStatus;
+      saveLocalCache();
+      updateStatistics();
+      renderCinemaCards();
+    }
+
+    function toggleWatchStatus(id) {
+      const item = cinemaDatabase.find(m => m.id === id);
+      if (!item) return;
+      item.status = item.status === 'watched' ? 'watchlist' : 'watched';
+      saveLocalCache();
+      updateStatistics();
+      renderCinemaCards();
+    }
+
+    // 6. Add Modal Operations
+    function openAddModal() {
+      document.getElementById('addModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    async function submitNewCinema(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitAddBtn');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      const title = document.getElementById('addTitle').value.trim();
+      const type = document.getElementById('addType').value;
+      const year = document.getElementById('addYear').value.trim() || new Date().getFullYear();
+      const director = document.getElementById('addDirector').value.trim() || 'Auteur';
+      const rating = parseFloat(document.getElementById('addRating').value) || null;
+      const genres = document.getElementById('addGenres').value.split(',').map(s=>s.trim()).filter(Boolean);
+      const platform = document.getElementById('addPlatform').value.trim() || 'Theater / 70mm IMAX';
+      const posterUrl = document.getElementById('addPosterUrl').value.trim();
+      const emotionalTag = document.getElementById('addEmotionalTag').value.trim() || 'Cinematic Brilliance';
+      const hotTake = document.getElementById('addHotTake').value.trim() || 'A breathtaking masterpiece.';
+      const quote = document.getElementById('addQuote').value.trim();
+
+      const newEntry = {
+        id: `cv-${Date.now()}`,
+        title,
+        type,
+        year,
+        director,
+        rating,
+        rewatchCount: 1,
+        runtimeMinutes: type === 'Movie' ? 125 : 480,
+        runtimeStr: type === 'Movie' ? '125 min' : '1 Season',
+        genres: genres.length > 0 ? genres : ['Cinema'],
+        emotionalTag,
+        hotTake,
+        quote,
+        platform,
+        posterUrl: posterUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500',
+        accentColor: '#f59e0b',
+        ticketSeat: `ROW F-${Math.floor(Math.random() * 20 + 1)}`,
+        watchedDate: new Date().toISOString().split('T')[0],
+        addedAt: new Date().toISOString(),
+        status: 'watched'
+      };
+
+      try {
+        await fetch('http://localhost:4000/api/cinema', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newEntry)
+        });
+      } catch(err) {}
+
+      cinemaDatabase.unshift(newEntry);
+      saveLocalCache();
+      updateStatistics();
+      renderCinemaCards();
+
+      btn.disabled = false;
+      btn.textContent = 'Archive Cinema';
+      closeAddModal();
+      document.getElementById('addCinemaForm').reset();
+    }
+
+    // 7. Navigation & Tabs
+    function setFilterTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-pill').forEach(pill => {
+        if (pill.dataset.tab === tab) {
+          pill.className = "tab-pill px-3 py-1 rounded-lg text-xs font-medium transition-all bg-white/10 text-white border border-white/15";
+        } else {
+          pill.className = "tab-pill px-3 py-1 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white border border-transparent";
+        }
+      });
+      renderCinemaCards();
+    }
+
+    function setViewMode(mode) {
+      currentView = mode;
+      const btnGrid = document.getElementById('viewBtnGrid');
+      const btnTickets = document.getElementById('viewBtnTickets');
+      const btnList = document.getElementById('viewBtnList');
+
+      btnGrid.className = mode === 'grid' ? "px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-amber-500/20 text-amber-300 border border-amber-500/30" : "px-3 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white";
+      btnTickets.className = mode === 'tickets' ? "px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-amber-500/20 text-amber-300 border border-amber-500/30" : "px-3 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white";
+      btnList.className = mode === 'list' ? "px-3 py-1.5 rounded-lg text-xs font-medium transition-all bg-amber-500/20 text-amber-300 border border-amber-500/30" : "px-3 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-400 hover:text-white";
+
+      renderCinemaCards();
+    }
+
+    function handleSearch() {
+      renderCinemaCards();
+    }
+
+    function applyFilters() {
+      renderCinemaCards();
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('genreFilter').value = 'all';
+      document.getElementById('platformFilter').value = 'all';
+      document.getElementById('sortFilter').value = 'rating_desc';
+      setFilterTab('all');
+    }
+
+    // 8. Interactive Mouse Physics for 3D Holographic Sheen
+    function setupMousePhysics() {
+      document.addEventListener('mousemove', (e) => {
+        const cards = document.querySelectorAll('.specular-wrap');
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    }
+
+    // 9. Keyboard Shortcuts
+    function setupKeyboardShortcuts() {
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeDetailModal();
+          closeAddModal();
+        }
+        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          document.getElementById('searchInput').focus();
+        }
+      });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', initCinemaVault);
+  </script>
+</body>
+</html>

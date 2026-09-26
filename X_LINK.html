@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>𝕏 (Twitter) Gateway // Second Brain</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #070a12;
+    --hud-sky: #38bdf8;
+    --hud-glow: rgba(56, 189, 248, 0.35);
+    --panel-bg: rgba(10, 20, 32, 0.85);
+    --panel-border: rgba(56, 189, 248, 0.25);
+    --text-primary: #e0f2fe;
+    --text-dim: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-dark);
+    background-image: radial-gradient(circle at 50% 30%, rgba(14, 40, 65, 0.6) 0%, rgba(7, 10, 18, 0.98) 80%);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  p.subtitle {
+    color: var(--hud-sky);
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    margin-top: 6px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+  .card-container {
+    max-width: 900px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media(max-width: 768px) {
+    .card-container { grid-template-columns: 1fr; }
+  }
+  .hud-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+    padding: 28px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+  .card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--panel-border);
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .action-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 260px;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px dashed var(--panel-border);
+    text-align: center;
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    margin-bottom: 20px;
+  }
+  .status-waiting {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+  .status-connected {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  .connect-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #0284c7, #38bdf8);
+    color: #030712;
+    font-weight: 800;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px var(--hud-glow);
+    transition: all 0.2s ease;
+    font-family: 'Outfit', sans-serif;
+  }
+  .connect-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(56, 189, 248, 0.5);
+  }
+  .step-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .step-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #cbd5e1;
+  }
+  .step-num {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--hud-sky);
+    border: 1px solid var(--panel-border);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .cmd-box {
+    margin-top: 14px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+  .cmd-item {
+    margin-bottom: 8px;
+  }
+  .cmd-key {
+    color: var(--hud-sky);
+    font-weight: 600;
+  }
+  .back-link {
+    margin-top: 28px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: color 0.2s;
+  }
+  .back-link:hover {
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🐦 𝕏 (TWITTER) EXECUTIVE GATEWAY</h1>
+  <p class="subtitle">1-Click Pairing // Second Brain Autonomous Engine</p>
+</header>
+
+<div class="card-container">
+  <!-- Card 1: 1-Click Connect -->
+  <div class="hud-card">
+    <div class="card-title">
+      <span>1. Connect Your 𝕏 Account</span>
+      <span id="liveBadge" style="font-size:0.75rem; color:var(--hud-sky); font-family:'JetBrains Mono';">POLLING LIVE</span>
+    </div>
+
+    <div class="action-box">
+      <div id="statusBadge" class="status-badge status-waiting">
+        <span class="dot" style="width:8px; height:8px; border-radius:50%; background:#f59e0b;"></span>
+        WAITING FOR SESSION
+      </div>
+      
+      <p id="statusDesc" style="color:var(--text-dim); font-size:0.85rem; margin-bottom:20px; max-width:280px;">
+        Click the button below to open a browser window and log in to your 𝕏 account.
+      </p>
+
+      <button id="connectBtn" onclick="launchConnect()" class="connect-btn">
+        <span>🚀</span>
+        <span>Open 𝕏 Login Window</span>
+      </button>
+
+      <div id="successInfo" style="display:none; margin-top:16px;">
+        <p style="color:#10b981; font-weight:700; font-size:0.95rem;">🎉 Connected & Ready!</p>
+        <p id="handleText" style="color:var(--text-dim); font-size:0.85rem; margin-top:4px;">@kartikey</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 14px; font-size: 0.8rem; color: var(--text-dim); text-align: center;">
+      Runs 100% locally on your machine. Zero cloud password leaks.
+    </div>
+  </div>
+
+  <!-- Card 2: WhatsApp Remote -->
+  <div class="hud-card">
+    <div class="card-title">
+      <span>2. Control from WhatsApp</span>
+      <span style="font-size:0.75rem; color:#25d366; font-family:'JetBrains Mono';">CHAT LOCKED</span>
+    </div>
+
+    <ul class="step-list">
+      <li>
+        <span class="step-num">1</span>
+        <span>Every morning at <strong>09:30 AM</strong> and night at <strong>08:00 PM IST</strong>, the bot prepares your tweet.</span>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <span>You receive an instant notification in your locked WhatsApp chat with the full tweet and 1-tap post link.</span>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <span>Text commands straight from your phone anytime:</span>
+      </li>
+    </ul>
+
+    <div class="cmd-box">
+      <div class="cmd-item"><span class="cmd-key">x status</span> &rarr; Check upcoming drop & queue</div>
+      <div class="cmd-item"><span class="cmd-key">x draft &lt;topic&gt;</span> &rarr; AI drafts a witty tweet in your voice</div>
+      <div class="cmd-item"><span class="cmd-key">x trigger</span> &rarr; Force run post immediately</div>
+    </div>
+  </div>
+</div>
+
+<a href="/x" class="back-link">&larr; Back to Full Command Center</a>
+
+<script>
+  async function pollStatus() {
+    try {
+      const res = await fetch('/api/x/status');
+      const data = await res.json();
+      const badge = document.getElementById('statusBadge');
+      const desc = document.getElementById('statusDesc');
+      const btn = document.getElementById('connectBtn');
+      const successInfo = document.getElementById('successInfo');
+      const handleText = document.getElementById('handleText');
+
+      if (data.mode === 'headless_browser' || data.apiConnected) {
+        badge.className = 'status-badge status-connected';
+        badge.innerHTML = '<span style="width:8px; height:8px; border-radius:50%; background:#10b981;"></span> ACTIVE & AUTONOMOUS';
+        desc.innerText = 'Your session is active. Valkyrie is publishing on schedule headlessly.';
+        btn.innerText = 'Re-Connect Account';
+        btn.style.background = 'rgba(255, 255, 255, 0.08)';
+        btn.style.color = '#fff';
+        btn.style.boxShadow = 'none';
+        btn.style.border = '1px solid var(--panel-border)';
+        successInfo.style.display = 'block';
+        handleText.innerText = data.handle || '@kartikey';
+      } else {
+        badge.className = 'status-badge status-waiting';
+        badge.innerHTML = '<span style="width:8px; height:8px; border-radius:50%; background:#f59e0b;"></span> WAITING FOR SESSION';
+        desc.innerText = 'Click the button below to open a browser window and log in to your 𝕏 account.';
+        btn.innerHTML = '<span>🚀</span><span>Open 𝕏 Login Window</span>';
+        successInfo.style.display = 'none';
+      }
+    } catch(e) {
+      console.warn('Status poll error:', e.message);
+    }
+  }
+
+  async function launchConnect() {
+    const btn = document.getElementById('connectBtn');
+    btn.disabled = true;
+    btn.innerText = 'Launching browser window...';
+    try {
+      const res = await fetch('/api/x/launch-login');
+      const data = await res.json();
+      if (data.success) {
+        btn.innerText = '👉 Log in to 𝕏 in the window...';
+      } else {
+        alert('Error: ' + data.error);
+        btn.disabled = false;
+        btn.innerText = 'Open 𝕏 Login Window';
+      }
+    } catch(e) {
+      alert('Error launching: ' + e.message);
+      btn.disabled = false;
+      btn.innerText = 'Open 𝕏 Login Window';
+    }
+  }
+
+  // Poll every 3 seconds
+  pollStatus();
+  setInterval(pollStatus, 3000);
+</script>
+</body>
+</html>
