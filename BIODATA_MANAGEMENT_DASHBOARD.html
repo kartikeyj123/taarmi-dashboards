@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Biodata Intake & Deduplication AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+            },
+            dark: {
+              900: '#090a0f',
+              800: '#11131a',
+              700: '#181b26',
+              600: '#232738'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Poppins', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #090a0f; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Poppins', sans-serif; }
+    .glass-panel {
+      background: rgba(17, 19, 26, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .glass-card {
+      background: rgba(24, 27, 38, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500/30 selection:text-emerald-300">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-white/[0.08] px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-xl font-bold">
+          💍
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-heading font-bold text-lg text-white tracking-wide">Biodata Intake AI</h1>
+            <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Dedicated Clone</span>
+          </div>
+          <p class="text-xs text-slate-400">Autonomous WhatsApp Intake, Vision OCR & Excel Deduplication Engine</p>
+        </div>
+      </div>
+
+      <!-- Right Telemetry -->
+      <div class="flex items-center gap-4 text-xs">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">
+          <span class="text-slate-400">Admin Number:</span>
+          <span class="font-mono font-semibold text-emerald-400">+91 87640 51939</span>
+        </div>
+
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">
+          <span class="text-slate-400">Model:</span>
+          <span class="font-mono font-semibold text-teal-300">qwen2.5vl:3b (Local Ollama)</span>
+        </div>
+
+        <div id="waStatusBadge" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span id="waStatusText" class="font-medium">Connecting...</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Grid -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+
+    <!-- KPI Summary Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Biodatas Ingested</span>
+          <span class="text-xl">📑</span>
+        </div>
+        <div class="mt-3 flex items-baseline gap-2">
+          <span id="kpiTotal" class="text-3xl font-heading font-bold text-white">0</span>
+          <span class="text-xs text-slate-400">all time</span>
+        </div>
+        <div class="mt-2 text-xs text-emerald-400">100% locally parsed via OCR</div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">New Database Entries</span>
+          <span class="text-xl">✨</span>
+        </div>
+        <div class="mt-3 flex items-baseline gap-2">
+          <span id="kpiNew" class="text-3xl font-heading font-bold text-emerald-400">0</span>
+          <span class="text-xs text-slate-400">unique candidates</span>
+        </div>
+        <div class="mt-2 text-xs text-slate-400">Recorded in Excel Master DB</div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Duplicates Filtered</span>
+          <span class="text-xl">🛡️</span>
+        </div>
+        <div class="mt-3 flex items-baseline gap-2">
+          <span id="kpiDuplicates" class="text-3xl font-heading font-bold text-amber-400">0</span>
+          <span class="text-xs text-slate-400">prevented clutter</span>
+        </div>
+        <div class="mt-2 text-xs text-slate-400">Saved zero duplicate rows</div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">WhatsApp Status</span>
+          <span class="text-xl">📱</span>
+        </div>
+        <div class="mt-3 flex items-baseline gap-2">
+          <span id="kpiPhone" class="text-xl font-heading font-bold text-white truncate">Pending Scan</span>
+        </div>
+        <div class="mt-2 text-xs text-teal-400">Dedicated Auth Store (`auth_info_biodata`)</div>
+      </div>
+    </div>
+
+    <!-- Dual Column: WhatsApp QR Pairing & Live Upload Studio -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: WhatsApp Pairing Hub (5 Cols) -->
+      <div class="lg:col-span-5 glass-panel rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-heading font-semibold text-base text-white flex items-center gap-2">
+              <span>📱</span> Dedicated WhatsApp Pairing
+            </h2>
+            <button onclick="refreshStatus()" class="px-2.5 py-1 text-xs rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+              ↻ Refresh
+            </button>
+          </div>
+          <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+            Link the dedicated WhatsApp number where contacts send biodatas. This is 100% separate from Jarvis.
+          </p>
+
+          <!-- QR Code Container -->
+          <div id="qrContainer" class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col items-center justify-center min-h-[260px]">
+            <div id="qrImageWrapper" class="hidden flex flex-col items-center gap-3">
+              <img id="qrImage" src="" alt="WhatsApp Pairing QR" class="w-56 h-56 rounded-lg bg-white p-2 shadow-xl" />
+              <p class="text-xs text-emerald-400 font-medium animate-pulse text-center">
+                Scan with WhatsApp > Linked Devices
+              </p>
+            </div>
+            <div id="qrLoadingWrapper" class="flex flex-col items-center gap-3 text-slate-400 text-xs text-center p-6">
+              <div class="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+              <p>Checking WhatsApp socket status...</p>
+            </div>
+            <div id="connectedWrapper" class="hidden flex flex-col items-center gap-3 text-center p-6">
+              <div class="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-2xl">
+                ✓
+              </div>
+              <h3 class="font-heading font-semibold text-emerald-400">WhatsApp Bridge Active</h3>
+              <p class="text-xs text-slate-300 font-mono" id="connectedNumberDisplay"></p>
+              <p class="text-xs text-slate-400">Listening to incoming active chats. Archive chats remain locked.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-slate-800/80 text-xs text-slate-400 flex items-center justify-between">
+          <span>Privacy Rule:</span>
+          <span class="text-rose-400 font-medium">Archive Chats Permanently Ignored</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Manual Testing & File Extraction Studio (7 Cols) -->
+      <div class="lg:col-span-7 glass-panel rounded-2xl p-6 flex flex-col">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-heading font-semibold text-base text-white flex items-center gap-2">
+            <span>⚡</span> Biodata Intake & Test Studio
+          </h2>
+          <span class="text-xs text-slate-400">Test with any PDF, Image or Word file</span>
+        </div>
+
+        <!-- Drag & Drop Zone -->
+        <div id="dropZone" class="border-2 border-dashed border-slate-700/80 hover:border-emerald-500/50 rounded-xl p-6 text-center cursor-pointer transition-colors bg-slate-900/40 mb-4" onclick="document.getElementById('fileInput').click()">
+          <input type="file" id="fileInput" class="hidden" accept=".pdf,.png,.jpg,.jpeg,.docx,.txt" onchange="handleFileSelected(event)" />
+          <div class="flex flex-col items-center gap-2">
+            <span class="text-3xl text-emerald-400">📄</span>
+            <p class="text-sm font-medium text-slate-200" id="selectedFileName">Click or Drag & Drop Biodata File</p>
+            <p class="text-xs text-slate-400">Supports PDF (Scanned & Digital), JPG, PNG, DOCX, TXT</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Simulated Sender WhatsApp Number</label>
+            <input type="text" id="simulatedSender" value="+91 98765 43210" class="w-full px-3 py-2 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white font-mono focus:outline-none focus:border-emerald-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Admin Notification Target</label>
+            <input type="text" value="+91 87640 51939" readonly class="w-full px-3 py-2 text-xs rounded-lg bg-slate-900/60 border border-slate-800 text-slate-400 font-mono" />
+          </div>
+        </div>
+
+        <button id="btnProcess" onclick="processUploadedFile()" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-heading font-semibold text-sm shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+          <span>⚡</span> Process & Deduplicate Biodata
+        </button>
+
+        <!-- Live Extraction Result Preview -->
+        <div id="extractionPreview" class="hidden mt-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <span class="text-xs font-semibold text-slate-300">Extraction & Deduplication Result</span>
+            <span id="resBadge" class="px-2 py-0.5 text-xs font-bold rounded-full"></span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <div>
+              <span class="text-slate-400 block">Candidate Name</span>
+              <span id="resName" class="font-semibold text-white"></span>
+            </div>
+            <div>
+              <span class="text-slate-400 block">Date of Birth</span>
+              <span id="resDob" class="font-semibold text-white font-mono"></span>
+            </div>
+            <div>
+              <span class="text-slate-400 block">City / Residence</span>
+              <span id="resCity" class="font-semibold text-white"></span>
+            </div>
+            <div>
+              <span class="text-slate-400 block">Other Numbers</span>
+              <span id="resPhone" class="font-semibold text-white font-mono truncate"></span>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800/60 text-xs">
+            <span class="text-slate-400 block mb-1">WhatsApp Messages Dispatched:</span>
+            <div class="space-y-1 font-mono text-[11px]">
+              <div class="p-1.5 rounded bg-slate-800/60 text-slate-300">
+                <span class="text-emerald-400">To Sender:</span> <span id="msgSender"></span>
+              </div>
+              <div class="p-1.5 rounded bg-slate-800/60 text-slate-300">
+                <span class="text-teal-400">To Admin (+91 87640 51939):</span> <span id="msgAdminInitial"></span>
+              </div>
+              <div class="p-1.5 rounded bg-slate-800/60 text-slate-300">
+                <span class="text-amber-400">To Admin (Status):</span> <span id="msgAdminStatus"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Master Excel Database Viewer Section -->
+    <div class="glass-panel rounded-2xl p-6 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="font-heading font-semibold text-lg text-white flex items-center gap-2">
+            <span>📊</span> Master Biodata Excel Database (`BIODATA_MASTER_DATABASE.xlsx`)
+          </h2>
+          <p class="text-xs text-slate-400">Stored on your laptop at `data/BIODATA_MASTER_DATABASE.xlsx` with automatic deduplication.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="text" id="dbSearch" placeholder="Search candidate, city, phone..." oninput="filterTable()" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 w-56" />
+          <a href="/api/biodata/download" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-colors flex items-center gap-1">
+            <span>📥</span> Download Excel
+          </a>
+        </div>
+      </div>
+
+      <!-- Database Table -->
+      <div class="overflow-x-auto rounded-xl border border-white/[0.08] custom-scrollbar">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-slate-900/90 text-slate-400 uppercase tracking-wider font-semibold border-b border-white/[0.08]">
+              <th class="px-4 py-3">ID</th>
+              <th class="px-4 py-3">Date Added</th>
+              <th class="px-4 py-3">Candidate Name</th>
+              <th class="px-4 py-3">Date of Birth</th>
+              <th class="px-4 py-3">City / Residence</th>
+              <th class="px-4 py-3">Other Numbers</th>
+              <th class="px-4 py-3">Source WhatsApp</th>
+              <th class="px-4 py-3">Format</th>
+              <th class="px-4 py-3">Education / Job</th>
+              <th class="px-4 py-3">Status</th>
+            </tr>
+          </thead>
+          <tbody id="dbTableBody" class="divide-y divide-white/[0.05] text-slate-200">
+            <tr>
+              <td colspan="10" class="px-4 py-8 text-center text-slate-500">Loading database records...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Live Event & Message Logs Stream -->
+    <div class="glass-panel rounded-2xl p-6 space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="font-heading font-semibold text-base text-white flex items-center gap-2">
+          <span>📜</span> Real-Time Activity & Outbox Audit Stream
+        </h2>
+        <span class="text-xs text-slate-400">Live background events</span>
+      </div>
+
+      <div id="logStream" class="space-y-1.5 max-h-56 overflow-y-auto font-mono text-xs custom-scrollbar p-3 rounded-xl bg-slate-950/80 border border-slate-900">
+        <div class="text-slate-500">Waiting for live events...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    let currentSelectedFile = null;
+
+    async function refreshStatus() {
+      try {
+        const res = await fetch('/api/biodata/status');
+        const data = await res.json();
+        
+        // Update WhatsApp Badge
+        const badge = document.getElementById('waStatusBadge');
+        const text = document.getElementById('waStatusText');
+        const qrImgWrapper = document.getElementById('qrImageWrapper');
+        const qrLoading = document.getElementById('qrLoadingWrapper');
+        const connectedWrapper = document.getElementById('connectedWrapper');
+        const kpiPhone = document.getElementById('kpiPhone');
+
+        if (data.connectionState === 'connected') {
+          badge.className = 'flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400';
+          text.innerText = 'Connected: +' + data.connectedPhone;
+          qrImgWrapper.classList.add('hidden');
+          qrLoading.classList.add('hidden');
+          connectedWrapper.classList.remove('hidden');
+          document.getElementById('connectedNumberDisplay').innerText = '+' + data.connectedPhone;
+          kpiPhone.innerText = '+' + data.connectedPhone;
+        } else if (data.connectionState === 'waiting_qr' && data.qrDataUrl) {
+          badge.className = 'flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400';
+          text.innerText = 'Scan QR Code';
+          qrImgWrapper.classList.remove('hidden');
+          qrLoading.classList.add('hidden');
+          connectedWrapper.classList.add('hidden');
+          document.getElementById('qrImage').src = data.qrDataUrl;
+          kpiPhone.innerText = 'Awaiting Scan';
+        } else {
+          badge.className = 'flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-400';
+          text.innerText = data.connectionState;
+          qrImgWrapper.classList.add('hidden');
+          qrLoading.classList.remove('hidden');
+          connectedWrapper.classList.add('hidden');
+          kpiPhone.innerText = 'Disconnected';
+        }
+
+        // Update Logs
+        if (data.recentLogs && data.recentLogs.length > 0) {
+          const logContainer = document.getElementById('logStream');
+          logContainer.innerHTML = data.recentLogs.map(l => {
+            let color = 'text-slate-300';
+            if (l.type === 'success') color = 'text-emerald-400';
+            if (l.type === 'warning') color = 'text-amber-400';
+            if (l.type === 'error') color = 'text-rose-400';
+            if (l.type === 'message') color = 'text-teal-300';
+            return `<div class="flex items-start gap-2"><span class="text-slate-500 shrink-0">[${l.timeFormatted}]</span><span class="${color}">${escapeHtml(l.text)}</span></div>`;
+          }).join('');
+        }
+
+      } catch (err) {
+        console.warn('Status fetch error:', err);
+      }
+    }
+
+    async function loadRecords() {
+      try {
+        const res = await fetch('/api/biodata/records');
+        const records = await res.json();
+        
+        document.getElementById('kpiTotal').innerText = records.length;
+        document.getElementById('kpiNew').innerText = records.filter(r => r.Status === 'New').length;
+        document.getElementById('kpiDuplicates').innerText = records.filter(r => r.Status === 'Duplicate').length;
+
+        renderTable(records);
+      } catch (err) {
+        console.warn('Records fetch error:', err);
+      }
+    }
+
+    function renderTable(records) {
+      const tbody = document.getElementById('dbTableBody');
+      if (!records || records.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" class="px-4 py-8 text-center text-slate-500">No biodata entries in database yet. Ingest a file above to test!</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = records.map(r => `
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="px-4 py-3 font-mono font-semibold text-slate-400">${r.ID || ''}</td>
+          <td class="px-4 py-3 font-mono text-slate-400">${r['Date Added'] || ''}</td>
+          <td class="px-4 py-3 font-semibold text-white">${escapeHtml(r['Person Name'] || '')}</td>
+          <td class="px-4 py-3 font-mono text-emerald-400">${escapeHtml(r['Date of Birth'] || '')}</td>
+          <td class="px-4 py-3 text-slate-300">${escapeHtml(r['City / Residence'] || '')}</td>
+          <td class="px-4 py-3 font-mono text-slate-300">${escapeHtml(r['Other Mobile Numbers'] || '')}</td>
+          <td class="px-4 py-3 font-mono text-teal-300">${escapeHtml(r['Source WhatsApp Number'] || '')}</td>
+          <td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-mono">${escapeHtml(r['Document Format'] || '')}</span></td>
+          <td class="px-4 py-3 text-slate-300 truncate max-w-xs">${escapeHtml(r['Education / Job'] || '')}</td>
+          <td class="px-4 py-3">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${r.Status === 'New' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">
+              ${r.Status || 'New'}
+            </span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterTable() {
+      const query = document.getElementById('dbSearch').value.toLowerCase();
+      fetch('/api/biodata/records').then(r => r.json()).then(records => {
+        const filtered = records.filter(r => {
+          return String(r['Person Name'] || '').toLowerCase().includes(query) ||
+                 String(r['City / Residence'] || '').toLowerCase().includes(query) ||
+                 String(r['Other Mobile Numbers'] || '').toLowerCase().includes(query) ||
+                 String(r['Source WhatsApp Number'] || '').toLowerCase().includes(query);
+        });
+        renderTable(filtered);
+      });
+    }
+
+    function handleFileSelected(event) {
+      const file = event.target.files[0];
+      if (file) {
+        currentSelectedFile = file;
+        document.getElementById('selectedFileName').innerText = 'Selected: ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+      }
+    }
+
+    async function processUploadedFile() {
+      if (!currentSelectedFile) {
+        alert('Please select a PDF, image, or Word file first.');
+        return;
+      }
+
+      const btn = document.getElementById('btnProcess');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> Ingesting with Vision OCR & Deduplicating...';
+
+      const senderNum = document.getElementById('simulatedSender').value || '+919876543210';
+      const formData = new FormData();
+      formData.append('file', currentSelectedFile);
+      formData.append('sourceNumber', senderNum);
+
+      try {
+        const res = await fetch('/api/biodata/upload-test', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await res.json();
+        
+        // Show extraction preview
+        const prev = document.getElementById('extractionPreview');
+        prev.classList.remove('hidden');
+
+        const ext = result.extracted || {};
+        document.getElementById('resName').innerText = ext.personName || 'Unknown';
+        document.getElementById('resDob').innerText = ext.dob || 'Not specified';
+        document.getElementById('resCity').innerText = ext.city || 'Not specified';
+        document.getElementById('resPhone').innerText = (ext.otherMobiles || []).join(', ') || 'None';
+
+        const badge = document.getElementById('resBadge');
+        if (result.isDuplicate) {
+          badge.className = 'px-2.5 py-0.5 text-xs font-bold rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40';
+          badge.innerText = '⚠️ DUPLICATE ENTRY';
+          document.getElementById('msgAdminStatus').innerText = `"Hey this biodata from ${senderNum} is already in our database"`;
+        } else {
+          badge.className = 'px-2.5 py-0.5 text-xs font-bold rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+          badge.innerText = '✨ NEW BIODATA SAVED';
+          document.getElementById('msgAdminStatus').innerText = `"Hey this biodata from ${senderNum} is new in our database."`;
+        }
+
+        document.getElementById('msgSender').innerText = '"Hey thanks. I have received your biodata and it is under my processing."';
+        document.getElementById('msgAdminInitial').innerText = `"Hey you have received new biodata from - ${senderNum}"`;
+
+        // Refresh DB table
+        await loadRecords();
+        await refreshStatus();
+
+      } catch (err) {
+        alert('Error processing biodata: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡</span> Process & Deduplicate Biodata';
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // Initial load and polling
+    loadRecords();
+    refreshStatus();
+    setInterval(refreshStatus, 3000);
+    setInterval(loadRecords, 6000);
+  </script>
+</body>
+</html>

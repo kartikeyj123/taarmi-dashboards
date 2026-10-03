@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CineMatch — Tinder for Cinema & Series</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              rose: '#f43f5e',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              sky: '#0284c7',
+              purple: '#8b5cf6',
+              dark: '#090a10',
+              card: '#12141f'
+            }
+          },
+          fontFamily: {
+            heading: ['Plus Jakarta Sans', 'Outfit', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --app-height: 100vh;
+      --app-height: 100dvh;
+    }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    body {
+      background-color: #07080d;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(244, 63, 94, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.06) 0%, transparent 40%);
+    }
+
+    /* Swipe Card Container */
+    .card-stack {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 100%;
+      max-height: 620px;
+      margin: 0 auto;
+      perspective: 1000px;
+    }
+
+    .swipe-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #11131e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.4);
+      cursor: grab;
+      touch-action: none;
+      transition: transform 0.15s ease-out, opacity 0.2s ease-out;
+      transform-origin: 50% 100%;
+      will-change: transform, opacity;
+    }
+
+    .swipe-card:active {
+      cursor: grabbing;
+    }
+
+    .swipe-card.is-animating {
+      transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s ease-out !important;
+    }
+
+    /* Decision Stamps */
+    .stamp {
+      position: absolute;
+      padding: 8px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 12px;
+      border: 4px solid;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+      transform: scale(0.85);
+      transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+    }
+
+    .stamp-watched {
+      top: 30px;
+      right: 25px;
+      color: #10b981;
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+      transform: rotate(15deg);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .stamp-pass {
+      top: 30px;
+      left: 25px;
+      color: #f43f5e;
+      border-color: #f43f5e;
+      background: rgba(244, 63, 94, 0.15);
+      transform: rotate(-15deg);
+      box-shadow: 0 0 25px rgba(244, 63, 94, 0.3);
+    }
+
+    .stamp-watchlist {
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%) rotate(0deg);
+      color: #8b5cf6;
+      border-color: #8b5cf6;
+      background: rgba(139, 92, 246, 0.15);
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Custom Scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="flex flex-col justify-between">
+
+  <!-- Top App Navigation Bar -->
+  <header class="w-full max-w-lg mx-auto px-4 pt-3 pb-2 flex items-center justify-between z-40 shrink-0">
+    <div class="flex items-center gap-2">
+      <a href="CINEMA_VAULT.html" class="p-2 rounded-2xl bg-zinc-900 border border-white/10 text-zinc-300 hover:text-white transition" title="Go to Cinema Vault">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      </a>
+      <div class="flex items-center gap-1.5">
+        <span class="text-xl">🎬</span>
+        <h1 class="font-heading font-black text-lg sm:text-xl tracking-tight bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 bg-clip-text text-transparent">CineMatch</h1>
+      </div>
+    </div>
+
+    <!-- Right Controls: Match Counts & Vault Link -->
+    <div class="flex items-center gap-2">
+      <a href="CINEMA_VAULT.html" class="px-3 py-1.5 rounded-full bg-zinc-900 border border-white/10 text-xs font-mono font-bold text-amber-400 hover:border-amber-400/50 transition flex items-center gap-1.5 shadow-sm">
+        <span>🎬 Vault</span>
+        <span id="headerVaultCount" class="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-[10px] text-amber-300">21</span>
+      </a>
+      <button onclick="toggleInfoModal()" class="p-2 rounded-2xl bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white transition" title="Gestures Guide">
+        ℹ️
+      </button>
+    </div>
+  </header>
+
+  <!-- Category Pills Carousel -->
+  <section aria-label="Categories" class="w-full max-w-lg mx-auto px-4 pb-2 z-40 shrink-0">
+    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1" id="categoryBar">
+      <button onclick="filterCategory('all')" data-cat="all" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap bg-rose-500 text-white shadow-lg shadow-rose-500/20">
+        ✨ All Cinema
+      </button>
+      <button onclick="filterCategory('top_250')" data-cat="top_250" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white">
+        👑 Top Rated (250)
+      </button>
+      <button onclick="filterCategory('sci_fi')" data-cat="sci_fi" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white">
+        🚀 Mind-Bending Sci-Fi
+      </button>
+      <button onclick="filterCategory('psychological')" data-cat="psychological" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white">
+        🧠 Thrillers & Mind Games
+      </button>
+      <button onclick="filterCategory('crime_heist')" data-cat="crime_heist" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white">
+        🔪 Crime & Heists
+      </button>
+      <button onclick="filterCategory('romance_drama')" data-cat="romance_drama" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white">
+        ❤️ Heartache & Romance
+      </button>
+      <button onclick="filterCategory('indian_cinema')" data-cat="indian_cinema" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white">
+        🇮🇳 Indian Cinema
+      </button>
+      <button onclick="filterCategory('indian_series')" data-cat="indian_series" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white">
+        🇮🇳 Great Indian Series
+      </button>
+      <button onclick="filterCategory('peak_tv')" data-cat="peak_tv" class="cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white">
+        📺 Global TV Series
+      </button>
+    </div>
+  </section>
+
+  <!-- Main Stage: Swipe Card Deck -->
+  <main class="flex-1 w-full max-w-lg mx-auto px-4 py-1 flex items-center justify-center relative overflow-hidden">
+    <div class="card-stack" id="cardStack">
+      <!-- Dynamic Cards Injected by JS -->
+    </div>
+
+    <!-- Empty Stack State -->
+    <div id="emptyDeckState" class="hidden text-center space-y-4 max-w-xs mx-auto py-12">
+      <div class="w-20 h-20 mx-auto rounded-3xl bg-zinc-900 border border-white/10 flex items-center justify-center text-4xl shadow-xl shadow-black/50">
+        🍿
+      </div>
+      <h2 class="text-xl font-heading font-black text-white">You've Reached the End!</h2>
+      <p class="text-xs text-zinc-400 leading-relaxed">You've swiped through this entire category. Switch categories above, reset your deck, or view your saved matches.</p>
+      <div class="flex items-center justify-center gap-3 pt-2">
+        <button onclick="resetCurrentDeck()" class="px-5 py-2.5 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-xs font-bold text-white transition">
+          ↺ Reset Deck
+        </button>
+        <a href="CINEMA_VAULT.html" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-rose-500 to-amber-500 text-black font-bold text-xs transition shadow-lg shadow-rose-500/20">
+          Open Vault ➔
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Floating Action Controllers (Tinder Style) -->
+  <footer class="w-full max-w-md mx-auto px-6 py-3 pb-6 flex items-center justify-around z-40 shrink-0">
+    <!-- Undo Button -->
+    <button onclick="handleUndoSwipe()" class="w-12 h-12 rounded-full bg-zinc-900 border border-amber-500/30 text-amber-400 hover:scale-110 active:scale-90 flex items-center justify-center text-lg transition shadow-lg shadow-amber-500/10" title="Undo Swipe (U)">
+      ↺
+    </button>
+
+    <!-- Swipe Left: Haven't Watched / Pass -->
+    <button onclick="triggerSwipe('pass')" class="w-14 h-14 rounded-full bg-zinc-900 border border-rose-500/40 text-rose-500 hover:scale-110 active:scale-90 flex items-center justify-center text-2xl transition shadow-xl shadow-rose-500/20" title="Haven't Watched / Pass (Left Arrow)">
+      ✕
+    </button>
+
+    <!-- Swipe Up/Down: Want to Watch / Watchlist -->
+    <button onclick="triggerSwipe('want_to_watch')" class="w-14 h-14 rounded-full bg-zinc-900 border border-purple-500/40 text-purple-400 hover:scale-110 active:scale-90 flex items-center justify-center text-2xl transition shadow-xl shadow-purple-500/20" title="Want to Watch / Watchlist (Up/Down Arrow)">
+      🌟
+    </button>
+
+    <!-- Swipe Right: Watched It -->
+    <button onclick="triggerSwipe('watched')" class="w-16 h-16 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-400 text-slate-950 hover:scale-110 active:scale-90 flex items-center justify-center text-3xl font-black transition shadow-2xl shadow-emerald-500/30" title="Watched It (Right Arrow)">
+      ❤️
+    </button>
+  </footer>
+
+  <!-- Detail Expand Modal -->
+  <dialog id="expandModal" class="fixed inset-0 w-full h-full p-4 z-50 items-center justify-center border-none bg-transparent">
+    <div class="bg-zinc-900 border border-white/10 rounded-3xl w-full max-w-md max-h-[85vh] overflow-y-auto p-6 shadow-2xl shadow-black relative text-left" id="expandModalContent">
+      <!-- Injected by JS -->
+    </div>
+  </dialog>
+
+  <!-- Info & Gestures Modal -->
+  <dialog id="infoModal" class="fixed inset-0 w-full h-full p-4 z-50 items-center justify-center border-none bg-transparent">
+    <div class="bg-zinc-900 border border-white/10 rounded-3xl w-full max-w-sm p-6 shadow-2xl text-left space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-heading font-black text-base text-white">🎬 How CineMatch Works</h3>
+        <button onclick="toggleInfoModal()" class="text-zinc-500 hover:text-white p-1">✕</button>
+      </div>
+      <div class="space-y-3 text-xs text-zinc-300">
+        <div class="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-950 border border-emerald-500/20">
+          <span class="text-2xl">👉</span>
+          <div>
+            <strong class="text-emerald-400 block font-bold">Swipe Right</strong>
+            <span>You've watched this title. Saves to Watched list.</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-950 border border-rose-500/20">
+          <span class="text-2xl">👈</span>
+          <div>
+            <strong class="text-rose-400 block font-bold">Swipe Left</strong>
+            <span>Haven't watched / Pass. Skips to the next profile.</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-950 border border-purple-500/20">
+          <span class="text-2xl">👆 / 👇</span>
+          <div>
+            <strong class="text-purple-400 block font-bold">Swipe Up or Down</strong>
+            <span>Want to Watch! Adds title directly to your Watchlist.</span>
+          </div>
+        </div>
+      </div>
+      <div class="pt-2 text-[11px] font-mono text-zinc-500 text-center">
+        Keyboard: Arrow Keys (← ↓ ↑ →) & U to Undo
+      </div>
+      <button onclick="toggleInfoModal()" class="w-full py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs transition">Got It!</button>
+    </div>
+  </dialog>
+
+  <!-- JAVASCRIPT GESTURE & DATING ENGINE -->
+  <script>
+    let allDatingPool = [];
+    let currentFilteredPool = [];
+    let currentCardIndex = 0;
+    let swipeHistory = [];
+    let activeCategory = 'all';
+
+    // Touch gesture tracking variables
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let currentCardEl = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadPoolData();
+      setupKeyboardControls();
+    });
+
+    async function loadPoolData() {
+      try {
+        const res = await fetch('/api/cinema/dating-pool');
+        if (res.ok) {
+          const json = await res.json();
+          allDatingPool = json.data || [];
+        } else {
+          const fallbackRes = await fetch('/data/cinema_dating_pool.json');
+          if (fallbackRes.ok) allDatingPool = await fallbackRes.json();
+        }
+      } catch(e) {
+        console.warn('API error, using local fallback:', e);
+      }
+
+      if (!allDatingPool.length) {
+        allDatingPool = getFallbackCards();
+      }
+
+      filterCategory('all');
+      updateVaultCount();
+    }
+
+    async function updateVaultCount() {
+      try {
+        const res = await fetch('/api/cinema');
+        if (res.ok) {
+          const json = await res.json();
+          const total = json.count || (json.data ? json.data.length : 21);
+          document.getElementById('headerVaultCount').textContent = total;
+        }
+      } catch(e) {}
+    }
+
+    function filterCategory(cat) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = 'cat-pill px-3.5 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap bg-rose-500 text-white shadow-lg shadow-rose-500/20';
+        } else {
+          btn.className = 'cat-pill px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white';
+        }
+      });
+
+      if (cat === 'all') {
+        currentFilteredPool = [...allDatingPool];
+      } else {
+        currentFilteredPool = allDatingPool.filter(c => c.category === cat);
+      }
+
+      currentCardIndex = 0;
+      renderCardStack();
+    }
+
+    function renderCardStack() {
+      const stack = document.getElementById('cardStack');
+      const empty = document.getElementById('emptyDeckState');
+      stack.innerHTML = '';
+
+      if (currentCardIndex >= currentFilteredPool.length) {
+        stack.classList.add('hidden');
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      stack.classList.remove('hidden');
+      empty.classList.add('hidden');
+
+      // Render top 3 visible cards
+      const visibleCount = Math.min(3, currentFilteredPool.length - currentCardIndex);
+      for (let i = visibleCount - 1; i >= 0; i--) {
+        const cardData = currentFilteredPool[currentCardIndex + i];
+        const cardEl = createCardElement(cardData, i);
+        stack.appendChild(cardEl);
+      }
+
+      setupTopCardListeners();
+    }
+
+    function createCardElement(data, depthIndex) {
+      const card = document.createElement('div');
+      card.className = 'swipe-card';
+      card.id = `card-${data.id}`;
+
+      // Stacking transforms
+      const scale = 1 - (depthIndex * 0.04);
+      const translateY = depthIndex * 10;
+      card.style.transform = `translateY(${translateY}px) scale(${scale})`;
+      card.style.zIndex = 30 - depthIndex;
+      card.style.opacity = 1 - (depthIndex * 0.15);
+
+      const greenBadges = (data.greenFlags || []).map(f => `<span class="px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-[10px] text-emerald-300 font-medium">🟢 ${escapeHtml(f)}</span>`).join('');
+      const redBadges = (data.redFlags || []).map(f => `<span class="px-2 py-0.5 rounded-md bg-rose-500/15 border border-rose-500/30 text-[10px] text-rose-300 font-medium">🚩 ${escapeHtml(f)}</span>`).join('');
+
+      card.innerHTML = `
+        <!-- Decision Overlay Stamps -->
+        <div class="stamp stamp-watched">WATCHED ❤️</div>
+        <div class="stamp stamp-pass">NOPE ✕</div>
+        <div class="stamp stamp-watchlist">WATCHLIST 🌟</div>
+
+        <!-- Poster Full Image Background -->
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('${data.posterUrl}')">
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent"></div>
+        </div>
+
+        <!-- Top Badges -->
+        <div class="relative z-10 p-5 flex items-center justify-between">
+          <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-amber-400 flex items-center gap-1 shadow-md">
+            🔥 ${data.matchScore || 98}% Match
+          </span>
+          <span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-xs font-mono font-bold text-white flex items-center gap-1">
+            ★ ${data.rating || '8.5'} IMDb
+          </span>
+        </div>
+
+        <!-- Bottom Profile Content (Dating Card Style) -->
+        <div class="absolute bottom-0 inset-x-0 p-5 sm:p-6 space-y-3 z-10 text-left">
+          <!-- Title & Verified Badge -->
+          <div>
+            <div class="flex items-baseline gap-2">
+              <h2 class="font-heading font-black text-2xl sm:text-3xl text-white tracking-tight leading-tight">${escapeHtml(data.title)}</h2>
+              <span class="text-sm font-mono text-zinc-400 font-medium">${data.year || '2024'}</span>
+            </div>
+            <p class="text-xs text-rose-300 font-medium italic mt-0.5">"${escapeHtml(data.tagline || '')}"</p>
+          </div>
+
+          <!-- Dating Bio Prompt -->
+          <div class="p-3 rounded-2xl bg-black/60 backdrop-blur-md border border-white/10 text-xs text-zinc-200 leading-relaxed">
+            <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block mb-1">About Me / Bio:</span>
+            ${escapeHtml(data.bio || '')}
+          </div>
+
+          <!-- Green & Red Flags Pill Badges -->
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            ${greenBadges}
+            ${redBadges}
+          </div>
+
+          <!-- Tap for More Details -->
+          <div class="pt-1 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+            <span>Dir: <strong class="text-zinc-200 font-semibold">${escapeHtml(data.director || 'Visionary Director')}</strong></span>
+            <button onclick="openCardDetails('${data.id}')" class="text-rose-400 hover:underline flex items-center gap-0.5">
+              <span>Full Profile</span> ➔
+            </button>
+          </div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function setupTopCardListeners() {
+      const stack = document.getElementById('cardStack');
+      currentCardEl = stack.querySelector('.swipe-card:last-child');
+      if (!currentCardEl) return;
+
+      currentCardEl.addEventListener('pointerdown', onPointerDown);
+    }
+
+    function onPointerDown(e) {
+      if (e.target.closest('button') || e.target.closest('a')) return;
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      currentX = 0;
+      currentY = 0;
+
+      currentCardEl.classList.remove('is-animating');
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('pointerup', onPointerUp);
+      window.addEventListener('pointercancel', onPointerUp);
+    }
+
+    function onPointerMove(e) {
+      if (!isDragging || !currentCardEl) return;
+      currentX = e.clientX - startX;
+      currentY = e.clientY - startY;
+
+      const rotate = currentX * 0.08;
+      currentCardEl.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg)`;
+
+      // Stamp opacity logic
+      const watchedStamp = currentCardEl.querySelector('.stamp-watched');
+      const passStamp = currentCardEl.querySelector('.stamp-pass');
+      const watchlistStamp = currentCardEl.querySelector('.stamp-watchlist');
+
+      if (currentX > 30) {
+        const opacity = Math.min(1, (currentX - 30) / 100);
+        if (watchedStamp) watchedStamp.style.opacity = opacity;
+        if (passStamp) passStamp.style.opacity = 0;
+        if (watchlistStamp) watchlistStamp.style.opacity = 0;
+      } else if (currentX < -30) {
+        const opacity = Math.min(1, (-currentX - 30) / 100);
+        if (passStamp) passStamp.style.opacity = opacity;
+        if (watchedStamp) watchedStamp.style.opacity = 0;
+        if (watchlistStamp) watchlistStamp.style.opacity = 0;
+      } else if (Math.abs(currentY) > 40 && Math.abs(currentX) < 40) {
+        const opacity = Math.min(1, (Math.abs(currentY) - 40) / 80);
+        if (watchlistStamp) watchlistStamp.style.opacity = opacity;
+        if (watchedStamp) watchedStamp.style.opacity = 0;
+        if (passStamp) passStamp.style.opacity = 0;
+      } else {
+        if (watchedStamp) watchedStamp.style.opacity = 0;
+        if (passStamp) passStamp.style.opacity = 0;
+        if (watchlistStamp) watchlistStamp.style.opacity = 0;
+      }
+    }
+
+    function onPointerUp(e) {
+      if (!isDragging || !currentCardEl) return;
+      isDragging = false;
+
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerUp);
+
+      const threshold = 100;
+      const verticalThreshold = 100;
+
+      if (currentX > threshold) {
+        executeSwipe('watched');
+      } else if (currentX < -threshold) {
+        executeSwipe('pass');
+      } else if (currentY < -verticalThreshold || currentY > verticalThreshold) {
+        executeSwipe('want_to_watch');
+      } else {
+        // Snap back to center
+        currentCardEl.classList.add('is-animating');
+        currentCardEl.style.transform = `translate(0px, 0px) rotate(0deg)`;
+        const stamps = currentCardEl.querySelectorAll('.stamp');
+        stamps.forEach(s => s.style.opacity = 0);
+      }
+    }
+
+    function triggerSwipe(action) {
+      if (!currentCardEl || isDragging) return;
+      executeSwipe(action);
+    }
+
+    async function executeSwipe(action) {
+      const cardData = currentFilteredPool[currentCardIndex];
+      if (!cardData || !currentCardEl) return;
+
+      currentCardEl.classList.add('is-animating');
+      const stamps = currentCardEl.querySelectorAll('.stamp');
+      stamps.forEach(s => s.style.opacity = 0);
+
+      if (action === 'watched') {
+        const stamp = currentCardEl.querySelector('.stamp-watched');
+        if (stamp) stamp.style.opacity = 1;
+        currentCardEl.style.transform = `translate(${window.innerWidth + 200}px, 50px) rotate(35deg)`;
+      } else if (action === 'pass') {
+        const stamp = currentCardEl.querySelector('.stamp-pass');
+        if (stamp) stamp.style.opacity = 1;
+        currentCardEl.style.transform = `translate(${-window.innerWidth - 200}px, 50px) rotate(-35deg)`;
+      } else if (action === 'want_to_watch') {
+        const stamp = currentCardEl.querySelector('.stamp-watchlist');
+        if (stamp) stamp.style.opacity = 1;
+        currentCardEl.style.transform = `translate(0px, ${-window.innerHeight - 200}px) rotate(0deg)`;
+      }
+
+      // Record to swipe history for undo
+      swipeHistory.push({
+        index: currentCardIndex,
+        data: cardData,
+        action: action
+      });
+
+      // Post decision to backend
+      if (action === 'watched' || action === 'want_to_watch') {
+        postSwipeDecision(cardData, action);
+      }
+
+      currentCardIndex++;
+
+      setTimeout(() => {
+        renderCardStack();
+      }, 300);
+    }
+
+    async function postSwipeDecision(card, action) {
+      try {
+        const res = await fetch('/api/cinema/swipe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: card.title,
+            action: action,
+            year: card.year,
+            type: card.type || 'Movie',
+            posterUrl: card.posterUrl,
+            director: card.director,
+            rating: card.rating,
+            category: card.categoryName
+          })
+        });
+        if (res.ok) {
+          updateVaultCount();
+        }
+      } catch(e) {
+        console.warn('Backend sync deferred:', e);
+      }
+    }
+
+    function handleUndoSwipe() {
+      if (!swipeHistory.length) return;
+      const last = swipeHistory.pop();
+      currentCardIndex = Math.max(0, currentCardIndex - 1);
+      renderCardStack();
+    }
+
+    function resetCurrentDeck() {
+      currentCardIndex = 0;
+      renderCardStack();
+    }
+
+    function openCardDetails(cardId) {
+      const card = allDatingPool.find(c => c.id === cardId);
+      if (!card) return;
+
+      const modal = document.getElementById('expandModal');
+      const content = document.getElementById('expandModalContent');
+
+      content.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-mono font-bold uppercase">${escapeHtml(card.categoryName || 'Cinema')}</span>
+              <h2 class="font-heading font-black text-2xl text-white mt-1">${escapeHtml(card.title)} (${card.year})</h2>
+              <p class="text-xs text-zinc-400 font-mono">Directed by ${escapeHtml(card.director || 'Visionary')}</p>
+            </div>
+            <button onclick="document.getElementById('expandModal').close()" class="text-zinc-400 hover:text-white p-1 text-base">✕</button>
+          </div>
+
+          <div class="rounded-2xl overflow-hidden aspect-video bg-cover bg-center border border-white/10 relative" style="background-image: url('${card.posterUrl}')">
+            <div class="absolute bottom-2 left-2 px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md text-amber-400 text-xs font-mono font-bold">
+              ★ ${card.rating} IMDb Rating
+            </div>
+          </div>
+
+          <div class="space-y-3 text-xs text-zinc-200">
+            <div class="p-3 rounded-2xl bg-zinc-950 border border-white/5 space-y-1">
+              <strong class="text-rose-400 font-mono text-[10px] uppercase block">💘 Dating Bio Prompt:</strong>
+              <p class="italic leading-relaxed">"${escapeHtml(card.bio)}"</p>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-zinc-950 border border-white/5 space-y-1">
+              <strong class="text-amber-400 font-mono text-[10px] uppercase block">🍷 My Ideal Date:</strong>
+              <p class="leading-relaxed">${escapeHtml(card.idealDate || 'A darkened room, booming sound system, and zero phone interruptions.')}</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-2">
+            <button onclick="triggerSwipe('want_to_watch'); document.getElementById('expandModal').close();" class="flex-1 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition">
+              🌟 Add to Watchlist
+            </button>
+            <button onclick="triggerSwipe('watched'); document.getElementById('expandModal').close();" class="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs transition">
+              ❤️ Watched It
+            </button>
+          </div>
+        </div>
+      `;
+
+      modal.showModal();
+    }
+
+    function toggleInfoModal() {
+      const modal = document.getElementById('infoModal');
+      if (modal.open) modal.close();
+      else modal.showModal();
+    }
+
+    function setupKeyboardControls() {
+      window.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 'ArrowRight') triggerSwipe('watched');
+        if (e.key === 'ArrowLeft') triggerSwipe('pass');
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') triggerSwipe('want_to_watch');
+        if (e.key === 'u' || e.key === 'U' || e.key === 'z') handleUndoSwipe();
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function getFallbackCards() {
+      return [
+        {
+          id: 'card-interstellar',
+          title: 'Interstellar',
+          year: '2014',
+          rating: 8.7,
+          matchScore: 99,
+          posterUrl: 'https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg',
+          tagline: "Love is the one thing that transcends time and space.",
+          bio: "I will travel through a wormhole near Saturn and wait 51 Earth years for you. Also, Hans Zimmer's pipe organs will vibrate your soul.",
+          greenFlags: ["Docking scene tension", "Relativity accuracy", "TARS is the best robot wingman"],
+          redFlags: ["One hour on my planet is 7 years on Earth"],
+          idealDate: "Stargazing near a black hole calculating time dilation.",
+          director: "Christopher Nolan"
+        },
+        {
+          id: 'card-past-lives',
+          title: 'Past Lives',
+          year: '2023',
+          rating: 7.9,
+          matchScore: 98,
+          posterUrl: 'https://upload.wikimedia.org/wikipedia/en/d/da/Past_Lives_film_poster.png',
+          tagline: "In-Yun: Ties between two people over thousands of lifetimes.",
+          bio: "We might have brushed sleeves in Seoul 24 years ago, or been a tree and a bird in another lifetime. Looking for deep, lingering glances across a bar.",
+          greenFlags: ["Celine Song delicate mastery", "Poignant realism", "Heartbreaking maturity"],
+          redFlags: ["I live in New York, you live in Seoul"],
+          idealDate: "Walking along the East River ferry talking about who we could have been.",
+          director: "Celine Song"
+        }
+      ];
+    }
+  </script>
+</body>
+</html>

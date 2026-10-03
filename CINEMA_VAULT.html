@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Cinema Vault — Personal Film & Prestige Series Archive</title>
+  <meta name="referrer" content="no-referrer">
+  <title>Cinema Vault — Personal Watchlist & Watched Archive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -14,25 +15,21 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            cinema: ['"Cinzel Decorative"', 'Cinzel', 'serif'],
-            cinzel: ['Cinzel', 'serif'],
-            marquee: ['"Bebas Neue"', 'sans-serif'],
-            quote: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            syne: ['Syne', 'sans-serif'],
+            sans: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+            inter: ['Inter', 'sans-serif'],
+            display: ['Poppins', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
-            display: ['Syne', 'sans-serif'],
           },
           colors: {
             vault: {
-              black: '#07080b',
-              surface: '#0e1017',
-              card: '#13151f',
-              input: '#181b27',
+              black: '#090a0f',
+              surface: '#10121a',
+              card: '#141722',
+              input: '#181b28',
               border: 'rgba(255, 255, 255, 0.08)',
               gold: '#f59e0b',
               'gold-hover': '#fbbf24',
-              'gold-muted': '#d97706',
             }
           }
         }
@@ -44,24 +41,19 @@
       --glow-color: rgba(245, 158, 11, 0.08);
     }
     body {
-      background-color: #07080b;
-      color: #e2e8f0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #090a0f;
+      color: #f1f5f9;
+      font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.06), transparent 70%),
-        radial-gradient(ellipse 60% 40% at 85% 80%, rgba(99, 102, 241, 0.04), transparent 60%);
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.05), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 85% 80%, rgba(99, 102, 241, 0.03), transparent 60%);
       background-attachment: fixed;
     }
 
-    .font-cinema-title { font-family: 'Cinzel Decorative', 'Cinzel', serif; }
-    .font-cinzel { font-family: 'Cinzel', serif; }
-    .font-marquee { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em; }
-    .font-quote { font-family: 'Cormorant Garamond', Georgia, serif; }
-    .font-syne { font-family: 'Syne', sans-serif; }
+    .font-cinema { font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
-    .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
 
     /* Ambient Cinema Warm Vignette */
     .ambient-screen-glow {
@@ -75,49 +67,7 @@
       filter: blur(80px);
       pointer-events: none;
       z-index: 0;
-      transition: background 0.8s ease;
       opacity: 0.5;
-    }
-
-    /* 35mm Film Projector Grain & Flicker Simulation */
-    .film-projector-active {
-      position: relative;
-    }
-    .film-projector-active::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.75;
-      animation: grainFlicker 0.12s infinite;
-    }
-    .film-projector-active::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      box-shadow: inset 0 0 160px rgba(0,0,0,0.9), inset 0 0 60px rgba(0,0,0,0.95);
-      pointer-events: none;
-      z-index: 998;
-      animation: gateJitter 0.15s infinite;
-    }
-
-    @keyframes grainFlicker {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      20% { transform: translate(-1%, 1%) scale(1.01); }
-      40% { transform: translate(1%, -1%) scale(0.99); }
-      60% { transform: translate(-1%, -1%) scale(1.02); }
-      80% { transform: translate(1%, 1%) scale(1); }
-    }
-    @keyframes gateJitter {
-      0%, 100% { opacity: 0.98; }
-      50% { opacity: 1.0; }
-    }
-    @keyframes shimmer {
-      100% { transform: translateX(100%); }
     }
 
     /* 3D Interactive Card Physics */
@@ -152,52 +102,7 @@
       opacity: 1;
     }
 
-    /* Vintage Perforated Ticket Stub Styling */
-    .ticket-stub {
-      background: linear-gradient(145deg, #141416 0%, #0f0f11 100%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      position: relative;
-      display: flex;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .ticket-stub:hover {
-      transform: translateY(-3px);
-      border-color: rgba(245, 158, 11, 0.35);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 20px rgba(245, 158, 11, 0.1);
-    }
-    .ticket-divider {
-      position: relative;
-      border-left: 2px dashed rgba(255, 255, 255, 0.15);
-    }
-    .ticket-divider::before {
-      content: "";
-      position: absolute;
-      top: -12px;
-      left: -13px;
-      width: 24px;
-      height: 24px;
-      background-color: #09090b;
-      border-radius: 50%;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 20;
-    }
-    .ticket-divider::after {
-      content: "";
-      position: absolute;
-      bottom: -12px;
-      left: -13px;
-      width: 24px;
-      height: 24px;
-      background-color: #09090b;
-      border-radius: 50%;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 20;
-    }
-
-    /* Proper Accessible HTML5 Dialog Styling */
+    /* Dialog styling */
     dialog:not([open]) {
       display: none !important;
       pointer-events: none !important;
@@ -216,7 +121,7 @@
       -webkit-backdrop-filter: blur(12px);
     }
 
-    /* Custom Scrollbar */
+    /* Custom Scrollbars */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #09090b; }
     ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
@@ -224,18 +129,9 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* Accessibility: Focus Rings & Reduced Motion */
     :focus-visible {
       outline: 2px solid #f59e0b !important;
       outline-offset: 2px !important;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .cinema-card, .ticket-stub, .film-projector-active::before, .film-projector-active::after,
-      #directorCarouselTrack, #thumbShimmer {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
-      }
     }
   </style>
 </head>
@@ -248,71 +144,56 @@
   <div class="relative z-10 min-h-screen flex flex-col">
 
     <!-- Top Navigation Header -->
-    <header class="border-b border-white/[0.08] bg-[#0c0c0e]/95 backdrop-blur-md sticky top-0 z-40 transition-colors">
+    <header class="border-b border-white/[0.08] bg-[#0c0c0e]/95 backdrop-blur-md sticky top-0 z-40">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         
         <!-- Left: Brand -->
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center text-amber-400">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V7h8v2z"/></svg>
+          <div class="w-9 h-9 rounded-xl bg-zinc-900 border border-white/10 flex items-center justify-center text-amber-400 shadow-inner">
+            <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-8v-2h8v2zm0-4h-8v-2h8v2zm0-4h-8V7h8v2z"/></svg>
           </div>
           <div>
             <div class="flex items-center gap-2">
               <span class="font-cinema text-base sm:text-lg font-bold tracking-wider text-white">CINEMA VAULT</span>
             </div>
-            <p class="text-[10px] text-zinc-400 font-mono tracking-wider uppercase">Archive & Watchlist</p>
+            <p class="text-[10px] text-zinc-400 font-mono tracking-wider uppercase">Personal Watchlist & Watched</p>
           </div>
         </div>
 
-        <!-- Center: Minimal Segmented Tab Switcher (Watched vs Watchlist) -->
-        <div class="flex items-center p-1 bg-zinc-900/90 rounded-xl border border-white/[0.08] text-xs font-medium">
-          <button id="tabWatchedBtn" onclick="setVaultTab('watched')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition bg-zinc-800 text-white shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400" title="View Watched Vault (Hotkey: W)">
-            <span>Watched</span>
-            <span id="tabCountWatched" class="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-zinc-950 text-zinc-300 font-bold border border-white/10">0</span>
+        <!-- Center: Primary 2-Option Segmented Switcher -->
+        <div class="flex items-center p-1 bg-zinc-900/90 rounded-xl border border-white/[0.08] text-xs font-medium shadow-sm">
+          <button id="tabWatchedBtn" onclick="setVaultTab('watched')" class="px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition bg-zinc-800 text-white shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400" title="View Watched Movies & Series (Hotkey: W)">
+            <span>🎬 Watched (Latest)</span>
+            <span id="tabCountWatched" class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-zinc-950 text-amber-400 font-bold border border-amber-500/20">0</span>
           </button>
-          <button id="tabWatchlistBtn" onclick="setVaultTab('watchlist')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus-visible:ring-2 focus-visible:ring-amber-400" title="View Watchlist Queue (Hotkey: W)">
-            <span>Watchlist</span>
-            <span id="tabCountWatchlist" class="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-zinc-950 text-zinc-400 font-medium border border-white/10">0</span>
+          <button id="tabWatchlistBtn" onclick="setVaultTab('watchlist')" class="px-4 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus-visible:ring-2 focus-visible:ring-amber-400" title="View Watchlist / What I Want to Watch (Hotkey: W)">
+            <span>⏳ Watchlist</span>
+            <span id="tabCountWatchlist" class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-zinc-950 text-zinc-400 font-medium border border-white/10">0</span>
           </button>
         </div>
 
-        <!-- Right: Action Suite -->
+        <!-- Right: Primary Actions (Add Single + Bulk Add + CineMatch) -->
         <div class="flex items-center gap-2">
-          <!-- View Toggle (Posters vs Tickets) -->
-          <div class="hidden sm:flex items-center p-0.5 bg-zinc-900 rounded-lg border border-white/[0.08]">
-            <button id="viewPosterBtn" onclick="setViewMode('poster')" class="p-1.5 rounded-md text-xs transition bg-zinc-800 text-amber-400 shadow-sm" title="Poster Grid View (V)">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-            </button>
-            <button id="viewTicketBtn" onclick="setViewMode('ticket')" class="p-1.5 rounded-md text-xs transition text-zinc-400 hover:text-white" title="Ticket Stubs View (V)">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
-            </button>
-          </div>
+          <!-- CineMatch Swipe Deck Button -->
+          <a href="CINEMA_MATCH.html" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-rose-500/20 to-pink-500/20 hover:from-rose-500/30 hover:to-pink-500/30 border border-rose-500/30 text-rose-300 font-semibold text-xs flex items-center gap-1.5 transition shadow-sm" title="Open Tinder-style CineMatch Discovery Deck">
+            <span>🔥</span>
+            <span class="hidden sm:inline">CineMatch</span>
+          </a>
 
-          <!-- 35mm Audio Toggle -->
-          <button id="projectorToggleBtn" onclick="toggleProjectorMode()" class="p-2 rounded-lg bg-zinc-900 border border-white/[0.08] hover:border-amber-500/40 text-zinc-400 hover:text-amber-300 transition" title="Toggle 35mm Projector Atmosphere (Hotkey: P)">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+          <!-- Bulk Add Button -->
+          <button onclick="openAddModal('bulk')" class="px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/[0.08] hover:border-amber-400/40 text-amber-400 font-medium text-xs flex items-center gap-1.5 transition shadow-sm" title="Bulk Add List of Movies/Series (Hotkey: B)">
+            <span>⚡</span>
+            <span class="hidden sm:inline">Bulk Add</span>
           </button>
 
-          <!-- Import Letterboxd / JSON -->
-          <button onclick="openImportModal()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-white/[0.08] text-xs font-mono text-zinc-300 hover:text-white transition" title="Import Letterboxd / JSON (Hotkey: I)">
-            <span>📥</span>
-            <span>Import</span>
-          </button>
-
-          <!-- Export CSV / JSON -->
-          <button onclick="openExportModal()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-white/[0.08] text-xs font-mono text-zinc-300 hover:text-white transition" title="Export CSV / JSON (Hotkey: E)">
-            <span>📤</span>
-            <span>Export</span>
-          </button>
-
-          <!-- Primary Add Title Button -->
-          <button onclick="openAddModal()" class="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs flex items-center gap-1.5 transition shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400" title="Feed New Cinema Memory (Hotkey: N)">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+          <!-- Primary Add Single Title Button -->
+          <button onclick="openAddModal('single')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs flex items-center gap-1.5 transition shadow-lg shadow-amber-500/10 focus-visible:ring-2 focus-visible:ring-amber-400" title="Add Movie or Series (Hotkey: N)">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
             <span>Add Title</span>
           </button>
 
-          <a href="/" class="p-2 rounded-lg bg-zinc-900 border border-white/[0.08] hover:border-amber-500/40 text-zinc-400 hover:text-white transition" title="Return to Dashboard Hub">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <a href="/" class="p-2 rounded-xl bg-zinc-900 border border-white/[0.08] hover:border-amber-500/40 text-zinc-400 hover:text-white transition" title="Return to Dashboard Hub">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
           </a>
         </div>
 
@@ -322,7 +203,7 @@
     <!-- Main Content Container -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-      <!-- Minimalist Editorial Stats Strip -->
+      <!-- Minimal Stats Strip -->
       <section aria-label="Archive Summary" class="bg-zinc-900/50 border border-white/[0.08] rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-zinc-400">
         <div class="flex items-center flex-wrap gap-4 sm:gap-6 divide-x divide-white/[0.08]">
           <div class="flex items-center gap-2">
@@ -330,142 +211,71 @@
             <span class="text-white font-bold text-sm" id="statTotalTitles">0</span>
           </div>
           <div class="pl-4 sm:pl-6 flex items-center gap-2">
-            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Queue</span>
-            <span class="text-white font-bold text-sm" id="statWatchlistCount">0</span>
+            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Watchlist</span>
+            <span class="text-amber-400 font-bold text-sm" id="statWatchlistCount">0</span>
           </div>
           <div class="pl-4 sm:pl-6 flex items-center gap-2">
-            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Runtime</span>
-            <span class="text-white font-bold text-sm" id="statHoursLogged">0.0 hrs</span>
+            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Hours Watched</span>
+            <span class="text-white font-bold text-sm font-mono text-amber-400" id="statHoursLogged">0.0 hrs</span>
           </div>
           <div class="pl-4 sm:pl-6 flex items-center gap-2">
-            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Avg Score</span>
+            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Avg Rating</span>
             <span class="text-amber-400 font-bold text-sm" id="statAvgRating">-- / 10</span>
           </div>
           <div class="pl-4 sm:pl-6 flex items-center gap-2">
-            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Masterpieces</span>
-            <span class="text-white font-bold text-sm" id="statMasterpieces">0</span>
-          </div>
-          <div class="pl-4 sm:pl-6 flex items-center gap-2">
-            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Rewatches</span>
+            <span class="text-zinc-500 text-[11px] uppercase tracking-wider font-sans">Total Rewatches</span>
             <span class="text-white font-bold text-sm" id="statTotalRewatches">0</span>
           </div>
         </div>
-      </section>
 
-      <!-- Auteur & Director Spotlight (Smart Visibility: Hides when empty) -->
-      <section id="directorSpotlightSection" aria-label="Director Spotlight" class="hidden bg-zinc-900/60 border border-white/[0.08] rounded-xl p-4 sm:p-5">
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-            <h2 class="font-cinema text-xs sm:text-sm font-bold tracking-wider text-zinc-200">Auteur Spotlight</h2>
-            <span id="directorCountBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-zinc-400">Visionaries</span>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <button onclick="scrollDirectorCarousel(-1)" class="p-1 px-2 rounded bg-zinc-800 text-zinc-400 hover:text-white transition" title="Previous Directors">‹</button>
-            <button onclick="scrollDirectorCarousel(1)" class="p-1 px-2 rounded bg-zinc-800 text-zinc-400 hover:text-white transition" title="Next Directors">›</button>
-          </div>
-        </div>
-        <div id="directorCarouselTrack" class="flex gap-3 overflow-x-auto no-scrollbar scroll-smooth py-1" tabindex="0" role="region"></div>
-        <div id="activeDirectorChip" class="hidden mt-3 pt-2.5 border-t border-white/[0.08] flex items-center justify-between text-xs">
-          <div class="flex items-center gap-2">
-            <span class="text-zinc-400 font-mono text-[11px]">AUTEUR FILTER:</span>
-            <span id="activeDirectorName" class="font-bold text-amber-300 font-display">Director Name</span>
-          </div>
-          <button onclick="clearDirectorFilter()" class="px-2.5 py-1 rounded-lg text-xs font-mono bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition border border-amber-500/30">✕ Clear</button>
+        <div class="text-[11px] font-mono text-zinc-500 flex items-center gap-2">
+          <span>Active View:</span>
+          <strong id="activeTabName" class="text-amber-300 font-semibold">Watched (Latest)</strong>
         </div>
       </section>
 
-      <!-- Search & Filters Console -->
-      <section aria-label="Search and Filter Controls" class="space-y-3">
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-          
-          <!-- Search Input -->
-          <div class="relative flex-1 max-w-md">
-            <svg class="w-4 h-4 text-zinc-500 absolute left-3 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            <input 
-              type="text" 
-              id="searchInput" 
-              oninput="handleSearchFilter()" 
-              placeholder="Search titles, directors, quotes... ('/' to focus)" 
-              class="w-full bg-zinc-900 border border-white/[0.08] rounded-xl py-2 pl-9 pr-9 text-xs sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition"
-            >
-            <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-2 text-xs text-zinc-500 hover:text-white p-1" title="Clear">✕</button>
-          </div>
-
-          <!-- Format Pills -->
-          <div class="flex items-center gap-1 bg-zinc-900 p-1 rounded-xl border border-white/[0.08]" id="typeFilterContainer">
-            <button onclick="setTypeFilter('all')" data-type="all" class="type-pill px-3 py-1 rounded-lg text-xs font-semibold transition bg-zinc-800 text-white shadow-sm">All</button>
-            <button onclick="setTypeFilter('Movie')" data-type="Movie" class="type-pill px-3 py-1 rounded-lg text-xs font-medium transition text-zinc-400 hover:text-white">Movies</button>
-            <button onclick="setTypeFilter('TV Series')" data-type="TV Series" class="type-pill px-3 py-1 rounded-lg text-xs font-medium transition text-zinc-400 hover:text-white">TV Series</button>
-            <button onclick="setTypeFilter('Miniseries')" data-type="Miniseries" class="type-pill px-3 py-1 rounded-lg text-xs font-medium transition text-zinc-400 hover:text-white">Miniseries</button>
-          </div>
-
-          <!-- Compact Dropdowns -->
-          <div class="flex items-center gap-2">
-            <select id="genreSelect" onchange="handleSearchFilter()" class="bg-zinc-900 border border-white/[0.08] rounded-xl px-2.5 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-amber-400">
-              <option value="all">All Genres</option>
-              <option value="Sci-Fi">Sci-Fi</option>
-              <option value="Drama">Drama</option>
-              <option value="Thriller">Thriller</option>
-              <option value="Mystery">Mystery</option>
-              <option value="Crime">Crime</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Psychological">Psychological</option>
-              <option value="Biography">Biography</option>
-              <option value="Sport">Sport</option>
-            </select>
-
-            <select id="ratingSelect" onchange="handleSearchFilter()" class="bg-zinc-900 border border-white/[0.08] rounded-xl px-2.5 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-amber-400">
-              <option value="all">All Ratings</option>
-              <option value="9.7">Masterpiece (9.7+)</option>
-              <option value="9.5">Near Flawless (9.5+)</option>
-              <option value="9.0">Elite (9.0+)</option>
-            </select>
-
-            <select id="sortSelect" onchange="handleSearchFilter()" class="bg-zinc-900 border border-white/[0.08] rounded-xl px-2.5 py-1.5 text-xs text-amber-400 font-medium focus:outline-none focus:border-amber-400">
-              <option value="rating_desc">Highest Rated ★</option>
-              <option value="rewatch_desc">Most Rewatched</option>
-              <option value="year_desc">Year (Newest)</option>
-              <option value="year_asc">Year (Oldest)</option>
-              <option value="title_asc">Title (A-Z)</option>
-            </select>
-          </div>
-
+      <!-- Clean Search & Filter Bar -->
+      <section aria-label="Search Controls" class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <!-- Search Input -->
+        <div class="relative flex-1 max-w-md">
+          <svg class="w-4 h-4 text-zinc-500 absolute left-3.5 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <input 
+            type="text" 
+            id="searchInput" 
+            oninput="handleSearchFilter()" 
+            placeholder="Search movie or series name... ('/' to focus)" 
+            class="w-full bg-zinc-900 border border-white/[0.08] rounded-xl py-2 pl-10 pr-9 text-xs sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition"
+          >
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-2.5 text-xs text-zinc-500 hover:text-white p-1" title="Clear">✕</button>
         </div>
 
-        <!-- Meta status line -->
-        <div class="flex items-center justify-between text-xs text-zinc-500 pt-1">
-          <div class="flex items-center gap-2">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-            <span>Showing <strong id="visibleCount" class="text-zinc-200">0</strong> in <strong id="activeTabName" class="text-zinc-200">Watched Vault</strong></span>
-          </div>
-          <div class="text-[11px] font-mono text-zinc-600 hidden sm:block">
-            Hotkeys: <kbd class="px-1.5 py-0.5 bg-zinc-900 rounded border border-white/10">/</kbd> search • <kbd class="px-1.5 py-0.5 bg-zinc-900 rounded border border-white/10">W</kbd> tab • <kbd class="px-1.5 py-0.5 bg-zinc-900 rounded border border-white/10">N</kbd> add • <kbd class="px-1.5 py-0.5 bg-zinc-900 rounded border border-white/10">V</kbd> view
-          </div>
+        <!-- Format Filter Pills -->
+        <div class="flex items-center gap-1.5 bg-zinc-900 p-1 rounded-xl border border-white/[0.08]" id="typeFilterContainer">
+          <button onclick="setTypeFilter('all')" data-type="all" class="type-pill px-3 py-1 rounded-lg text-xs font-semibold transition bg-zinc-800 text-white shadow-sm">All</button>
+          <button onclick="setTypeFilter('Movie')" data-type="Movie" class="type-pill px-3 py-1 rounded-lg text-xs font-medium transition text-zinc-400 hover:text-white">Movies</button>
+          <button onclick="setTypeFilter('TV Series')" data-type="TV Series" class="type-pill px-3 py-1 rounded-lg text-xs font-medium transition text-zinc-400 hover:text-white">TV Series</button>
         </div>
       </section>
 
-      <!-- Main Display Container -->
+      <!-- Main Display Cards Grid -->
       <section id="vaultDisplayContainer" aria-label="Cinema Entries" class="py-2">
         <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
-        <div id="ticketsGrid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
 
-        <!-- Empty State -->
+        <!-- Clean Empty State -->
         <div id="emptyState" class="hidden py-20 text-center space-y-4">
-          <div class="w-14 h-14 mx-auto rounded-xl bg-zinc-900 border border-white/[0.08] flex items-center justify-center text-zinc-400 text-2xl shadow-lg">
+          <div class="w-14 h-14 mx-auto rounded-2xl bg-zinc-900 border border-white/[0.08] flex items-center justify-center text-zinc-400 text-2xl shadow-lg">
             🎬
           </div>
-          <h3 class="text-lg font-cinema font-bold text-white tracking-wide" id="emptyStateTitle">Your Cinema Vault is Ready</h3>
-          <p class="text-xs text-zinc-400 max-w-sm mx-auto" id="emptyStateDesc">Log movies and series you have watched, or import your Letterboxd archive.</p>
-          <div class="flex items-center justify-center gap-3 pt-2" id="emptyStateActions">
-            <button onclick="openAddModal()" class="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition shadow-sm flex items-center gap-2">
-              <span>+ Add First Title</span>
+          <h3 class="text-lg font-cinema font-bold text-white tracking-wide" id="emptyStateTitle">No Titles Found</h3>
+          <p class="text-xs text-zinc-400 max-w-sm mx-auto" id="emptyStateDesc">Add movies or series individually, or paste a bulk list to auto-fetch all posters instantly.</p>
+          <div class="flex items-center justify-center gap-3 pt-2">
+            <button onclick="openAddModal('bulk')" class="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-amber-400 font-semibold text-xs transition flex items-center gap-2">
+              <span>⚡ Bulk Add List</span>
             </button>
-            <button onclick="openImportModal()" class="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white font-medium text-xs transition border border-white/[0.08] flex items-center gap-2">
-              <span>📥 Import Letterboxd</span>
+            <button onclick="openAddModal('single')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition shadow-sm flex items-center gap-2">
+              <span>+ Add Single Title</span>
             </button>
           </div>
-          <button id="resetFiltersBtn" onclick="resetFilters()" class="hidden px-4 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-xs font-medium text-amber-400 transition border border-white/10">Reset Filters</button>
         </div>
       </section>
 
@@ -476,215 +286,268 @@
       <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-2">
           <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-          <span class="font-mono text-zinc-400">Cinema Vault • Personal Archive & Watchlist</span>
+          <span class="font-mono text-zinc-400">Cinema Vault • Fast Auto-Poster & Watchlist Hub</span>
         </div>
         <div class="text-[11px] font-mono text-zinc-600">
-          Local-first • No Cloud Locks • High Dynamic Contrast
+          Local First • Instant Bulk Auto-Fetcher
         </div>
       </div>
     </footer>
 
   </div>
 
-  <!-- MODAL: ADD ENTRY (STUDIO) -->
+  <!-- MODAL: ADD ENTRY (SINGLE & BULK MODE) -->
   <dialog id="addModal" class="fixed inset-0 w-full h-full p-4 sm:p-6 z-50 items-center justify-center border-none bg-transparent">
-    <div class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-y-auto p-6 sm:p-7 shadow-2xl shadow-black relative text-left">
+    <div class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-2xl p-6 sm:p-7 shadow-2xl shadow-black relative text-left max-h-[92vh] overflow-y-auto">
       
       <!-- Close Button -->
       <button onclick="closeAddModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition" title="Close (Esc)">✕</button>
 
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between gap-4 mb-5 pr-10">
+      <!-- Top Mode Switcher: Single vs Bulk -->
+      <div class="flex items-center justify-between gap-4 mb-5 pr-10 border-b border-white/[0.08] pb-4">
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-zinc-800 text-amber-400 border border-white/10 flex items-center justify-center text-base">
+          <div class="w-9 h-9 rounded-xl bg-zinc-800 text-amber-400 border border-white/10 flex items-center justify-center text-base">
             🎬
           </div>
           <div>
-            <h2 class="font-cinema text-lg font-bold text-white tracking-wide">Add Cinema Memory</h2>
-            <p class="text-xs text-zinc-400">Log a watched film or stage an upcoming title.</p>
+            <h2 class="font-display font-bold text-lg text-white tracking-wide" id="modalHeaderTitle">Add to Cinema Vault</h2>
+            <p class="text-xs text-zinc-400" id="modalHeaderSubtitle">Auto-fetch authentic posters & choose status.</p>
           </div>
         </div>
 
-        <button type="button" id="aiCritiqueBtn" onclick="runAiCritique()" class="hidden sm:flex shrink-0 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs items-center gap-1.5 transition shadow-sm" title="Auto-fill via local Ollama LLM">
-          <span id="aiCritiqueSpinner" class="hidden animate-spin">⟳</span>
-          <span id="aiCritiqueText">✨ Auto-Fill with AI</span>
-        </button>
+        <!-- Mode Toggle Segment -->
+        <div class="flex items-center p-1 bg-zinc-950 rounded-xl border border-white/[0.08] text-xs font-medium">
+          <button type="button" id="modeBtnSingle" onclick="switchAddMode('single')" class="px-3 py-1 rounded-lg font-semibold transition bg-zinc-800 text-white shadow-sm">
+            Single
+          </button>
+          <button type="button" id="modeBtnBulk" onclick="switchAddMode('bulk')" class="px-3 py-1 rounded-lg font-medium transition text-zinc-400 hover:text-white">
+            ⚡ Bulk List
+          </button>
+        </div>
       </div>
 
-      <form id="addMovieForm" onsubmit="handleSaveMemory(event)" class="space-y-5">
+      <!-- SECTION 1: SINGLE ADD FORM -->
+      <form id="singleAddForm" onsubmit="handleSaveTitle(event)" class="space-y-4">
         
-        <!-- Status Switcher -->
-        <div class="p-1.5 bg-zinc-950 rounded-xl border border-white/[0.08] flex items-center justify-between gap-3">
-          <span class="text-xs font-mono text-zinc-400 px-2 uppercase tracking-wider">Destination:</span>
-          <div class="flex items-center gap-1 flex-1 max-w-xs">
-            <button type="button" id="statusPillWatched" onclick="setFormStatus('watched')" class="flex-1 py-1 px-3 rounded-lg text-xs font-semibold font-mono transition bg-zinc-800 text-white shadow-sm">
-              Watched
+        <!-- 1. Destination Option: Watched vs Watchlist -->
+        <div>
+          <label class="block text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1.5">Where are you adding this?</label>
+          <div class="p-1 bg-zinc-950 rounded-xl border border-white/[0.08] flex items-center gap-1.5">
+            <button type="button" id="statusPillWatched" onclick="setFormStatus('watched')" class="flex-1 py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition bg-zinc-800 text-white shadow-sm focus:outline-none">
+              <span>🎬</span> <span>Watched (Already Seen)</span>
             </button>
-            <button type="button" id="statusPillWatchlist" onclick="setFormStatus('watchlist')" class="flex-1 py-1 px-3 rounded-lg text-xs font-medium font-mono transition text-zinc-400 hover:text-white">
-              Watchlist
+            <button type="button" id="statusPillWatchlist" onclick="setFormStatus('watchlist')" class="flex-1 py-2 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition text-zinc-400 hover:text-white focus:outline-none">
+              <span>⏳</span> <span>Watchlist (Want to Watch)</span>
             </button>
+            <input type="hidden" id="formStatus" value="watched">
           </div>
-          <input type="hidden" id="formStatus" value="watched">
         </div>
 
-        <!-- 2-Column Form Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+        <!-- 2. Movie / Series Name Input with Auto-Fetch Trigger -->
+        <div>
+          <label class="block text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1.5" for="inputTitle">Movie or Series Name *</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="inputTitle" 
+              placeholder="e.g. Inception, Breaking Bad, Dune, 3 Idiots, Tumbbad..." 
+              oninput="handleTitleInput(this.value)"
+              class="w-full bg-zinc-950 border border-white/15 focus:border-amber-400 rounded-xl px-3.5 py-2.5 pr-28 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-amber-400 transition"
+            >
+            <button 
+              type="button" 
+              id="autoFetchBtn"
+              onclick="triggerAutoThumbnail()"
+              class="absolute right-1.5 top-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-amber-500 hover:text-black text-zinc-300 font-mono text-[11px] font-medium flex items-center gap-1.5 transition shadow-sm"
+              title="Click to fetch poster"
+            >
+              <span>🖼</span> <span>Auto-Fetch</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Auto-Fetched Poster Preview & Rating Area -->
+        <div class="grid grid-cols-12 gap-3.5 p-3.5 bg-zinc-950/80 rounded-xl border border-white/[0.08] items-center">
           
-          <!-- LEFT: 2:3 Vertical Poster Preview -->
-          <div class="md:col-span-4 flex flex-col items-center">
-            <div id="thumbPreviewBox" class="w-full aspect-[2/3] max-w-[200px] rounded-xl bg-zinc-950 border border-white/10 overflow-hidden relative shadow-lg flex flex-col items-center justify-center text-center p-3 group transition-all duration-300">
+          <!-- Poster Preview Box -->
+          <div class="col-span-4 sm:col-span-3">
+            <div id="thumbPreviewBox" class="w-full aspect-[2/3] rounded-lg bg-zinc-900 border border-white/10 overflow-hidden relative shadow-md flex flex-col items-center justify-center text-center p-2">
               <img id="thumbPreviewImg" src="" alt="Poster Preview" class="w-full h-full object-cover hidden">
               
-              <div id="thumbPlaceholderIcon" class="flex flex-col items-center text-zinc-600 space-y-2">
-                <span class="text-2xl">🎬</span>
-                <span class="text-[11px] font-mono font-medium text-zinc-400">Live Poster Preview</span>
-                <span class="text-[9px] text-zinc-500 max-w-[130px] leading-tight">Artwork auto-fetches as you type</span>
+              <div id="thumbPlaceholderIcon" class="flex flex-col items-center text-zinc-600 space-y-1">
+                <span class="text-2xl">🖼</span>
+                <span class="text-[9px] font-mono text-zinc-500">Auto-Poster</span>
               </div>
 
               <!-- Shimmer Loader -->
-              <div id="thumbShimmerOverlay" class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent hidden animate-pulse pointer-events-none"></div>
+              <div id="thumbShimmerOverlay" class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent hidden animate-pulse pointer-events-none"></div>
 
               <!-- Badges -->
-              <div id="thumbAutoDetectBadge" class="hidden absolute top-2 left-2 px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-zinc-950/80 text-amber-400 border border-amber-400/30">
-                Official Artwork
-              </div>
-              <div id="thumbResolutionBadge" class="hidden absolute bottom-2 left-2 px-1.5 py-0.5 rounded text-[8px] font-mono text-zinc-300 bg-zinc-950/80 border border-white/10">
-                HD
-              </div>
-              <div id="thumbSourceBadge" class="hidden absolute bottom-2 right-2 px-1.5 py-0.5 rounded text-[8px] font-mono text-zinc-400 bg-zinc-950/80 border border-white/10">
-                Archive
+              <div id="thumbAutoDetectBadge" class="hidden absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-zinc-950/90 text-amber-400 border border-amber-400/30">
+                Official HD
               </div>
             </div>
-
-            <!-- Custom Poster URL Accordion -->
-            <details class="w-full max-w-[200px] mt-2.5 text-left">
-              <summary class="text-[10px] font-mono text-zinc-500 hover:text-zinc-300 cursor-pointer text-center">Custom Poster URL ▾</summary>
-              <input 
-                type="url" 
-                id="customPosterInput" 
-                placeholder="https://...image.jpg"
-                oninput="handleCustomPosterUrl(this.value)"
-                class="w-full mt-1.5 bg-zinc-950 border border-white/10 rounded-lg px-2 py-1 text-[10px] text-white focus:outline-none focus:border-amber-400"
-              />
-            </details>
           </div>
 
-          <!-- RIGHT: Inputs -->
-          <div class="md:col-span-8 space-y-3.5">
+          <!-- Controls & Rating -->
+          <div class="col-span-8 sm:col-span-9 space-y-3">
             
-            <!-- Title with Auto-Fetch Button -->
-            <div>
-              <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="inputTitle">Title *</label>
-              <div class="relative">
-                <input 
-                  type="text" 
-                  id="inputTitle" 
-                  required 
-                  placeholder="e.g., The Prestige, Severance, Dune, Oppenheimer" 
-                  oninput="handleTitleInput(this.value)"
-                  class="w-full bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 pr-24 text-xs sm:text-sm text-white focus:outline-none focus:border-amber-400"
-                >
-                <button 
-                  type="button" 
-                  id="autoFetchBtn"
-                  onclick="triggerAutoThumbnail()"
-                  class="absolute right-1.5 top-1 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white font-mono text-[10px] flex items-center gap-1 transition"
-                  title="Search & fetch poster"
-                >
-                  <span>🖼</span> <span>Auto-Fetch</span>
-                </button>
+            <!-- Rating Control (Active only when Watched) -->
+            <div id="ratingControlGroup" class="space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-mono text-zinc-400 uppercase tracking-wider text-[10px]">Your Rating:</span>
+                <span id="ratingValDisplay" class="font-mono font-bold text-amber-400 text-sm">9.0 ★</span>
               </div>
+              <input type="range" id="inputRating" min="1" max="10" step="0.1" value="9.0" oninput="updateRatingDisplay(this.value)" class="w-full accent-amber-500 cursor-pointer">
             </div>
 
-            <!-- Format & Year -->
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="selectType">Format</label>
-                <select id="selectType" onchange="triggerAutoThumbnail()" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
-                  <option value="Movie">Movie (Feature Film)</option>
-                  <option value="TV Series">TV Series (Multi-Season)</option>
-                  <option value="Miniseries">Miniseries (Limited Run)</option>
-                </select>
+            <!-- Alternate Poster Options -->
+            <div id="posterOptionsSection" class="hidden space-y-1">
+              <div class="flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><strong id="posterOptionsCountText">Posters Found</strong>:</span>
+                <span class="text-zinc-500">Click to switch</span>
               </div>
-              <div>
-                <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="inputYear">Release Year</label>
-                <input type="text" id="inputYear" placeholder="2024" onchange="triggerAutoThumbnail()" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
-              </div>
+              <div id="posterOptionsList" class="flex gap-2 overflow-x-auto pb-1 pt-0.5 no-scrollbar"></div>
             </div>
 
-            <!-- Director & Platform -->
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="inputDirector">Director / Creator</label>
-                <input type="text" id="inputDirector" placeholder="e.g. Christopher Nolan" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+            <!-- Optional Info Accordion -->
+            <details class="text-left text-xs">
+              <summary class="text-[10px] font-mono text-zinc-500 hover:text-zinc-300 cursor-pointer">⚙ Optional Details (Auto-filled) ▾</summary>
+              <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-white/[0.06]">
+                <div>
+                  <label class="block text-[9px] font-mono text-zinc-500 uppercase">Format</label>
+                  <select id="selectType" class="w-full bg-zinc-900 border border-white/10 rounded-lg px-2 py-1 text-xs text-white">
+                    <option value="Movie">Movie</option>
+                    <option value="TV Series">TV Series</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[9px] font-mono text-zinc-500 uppercase">Release Year</label>
+                  <input type="text" id="inputYear" placeholder="e.g. 2024" class="w-full bg-zinc-900 border border-white/10 rounded-lg px-2 py-1 text-xs text-white font-mono">
+                </div>
+                <div class="col-span-2">
+                  <label class="block text-[9px] font-mono text-zinc-500 uppercase">Director / Creator</label>
+                  <input type="text" id="inputDirector" placeholder="e.g. Christopher Nolan" class="w-full bg-zinc-900 border border-white/10 rounded-lg px-2 py-1 text-xs text-white">
+                </div>
+                <div class="col-span-2">
+                  <label class="block text-[9px] font-mono text-zinc-500 uppercase">Custom Poster URL</label>
+                  <input type="url" id="customPosterInput" placeholder="https://..." oninput="handleCustomPosterUrl(this.value)" class="w-full bg-zinc-900 border border-white/10 rounded-lg px-2 py-1 text-[10px] text-white">
+                </div>
               </div>
-              <div>
-                <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="selectPlatform">Platform</label>
-                <select id="selectPlatform" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
-                  <option value="Theater / 70mm IMAX">Theater / 70mm IMAX</option>
-                  <option value="HBO Max">HBO Max</option>
-                  <option value="Apple TV+">Apple TV+</option>
-                  <option value="Netflix">Netflix</option>
-                  <option value="Prime Video">Prime Video</option>
-                  <option value="Physical 4K UHD">Physical 4K UHD</option>
-                  <option value="Personal Archive">Personal Archive</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Rating Slider (Watched only) -->
-            <div id="ratingControlGroup" class="p-2.5 bg-zinc-950 rounded-xl border border-white/[0.08] space-y-1.5">
-              <div class="flex justify-between items-center">
-                <label class="text-xs font-mono text-zinc-400 uppercase tracking-wider" for="inputRating">Personal Rating (1-10)</label>
-                <span id="ratingValDisplay" class="text-xs font-mono font-bold text-amber-400">9.5 ★</span>
-              </div>
-              <input type="range" id="inputRating" min="1" max="10" step="0.1" value="9.5" oninput="updateRatingDisplay(this.value)" class="w-full accent-amber-500 cursor-pointer">
-            </div>
-
-            <!-- Rewatch Counter -->
-            <div id="rewatchControlGroup" class="flex items-center justify-between p-2 bg-zinc-950 rounded-xl border border-white/[0.08]">
-              <label class="text-xs font-mono text-zinc-400 uppercase tracking-wider" for="inputRewatches">Rewatches Logged</label>
-              <input type="number" id="inputRewatches" min="1" value="1" class="w-16 bg-zinc-900 border border-white/10 rounded-lg px-2 py-1 text-xs text-white text-center font-mono">
-            </div>
+            </details>
 
           </div>
-        </div>
-
-        <!-- Secondary Fields -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-white/[0.08]">
-          <div>
-            <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="inputGenres">Genres (comma separated)</label>
-            <input type="text" id="inputGenres" placeholder="Sci-Fi, Drama, Mystery" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
-          </div>
-          <div>
-            <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="inputVibe">Emotional Resonance Tag</label>
-            <input type="text" id="inputVibe" placeholder="e.g. Existential Dread & Cosmic Grief" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
-          </div>
-        </div>
-
-        <!-- Hot Take -->
-        <div>
-          <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="inputHotTake">Personal Unfiltered Hot Take</label>
-          <textarea id="inputHotTake" rows="2" placeholder="Your honest, witty, unfiltered opinion on why this hit different..." class="w-full bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
-        </div>
-
-        <!-- Iconic Quote -->
-        <div>
-          <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="inputQuote">Iconic Quote / Tagline</label>
-          <input type="text" id="inputQuote" placeholder="e.g. 'Do not go gentle into that good night.'" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
         </div>
 
         <!-- Action Footer -->
         <div class="flex items-center justify-end gap-3 pt-3 border-t border-white/[0.08]">
-          <button type="button" onclick="closeAddModal()" class="px-4 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-zinc-300 transition">Cancel</button>
-          <button type="submit" id="saveMemoryBtn" class="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition shadow-sm">Save to Cinema Vault</button>
+          <button type="button" onclick="closeAddModal()" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-zinc-300 transition">Cancel</button>
+          <button type="submit" id="saveMemoryBtn" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition shadow-lg shadow-amber-500/10">
+            ✦ Add to Watched (Latest)
+          </button>
         </div>
 
       </form>
+
+      <!-- SECTION 2: BULK ADD STUDIO -->
+      <div id="bulkAddStudio" class="hidden space-y-4">
+        
+        <!-- Bulk Destination & Default Rating -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1.5">Add All As:</label>
+            <div class="p-1 bg-zinc-950 rounded-xl border border-white/[0.08] flex items-center gap-1">
+              <button type="button" id="bulkStatusWatched" onclick="setBulkStatus('watched')" class="flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition bg-zinc-800 text-white shadow-sm">
+                <span>🎬</span> <span>Watched</span>
+              </button>
+              <button type="button" id="bulkStatusWatchlist" onclick="setBulkStatus('watchlist')" class="flex-1 py-1.5 px-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition text-zinc-400 hover:text-white">
+                <span>⏳</span> <span>Watchlist</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="bulkRatingContainer">
+            <label class="block text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1.5">Default Rating for Watched:</label>
+            <div class="flex items-center gap-3 bg-zinc-950 p-2 rounded-xl border border-white/[0.08]">
+              <input type="range" id="bulkDefaultRating" min="1" max="10" step="0.5" value="8.5" oninput="document.getElementById('bulkRatingVal').textContent = Number(this.value).toFixed(1) + ' ★'" class="flex-1 accent-amber-500 cursor-pointer">
+              <span id="bulkRatingVal" class="font-mono font-bold text-amber-400 text-xs w-12 text-right">8.5 ★</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bulk Textarea Input -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-[11px] font-mono text-zinc-400 uppercase tracking-wider" for="bulkInputList">Paste Movies & Series List (One per line)</label>
+            <span id="bulkDetectedCount" class="text-[10px] font-mono text-amber-400">0 titles detected</span>
+          </div>
+          <textarea 
+            id="bulkInputList" 
+            rows="6" 
+            oninput="updateBulkCount()"
+            placeholder="Inception&#10;Breaking Bad&#10;Interstellar&#10;The Dark Knight&#10;Stranger Things&#10;Tumbbad&#10;Dune&#10;Sholay"
+            class="w-full bg-zinc-950 border border-white/15 focus:border-amber-400 rounded-xl p-3.5 text-xs sm:text-sm text-white placeholder-zinc-600 focus:outline-none focus:ring-1 focus:ring-amber-400 font-mono leading-relaxed"
+          ></textarea>
+        </div>
+
+        <!-- Trigger Auto-Fetch Button -->
+        <div class="flex items-center justify-between pt-1">
+          <button 
+            type="button" 
+            id="startBulkFetchBtn"
+            onclick="processBulkList()"
+            class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-black font-semibold text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/10"
+          >
+            <span>⚡</span>
+            <span>Auto-Fetch All Posters & Preview</span>
+          </button>
+        </div>
+
+        <!-- Processing Progress Bar -->
+        <div id="bulkProgressBarContainer" class="hidden space-y-2 p-3.5 bg-zinc-950 rounded-xl border border-white/10">
+          <div class="flex justify-between text-xs font-mono">
+            <span id="bulkProgressText" class="text-zinc-300">Fetching posters...</span>
+            <span id="bulkProgressPercent" class="text-amber-400 font-bold">0%</span>
+          </div>
+          <div class="w-full h-2 bg-zinc-900 rounded-full overflow-hidden border border-white/5">
+            <div id="bulkProgressBar" class="h-full bg-amber-500 transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Bulk Results Review Grid -->
+        <div id="bulkResultsReviewSection" class="hidden space-y-3 pt-3 border-t border-white/[0.08]">
+          <div class="flex items-center justify-between">
+            <h4 class="font-display font-bold text-sm text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span>Review Detected Titles (<span id="bulkResolvedCount">0</span>)</span>
+            </h4>
+            <span class="text-[10px] font-mono text-zinc-500">Tap ✕ on any item to remove</span>
+          </div>
+
+          <div id="bulkReviewGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-72 overflow-y-auto p-1 scrollbar-thin"></div>
+
+          <!-- Confirm & Save All Button -->
+          <div class="flex items-center justify-end gap-3 pt-3 border-t border-white/[0.08]">
+            <button type="button" onclick="closeAddModal()" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-zinc-300 transition">Cancel</button>
+            <button 
+              type="button" 
+              id="confirmBulkSaveBtn"
+              onclick="commitBulkSave()"
+              class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition shadow-lg shadow-amber-500/10 flex items-center gap-2"
+            >
+              <span>✦ Add All</span>
+              <span id="bulkFinalCountBadge" class="px-1.5 py-0.2 rounded bg-black/20 font-mono text-[11px]">0</span>
+              <span>to Cinema Vault</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </dialog>
 
-  <!-- MODAL: GRADUATE TO WATCHED -->
+  <!-- MODAL: MARK AS WATCHED (GRADUATION FROM WATCHLIST) -->
   <dialog id="graduateModal" class="fixed inset-0 w-full h-full p-4 sm:p-6 z-50 items-center justify-center border-none bg-transparent">
     <div class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-md p-6 shadow-2xl shadow-black relative text-left">
       <button onclick="closeGraduateModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition">✕</button>
@@ -694,16 +557,16 @@
           <img id="gradPoster" src="" alt="Poster" class="w-full h-full object-cover">
         </div>
         <div>
-          <span class="text-[9px] font-mono uppercase tracking-widest text-amber-400 font-bold">✦ Graduate Title</span>
-          <h3 id="gradTitle" class="font-display font-bold text-lg text-white">Title</h3>
+          <span class="text-[9px] font-mono uppercase tracking-widest text-amber-400 font-bold">✦ Mark as Watched</span>
+          <h3 id="gradTitle" class="font-display font-bold text-base text-white">Title</h3>
           <p id="gradDirector" class="text-xs text-zinc-400">Dir. Unknown</p>
         </div>
       </div>
 
-      <form id="graduateForm" onsubmit="handleGraduateSubmit(event)" class="space-y-3.5">
+      <form id="graduateForm" onsubmit="handleGraduateSubmit(event)" class="space-y-4">
         <input type="hidden" id="gradId">
 
-        <div class="p-2.5 bg-zinc-950 rounded-xl border border-white/[0.08] space-y-1">
+        <div class="p-3 bg-zinc-950 rounded-xl border border-white/[0.08] space-y-1.5">
           <div class="flex justify-between items-center">
             <label class="text-xs font-mono text-zinc-400 uppercase tracking-wider" for="gradRating">Your Rating (1-10)</label>
             <span id="gradRatingDisplay" class="text-xs font-mono font-bold text-amber-400">9.0 ★</span>
@@ -711,140 +574,17 @@
           <input type="range" id="gradRating" min="1" max="10" step="0.1" value="9.0" oninput="document.getElementById('gradRatingDisplay').textContent = Number(this.value).toFixed(1) + ' ★'" class="w-full accent-amber-500 cursor-pointer">
         </div>
 
-        <div>
-          <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="gradHotTake">Your Hot Take *</label>
-          <textarea id="gradHotTake" required rows="2" placeholder="What made this hit? Give your unfiltered verdict..." class="w-full bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400"></textarea>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2.5">
-          <div>
-            <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="gradPlatform">Watched On</label>
-            <select id="gradPlatform" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400">
-              <option value="Theater / 70mm IMAX">Theater / 70mm IMAX</option>
-              <option value="HBO Max">HBO Max</option>
-              <option value="Apple TV+">Apple TV+</option>
-              <option value="Netflix">Netflix</option>
-              <option value="Prime Video">Prime Video</option>
-              <option value="Physical 4K UHD">Physical 4K UHD</option>
-              <option value="Personal Archive">Personal Archive</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-1" for="gradDate">Watched Date</label>
-            <input type="date" id="gradDate" class="w-full bg-zinc-950 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400 font-mono">
-          </div>
-        </div>
-
         <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-white/[0.08]">
           <button type="button" onclick="closeGraduateModal()" class="px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-zinc-300 transition">Cancel</button>
-          <button type="submit" id="gradSubmitBtn" class="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition">✦ Graduate to Vault</button>
+          <button type="submit" class="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition">✦ Move to Watched</button>
         </div>
       </form>
     </div>
   </dialog>
 
-  <!-- MODAL: IMPORT VAULT -->
-  <dialog id="importModal" class="fixed inset-0 w-full h-full p-4 sm:p-6 z-50 items-center justify-center border-none bg-transparent">
-    <div class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-lg p-6 shadow-2xl shadow-black relative text-left">
-      <button onclick="closeImportModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition">✕</button>
-
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-9 h-9 rounded-lg bg-zinc-800 text-amber-400 border border-white/10 flex items-center justify-center text-base">
-          📥
-        </div>
-        <div>
-          <h2 class="font-cinema text-lg font-bold text-white tracking-wide">Import Cinema Data</h2>
-          <p class="text-xs text-zinc-400">Import Letterboxd CSV (<code class="text-amber-400">watched.csv</code>) or structured JSON.</p>
-        </div>
-      </div>
-
-      <!-- Dropzone -->
-      <div 
-        id="importDropzone" 
-        ondragover="handleDragOver(event)" 
-        ondragleave="handleDragLeave(event)" 
-        ondrop="handleFileDrop(event)"
-        onclick="document.getElementById('importFileInput').click()"
-        class="border-2 border-dashed border-white/15 hover:border-amber-400/50 rounded-xl p-6 text-center cursor-pointer transition bg-zinc-950/60 group"
-      >
-        <div class="text-2xl mb-1.5 group-hover:scale-110 transition-transform">📄</div>
-        <p class="text-xs text-white font-medium">Click to select or drag and drop file</p>
-        <p class="text-[10px] text-zinc-500 mt-1">Accepts .CSV (Letterboxd format) or .JSON</p>
-        <input type="file" id="importFileInput" accept=".csv,.json" class="hidden" onchange="handleFileSelect(event)">
-      </div>
-
-      <!-- Preview Summary -->
-      <div id="importPreview" class="hidden mt-3.5 p-3 rounded-xl bg-zinc-950 border border-white/10 space-y-2 text-xs">
-        <div class="flex justify-between items-center">
-          <span class="text-zinc-400">File Detected:</span>
-          <span id="importFileName" class="font-mono text-white">data.csv</span>
-        </div>
-        <div class="flex justify-between items-center">
-          <span class="text-zinc-400">Titles to Import:</span>
-          <span id="importCountBadge" class="font-mono font-bold text-amber-400">0 titles</span>
-        </div>
-        <div class="flex justify-between items-center">
-          <span class="text-zinc-400">Import Mode:</span>
-          <div class="flex gap-2">
-            <label class="flex items-center gap-1 text-[11px] text-zinc-300">
-              <input type="radio" name="importMode" value="merge" checked class="accent-amber-500"> Merge
-            </label>
-            <label class="flex items-center gap-1 text-[11px] text-zinc-300">
-              <input type="radio" name="importMode" value="replace" class="accent-amber-500"> Replace
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-end gap-2.5 pt-4 mt-4 border-t border-white/[0.08]">
-        <button type="button" onclick="closeImportModal()" class="px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-zinc-300 transition">Cancel</button>
-        <button type="button" id="executeImportBtn" onclick="executeImport()" disabled class="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-40 disabled:pointer-events-none text-black font-semibold text-xs transition">Confirm Import</button>
-      </div>
-    </div>
-  </dialog>
-
-  <!-- MODAL: EXPORT VAULT -->
-  <dialog id="exportModal" class="fixed inset-0 w-full h-full p-4 sm:p-6 z-50 items-center justify-center border-none bg-transparent">
-    <div class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-md p-6 shadow-2xl shadow-black relative text-left">
-      <button onclick="closeExportModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition">✕</button>
-
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-9 h-9 rounded-lg bg-zinc-800 text-amber-400 border border-white/10 flex items-center justify-center text-base">
-          📤
-        </div>
-        <div>
-          <h2 class="font-cinema text-lg font-bold text-white tracking-wide">Export Cinema Vault</h2>
-          <p class="text-xs text-zinc-400">Download your watch history in open formats.</p>
-        </div>
-      </div>
-
-      <div class="space-y-2.5 my-4">
-        <button onclick="downloadExport('json')" class="w-full p-3.5 rounded-xl bg-zinc-950 border border-white/[0.08] hover:border-amber-400/40 flex items-center justify-between group transition">
-          <div class="text-left">
-            <div class="font-bold text-xs text-white group-hover:text-amber-300">Structured JSON Database</div>
-            <div class="text-[10px] text-zinc-500">Complete raw backup with ratings, quotes, and hot takes.</div>
-          </div>
-          <span class="px-2.5 py-1 rounded bg-zinc-800 text-amber-400 font-mono font-bold text-xs">.JSON ▾</span>
-        </button>
-
-        <button onclick="downloadExport('csv')" class="w-full p-3.5 rounded-xl bg-zinc-950 border border-white/[0.08] hover:border-amber-400/40 flex items-center justify-between group transition">
-          <div class="text-left">
-            <div class="font-bold text-xs text-white group-hover:text-amber-300">Letterboxd-Compatible CSV</div>
-            <div class="text-[10px] text-zinc-500">Standard spreadsheet importable directly into Letterboxd.</div>
-          </div>
-          <span class="px-2.5 py-1 rounded bg-zinc-800 text-zinc-300 font-mono font-bold text-xs">.CSV ▾</span>
-        </button>
-      </div>
-
-      <div class="flex justify-end pt-2 border-t border-white/[0.08]">
-        <button onclick="closeExportModal()" class="px-4 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-white transition">Close</button>
-      </div>
-    </div>
-  </dialog>
-
   <!-- MODAL: DETAIL INSPECTOR -->
   <dialog id="detailModal" class="fixed inset-0 w-full h-full p-4 sm:p-6 z-50 items-center justify-center border-none bg-transparent">
-    <div id="detailModalContent" class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-7 shadow-2xl shadow-black relative text-left">
+    <div id="detailModalContent" class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-lg p-6 shadow-2xl shadow-black relative text-left">
       <!-- Injected by JS -->
     </div>
   </dialog>
@@ -852,28 +592,20 @@
   <!-- Tactile Toast -->
   <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" aria-live="polite"></div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- JAVASCRIPT ENGINE -->
   <script>
-    // Global State
     let cinemaData = [];
     let currentVaultTab = 'watched'; // 'watched' or 'watchlist'
-    let currentView = 'poster'; // 'poster' or 'ticket'
     let currentTypeFilter = 'all';
-    let activeDirectorFilter = null;
-    let projectorActive = false;
-    let audioCtx = null;
-    let projectorGain = null;
-    let projectorOsc = null;
-    let projectorTimer = null;
+    let bulkSelectedStatus = 'watched';
+    let bulkParsedItems = [];
 
-    // Initialize application on DOM load
     document.addEventListener('DOMContentLoaded', async () => {
       await loadCinemaVaultData();
       setupKeyboardNavigation();
       initCardPhysics();
     });
 
-    // 1. Fetch Database from API
     async function loadCinemaVaultData() {
       try {
         const res = await fetch('/api/cinema');
@@ -881,17 +613,16 @@
           const json = await res.json();
           cinemaData = json.data || [];
         } else {
-          console.warn('API returned non-200, trying fallback data/cinema_vault.json directly...');
           const fallbackRes = await fetch('/data/cinema_vault.json');
           if (fallbackRes.ok) cinemaData = await fallbackRes.json();
         }
       } catch (err) {
-        console.error('Failed to load cinema vault data:', err);
+        const stored = localStorage.getItem('cinema_vault_local');
+        if (stored) cinemaData = JSON.parse(stored);
       }
       renderAll();
     }
 
-    // 2. Render KPIs & Metrics
     function renderTelemetry() {
       const watchedItems = (cinemaData || []).filter(m => (m.status || 'watched') === 'watched');
       const watchlistItems = (cinemaData || []).filter(m => (m.status || 'watched') === 'watchlist');
@@ -899,17 +630,19 @@
       document.getElementById('statTotalTitles').textContent = watchedItems.length;
       document.getElementById('statWatchlistCount').textContent = watchlistItems.length;
 
-      const tabCountWatched = document.getElementById('tabCountWatched');
-      const tabCountWatchlist = document.getElementById('tabCountWatchlist');
-      if (tabCountWatched) tabCountWatched.textContent = watchedItems.length;
-      if (tabCountWatchlist) tabCountWatchlist.textContent = watchlistItems.length;
+      document.getElementById('tabCountWatched').textContent = watchedItems.length;
+      document.getElementById('tabCountWatchlist').textContent = watchlistItems.length;
 
-      const totalMinutes = watchedItems.reduce((acc, curr) => acc + (Number(curr.runtimeMinutes) || 120), 0);
+      // Compute Total Hours Watched
+      const totalMinutes = watchedItems.reduce((acc, curr) => {
+        const rewatch = Number(curr.rewatchCount) || 1;
+        const defaultMin = curr.type === 'TV Series' ? 480 : 130;
+        const mins = Number(curr.runtimeMinutes) || defaultMin;
+        return acc + (mins * rewatch);
+      }, 0);
       const hours = (totalMinutes / 60).toFixed(1);
-      document.getElementById('statHoursLogged').textContent = `${hours} hrs`;
-
-      const masterpieces = watchedItems.filter(m => Number(m.rating) >= 9.5).length;
-      document.getElementById('statMasterpieces').textContent = masterpieces;
+      const hoursEl = document.getElementById('statHoursLogged');
+      if (hoursEl) hoursEl.textContent = `${hours} hrs`;
 
       const ratedItems = watchedItems.filter(m => m.rating !== null && m.rating !== undefined && !isNaN(m.rating));
       const avg = ratedItems.length > 0
@@ -919,222 +652,76 @@
 
       const totalRewatches = watchedItems.reduce((acc, curr) => acc + (Number(curr.rewatchCount) || 1), 0);
       document.getElementById('statTotalRewatches').textContent = watchedItems.length > 0 ? totalRewatches : 0;
-
-      renderDirectorSpotlight();
     }
 
-    // 2B. Auteur & Director Spotlight (Hides automatically when < 2 directors)
-    function renderDirectorSpotlight() {
-      const track = document.getElementById('directorCarouselTrack');
-      const section = document.getElementById('directorSpotlightSection');
-      if (!track || !section) return;
-
-      const dirMap = {};
-      (cinemaData || []).forEach(m => {
-        if (m.director && m.director !== 'Unknown' && m.director !== 'Auteur') {
-          if (!dirMap[m.director]) {
-            dirMap[m.director] = { name: m.director, count: 0, totalRating: 0, ratedCount: 0, titles: [] };
-          }
-          dirMap[m.director].count++;
-          dirMap[m.director].titles.push(m.title);
-          if (m.rating) {
-            dirMap[m.director].totalRating += Number(m.rating);
-            dirMap[m.director].ratedCount++;
-          }
-        }
-      });
-
-      const directorList = Object.values(dirMap).sort((a, b) => b.count - a.count || (b.totalRating/b.ratedCount || 0) - (a.totalRating/a.ratedCount || 0));
-
-      if (directorList.length < 2) {
-        section.classList.add('hidden');
-        return;
-      }
-      section.classList.remove('hidden');
-      document.getElementById('directorCountBadge').textContent = `${directorList.length} Visionaries`;
-
-      track.innerHTML = directorList.map(d => {
-        const avgScore = d.ratedCount > 0 ? (d.totalRating / d.ratedCount).toFixed(1) : '--';
-        const initials = d.name.split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase();
-        const isActive = activeDirectorFilter === d.name;
-
-        return `
-          <div 
-            onclick="setDirectorFilter('${d.name.replace(/'/g, "\\'")}')" 
-            class="shrink-0 w-48 p-3 rounded-xl border transition-all duration-200 cursor-pointer ${isActive ? 'bg-amber-500/20 border-amber-400' : 'bg-zinc-950 border-white/[0.08] hover:border-amber-400/40 hover:bg-zinc-900'} flex flex-col justify-between group"
-            role="button"
-            tabindex="0"
-          >
-            <div class="flex items-center gap-2.5 mb-2">
-              <div class="w-8 h-8 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center font-mono font-bold text-xs text-amber-400 group-hover:scale-105 transition-transform">
-                ${initials}
-              </div>
-              <div class="overflow-hidden">
-                <div class="font-display font-bold text-xs text-white truncate group-hover:text-amber-300 transition-colors">${d.name}</div>
-                <div class="text-[10px] font-mono text-zinc-500">${d.count} ${d.count === 1 ? 'title' : 'titles'}</div>
-              </div>
-            </div>
-            <div class="flex items-center justify-between text-[11px] font-mono pt-1.5 border-t border-white/[0.08]">
-              <span class="text-zinc-500">Score</span>
-              <span class="text-amber-400 font-bold">${avgScore} ★</span>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function scrollDirectorCarousel(direction) {
-      const track = document.getElementById('directorCarouselTrack');
-      if (track) {
-        track.scrollBy({ left: direction * 240, behavior: 'smooth' });
-      }
-    }
-
-    function setDirectorFilter(directorName) {
-      if (activeDirectorFilter === directorName) {
-        clearDirectorFilter();
-        return;
-      }
-      activeDirectorFilter = directorName;
-      document.getElementById('activeDirectorChip').classList.remove('hidden');
-      document.getElementById('activeDirectorName').textContent = directorName;
-      renderDirectorSpotlight();
-      renderAll();
-      showToast(`Auteur filter: ${directorName}`);
-    }
-
-    function clearDirectorFilter() {
-      activeDirectorFilter = null;
-      document.getElementById('activeDirectorChip').classList.add('hidden');
-      renderDirectorSpotlight();
-      renderAll();
-    }
-
-    // 3. Vault Tab Switcher (Watched vs Watchlist Queue)
     function setVaultTab(tab) {
       currentVaultTab = tab;
       const tabWatchedBtn = document.getElementById('tabWatchedBtn');
       const tabWatchlistBtn = document.getElementById('tabWatchlistBtn');
       const activeTabName = document.getElementById('activeTabName');
-      const ratingSelect = document.getElementById('ratingSelect');
 
       if (tab === 'watched') {
-        tabWatchedBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition bg-zinc-800 text-white shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400';
-        tabWatchlistBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus-visible:ring-2 focus-visible:ring-amber-400';
-        if (activeTabName) activeTabName.textContent = 'Watched Vault';
-        if (ratingSelect) ratingSelect.classList.remove('opacity-40', 'pointer-events-none');
+        tabWatchedBtn.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition bg-zinc-800 text-white shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400';
+        tabWatchlistBtn.className = 'px-4 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus-visible:ring-2 focus-visible:ring-amber-400';
+        if (activeTabName) activeTabName.textContent = 'Watched (Latest)';
       } else {
-        tabWatchlistBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition bg-zinc-800 text-white shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400';
-        tabWatchedBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus-visible:ring-2 focus-visible:ring-amber-400';
+        tabWatchlistBtn.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition bg-zinc-800 text-white shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400';
+        tabWatchedBtn.className = 'px-4 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus-visible:ring-2 focus-visible:ring-amber-400';
         if (activeTabName) activeTabName.textContent = 'Watchlist Queue';
-        if (ratingSelect) ratingSelect.classList.add('opacity-40', 'pointer-events-none');
       }
 
       renderAll();
     }
 
-    // 4. Search & Filter Engine
     function getFilteredData() {
       const query = (document.getElementById('searchInput').value || '').trim().toLowerCase();
-      const genre = document.getElementById('genreSelect').value;
-      const minRating = document.getElementById('ratingSelect').value;
-      const sortBy = document.getElementById('sortSelect').value;
 
       let filtered = cinemaData.filter(item => {
         const itemStatus = item.status || 'watched';
-
-        // Tab Filter: Watched vs Watchlist
         if (itemStatus !== currentVaultTab) return false;
 
-        // Director Spotlight Filter
-        if (activeDirectorFilter && (item.director || '').toLowerCase() !== activeDirectorFilter.toLowerCase()) {
-          return false;
-        }
-
-        // Format / Type filter
         if (currentTypeFilter !== 'all' && item.type !== currentTypeFilter) return false;
 
-        // Genre filter
-        if (genre !== 'all' && (!item.genres || !item.genres.some(g => g.toLowerCase() === genre.toLowerCase()))) {
-          return false;
-        }
-
-        // Rating filter (only in watched tab)
-        if (currentVaultTab === 'watched' && minRating !== 'all' && Number(item.rating) < Number(minRating)) {
-          return false;
-        }
-
-        // Search text matching
         if (query) {
           const matchTitle = (item.title || '').toLowerCase().includes(query);
           const matchDirector = (item.director || '').toLowerCase().includes(query);
-          const matchHotTake = (item.hotTake || '').toLowerCase().includes(query);
-          const matchQuote = (item.quote || '').toLowerCase().includes(query);
-          const matchGenres = (item.genres || []).some(g => g.toLowerCase().includes(query));
-          if (!matchTitle && !matchDirector && !matchHotTake && !matchQuote && !matchGenres) return false;
+          if (!matchTitle && !matchDirector) return false;
         }
 
         return true;
       });
 
-      // Sorting
+      // Default: Latest watched / added first
       filtered.sort((a, b) => {
-        if (sortBy === 'rating_desc') {
-          return (Number(b.rating) || 0) - (Number(a.rating) || 0);
-        } else if (sortBy === 'rewatch_desc') {
-          return (Number(b.rewatchCount) || 1) - (Number(a.rewatchCount) || 1);
-        } else if (sortBy === 'year_desc') {
-          return parseInt(b.year) - parseInt(a.year);
-        } else if (sortBy === 'year_asc') {
-          return parseInt(a.year) - parseInt(b.year);
-        } else if (sortBy === 'title_asc') {
-          return (a.title || '').localeCompare(b.title || '');
-        }
-        return 0;
+        const dateA = new Date(a.watchedDate || a.createdAt || 0).getTime();
+        const dateB = new Date(b.watchedDate || b.createdAt || 0).getTime();
+        return dateB - dateA;
       });
 
       return filtered;
     }
 
-    // 5. Render Galleries
     function renderAll() {
       renderTelemetry();
 
       const items = getFilteredData();
-      document.getElementById('visibleCount').textContent = items.length;
-
       const emptyState = document.getElementById('emptyState');
       const cardsGrid = document.getElementById('cardsGrid');
-      const ticketsGrid = document.getElementById('ticketsGrid');
 
       if (items.length === 0) {
         cardsGrid.innerHTML = '';
-        ticketsGrid.innerHTML = '';
         emptyState.classList.remove('hidden');
-        const emptyActions = document.getElementById('emptyStateActions');
-        const resetBtn = document.getElementById('resetFiltersBtn');
-
-        if (cinemaData.length === 0) {
-          document.getElementById('emptyStateTitle').textContent = 'Your Cinema Vault is Ready';
-          document.getElementById('emptyStateDesc').textContent = 'Feed in the movies and web series you have seen till date, or bulk import from Letterboxd.';
-          if (emptyActions) emptyActions.classList.remove('hidden');
-          if (resetBtn) resetBtn.classList.add('hidden');
-        } else if (currentVaultTab === 'watchlist') {
-          document.getElementById('emptyStateTitle').textContent = 'Watchlist Queue is Empty';
-          document.getElementById('emptyStateDesc').textContent = 'No titles staged in your watchlist queue. Click "+ Add Title" and choose "Watchlist".';
-          if (emptyActions) emptyActions.classList.add('hidden');
-          if (resetBtn) resetBtn.classList.add('hidden');
+        if (currentVaultTab === 'watchlist') {
+          document.getElementById('emptyStateTitle').textContent = 'Watchlist is Empty';
+          document.getElementById('emptyStateDesc').textContent = 'You have no titles in your watchlist queue. Click "+ Add Title" or "⚡ Bulk Add".';
         } else {
-          document.getElementById('emptyStateTitle').textContent = 'No Cinema Memories Found';
-          document.getElementById('emptyStateDesc').textContent = 'No titles match your active filters. Try resetting filters.';
-          if (emptyActions) emptyActions.classList.add('hidden');
-          if (resetBtn) resetBtn.classList.remove('hidden');
+          document.getElementById('emptyStateTitle').textContent = 'No Watched Titles Found';
+          document.getElementById('emptyStateDesc').textContent = 'Add movies or series you have watched to log your ratings and history.';
         }
         return;
       }
       emptyState.classList.add('hidden');
 
-      // 5A. Render Cards
       cardsGrid.innerHTML = items.map(item => {
         const isWatchlist = (item.status || 'watched') === 'watchlist';
         const ratingVal = item.rating !== null && item.rating !== undefined && !isNaN(item.rating) ? item.rating : null;
@@ -1142,17 +729,14 @@
         return `
         <div class="cinema-card-wrap">
           <div 
-            class="cinema-card bg-zinc-900 border border-white/[0.08] hover:border-amber-400/40 rounded-xl overflow-hidden flex flex-col justify-between group cursor-pointer transition-all duration-200"
-            style="--card-glow: rgba(245, 158, 11, 0.12);"
+            class="cinema-card bg-zinc-900 border border-white/[0.08] hover:border-amber-400/40 rounded-2xl overflow-hidden flex flex-col justify-between group cursor-pointer transition-all duration-200"
             onclick="openDetailModal('${item.id}')"
             tabindex="0"
             role="button"
-            aria-label="${item.title}, ${isWatchlist ? 'Watchlist Queue' : 'Rating ' + item.rating}"
-            onkeydown="if(event.key==='Enter'||event.key===' ') openDetailModal('${item.id}')"
           >
             <div class="specular-sheen"></div>
 
-            <!-- Poster Artwork Container (2:3) -->
+            <!-- Poster Artwork (2:3) -->
             <div class="relative w-full aspect-[2/3] overflow-hidden bg-zinc-950">
               <img 
                 src="${item.posterUrl}" 
@@ -1163,78 +747,58 @@
               />
               <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent"></div>
 
-              <!-- Top Left: Format Pill -->
+              <!-- Format & Year Badges -->
               <div class="absolute top-2.5 left-2.5 flex items-center gap-1">
-                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-zinc-950/90 text-zinc-300 border border-white/10">
-                  ${item.type}
+                <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold bg-zinc-950/90 text-zinc-300 border border-white/10">
+                  ${item.type || 'Movie'}
                 </span>
-                <span class="px-2 py-0.5 rounded text-[10px] font-mono text-zinc-400 bg-zinc-950/90 border border-white/10">
-                  ${item.year}
-                </span>
+                ${item.year ? `
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-mono text-zinc-400 bg-zinc-950/90 border border-white/10">
+                    ${item.year}
+                  </span>
+                ` : ''}
               </div>
 
-              <!-- Top Right: Rating / Queue badge -->
-              <div class="absolute top-2.5 right-2.5 flex items-center gap-1">
+              <!-- Rating / Queue Badge -->
+              <div class="absolute top-2.5 right-2.5">
                 ${isWatchlist ? `
-                  <span class="px-2 py-0.5 rounded bg-zinc-950/90 border border-amber-400/30 text-amber-300 font-mono font-bold text-[10px] shadow">
+                  <span class="px-2 py-0.5 rounded-md bg-zinc-950/90 border border-amber-400/30 text-amber-300 font-mono font-bold text-[10px] shadow">
                     QUEUE
                   </span>
                 ` : `
-                  <div class="flex items-center gap-1 px-2 py-0.5 rounded bg-zinc-950/90 border border-amber-400/40 text-amber-400 font-mono font-bold text-xs shadow">
+                  <div class="flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-zinc-950/90 border border-amber-400/40 text-amber-400 font-mono font-bold text-xs shadow">
                     <span>★</span>
-                    <span id="cardRating-${item.id}">${ratingVal || '--'}</span>
+                    <span>${ratingVal || '--'}</span>
                   </div>
                 `}
               </div>
 
-              <!-- Bottom-Left: Rewatch Pill with Quick Increment (+) -->
+              <!-- Rewatch Increment (Only Watched) -->
               ${!isWatchlist ? `
                 <div class="absolute bottom-2.5 left-2.5 flex items-center gap-1">
-                  <div class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-950/90 text-zinc-300 border border-white/10 font-bold shadow flex items-center gap-1">
-                    <span>↻</span> <span id="cardRewatch-${item.id}">${item.rewatchCount || 1}x</span>
+                  <div class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-zinc-950/90 text-zinc-300 border border-white/10 font-bold shadow flex items-center gap-1">
+                    <span>↻</span> <span>${item.rewatchCount || 1}x</span>
                   </div>
                   <button 
                     type="button"
                     onclick="event.stopPropagation(); quickIncrementRewatch('${item.id}')"
-                    class="w-5 h-5 rounded bg-zinc-800 hover:bg-amber-400 hover:text-black text-amber-300 border border-white/20 flex items-center justify-center text-xs font-bold transition"
+                    class="w-5 h-5 rounded-md bg-zinc-800 hover:bg-amber-400 hover:text-black text-amber-300 border border-white/20 flex items-center justify-center text-xs font-bold transition"
                     title="Quick +1 Rewatch"
-                    aria-label="Add 1 rewatch to ${item.title}"
                   >
                     +
                   </button>
                 </div>
-              ` : `
-                <div class="absolute bottom-2.5 left-2.5 px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-950/90 text-amber-300 border border-amber-500/30">
-                  Plan to Watch
-                </div>
-              `}
-
-              <!-- Platform Badge -->
-              <div class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-950/90 text-zinc-400 border border-white/10">
-                ${(item.platform || 'Theater').split('/')[0].trim()}
-              </div>
+              ` : ''}
             </div>
 
-            <!-- Card Bottom Info -->
+            <!-- Card Bottom Body -->
             <div class="p-3.5 flex flex-col justify-between flex-1 bg-zinc-900">
               <div>
-                <h3 class="font-syne font-bold text-[15px] text-white group-hover:text-amber-300 transition-colors line-clamp-1 tracking-tight">
+                <h3 class="font-display font-bold text-sm text-white group-hover:text-amber-300 transition-colors line-clamp-1">
                   ${item.title}
                 </h3>
-                <p class="text-xs text-zinc-400 font-sans line-clamp-1 mb-2">
-                  dir. <span class="text-zinc-300 font-medium">${item.director}</span>
-                </p>
-
-                <!-- Emotional Tag -->
-                <div class="mb-2">
-                  <span class="inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-amber-300/90 line-clamp-1">
-                    "${item.emotionalTag || 'Unspecified'}"
-                  </span>
-                </div>
-
-                <!-- Hot Take Excerpt -->
-                <p class="font-quote text-xs text-amber-100/80 italic line-clamp-2 leading-relaxed border-l-2 pl-2 border-amber-500/60">
-                  "${item.hotTake || 'No hot take recorded yet.'}"
+                <p class="text-xs text-zinc-400 font-sans line-clamp-1 mt-0.5">
+                  ${item.director ? `dir. <span class="text-zinc-300 font-medium">${item.director}</span>` : 'Prestige Release'}
                 </p>
               </div>
 
@@ -1244,123 +808,31 @@
                   <button 
                     type="button"
                     onclick="event.stopPropagation(); openGraduateModal('${item.id}')"
-                    class="w-full py-1.5 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow"
-                    title="Mark this title as watched and graduate to vault"
+                    class="w-full py-1.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow"
+                    title="Mark as watched and move to Watched archive"
                   >
                     <span>✦</span> <span>Mark as Watched</span>
                   </button>
                 </div>
               ` : `
-                <div class="pt-2.5 mt-2.5 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-zinc-500 font-mono">
-                  <span>${item.runtimeStr || '120 min'}</span>
-                  <span class="text-amber-400/80 group-hover:text-amber-300 group-hover:translate-x-0.5 transition-all">Inspect →</span>
+                <div class="pt-2 mt-2 border-t border-white/[0.08] flex items-center justify-between text-[10px] text-zinc-500 font-mono">
+                  <span>⏱ ${item.runtimeStr || (item.type === 'TV Series' ? '8.0 hrs' : '2.2 hrs')}</span>
+                  <span class="text-amber-400/80 group-hover:text-amber-300 transition">View →</span>
                 </div>
               `}
             </div>
 
-          </div>
-        </div>
-        `;
-      }).join('');
-
-      // 5B. Render Ticket Stubs
-      ticketsGrid.innerHTML = items.map(item => {
-        const isWatchlist = (item.status || 'watched') === 'watchlist';
-
-        return `
-        <div 
-          class="ticket-stub group cursor-pointer"
-          onclick="openDetailModal('${item.id}')"
-          tabindex="0"
-          role="button"
-          aria-label="Ticket for ${item.title}"
-        >
-          <!-- Left Stub -->
-          <div class="p-3.5 flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-1.5">
-                <span class="text-[9px] font-mono uppercase tracking-widest text-amber-400 font-bold">
-                  ${isWatchlist ? '⏳ WATCHLIST QUEUE' : '★ ADMIT ONE ★'}
-                </span>
-                <span class="text-[10px] font-mono text-zinc-500">${item.watchedDate || (isWatchlist ? 'Upcoming' : '2024')}</span>
-              </div>
-              <h3 class="font-marquee font-bold text-xl text-white group-hover:text-amber-300 tracking-wider uppercase transition-colors">
-                ${item.title}
-              </h3>
-              <p class="text-xs text-zinc-400 font-sans">Dir. ${item.director} (${item.year})</p>
-              
-              <div class="mt-2 flex flex-wrap gap-1">
-                ${(item.genres || []).slice(0, 2).map(g => `<span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-zinc-800 text-zinc-300">${g}</span>`).join('')}
-              </div>
-
-              <p class="font-quote text-[13px] text-amber-100/80 italic line-clamp-2 mt-2 leading-relaxed">
-                "${item.hotTake}"
-              </p>
-            </div>
-
-            <div class="pt-2 mt-2 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono">
-              <span class="text-zinc-500">${item.platform}</span>
-              ${isWatchlist ? `
-                <button 
-                  onclick="event.stopPropagation(); openGraduateModal('${item.id}')"
-                  class="px-2 py-0.5 rounded bg-amber-500 text-black font-semibold text-[10px] hover:bg-amber-400 transition"
-                >
-                  ✦ Graduate
-                </button>
-              ` : `
-                <span class="text-amber-400 font-bold">${item.rating || '--'} ★</span>
-              `}
-            </div>
-          </div>
-
-          <!-- Perforation Divider -->
-          <div class="ticket-divider w-0"></div>
-
-          <!-- Right Tear Stub: Seat & Barcode -->
-          <div class="w-20 bg-zinc-950 p-2.5 flex flex-col justify-between items-center text-center">
-            <div>
-              <div class="text-[8px] font-mono uppercase text-zinc-500 tracking-wider">SEAT</div>
-              <div class="text-[10px] font-mono font-bold text-amber-400 leading-tight mt-0.5">${item.ticketSeat || 'F-14'}</div>
-            </div>
-
-            <div class="w-full py-1 opacity-60 group-hover:opacity-100 transition">
-              <svg class="w-full h-8" viewBox="0 0 80 40" fill="none">
-                <rect x="2" y="0" width="3" height="40" fill="#fff"/>
-                <rect x="7" y="0" width="1" height="40" fill="#fff"/>
-                <rect x="10" y="0" width="4" height="40" fill="#fff"/>
-                <rect x="16" y="0" width="2" height="40" fill="#fff"/>
-                <rect x="20" y="0" width="5" height="40" fill="#fff"/>
-                <rect x="28" y="0" width="1" height="40" fill="#fff"/>
-                <rect x="31" y="0" width="3" height="40" fill="#fff"/>
-                <rect x="36" y="0" width="6" height="40" fill="#fff"/>
-                <rect x="44" y="0" width="2" height="40" fill="#fff"/>
-                <rect x="48" y="0" width="4" height="40" fill="#fff"/>
-                <rect x="54" y="0" width="1" height="40" fill="#fff"/>
-                <rect x="57" y="0" width="5" height="40" fill="#fff"/>
-                <rect x="64" y="0" width="2" height="40" fill="#fff"/>
-                <rect x="68" y="0" width="3" height="40" fill="#fff"/>
-                <rect x="73" y="0" width="4" height="40" fill="#fff"/>
-              </svg>
-            </div>
-
-            <div class="text-[7px] font-mono text-zinc-600 uppercase tracking-widest">
-              VAULT-ARCHIVE
-            </div>
           </div>
         </div>
         `;
       }).join('');
     }
 
-    // Quick Increment Rewatch
     async function quickIncrementRewatch(id) {
       const item = cinemaData.find(m => m.id === id);
       if (!item) return;
 
       item.rewatchCount = (Number(item.rewatchCount) || 1) + 1;
-      const el = document.getElementById(`cardRewatch-${id}`);
-      if (el) el.textContent = `${item.rewatchCount}x`;
-
       try {
         await fetch('/api/cinema', {
           method: 'POST',
@@ -1368,147 +840,12 @@
           body: JSON.stringify(item)
         });
         showToast(`Logged rewatch #${item.rewatchCount} for ${item.title}`);
-        renderTelemetry();
+        renderAll();
       } catch (err) {
-        console.error('Failed to update rewatch count:', err);
+        renderAll();
       }
     }
 
-    // Card 3D Physics
-    function initCardPhysics() {
-      const container = document.getElementById('vaultDisplayContainer');
-      if (!container) return;
-
-      container.addEventListener('mousemove', (e) => {
-        const card = e.target.closest('.cinema-card');
-        if (!card) return;
-
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / centerY) * -9;
-        const rotateY = ((x - centerX) / centerX) * 9;
-
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
-        card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
-      });
-
-      container.addEventListener('mouseleave', (e) => {
-        const cards = document.querySelectorAll('.cinema-card');
-        cards.forEach(c => {
-          c.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-        });
-      }, true);
-    }
-
-    function setViewMode(mode) {
-      currentView = mode;
-      const cardsGrid = document.getElementById('cardsGrid');
-      const ticketsGrid = document.getElementById('ticketsGrid');
-      const viewPosterBtn = document.getElementById('viewPosterBtn');
-      const viewTicketBtn = document.getElementById('viewTicketBtn');
-
-      if (mode === 'poster') {
-        cardsGrid.classList.remove('hidden');
-        ticketsGrid.classList.add('hidden');
-        viewPosterBtn.className = 'p-1.5 rounded-md text-xs transition bg-zinc-800 text-amber-400 shadow-sm';
-        viewTicketBtn.className = 'p-1.5 rounded-md text-xs transition text-zinc-400 hover:text-white';
-        showToast('Switched to Poster Gallery');
-      } else {
-        cardsGrid.classList.add('hidden');
-        ticketsGrid.classList.remove('hidden');
-        viewTicketBtn.className = 'p-1.5 rounded-md text-xs transition bg-zinc-800 text-amber-400 shadow-sm';
-        viewPosterBtn.className = 'p-1.5 rounded-md text-xs transition text-zinc-400 hover:text-white';
-        showToast('Switched to Ticket Stub View');
-      }
-    }
-
-    // 35mm Projector Mode
-    function toggleProjectorMode() {
-      projectorActive = !projectorActive;
-      const btn = document.getElementById('projectorToggleBtn');
-
-      if (projectorActive) {
-        document.body.classList.add('film-projector-active');
-        btn.classList.add('text-amber-400', 'border-amber-400/50');
-        btn.classList.remove('text-zinc-400');
-        startProjectorAudio();
-        showToast('35mm Projector Mode Activated (Audio On)');
-      } else {
-        document.body.classList.remove('film-projector-active');
-        btn.classList.remove('text-amber-400', 'border-amber-400/50');
-        btn.classList.add('text-zinc-400');
-        stopProjectorAudio();
-        showToast('35mm Projector Mode Disabled');
-      }
-    }
-
-    function startProjectorAudio() {
-      try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-        audioCtx = new AudioContext();
-
-        projectorGain = audioCtx.createGain();
-        projectorGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-        projectorGain.connect(audioCtx.destination);
-
-        const bufferSize = audioCtx.sampleRate * 2;
-        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = Math.random() * 2 - 1;
-        }
-
-        const whiteNoise = audioCtx.createBufferSource();
-        whiteNoise.buffer = noiseBuffer;
-        whiteNoise.loop = true;
-
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.value = 1000;
-        filter.Q.value = 3.0;
-
-        whiteNoise.connect(filter);
-        filter.connect(projectorGain);
-        whiteNoise.start();
-
-        projectorTimer = setInterval(() => {
-          if (!audioCtx) return;
-          const clickOsc = audioCtx.createOscillator();
-          const clickGain = audioCtx.createGain();
-          clickOsc.type = 'triangle';
-          clickOsc.frequency.setValueAtTime(140, audioCtx.currentTime);
-          clickGain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-          clickGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
-          clickOsc.connect(clickGain);
-          clickGain.connect(audioCtx.destination);
-          clickOsc.start();
-          clickOsc.stop(audioCtx.currentTime + 0.05);
-        }, 125);
-
-      } catch (e) {
-        console.warn('WebAudio initialization prevented:', e);
-      }
-    }
-
-    function stopProjectorAudio() {
-      if (projectorTimer) {
-        clearInterval(projectorTimer);
-        projectorTimer = null;
-      }
-      if (audioCtx) {
-        audioCtx.close().catch(() => {});
-        audioCtx = null;
-      }
-    }
-
-    // Filter controls
     function setTypeFilter(type) {
       currentTypeFilter = type;
       document.querySelectorAll('#typeFilterContainer .type-pill').forEach(btn => {
@@ -1524,11 +861,8 @@
     function handleSearchFilter() {
       const q = (document.getElementById('searchInput').value || '').trim();
       const clearBtn = document.getElementById('clearSearchBtn');
-      if (q) {
-        clearBtn.classList.remove('hidden');
-      } else {
-        clearBtn.classList.add('hidden');
-      }
+      if (q) clearBtn.classList.remove('hidden');
+      else clearBtn.classList.add('hidden');
       renderAll();
     }
 
@@ -1539,31 +873,49 @@
       document.getElementById('searchInput').focus();
     }
 
-    function resetFilters() {
-      document.getElementById('searchInput').value = '';
-      document.getElementById('genreSelect').value = 'all';
-      document.getElementById('ratingSelect').value = 'all';
-      document.getElementById('sortSelect').value = 'rating_desc';
-      activeDirectorFilter = null;
-      const chip = document.getElementById('activeDirectorChip');
-      if (chip) chip.classList.add('hidden');
-      setTypeFilter('all');
-      renderAll();
-      showToast('All filters reset');
-    }
-
-    // Modal Ingestion & Studio
-    function openAddModal() {
+    // Modal Operations (Single & Bulk Switcher)
+    function openAddModal(mode = 'single') {
       const modal = document.getElementById('addModal');
-      document.getElementById('addMovieForm').reset();
+      document.getElementById('singleAddForm').reset();
       resetThumbnailPreview();
       setFormStatus(currentVaultTab);
+      setBulkStatus(currentVaultTab);
+      switchAddMode(mode);
       modal.showModal();
-      document.getElementById('inputTitle').focus();
+      if (mode === 'single') {
+        document.getElementById('inputTitle').focus();
+      } else {
+        document.getElementById('bulkInputList').focus();
+      }
     }
 
     function closeAddModal() {
       document.getElementById('addModal').close();
+    }
+
+    function switchAddMode(mode) {
+      const singleForm = document.getElementById('singleAddForm');
+      const bulkStudio = document.getElementById('bulkAddStudio');
+      const btnSingle = document.getElementById('modeBtnSingle');
+      const btnBulk = document.getElementById('modeBtnBulk');
+      const title = document.getElementById('modalHeaderTitle');
+      const sub = document.getElementById('modalHeaderSubtitle');
+
+      if (mode === 'single') {
+        singleForm.classList.remove('hidden');
+        bulkStudio.classList.add('hidden');
+        btnSingle.className = 'px-3 py-1 rounded-lg font-semibold transition bg-zinc-800 text-white shadow-sm';
+        btnBulk.className = 'px-3 py-1 rounded-lg font-medium transition text-zinc-400 hover:text-white';
+        title.textContent = 'Add Movie or Series';
+        sub.textContent = 'Type title to auto-fetch poster & choose status.';
+      } else {
+        singleForm.classList.add('hidden');
+        bulkStudio.classList.remove('hidden');
+        btnBulk.className = 'px-3 py-1 rounded-lg font-semibold transition bg-zinc-800 text-white shadow-sm';
+        btnSingle.className = 'px-3 py-1 rounded-lg font-medium transition text-zinc-400 hover:text-white';
+        title.textContent = '⚡ Bulk Add Movies & Series';
+        sub.textContent = 'Paste your list — posters and details auto-fetch for all.';
+      }
     }
 
     function setFormStatus(status) {
@@ -1571,18 +923,35 @@
       const watchedPill = document.getElementById('statusPillWatched');
       const watchlistPill = document.getElementById('statusPillWatchlist');
       const ratingGroup = document.getElementById('ratingControlGroup');
-      const rewatchGroup = document.getElementById('rewatchControlGroup');
+      const saveBtn = document.getElementById('saveMemoryBtn');
 
       if (status === 'watched') {
-        watchedPill.className = 'flex-1 py-1 px-3 rounded-lg text-xs font-semibold font-mono transition bg-zinc-800 text-white shadow-sm';
-        watchlistPill.className = 'flex-1 py-1 px-3 rounded-lg text-xs font-medium font-mono transition text-zinc-400 hover:text-white';
-        if (ratingGroup) ratingGroup.classList.remove('opacity-30', 'pointer-events-none');
-        if (rewatchGroup) rewatchGroup.classList.remove('opacity-30', 'pointer-events-none');
+        watchedPill.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition bg-zinc-800 text-white shadow-sm';
+        watchlistPill.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition text-zinc-400 hover:text-white';
+        if (ratingGroup) ratingGroup.classList.remove('hidden');
+        if (saveBtn) saveBtn.innerHTML = '✦ Add to Watched (Latest)';
       } else {
-        watchlistPill.className = 'flex-1 py-1 px-3 rounded-lg text-xs font-semibold font-mono transition bg-zinc-800 text-white shadow-sm';
-        watchedPill.className = 'flex-1 py-1 px-3 rounded-lg text-xs font-medium font-mono transition text-zinc-400 hover:text-white';
-        if (ratingGroup) ratingGroup.classList.add('opacity-30', 'pointer-events-none');
-        if (rewatchGroup) rewatchGroup.classList.add('opacity-30', 'pointer-events-none');
+        watchlistPill.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition bg-zinc-800 text-white shadow-sm';
+        watchedPill.className = 'flex-1 py-2 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition text-zinc-400 hover:text-white';
+        if (ratingGroup) ratingGroup.classList.add('hidden');
+        if (saveBtn) saveBtn.innerHTML = '✦ Save to Watchlist';
+      }
+    }
+
+    function setBulkStatus(status) {
+      bulkSelectedStatus = status;
+      const bWatched = document.getElementById('bulkStatusWatched');
+      const bWatchlist = document.getElementById('bulkStatusWatchlist');
+      const ratingCont = document.getElementById('bulkRatingContainer');
+
+      if (status === 'watched') {
+        bWatched.className = 'flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition bg-zinc-800 text-white shadow-sm';
+        bWatchlist.className = 'flex-1 py-1.5 px-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition text-zinc-400 hover:text-white';
+        if (ratingCont) ratingCont.classList.remove('opacity-30', 'pointer-events-none');
+      } else {
+        bWatchlist.className = 'flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition bg-zinc-800 text-white shadow-sm';
+        bWatched.className = 'flex-1 py-1.5 px-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition text-zinc-400 hover:text-white';
+        if (ratingCont) ratingCont.classList.add('opacity-30', 'pointer-events-none');
       }
     }
 
@@ -1596,75 +965,287 @@
       if (!val || val.trim().length < 2) return;
       titleDebounceTimer = setTimeout(() => {
         triggerAutoThumbnail();
-      }, 600);
+      }, 400);
     }
 
     async function triggerAutoThumbnail() {
-      const title = (document.getElementById('inputTitle').value || '').trim();
-      const type = document.getElementById('selectType').value;
-      const year = (document.getElementById('inputYear').value || '').trim();
+      const title = (document.getElementById('inputTitle')?.value || '').trim();
+      const type = document.getElementById('selectType')?.value || 'Movie';
+      const year = (document.getElementById('inputYear')?.value || '').trim();
 
       if (!title || title.length < 2) return;
 
       const shimmer = document.getElementById('thumbShimmerOverlay');
       const btn = document.getElementById('autoFetchBtn');
       if (shimmer) shimmer.classList.remove('hidden');
-      if (btn) btn.innerHTML = '<span>⏳</span> <span>Searching...</span>';
+      if (btn) btn.innerHTML = '<span>⏳</span> <span>Fetching...</span>';
 
+      let fetchSuccess = false;
+
+      // Try local server endpoint first
       try {
-        const res = await fetch(`/api/cinema/auto-thumbnail?title=${encodeURIComponent(title)}&type=${encodeURIComponent(type)}&year=${encodeURIComponent(year)}`);
+        const serverBase = window.location.protocol === 'file:' ? 'http://localhost:4000' : '';
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+        const res = await fetch(`${serverBase}/api/cinema/auto-thumbnail?title=${encodeURIComponent(title)}&type=${encodeURIComponent(type)}&year=${encodeURIComponent(year)}`, {
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
         if (res.ok) {
           const data = await res.json();
-          const poster = data.thumbnailUrl || data.posterUrl;
-          if (poster) {
-            setThumbnailPreview(poster, data.source || 'Auto', data.resolution || 'HD');
-            document.getElementById('customPosterInput').value = poster;
-            showToast(`Found official ${data.source || 'archive'} poster for "${data.title || title}"`);
-            return;
+          if (data && data.thumbnailUrl) {
+            applyAutoFetchedPoster(data, title);
+            fetchSuccess = true;
           }
         }
-      } catch (err) {
-        console.warn('Auto-thumbnail fetch error:', err);
-      } finally {
-        if (shimmer) shimmer.classList.add('hidden');
-        if (btn) btn.innerHTML = '<span>🖼</span> <span>Auto-Fetch</span>';
+      } catch (err) {}
+
+      // Browser direct fallback
+      if (!fetchSuccess) {
+        try {
+          const clientData = await directClientInfoboxFetch(title, type, year);
+          if (clientData && clientData.thumbnailUrl) {
+            applyAutoFetchedPoster(clientData, title);
+            fetchSuccess = true;
+          }
+        } catch (e) {}
+      }
+
+      if (shimmer) shimmer.classList.add('hidden');
+      if (btn) btn.innerHTML = '<span>🖼</span> <span>Auto-Fetch</span>';
+
+      if (!fetchSuccess) {
+        showToast(`No poster found for "${title}". You can paste custom URL.`);
       }
     }
 
-    function setThumbnailPreview(url, source = 'Auto', resolution = 'HD') {
+    function toCleanCanonicalTitle(rawTitle) {
+      if (!rawTitle) return '';
+      let clean = rawTitle
+        .replace(/\s*\((?:\d{4}\s+)?(?:film|movie|tv series|television series|series|miniseries|indian film|hindi film|franchise|anime|video game|soundtrack)\)/gi, '')
+        .replace(/\s*\(\d{4}\)$/g, '')
+        .trim();
+
+      const words = clean.split(' ');
+      const minorWords = new Set(['a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at', 'to', 'from', 'by', 'of', 'in', 'with']);
+      
+      return words.map((w, idx) => {
+        if (!w) return '';
+        const lower = w.toLowerCase();
+        if (idx > 0 && minorWords.has(lower) && !w.includes(':')) {
+          return lower;
+        }
+        return lower.charAt(0).toUpperCase() + lower.slice(1);
+      }).join(' ');
+    }
+
+    function applyAutoFetchedPoster(data, originalTitle) {
+      const poster = data.thumbnailUrl;
+      setThumbnailPreview(poster);
+      const customInput = document.getElementById('customPosterInput');
+      if (customInput) customInput.value = poster;
+
+      const canonical = toCleanCanonicalTitle(data.title) || toCleanCanonicalTitle(originalTitle);
+
+      // Auto-replace the input field with the official canonical title from the database match
+      const titleInput = document.getElementById('inputTitle');
+      if (titleInput && canonical) {
+        titleInput.value = canonical;
+      }
+
+      if (data.year && document.getElementById('inputYear') && !document.getElementById('inputYear').value) {
+        document.getElementById('inputYear').value = data.year;
+      }
+      if (data.director && document.getElementById('inputDirector') && !document.getElementById('inputDirector').value) {
+        document.getElementById('inputDirector').value = data.director;
+      }
+      if (data.type && document.getElementById('selectType')) {
+        document.getElementById('selectType').value = data.type;
+      }
+
+      if (data.matches && data.matches.length > 1) {
+        renderPosterOptions(data.matches);
+      } else {
+        const optsSec = document.getElementById('posterOptionsSection');
+        if (optsSec) optsSec.classList.add('hidden');
+      }
+
+      showToast(`🎯 Matched: "${canonical}"`);
+    }
+
+    async function directClientInfoboxFetch(title, type = 'Movie', year = '') {
+      const cleanTitle = (title || '').trim();
+      if (!cleanTitle) return { success: false, thumbnailUrl: null, matches: [] };
+      const searchYear = year ? String(year).trim() : '';
+      const allMatches = [];
+      const seenUrls = new Set();
+
+      const addMatch = (m) => {
+        if (m && m.thumbnailUrl && !seenUrls.has(m.thumbnailUrl)) {
+          seenUrls.add(m.thumbnailUrl);
+          allMatches.push(m);
+        }
+      };
+
+      // TVMaze
+      try {
+        const tvUrl = `https://api.tvmaze.com/search/shows?q=${encodeURIComponent(cleanTitle)}`;
+        const tvRes = await fetch(tvUrl);
+        if (tvRes.ok) {
+          const tvList = await tvRes.json();
+          if (Array.isArray(tvList)) {
+            for (const entry of tvList) {
+              const show = entry.show;
+              if (!show || !show.image) continue;
+              const poster = show.image.original || show.image.medium;
+              if (!poster) continue;
+              const isExact = show.name && show.name.toLowerCase() === cleanTitle.toLowerCase();
+              addMatch({
+                source: 'tvmaze',
+                title: show.name || cleanTitle,
+                type: 'TV Series',
+                year: show.premiered ? show.premiered.substring(0, 4) : searchYear,
+                thumbnailUrl: poster,
+                score: isExact ? 100 : 80
+              });
+            }
+          }
+        }
+      } catch (e) {}
+
+      // Wikipedia Infobox
+      const extractWikiPoster = async (pageTitle) => {
+        try {
+          const parseUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&origin=*&redirects=1&prop=wikitext|properties&section=0&page=${encodeURIComponent(pageTitle)}`;
+          const r = await fetch(parseUrl);
+          if (!r.ok) return null;
+          const d = await r.json();
+          if (!d.parse || !d.parse.wikitext) return null;
+
+          const wikitext = d.parse.wikitext['*'];
+          const realTitle = d.parse.title || pageTitle;
+
+          const isFilm = /{{\s*Infobox\s+film/i.test(wikitext) || (wikitext.includes('film') && (wikitext.includes('directed by') || wikitext.includes('starring')));
+          const isTv = /{{\s*Infobox\s+(?:television|animanga|series)/i.test(wikitext) || wikitext.includes('series');
+          if (!isFilm && !isTv) return null;
+
+          const imgMatch = wikitext.match(/\|\s*(?:image|poster|cover)\s*=\s*([^|\n\r}]+)/i);
+          if (!imgMatch) return null;
+          let fileName = imgMatch[1].trim()
+            .replace(/^\[\[File:/i, '')
+            .replace(/^File:/i, '')
+            .replace(/^\[\[Image:/i, '')
+            .replace(/\|.*/, '')
+            .replace(/\]\].*/, '')
+            .trim();
+          if (!fileName || fileName.length < 3 || fileName.endsWith('.svg')) return null;
+
+          const dirMatch = wikitext.match(/\|\s*director\s*=\s*([^|\n\r}]+)/i);
+          const director = dirMatch ? dirMatch[1].replace(/\[\[|\]\]/g, '').replace(/\{\{[^}]+\}\}/g, '').trim() : '';
+          const yearMatch = wikitext.match(/\b(19\d{2}|20\d{2})\b/);
+          const itemYear = yearMatch ? yearMatch[1] : searchYear;
+
+          const infoUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=imageinfo&iiprop=url&titles=File:${encodeURIComponent(fileName)}`;
+          const infoRes = await fetch(infoUrl);
+          if (!infoRes.ok) return null;
+          const infoData = await infoRes.json();
+          const p = Object.values(infoData.query?.pages || {})[0];
+          const directUrl = p && p.imageinfo && p.imageinfo[0] ? p.imageinfo[0].url : null;
+
+          if (directUrl) {
+            let score = 50;
+            const normReal = realTitle.toLowerCase().trim();
+            const normClean = cleanTitle.toLowerCase().trim();
+            if (normReal === normClean) score += 60;
+            else if (normReal === `${normClean} (film)` || normReal === `${normClean} (tv series)`) score += 55;
+
+            return {
+              source: 'wikipedia',
+              title: realTitle,
+              type: isTv ? 'TV Series' : 'Movie',
+              director: director,
+              year: itemYear,
+              thumbnailUrl: directUrl,
+              score
+            };
+          }
+        } catch (e) {}
+        return null;
+      };
+
+      const candidates = [cleanTitle, `${cleanTitle} (film)`, `${cleanTitle} (TV series)`, `${cleanTitle} (Indian film)`];
+      const wikiResults = await Promise.all(candidates.map(extractWikiPoster));
+      wikiResults.filter(Boolean).forEach(addMatch);
+
+      allMatches.sort((a, b) => (b.score || 0) - (a.score || 0));
+      if (allMatches.length > 0) {
+        const top = allMatches[0];
+        return {
+          success: true,
+          source: top.source,
+          title: top.title,
+          type: top.type,
+          director: top.director || '',
+          year: top.year || searchYear,
+          thumbnailUrl: top.thumbnailUrl,
+          matches: allMatches.slice(0, 8)
+        };
+      }
+      return { success: false, thumbnailUrl: null, matches: [] };
+    }
+
+    function renderPosterOptions(matches) {
+      const container = document.getElementById('posterOptionsSection');
+      const list = document.getElementById('posterOptionsList');
+      const countText = document.getElementById('posterOptionsCountText');
+      if (!container || !list) return;
+
+      container.classList.remove('hidden');
+      if (countText) countText.textContent = `${matches.length} Posters Found`;
+
+      list.innerHTML = matches.map(m => `
+        <div 
+          onclick="selectPosterOption('${m.thumbnailUrl.replace(/'/g, "\\'")}', '${(m.title || '').replace(/'/g, "\\'")}', '${m.year || ''}')"
+          class="shrink-0 w-20 p-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-white/10 hover:border-amber-400 cursor-pointer transition flex flex-col items-center text-center group"
+          title="${m.title} (${m.year || 'N/A'})"
+        >
+          <div class="w-full aspect-[2/3] rounded bg-zinc-950 overflow-hidden mb-1 border border-white/5">
+            <img src="${m.thumbnailUrl}" alt="${m.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+          </div>
+          <span class="text-[8px] font-mono text-zinc-400 truncate w-full group-hover:text-amber-300">${m.title}</span>
+        </div>
+      `).join('');
+    }
+
+    function selectPosterOption(url, title, year) {
+      setThumbnailPreview(url);
+      document.getElementById('customPosterInput').value = url;
+      if (year && !document.getElementById('inputYear').value) {
+        document.getElementById('inputYear').value = year;
+      }
+      showToast(`Selected poster for "${title}"`);
+    }
+
+    function setThumbnailPreview(url) {
       const img = document.getElementById('thumbPreviewImg');
       const icon = document.getElementById('thumbPlaceholderIcon');
       const autoBadge = document.getElementById('thumbAutoDetectBadge');
-      const resBadge = document.getElementById('thumbResolutionBadge');
-      const srcBadge = document.getElementById('thumbSourceBadge');
 
       if (!img || !url) return;
-
+      img.referrerPolicy = 'no-referrer';
       img.src = url;
-      img.onload = () => {
-        img.classList.remove('hidden');
-        if (icon) icon.classList.add('hidden');
-        if (autoBadge) autoBadge.classList.remove('hidden');
-        if (resBadge) {
-          resBadge.textContent = resolution;
-          resBadge.classList.remove('hidden');
-        }
-        if (srcBadge) {
-          srcBadge.textContent = source;
-          srcBadge.classList.remove('hidden');
-        }
-      };
-      img.onerror = () => {
-        resetThumbnailPreview();
-      };
+      img.classList.remove('hidden');
+      if (icon) icon.classList.add('hidden');
+      if (autoBadge) autoBadge.classList.remove('hidden');
     }
 
     function resetThumbnailPreview() {
       const img = document.getElementById('thumbPreviewImg');
       const icon = document.getElementById('thumbPlaceholderIcon');
       const autoBadge = document.getElementById('thumbAutoDetectBadge');
-      const resBadge = document.getElementById('thumbResolutionBadge');
-      const srcBadge = document.getElementById('thumbSourceBadge');
+      const optsSec = document.getElementById('posterOptionsSection');
 
       if (img) {
         img.src = '';
@@ -1672,96 +1253,209 @@
       }
       if (icon) icon.classList.remove('hidden');
       if (autoBadge) autoBadge.classList.add('hidden');
-      if (resBadge) resBadge.classList.add('hidden');
-      if (srcBadge) srcBadge.classList.add('hidden');
+      if (optsSec) optsSec.classList.add('hidden');
     }
 
     function handleCustomPosterUrl(url) {
       if (url && url.startsWith('http')) {
-        setThumbnailPreview(url, 'Custom URL', 'Custom');
+        setThumbnailPreview(url);
       } else {
         resetThumbnailPreview();
       }
     }
 
-    // AI Critique via local Ollama
-    async function runAiCritique() {
-      const title = (document.getElementById('inputTitle').value || '').trim();
-      const type = document.getElementById('selectType').value;
-      const year = (document.getElementById('inputYear').value || '').trim();
+    // ==========================================
+    // BULK PROCESSING ENGINE
+    // ==========================================
+    function updateBulkCount() {
+      const text = document.getElementById('bulkInputList').value || '';
+      const lines = text.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+      document.getElementById('bulkDetectedCount').textContent = `${lines.length} titles detected`;
+    }
 
-      if (!title) {
-        alert('Please enter a Title first before generating an AI critique.');
+    async function processBulkList() {
+      const text = (document.getElementById('bulkInputList').value || '').trim();
+      if (!text) {
+        showToast('Please paste at least one movie or series name.');
         return;
       }
 
-      const spinner = document.getElementById('aiCritiqueSpinner');
-      const text = document.getElementById('aiCritiqueText');
-      if (spinner) spinner.classList.remove('hidden');
-      if (text) text.textContent = 'Critiquing (Ollama)...';
+      const titles = text.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+      if (titles.length === 0) return;
+
+      const btn = document.getElementById('startBulkFetchBtn');
+      const progressCont = document.getElementById('bulkProgressBarContainer');
+      const progressBar = document.getElementById('bulkProgressBar');
+      const progressText = document.getElementById('bulkProgressText');
+      const progressPercent = document.getElementById('bulkProgressPercent');
+      const reviewSection = document.getElementById('bulkResultsReviewSection');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> <span>Processing Bulk List...</span>';
+      progressCont.classList.remove('hidden');
+      reviewSection.classList.add('hidden');
+      bulkParsedItems = [];
+
+      const serverBase = window.location.protocol === 'file:' ? 'http://localhost:4000' : '';
+      const defaultRating = Number(document.getElementById('bulkDefaultRating').value || 8.5);
+
+      for (let i = 0; i < titles.length; i++) {
+        const rawTitle = titles[i];
+        const currentIdx = i + 1;
+        const pct = Math.round((currentIdx / titles.length) * 100);
+
+        progressText.textContent = `Auto-fetching ${currentIdx} of ${titles.length}: "${rawTitle}"...`;
+        progressBar.style.width = `${pct}%`;
+        progressPercent.textContent = `${pct}%`;
+
+        let fetched = null;
+        try {
+          const res = await fetch(`${serverBase}/api/cinema/auto-thumbnail?title=${encodeURIComponent(rawTitle)}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.thumbnailUrl) fetched = data;
+          }
+        } catch (e) {}
+
+        if (!fetched) {
+          try {
+            const clientRes = await directClientInfoboxFetch(rawTitle);
+            if (clientRes && clientRes.thumbnailUrl) fetched = clientRes;
+          } catch (e) {}
+        }
+
+        const id = rawTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 1000);
+        const resolvedTitle = toCleanCanonicalTitle(fetched?.title) || toCleanCanonicalTitle(rawTitle);
+        const resolvedItem = {
+          id,
+          title: resolvedTitle,
+          type: fetched?.type || 'Movie',
+          year: fetched?.year || new Date().getFullYear().toString(),
+          director: fetched?.director || '',
+          status: bulkSelectedStatus,
+          rating: bulkSelectedStatus === 'watched' ? defaultRating : null,
+          rewatchCount: bulkSelectedStatus === 'watched' ? 1 : 0,
+          posterUrl: fetched?.thumbnailUrl || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&auto=format&fit=crop&q=80',
+          watchedDate: bulkSelectedStatus === 'watched' ? new Date().toISOString().split('T')[0] : 'Queue',
+          createdAt: new Date().toISOString()
+        };
+
+        bulkParsedItems.push(resolvedItem);
+      }
+
+      progressCont.classList.add('hidden');
+      btn.disabled = false;
+      btn.innerHTML = '<span>⚡</span> <span>Re-Fetch / Update List</span>';
+
+      renderBulkReviewGrid();
+      reviewSection.classList.remove('hidden');
+      showToast(`✨ Auto-fetched posters for ${bulkParsedItems.length} titles!`);
+    }
+
+    function renderBulkReviewGrid() {
+      const grid = document.getElementById('bulkReviewGrid');
+      const countEl = document.getElementById('bulkResolvedCount');
+      const finalBadge = document.getElementById('bulkFinalCountBadge');
+
+      if (!grid) return;
+      countEl.textContent = bulkParsedItems.length;
+      finalBadge.textContent = bulkParsedItems.length;
+
+      grid.innerHTML = bulkParsedItems.map((item, idx) => `
+        <div class="relative bg-zinc-950 border border-white/10 hover:border-amber-400/40 rounded-xl p-2.5 flex items-center gap-2.5 group">
+          <button 
+            type="button" 
+            onclick="removeBulkItem(${idx})"
+            class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-zinc-800 hover:bg-rose-500 text-zinc-400 hover:text-white flex items-center justify-center text-[10px] font-bold border border-white/10 transition z-10"
+            title="Remove item"
+          >
+            ✕
+          </button>
+
+          <div class="w-12 aspect-[2/3] rounded-lg overflow-hidden bg-zinc-900 border border-white/5 shrink-0">
+            <img src="${item.posterUrl}" alt="${item.title}" class="w-full h-full object-cover">
+          </div>
+
+          <div class="overflow-hidden flex-1">
+            <h5 class="font-display font-bold text-xs text-white truncate group-hover:text-amber-300 transition-colors">${item.title}</h5>
+            <div class="flex items-center gap-1.5 text-[9px] font-mono text-zinc-400 mt-0.5">
+              <span>${item.type}</span>
+              ${item.year ? `<span>• ${item.year}</span>` : ''}
+            </div>
+            <div class="mt-1">
+              <span class="inline-block px-1.5 py-0.2 rounded text-[8px] font-mono font-bold ${item.status === 'watched' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-zinc-800 text-zinc-400 border border-white/10'}">
+                ${item.status === 'watched' ? `★ ${item.rating || 8.5}` : '⏳ Watchlist'}
+              </span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function removeBulkItem(idx) {
+      bulkParsedItems.splice(idx, 1);
+      renderBulkReviewGrid();
+    }
+
+    async function commitBulkSave() {
+      if (bulkParsedItems.length === 0) {
+        showToast('No items to save.');
+        return;
+      }
+
+      const btn = document.getElementById('confirmBulkSaveBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> <span>Saving to Vault...</span>';
 
       try {
-        const res = await fetch('/api/cinema/ai-critique', {
+        const res = await fetch('/api/cinema', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, type, year })
+          body: JSON.stringify(bulkParsedItems)
         });
 
         if (res.ok) {
-          const ai = await res.json();
-          if (ai.hotTake) document.getElementById('inputHotTake').value = ai.hotTake;
-          if (ai.emotionalTag) document.getElementById('inputVibe').value = ai.emotionalTag;
-          if (ai.quote) document.getElementById('inputQuote').value = ai.quote;
-          if (ai.director && !document.getElementById('inputDirector').value) {
-            document.getElementById('inputDirector').value = ai.director;
-          }
-          if (ai.genres && (!document.getElementById('inputGenres').value || document.getElementById('inputGenres').value.length === 0)) {
-            document.getElementById('inputGenres').value = Array.isArray(ai.genres) ? ai.genres.join(', ') : ai.genres;
-          }
-          if (ai.year && !document.getElementById('inputYear').value) {
-            document.getElementById('inputYear').value = ai.year;
-          }
-          if (ai.suggestedRating && !document.getElementById('formStatus').value.includes('watchlist')) {
-            document.getElementById('inputRating').value = ai.suggestedRating;
-            updateRatingDisplay(ai.suggestedRating);
-          }
-          if (ai.posterUrl) {
-            setThumbnailPreview(ai.posterUrl, 'AI / TVMaze', 'Original');
-            document.getElementById('customPosterInput').value = ai.posterUrl;
-          }
-          showToast(`✨ Ollama synthesized critique for "${title}"`);
+          await loadCinemaVaultData();
+        } else {
+          // Local fallback
+          bulkParsedItems.forEach(item => {
+            const idx = cinemaData.findIndex(m => m.id === item.id || m.title.toLowerCase() === item.title.toLowerCase());
+            if (idx >= 0) cinemaData[idx] = item;
+            else cinemaData.unshift(item);
+          });
+          localStorage.setItem('cinema_vault_local', JSON.stringify(cinemaData));
+          renderAll();
         }
-      } catch (err) {
-        console.error('AI Critique error:', err);
-        showToast('AI critique service timed out. You can fill fields manually.');
-      } finally {
-        if (spinner) spinner.classList.add('hidden');
-        if (text) text.textContent = '✨ Auto-Fill with AI';
+      } catch (e) {
+        bulkParsedItems.forEach(item => cinemaData.unshift(item));
+        localStorage.setItem('cinema_vault_local', JSON.stringify(cinemaData));
+        renderAll();
       }
+
+      closeAddModal();
+      showToast(`🎉 Successfully added ${bulkParsedItems.length} titles to Cinema Vault!`);
+      btn.disabled = false;
+      btn.innerHTML = '<span>✦ Add All</span> <span id="bulkFinalCountBadge" class="px-1.5 py-0.2 rounded bg-black/20 font-mono text-[11px]">0</span> <span>to Cinema Vault</span>';
     }
 
-    // Save Memory
-    async function handleSaveMemory(e) {
+    // Save Single Title
+    async function handleSaveTitle(e) {
       e.preventDefault();
-      const status = document.getElementById('formStatus').value || 'watched';
+      const status = document.getElementById('formStatus')?.value || 'watched';
       const isWatchlist = status === 'watchlist';
 
-      const title = (document.getElementById('inputTitle').value || '').trim();
-      const type = document.getElementById('selectType').value;
-      const year = (document.getElementById('inputYear').value || '').trim() || new Date().getFullYear().toString();
-      const director = (document.getElementById('inputDirector').value || '').trim() || 'Unknown Visionary';
-      const platform = document.getElementById('selectPlatform').value;
-      const rating = isWatchlist ? null : Number(document.getElementById('inputRating').value);
-      const rewatchCount = isWatchlist ? 0 : (parseInt(document.getElementById('inputRewatches').value) || 1);
-      const genres = (document.getElementById('inputGenres').value || '')
-        .split(',')
-        .map(s => s.trim())
-        .filter(Boolean);
-      const emotionalTag = (document.getElementById('inputVibe').value || '').trim() || (isWatchlist ? 'Anticipated Masterpiece' : 'Profound Cinematic Impact');
-      const hotTake = (document.getElementById('inputHotTake').value || '').trim() || (isWatchlist ? 'Anticipating this visionary release.' : 'A commanding tour-de-force.');
-      const quote = (document.getElementById('inputQuote').value || '').trim() || '';
+      const title = (document.getElementById('inputTitle')?.value || '').trim();
+      if (!title) {
+        showToast('Please enter a movie or series title');
+        return;
+      }
 
-      const customPoster = (document.getElementById('customPosterInput').value || '').trim();
+      const type = document.getElementById('selectType')?.value || 'Movie';
+      const year = (document.getElementById('inputYear')?.value || '').trim() || new Date().getFullYear().toString();
+      const director = (document.getElementById('inputDirector')?.value || '').trim() || '';
+      const rating = isWatchlist ? null : Number(document.getElementById('inputRating')?.value || 9.0);
+
+      const customPoster = (document.getElementById('customPosterInput')?.value || '').trim();
       const previewImg = document.getElementById('thumbPreviewImg');
       const posterUrl = customPoster || (previewImg && previewImg.src && !previewImg.classList.contains('hidden') ? previewImg.src : 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&auto=format&fit=crop&q=80');
 
@@ -1773,20 +1467,12 @@
         type,
         year,
         director,
-        platform,
         status,
         rating,
-        rewatchCount,
-        genres: genres.length > 0 ? genres : ['Cinema'],
-        emotionalTag,
-        hotTake,
-        quote,
+        rewatchCount: isWatchlist ? 0 : 1,
         posterUrl,
-        accentColor: '#f59e0b',
-        runtimeMinutes: type === 'Movie' ? 140 : 60,
-        runtimeStr: type === 'Movie' ? '140 min' : 'Season Run',
         watchedDate: isWatchlist ? 'Queue' : new Date().toISOString().split('T')[0],
-        ticketSeat: `ROW ${String.fromCharCode(65 + Math.floor(Math.random() * 8))}-${Math.floor(Math.random() * 20) + 1}`
+        createdAt: new Date().toISOString()
       };
 
       try {
@@ -1800,32 +1486,26 @@
           const idx = cinemaData.findIndex(m => m.id === newEntry.id);
           if (idx >= 0) cinemaData[idx] = newEntry;
           else cinemaData.unshift(newEntry);
-
-          closeAddModal();
-          renderAll();
-          showToast(`${isWatchlist ? 'Staged to Watchlist Queue' : 'Fed into Watched Vault'}: ${title}`);
-        } else {
-          alert('Failed to save to server.');
         }
       } catch (err) {
-        console.error('Error saving memory:', err);
         cinemaData.unshift(newEntry);
-        closeAddModal();
-        renderAll();
-        showToast(`Locally saved: ${title}`);
+        localStorage.setItem('cinema_vault_local', JSON.stringify(cinemaData));
       }
+
+      closeAddModal();
+      renderAll();
+      showToast(`${isWatchlist ? 'Saved to Watchlist' : 'Added to Watched'}: ${title}`);
     }
 
-    // Graduate Watchlist title to Watched
+    // Graduate from Watchlist to Watched
     function openGraduateModal(id) {
       const item = cinemaData.find(m => m.id === id);
       if (!item) return;
 
       document.getElementById('gradId').value = item.id;
       document.getElementById('gradTitle').textContent = item.title;
-      document.getElementById('gradDirector').textContent = `Dir. ${item.director} (${item.year})`;
+      document.getElementById('gradDirector').textContent = item.director ? `Dir. ${item.director}` : item.type;
       document.getElementById('gradPoster').src = item.posterUrl;
-      document.getElementById('gradDate').value = new Date().toISOString().split('T')[0];
       document.getElementById('graduateModal').showModal();
     }
 
@@ -1840,16 +1520,10 @@
       if (!item) return;
 
       const rating = Number(document.getElementById('gradRating').value);
-      const hotTake = (document.getElementById('gradHotTake').value || '').trim();
-      const platform = document.getElementById('gradPlatform').value;
-      const watchedDate = document.getElementById('gradDate').value;
-
       item.status = 'watched';
       item.rating = rating;
-      item.hotTake = hotTake;
-      item.platform = platform;
-      item.watchedDate = watchedDate;
       item.rewatchCount = 1;
+      item.watchedDate = new Date().toISOString().split('T')[0];
 
       try {
         await fetch('/api/cinema', {
@@ -1857,12 +1531,13 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(item)
         });
-        closeGraduateModal();
-        renderAll();
-        showToast(`✦ "${item.title}" graduated to Watched Vault!`);
       } catch (err) {
-        console.error('Failed to graduate title:', err);
+        localStorage.setItem('cinema_vault_local', JSON.stringify(cinemaData));
       }
+
+      closeGraduateModal();
+      renderAll();
+      showToast(`✦ "${item.title}" moved to Watched!`);
     }
 
     // Detail Modal
@@ -1876,89 +1551,43 @@
       content.innerHTML = `
         <button onclick="closeDetailModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition">✕</button>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div class="rounded-xl overflow-hidden bg-zinc-950 border border-white/10 shadow-lg relative aspect-[2/3] md:aspect-auto">
+        <div class="flex flex-col sm:flex-row gap-5">
+          <div class="w-full sm:w-44 aspect-[2/3] rounded-xl overflow-hidden bg-zinc-950 border border-white/10 shrink-0">
             <img src="${item.posterUrl}" alt="${item.title}" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
-            <div class="absolute bottom-3 left-3 right-3 text-center">
-              ${isWatchlist ? `
-                <span class="px-2.5 py-1 rounded text-xs font-mono font-bold bg-zinc-950 text-amber-300 border border-amber-400/40">
-                  ⏳ Staged in Watchlist
-                </span>
-              ` : `
-                <span class="px-2.5 py-1 rounded text-xs font-mono font-bold bg-amber-500 text-black shadow">
-                  ★ ${item.rating || '--'} / 10 Score
-                </span>
-              `}
-            </div>
           </div>
 
-          <div class="md:col-span-2 flex flex-col justify-between space-y-3.5">
+          <div class="flex-1 flex flex-col justify-between space-y-3">
             <div>
               <div class="flex items-center gap-2 mb-1.5">
                 <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-zinc-800 text-amber-300 border border-amber-400/30">
-                  ${item.type}
+                  ${item.type || 'Movie'}
                 </span>
-                <span class="text-xs font-mono text-zinc-400">${item.year}</span>
-                <span class="text-zinc-600">•</span>
-                <span class="text-xs font-mono text-zinc-400">${item.runtimeStr || 'Feature'}</span>
+                <span class="text-xs font-mono text-zinc-400">${item.year || ''}</span>
               </div>
 
-              <h2 class="font-cinzel font-bold text-2xl sm:text-3xl text-white mb-0.5 tracking-wide">${item.title}</h2>
-              <p class="text-xs text-zinc-300 mb-3 font-sans">Dir. <strong class="text-amber-300 font-semibold">${item.director}</strong></p>
+              <h2 class="font-display font-bold text-xl text-white mb-1">${item.title}</h2>
+              ${item.director ? `<p class="text-xs text-zinc-400">Dir. <strong class="text-zinc-200">${item.director}</strong></p>` : ''}
 
-              <!-- Emotional Tag -->
-              <div class="p-2.5 rounded-lg bg-zinc-950 border border-white/[0.08] mb-3">
-                <div class="text-[9px] font-mono text-zinc-500 uppercase tracking-wider mb-0.5">Emotional Resonance</div>
-                <div class="font-quote text-sm italic text-amber-200">"${item.emotionalTag || 'Unspecified'}"</div>
-              </div>
-
-              <!-- Hot Take -->
-              <div class="space-y-1 mb-3">
-                <div class="text-[9px] font-mono text-zinc-500 uppercase tracking-wider">${isWatchlist ? 'Anticipation Notes' : 'Unfiltered Hot Take'}</div>
-                <p class="font-quote text-sm text-zinc-200 leading-relaxed italic border-l-2 pl-3 py-1.5 bg-zinc-950/60 rounded-r-lg border-amber-500">
-                  "${item.hotTake}"
-                </p>
-              </div>
-
-              ${item.quote ? `
-                <div class="space-y-1 mb-3">
-                  <div class="text-[9px] font-mono text-zinc-500 uppercase tracking-wider">Unforgettable Line</div>
-                  <p class="font-quote text-sm sm:text-base text-amber-200 italic font-medium">« ${item.quote} »</p>
-                </div>
-              ` : ''}
-
-              <!-- Specs -->
-              <div class="grid grid-cols-3 gap-2 pt-2.5 border-t border-white/[0.08] text-xs font-mono">
-                <div class="bg-zinc-950 p-2 rounded-lg border border-white/5">
-                  <span class="text-zinc-500 block text-[9px]">PLATFORM</span>
-                  <span class="text-white truncate block text-[11px]">${item.platform}</span>
-                </div>
-                <div class="bg-zinc-950 p-2 rounded-lg border border-white/5">
-                  <span class="text-zinc-500 block text-[9px]">STATUS</span>
-                  <span class="text-amber-400 font-bold block text-[11px]">${isWatchlist ? 'Watchlist' : `${item.rewatchCount || 1}x watched`}</span>
-                </div>
-                <div class="bg-zinc-950 p-2 rounded-lg border border-white/5">
-                  <span class="text-zinc-500 block text-[9px]">SEAT</span>
-                  <span class="text-white block text-[11px]">${item.ticketSeat || 'F-14'}</span>
+              <div class="mt-4 p-3 rounded-xl bg-zinc-950 border border-white/[0.08]">
+                <div class="text-[9px] font-mono text-zinc-500 uppercase tracking-wider mb-1">STATUS & DURATION</div>
+                <div class="font-bold text-sm text-amber-400">
+                  ${isWatchlist ? `⏳ In Watchlist • Est. ${item.runtimeStr || (item.type === 'TV Series' ? '8.0 hrs' : '2.2 hrs')}` : `★ ${item.rating || '--'} / 10 Score • ${item.rewatchCount || 1}x Watched • ⏱ ${item.runtimeStr || (item.type === 'TV Series' ? '8.0 hrs' : '2.2 hrs')}`}
                 </div>
               </div>
             </div>
 
-            <!-- Footer -->
             <div class="pt-3 border-t border-white/[0.08] flex items-center justify-between gap-3">
-              <button onclick="deleteMemory('${item.id}', '${item.title.replace(/'/g, "\\'")}')" class="text-xs font-mono text-rose-400 hover:text-rose-300 transition flex items-center gap-1.5 p-1 rounded hover:bg-rose-500/10">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              <button onclick="deleteMemory('${item.id}', '${item.title.replace(/'/g, "\\'")}')" class="text-xs font-mono text-rose-400 hover:text-rose-300 transition flex items-center gap-1.5 p-1">
                 <span>Remove</span>
               </button>
 
               <div class="flex items-center gap-2">
                 ${isWatchlist ? `
-                  <button onclick="closeDetailModal(); openGraduateModal('${item.id}')" class="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition">
+                  <button onclick="closeDetailModal(); openGraduateModal('${item.id}')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition">
                     ✦ Mark as Watched
                   </button>
                 ` : ''}
-                <button onclick="closeDetailModal()" class="px-4 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-white transition">
+                <button onclick="closeDetailModal()" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-white transition">
                   Close
                 </button>
               </div>
@@ -1975,125 +1604,19 @@
     }
 
     async function deleteMemory(id, title) {
-      if (!confirm(`Remove "${title}" from your Cinema Vault?`)) return;
+      if (!confirm(`Remove "${title}" from Cinema Vault?`)) return;
 
       try {
-        const res = await fetch(`/api/cinema/${id}`, { method: 'DELETE' });
-        if (res.ok) {
-          cinemaData = cinemaData.filter(m => m.id !== id);
-          closeDetailModal();
-          renderAll();
-          showToast(`Removed "${title}" from vault`);
-        } else {
-          alert('Failed to remove title from server.');
-        }
-      } catch (err) {
-        console.error('Delete error:', err);
-      }
+        await fetch(`/api/cinema/${id}`, { method: 'DELETE' });
+      } catch (err) {}
+
+      cinemaData = cinemaData.filter(m => m.id !== id);
+      localStorage.setItem('cinema_vault_local', JSON.stringify(cinemaData));
+      closeDetailModal();
+      renderAll();
+      showToast(`Removed "${title}"`);
     }
 
-    // Export Data Portability
-    function openExportModal() {
-      document.getElementById('exportModal').showModal();
-    }
-    function closeExportModal() {
-      document.getElementById('exportModal').close();
-    }
-    function downloadExport(format) {
-      window.location.href = `/api/cinema/export?format=${format}`;
-      showToast(`Exporting vault as .${format.toUpperCase()}...`);
-      closeExportModal();
-    }
-
-    // Import Data Portability
-    let parsedImportData = null;
-    function openImportModal() {
-      parsedImportData = null;
-      document.getElementById('importPreview').classList.add('hidden');
-      document.getElementById('executeImportBtn').disabled = true;
-      document.getElementById('importFileInput').value = '';
-      document.getElementById('importModal').showModal();
-    }
-    function closeImportModal() {
-      document.getElementById('importModal').close();
-    }
-    function handleDragOver(e) {
-      e.preventDefault();
-      e.currentTarget.classList.add('border-amber-400', 'bg-zinc-900');
-    }
-    function handleDragLeave(e) {
-      e.currentTarget.classList.remove('border-amber-400', 'bg-zinc-900');
-    }
-    function handleFileDrop(e) {
-      e.preventDefault();
-      e.currentTarget.classList.remove('border-amber-400', 'bg-zinc-900');
-      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        processImportFile(e.dataTransfer.files[0]);
-      }
-    }
-    function handleFileSelect(e) {
-      if (e.target.files && e.target.files[0]) {
-        processImportFile(e.target.files[0]);
-      }
-    }
-    function processImportFile(file) {
-      const reader = new FileReader();
-      const isJson = file.name.endsWith('.json');
-      const isCsv = file.name.endsWith('.csv');
-
-      reader.onload = (event) => {
-        const text = event.target.result;
-        previewImportData(text, isJson ? 'json' : 'csv', file.name);
-      };
-      reader.readAsText(file);
-    }
-    function previewImportData(rawText, format, filename) {
-      parsedImportData = { rawText, format, filename };
-      const lines = rawText.split('\n').filter(Boolean);
-      const approxCount = format === 'json' ? (JSON.parse(rawText) || []).length : Math.max(0, lines.length - 1);
-
-      document.getElementById('importFileName').textContent = filename;
-      document.getElementById('importCountBadge').textContent = `${approxCount} titles detected`;
-      document.getElementById('importPreview').classList.remove('hidden');
-      document.getElementById('executeImportBtn').disabled = false;
-    }
-    async function executeImport() {
-      if (!parsedImportData) return;
-      const mode = document.querySelector('input[name="importMode"]:checked').value || 'merge';
-
-      const btn = document.getElementById('executeImportBtn');
-      btn.textContent = 'Importing...';
-      btn.disabled = true;
-
-      try {
-        const res = await fetch('/api/cinema/import', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            data: parsedImportData.rawText,
-            format: parsedImportData.format,
-            mode
-          })
-        });
-
-        if (res.ok) {
-          const resp = await res.json();
-          showToast(`Successfully imported ${resp.importedCount || resp.totalCount || 'titles'}!`);
-          closeImportModal();
-          await loadCinemaVaultData();
-        } else {
-          alert('Import failed on server.');
-        }
-      } catch (err) {
-        console.error('Import error:', err);
-        alert('Error connecting to import service.');
-      } finally {
-        btn.textContent = 'Confirm Import';
-        btn.disabled = false;
-      }
-    }
-
-    // Tactile Toast notification
     function showToast(msg) {
       const c = document.getElementById('toastContainer');
       if (!c) return;
@@ -2109,16 +1632,44 @@
       setTimeout(() => {
         toast.classList.add('opacity-0', 'translate-y-2');
         setTimeout(() => toast.remove(), 300);
-      }, 3200);
+      }, 3000);
     }
 
-    // Keyboard Shortcuts
+    function initCardPhysics() {
+      const container = document.getElementById('vaultDisplayContainer');
+      if (!container) return;
+
+      container.addEventListener('mousemove', (e) => {
+        const card = e.target.closest('.cinema-card');
+        if (!card) return;
+
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -8;
+        const rotateY = ((x - centerX) / centerX) * 8;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+        card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+      });
+
+      container.addEventListener('mouseleave', () => {
+        const cards = document.querySelectorAll('.cinema-card');
+        cards.forEach(c => {
+          c.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+      }, true);
+    }
+
     function setupKeyboardNavigation() {
       document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-          if (e.key === 'Escape') {
-            e.target.blur();
-          }
+          if (e.key === 'Escape') e.target.blur();
           return;
         }
 
@@ -2128,22 +1679,13 @@
           if (searchInput) searchInput.focus();
         } else if (e.key === 'n' || e.key === 'N') {
           e.preventDefault();
-          openAddModal();
+          openAddModal('single');
+        } else if (e.key === 'b' || e.key === 'B') {
+          e.preventDefault();
+          openAddModal('bulk');
         } else if (e.key === 'w' || e.key === 'W') {
           e.preventDefault();
           setVaultTab(currentVaultTab === 'watched' ? 'watchlist' : 'watched');
-        } else if (e.key === 'v' || e.key === 'V') {
-          e.preventDefault();
-          setViewMode(currentView === 'poster' ? 'ticket' : 'poster');
-        } else if (e.key === 'p' || e.key === 'P') {
-          e.preventDefault();
-          toggleProjectorMode();
-        } else if (e.key === 'e' || e.key === 'E') {
-          e.preventDefault();
-          openExportModal();
-        } else if (e.key === 'i' || e.key === 'I') {
-          e.preventDefault();
-          openImportModal();
         }
       });
     }
