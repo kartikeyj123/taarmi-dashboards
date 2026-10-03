@@ -1,0 +1,259 @@
+{
+  "schedule": {
+    "intervalHours": 5,
+    "cronExpression": "0 */5 * * *",
+    "leadArchitect": "worker-uiux-architect",
+    "leadEngineer": "worker-web-developer",
+    "orchestrator": "god",
+    "totalDashboards": 27,
+    "lastAuditTimestamp": "2026-10-03T23:27:00+05:30",
+    "nextAuditTimestamp": "2026-10-04T04:27:00+05:30"
+  },
+  "queue": [
+    {
+      "order": 1,
+      "id": "portal_master",
+      "name": "00_DASHBOARD_PORTAL.html / index.html",
+      "title": "Taarmi Executive Suite — Master OS & Command Hub",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\index.html",
+      "mirrors": ["F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\00_DASHBOARD_PORTAL.html", "F:\\ai office\\Amazon office\\output\\00_DASHBOARD_PORTAL.html", "F:\\ai office\\Amazon office\\output\\index.html"],
+      "status": "in_progress",
+      "skillsApplied": ["anti-ai-slop-web-design", "impeccable", "frontend-design", "ui-ux-pro-max", "web-design-guidelines"],
+      "completedAt": null
+    },
+    {
+      "order": 2,
+      "id": "amazon_ppc_action",
+      "name": "AMAZON_CAMPAIGNS_ACTION_DASHBOARD.html",
+      "title": "Amazon Campaigns Action Dashboard",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\AMAZON_CAMPAIGNS_ACTION_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-04T04:27:00+05:30"
+    },
+    {
+      "order": 3,
+      "id": "amazon_ppc_roas_restore",
+      "name": "AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html",
+      "title": "Amazon PPC ROAS Restore Dashboard",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-04T09:27:00+05:30"
+    },
+    {
+      "order": 4,
+      "id": "taarmi_ppc_exec",
+      "name": "TAARMI_PPC_EXECUTIVE_DASHBOARD.html",
+      "title": "Taarmi PPC Executive Dashboard",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\TAARMI_PPC_EXECUTIVE_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-04T14:27:00+05:30"
+    },
+    {
+      "order": 5,
+      "id": "roas_5_plus_intel",
+      "name": "ROAS_5_PLUS_MINED_INTELLIGENCE_DASHBOARD.html",
+      "title": "ROAS 5+ Mined Intelligence Dashboard",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\ROAS_5_PLUS_MINED_INTELLIGENCE_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-04T19:27:00+05:30"
+    },
+    {
+      "order": 6,
+      "id": "search_terms_panel",
+      "name": "SEARCH_TERMS_INTERACTIVE_PANEL.html",
+      "title": "Search Terms Interactive Explorer Panel",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\SEARCH_TERMS_INTERACTIVE_PANEL.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-05T00:27:00+05:30"
+    },
+    {
+      "order": 7,
+      "id": "storefront_simulator",
+      "name": "STOREFRONT_INTERACTIVE_DASHBOARD.html",
+      "title": "Amazon Storefront Interactive Simulator",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\STOREFRONT_INTERACTIVE_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-05T05:27:00+05:30"
+    },
+    {
+      "order": 8,
+      "id": "listings_copy_studio",
+      "name": "LISTINGS_COPY_INTERACTIVE_DASHBOARD.html",
+      "title": "Catalog & Listing Copy Interactive Dashboard",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\LISTINGS_COPY_INTERACTIVE_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-05T10:27:00+05:30"
+    },
+    {
+      "order": 9,
+      "id": "seller_exec_toolkit",
+      "name": "AMAZON_SELLER_EXECUTIVE_TOOLKIT.html",
+      "title": "Amazon Seller Executive Toolkit",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\AMAZON_SELLER_EXECUTIVE_TOOLKIT.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-05T15:27:00+05:30"
+    },
+    {
+      "order": 10,
+      "id": "stockout_predictor",
+      "name": "INVENTORY_STOCKOUT_PREDICTOR.html",
+      "title": "Inventory Stockout Predictor",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\INVENTORY_STOCKOUT_PREDICTOR.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-05T20:27:00+05:30"
+    },
+    {
+      "order": 11,
+      "id": "growth_master_playbook",
+      "name": "AMAZON_GROWTH_MASTER_PLAYBOOK_DASHBOARD.html",
+      "title": "Amazon Growth Master Playbook Dashboard",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\AMAZON_GROWTH_MASTER_PLAYBOOK_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-06T01:27:00+05:30"
+    },
+    {
+      "order": 12,
+      "id": "basket_lab_studio",
+      "name": "BASKET_LAB_STUDIO.html",
+      "title": "Basket Lab & Variant Studio",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\BASKET_LAB_STUDIO.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-06T06:27:00+05:30"
+    },
+    {
+      "order": 13,
+      "id": "box_lab_studio",
+      "name": "BOX_LAB_STUDIO.html",
+      "title": "Box Lab & Packaging Studio",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\BOX_LAB_STUDIO.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-06T11:27:00+05:30"
+    },
+    {
+      "order": 14,
+      "id": "metallic_ribbon_studio",
+      "name": "METALLIC_RIBBON_STUDIO.html",
+      "title": "Metallic Ribbon Product Studio",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\METALLIC_RIBBON_STUDIO.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-06T16:27:00+05:30"
+    },
+    {
+      "order": 15,
+      "id": "biodata_mgmt",
+      "name": "BIODATA_MANAGEMENT_DASHBOARD.html",
+      "title": "WhatsApp Biodata Intake & Deduplication Command",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\BIODATA_MANAGEMENT_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-06T21:27:00+05:30"
+    },
+    {
+      "order": 16,
+      "id": "discovered_tools",
+      "name": "DISCOVERED_TOOLS_DASHBOARD.html",
+      "title": "Discovered AI Tools & Workflow Automation Hub",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\DISCOVERED_TOOLS_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-07T02:27:00+05:30"
+    },
+    {
+      "order": 17,
+      "id": "ai_models_fleet",
+      "name": "AI_MODELS_DASHBOARD.html",
+      "title": "AI Models & Local LLM Fleet Monitor",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\AI_MODELS_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-07T07:27:00+05:30"
+    },
+    {
+      "order": 18,
+      "id": "second_brain_office",
+      "name": "SECOND_BRAIN_OFFICE_DASHBOARD.html",
+      "title": "Second Brain & Autonomous Office Mission Control",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\SECOND_BRAIN_OFFICE_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-07T12:27:00+05:30"
+    },
+    {
+      "order": 19,
+      "id": "sellermate_exec",
+      "name": "SELLERMATE_STRATEGY_EXECUTION_DASHBOARD.html",
+      "title": "SellerMate Strategy Execution Dashboard",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\SELLERMATE_STRATEGY_EXECUTION_DASHBOARD.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-07T17:27:00+05:30"
+    },
+    {
+      "order": 20,
+      "id": "review_automation",
+      "name": "AMAZON_REVIEW_AUTOMATION_STUDIO.html",
+      "title": "Amazon Review Automation Studio",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\AMAZON_REVIEW_AUTOMATION_STUDIO.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-07T22:27:00+05:30"
+    },
+    {
+      "order": 21,
+      "id": "jarvis_voice",
+      "name": "JARVIS_VOICE_CONSOLE.html",
+      "title": "Jarvis Voice & Telemetry Console",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\JARVIS_VOICE_CONSOLE.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-08T03:27:00+05:30"
+    },
+    {
+      "order": 22,
+      "id": "team_war_room",
+      "name": "TEAM_ALL_HANDS_WAR_ROOM.html",
+      "title": "Team All-Hands Autonomous War Room",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\TEAM_ALL_HANDS_WAR_ROOM.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-08T08:27:00+05:30"
+    },
+    {
+      "order": 23,
+      "id": "x_command_center",
+      "name": "X_ACCOUNT_COMMAND_CENTER.html",
+      "title": "X (Twitter) Growth Command Center",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\X_ACCOUNT_COMMAND_CENTER.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-08T13:27:00+05:30"
+    },
+    {
+      "order": 24,
+      "id": "kartikey_portfolio",
+      "name": "KARTIKEY_PORTFOLIO_INTERACTIVE.html",
+      "title": "Founder Digital Portfolio & Executive Dossier",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\KARTIKEY_PORTFOLIO_INTERACTIVE.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-08T18:27:00+05:30"
+    },
+    {
+      "order": 25,
+      "id": "mock_linkedin",
+      "name": "MOCK_LINKEDIN_PROFILE_INTERACTIVE.html",
+      "title": "Interactive Professional Profile Showcase",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\MOCK_LINKEDIN_PROFILE_INTERACTIVE.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-08T23:27:00+05:30"
+    },
+    {
+      "order": 26,
+      "id": "cinema_vault",
+      "name": "CINEMA_VAULT.html",
+      "title": "Cinema Vault Multimedia Engine",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\CINEMA_VAULT.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-09T04:27:00+05:30"
+    },
+    {
+      "order": 27,
+      "id": "cinema_match",
+      "name": "CINEMA_MATCH.html",
+      "title": "Cinema Match Interactive Curator",
+      "path": "F:\\ai office\\Amazon office\\LIVE_DASHBOARDS\\CINEMA_MATCH.html",
+      "status": "queued",
+      "scheduledFor": "2026-10-09T09:27:00+05:30"
+    }
+  ]
+}

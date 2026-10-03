@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Taarmi Executive Suite — Master OS & Command Hub</title>
+  <title>Taarmi Executive Suite — Master OS & Operations Command</title>
+  <meta name="description" content="Central command portal for Taarmi E-Commerce, Amazon PPC, Creative Studios, AI Multi-Agent Fleet, and Personal OS.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Cinzel:wght@600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -14,21 +15,19 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            cinzel: ['Cinzel', 'serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
           },
           colors: {
             brand: {
+              surface: '#0B0F19',
+              card: '#111827',
+              border: '#1F2937',
               gold: '#F59E0B',
-              'gold-light': '#FDE68A',
-              amber: '#D97706',
+              'gold-hover': '#D97706',
               emerald: '#10B981',
               cyan: '#06B6D4',
-              sky: '#0EA5E9',
-              indigo: '#6366F1',
-              purple: '#8B5CF6',
-              rose: '#F43F5E',
+              purple: '#8B5CF6'
             }
           }
         }
@@ -37,129 +36,93 @@
   </script>
   <style>
     :root {
-      --bg-dark: #07090E;
-      --card-bg: rgba(15, 23, 42, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --gold-glow: rgba(245, 158, 11, 0.15);
+      --bg-dark: #070A12;
+      --card-bg: #0F172A;
+      --card-border: #1E293B;
+      --card-border-hover: #F59E0B;
     }
 
     body {
       background-color: var(--bg-dark);
-      color: #F1F5F9;
+      color: #E2E8F0;
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 85% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 45%),
-        radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 32px 32px;
     }
 
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-
-    /* Glass card styling */
-    .glass-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+    .dash-card {
+      background-color: var(--card-bg);
       border: 1px solid var(--card-border);
-      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .glass-card:hover {
-      background: rgba(26, 35, 58, 0.85);
-      border-color: rgba(245, 158, 11, 0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.6), 0 0 25px 0 rgba(245, 158, 11, 0.15);
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .card-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.375rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 9999px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
+    .dash-card:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(245, 158, 11, 0.15);
     }
 
-    /* Custom scrollbars */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #07090E; }
-    ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #334155; }
-
-    /* Glow utility */
-    .gold-text-gradient {
-      background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .cat-btn:focus-visible, a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px #F59E0B;
     }
 
-    .stat-pill {
-      background: rgba(10, 15, 29, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-    }
-
-    /* Keyboard tag */
     kbd {
       font-family: 'JetBrains Mono', monospace;
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 4px;
-      padding: 2px 6px;
+      padding: 1px 5px;
       font-size: 10px;
     }
 
-    @media (max-width: 768px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070A12; }
+    ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
   </style>
 </head>
 <body class="selection:bg-amber-500 selection:text-black">
 
   <!-- Top Navigation Header -->
-  <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/85 backdrop-blur-2xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
       
-      <!-- Brand Logo -->
-      <div class="flex items-center gap-3.5">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center font-black text-slate-950 text-2xl shadow-lg shadow-amber-500/25 ring-2 ring-amber-400/30">
+      <!-- Brand & Identity -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center font-black text-slate-950 text-xl shadow-md shadow-amber-500/20">
           T
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-lg sm:text-xl text-white tracking-tight">TAARMI EXECUTIVE OS</h1>
-            <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30 rounded-full">v6.2 Autonomous</span>
+            <h1 class="font-extrabold text-base sm:text-lg text-white tracking-tight">TAARMI EXECUTIVE OS</h1>
+            <span class="px-2 py-0.5 text-[10px] font-mono font-bold tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-md">v6.5 AUDITED</span>
           </div>
-          <p class="text-xs text-slate-400">Command Center • E-Commerce, Ads, AI Fleet & Second Brain</p>
+          <p class="text-xs text-slate-400 hidden sm:block">Unified Operations Hub • 26 Autonomous Portals</p>
         </div>
       </div>
 
-      <!-- Quick Actions & Status Telemetry -->
-      <div class="flex items-center gap-3">
-        <!-- Live System Clock -->
-        <div class="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-white/10 text-xs font-mono text-slate-300 shadow-inner">
+      <!-- Live Status & External Gateways -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- IST Clock -->
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span id="liveClock">--:--:-- IST</span>
         </div>
 
-        <!-- Phone WhatsApp Link -->
-        <a href="https://wa.me/918178129035" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
-          <span class="text-sm">💬</span>
+        <!-- WhatsApp Link -->
+        <a href="https://wa.me/918178129035" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.297.144.35.491 1.199.534 1.286.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.302c-.087.087-.179.181-.077.355.101.173.45 1.026 1.455 1.488.225.104.404.168.545.212.233.074.457.064.63-.032.217-.119.535-.623.679-.838.144-.216.289-.173.491-.101.202.072 1.285.606 1.502.715.216.108.361.162.414.253.053.091.053.526-.091.931z"/></svg>
           <span class="hidden md:inline">WhatsApp Bot</span>
         </a>
 
         <!-- Seller Central -->
-        <a href="https://sellercentral.amazon.in" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-semibold flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           <span class="hidden md:inline">Seller Central</span>
         </a>
       </div>
@@ -167,559 +130,779 @@
   </header>
 
   <!-- Main Container -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
 
-    <!-- Executive Overview Hero -->
-    <div class="mb-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900/90 via-slate-900/75 to-slate-950/95 border border-white/10 backdrop-blur-2xl relative overflow-hidden shadow-2xl">
-      <div class="absolute -right-16 -top-16 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -left-16 -bottom-16 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-        <div class="max-w-2xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold mb-3 tracking-wide">
-            ✨ Commercial Intelligence & Autonomous Operations
+    <!-- Executive Mission Header -->
+    <div class="mb-6 p-6 rounded-2xl bg-slate-900 border border-slate-800">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono font-semibold mb-2">
+            OPERATIONAL MISSION CONTROL
           </div>
-          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
-            High-Converting E-Commerce, Multi-Agent Fleet & Personal OS
+          <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+            Amazon Brand Operations, Mined PPC & Multi-Agent Network
           </h2>
-          <p class="text-sm text-slate-300 mt-2.5 leading-relaxed">
-            Unified mission control connecting live Amazon storefront simulators, 3,249+ mined PPC queries, autonomous WhatsApp OS controllers, product studios, and digital dossiers.
+          <p class="text-xs text-slate-400 mt-1.5 max-w-2xl leading-relaxed">
+            Centralized directory managing 161 catalog SKUs, 3,249 authentic search-term queries, automated WhatsApp workflows, and live interactive simulators.
           </p>
         </div>
 
         <!-- 4 Key Telemetry Metrics -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 shrink-0">
-          <div class="stat-pill p-3.5 rounded-2xl">
-            <span class="text-[10px] font-mono text-slate-400 block uppercase tracking-wider">Catalog SKUs</span>
-            <span class="text-xl font-mono font-black text-amber-400">161 Active</span>
-            <span class="text-[10px] text-amber-300/80 block mt-0.5">Diwali Ready</span>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 shrink-0">
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800/80">
+            <span class="text-[10px] font-mono text-slate-400 block uppercase">Active SKUs</span>
+            <span class="text-lg font-mono font-bold text-amber-400">161 SKUs</span>
+            <span class="text-[10px] text-slate-400 block">Diwali 2026</span>
           </div>
-          <div class="stat-pill p-3.5 rounded-2xl">
-            <span class="text-[10px] font-mono text-slate-400 block uppercase tracking-wider">Mined Keywords</span>
-            <span class="text-xl font-mono font-black text-cyan-400">3,249</span>
-            <span class="text-[10px] text-cyan-300/80 block mt-0.5">Search Intent</span>
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800/80">
+            <span class="text-[10px] font-mono text-slate-400 block uppercase">Mined Queries</span>
+            <span class="text-lg font-mono font-bold text-cyan-400">3,249</span>
+            <span class="text-[10px] text-slate-400 block">PPC Harvested</span>
           </div>
-          <div class="stat-pill p-3.5 rounded-2xl">
-            <span class="text-[10px] font-mono text-slate-400 block uppercase tracking-wider">AI Modules</span>
-            <span class="text-xl font-mono font-black text-purple-400">18 Suites</span>
-            <span class="text-[10px] text-purple-300/80 block mt-0.5">100% Live</span>
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800/80">
+            <span class="text-[10px] font-mono text-slate-400 block uppercase">Dashboards</span>
+            <span class="text-lg font-mono font-bold text-emerald-400">26 Live</span>
+            <span class="text-[10px] text-slate-400 block">100% Deployed</span>
           </div>
-          <div class="stat-pill p-3.5 rounded-2xl">
-            <span class="text-[10px] font-mono text-slate-400 block uppercase tracking-wider">Discovered Tools</span>
-            <span class="text-xl font-mono font-black text-emerald-400">30+ AI Apps</span>
-            <span class="text-[10px] text-emerald-300/80 block mt-0.5">Insta Live Sync</span>
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800/80">
+            <span class="text-[10px] font-mono text-slate-400 block uppercase">AI Fleet</span>
+            <span class="text-lg font-mono font-bold text-purple-400">7 Agents</span>
+            <span class="text-[10px] text-slate-400 block">Active Roster</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Navigation Filter & Search Bar -->
-    <div class="mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="mb-6 flex flex-col md:flex-row items-center justify-between gap-3">
       <!-- Category Tabs -->
-      <div class="flex items-center gap-1.5 p-1.5 bg-slate-900/90 border border-white/10 rounded-2xl overflow-x-auto whitespace-nowrap w-full md:w-auto no-scrollbar shadow-inner">
-        <button onclick="filterCategory('all')" data-cat="all" class="cat-btn shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-amber-500 text-slate-950 shadow-md">All Suites (<span id="count-all">16</span>)</button>
-        <button onclick="filterCategory('amazon')" data-cat="amazon" class="cat-btn shrink-0 px-4 py-2 rounded-xl text-xs font-medium transition text-slate-400 hover:text-white hover:bg-slate-800/60">Amazon Operations (<span id="count-amazon">6</span>)</button>
-        <button onclick="filterCategory('ppc')" data-cat="ppc" class="cat-btn shrink-0 px-4 py-2 rounded-xl text-xs font-medium transition text-slate-400 hover:text-white hover:bg-slate-800/60">PPC & Growth (<span id="count-ppc">4</span>)</button>
-        <button onclick="filterCategory('creative')" data-cat="creative" class="cat-btn shrink-0 px-4 py-2 rounded-xl text-xs font-medium transition text-slate-400 hover:text-white hover:bg-slate-800/60">Creative & Packaging (<span id="count-creative">3</span>)</button>
-        <button onclick="filterCategory('secondbrain')" data-cat="secondbrain" class="cat-btn shrink-0 px-4 py-2 rounded-xl text-xs font-medium transition text-slate-400 hover:text-white hover:bg-slate-800/60">Second Brain & OS (<span id="count-secondbrain">5</span>)</button>
+      <div class="flex items-center gap-1.5 p-1 bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto whitespace-nowrap w-full md:w-auto">
+        <button onclick="filterCategory('all')" data-cat="all" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-amber-500 text-slate-950">All Portals (<span id="count-all">26</span>)</button>
+        <button onclick="filterCategory('amazon')" data-cat="amazon" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-400 hover:text-white">Amazon & Sales (<span id="count-amazon">7</span>)</button>
+        <button onclick="filterCategory('ppc')" data-cat="ppc" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-400 hover:text-white">PPC & Growth (<span id="count-ppc">5</span>)</button>
+        <button onclick="filterCategory('creative')" data-cat="creative" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-400 hover:text-white">Packaging & Studio (<span id="count-creative">3</span>)</button>
+        <button onclick="filterCategory('fleet')" data-cat="fleet" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-400 hover:text-white">AI Fleet & Ops (<span id="count-fleet">6</span>)</button>
+        <button onclick="filterCategory('personal')" data-cat="personal" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-400 hover:text-white">Personal OS (<span id="count-personal">5</span>)</button>
       </div>
 
-      <!-- Search Input with Keyboard shortcut -->
-      <div class="relative w-full md:w-80 shrink-0">
+      <!-- Search Input -->
+      <div class="relative w-full md:w-72 shrink-0">
         <input 
           type="text" 
           id="searchInput" 
           oninput="handleSearch()"
-          placeholder="Search modules, SKUs, tools... (Press /)" 
-          class="w-full px-4 py-2.5 pl-10 pr-12 text-xs bg-slate-900/95 border border-white/10 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/60 focus:ring-2 focus:ring-amber-500/20 transition font-sans shadow-inner"
+          placeholder="Filter dashboards... (Press /)" 
+          class="w-full px-3.5 py-2 pl-9 pr-10 text-xs bg-slate-900 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition font-sans"
         >
-        <svg class="w-4 h-4 text-slate-500 absolute left-3.5 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        <div class="absolute right-3 top-2.5 flex items-center gap-1">
-          <kbd class="hidden sm:inline-block text-[9px] text-slate-400">/</kbd>
+        <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <div class="absolute right-2.5 top-2 flex items-center gap-1">
+          <kbd class="hidden sm:inline-block">/</kbd>
           <button id="clearSearch" onclick="clearSearchInput()" class="hidden text-xs text-slate-400 hover:text-white ml-1">✕</button>
         </div>
       </div>
     </div>
 
-    <!-- Modules Grid -->
-    <div id="modulesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Modules Grid (All 26 Live Dashboards) -->
+    <div id="modulesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
-      <!-- 1. Cinema Vault — Luxury Masterpiece Archive -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="secondbrain" data-tags="cinema vault movies films imax tickets interstellar inception shawshank dark knight godspeed prestige dark luxury cinema">
+      <!-- 1. Biodata Intake & Deduplication AI -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="fleet" data-tags="biodata matrimonial intake deduplication vision ocr whatsapp bot excel master database wedding profiles">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-              ✨ Just Redesigned
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">Vault v2.4 Pro</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Active Daemon</span>
+            <span class="text-[10px] font-mono text-slate-400">Local Vision OCR</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition flex items-center gap-2">
-            🎬 Cinema Vault
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Biodata Intake AI & Deduplication
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Curated film repository & personal viewing dossier. Features 3D poster tilts, vintage perforated IMAX ticket stubs view, telemetry metrics, and local JSON sync.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Autonomous WhatsApp biodata receiver. Ingests profiles via local qwen2.5vl:3b, performs fuzzy deduplication, and syncs to Excel master ledger.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-amber-300 border border-amber-500/20">IMAX 3D Mode</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Film Dossiers</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Local JSON API</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">WhatsApp QR Sync</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Excel DB</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Deduplication</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="CINEMA_VAULT.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs transition shadow-lg shadow-amber-500/20">Enter Cinema Vault →</a>
-          <button onclick="copyLink('CINEMA_VAULT.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="BIODATA_MANAGEMENT_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Dashboard →</a>
+          <button onclick="copyLink('BIODATA_MANAGEMENT_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 2. Discovered AI Tools & Workflow Hub -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="secondbrain" data-tags="discovered ai tools instagram reels second brain checkbox workflow apps test video audio code marketing">
+      <!-- 2. Amazon Storefront Interactive Simulator -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="amazon" data-tags="storefront revenue listings studio 64 skus visual gallery simulation catalog amazon">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              ✨ Instagram Feed Live
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">30+ Apps</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Storefront OS</span>
+            <span class="text-[10px] font-mono text-slate-400">64 SKUs</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition flex items-center gap-2">
-            ⚡ Discovered AI Tools Hub
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Storefront Interactive Simulator
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Automated tool directory extracted from forwarded Instagram reels with interactive "Tried & Tested" checkboxes, 1-click links, and live sync.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Interactive Amazon storefront simulator featuring dynamic revenue calculators, dual-format listing copy, and high-resolution photo galleries.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-emerald-300 border border-emerald-500/20">Interactive Checkbox</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">WhatsApp Feed</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Category Badges</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Revenue Simulator</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">A10 Ready</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Catalog Switcher</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="DISCOVERED_TOOLS_DASHBOARD.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-bold text-xs transition shadow-lg shadow-emerald-500/20">Explore & Try Tools →</a>
-          <button onclick="copyLink('DISCOVERED_TOOLS_DASHBOARD.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="STOREFRONT_INTERACTIVE_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Storefront →</a>
+          <button onclick="copyLink('STOREFRONT_INTERACTIVE_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 3. Amazon Inventory Stockout & Diwali Runway Predictor -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="amazon" data-tags="inventory stockout diwali runway reorder fba fbm velocity forecast 161 skus">
+      <!-- 3. Customer Search Terms Analytics Panel -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="ppc" data-tags="search terms queries 3249 customer intent harvest cpc roas clicks keywords amazon ppc">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-rose-500/15 text-rose-300 border border-rose-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
-              Diwali 2026 Alert
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">161 SKUs</span>
-          </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-rose-400 transition flex items-center gap-2">
-            📦 Stockout & Diwali Predictor
-          </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Evaluates 161 catalog SKUs across on-hand inventory vs. 30-day velocity. Applies 2.2x Festive Diwali demand surge to forecast exact stockout dates & reorder units.
-          </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-rose-300 border border-rose-500/20">2.2x Festive Multiplier</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Reorder Matrix</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">WhatsApp Alert Ready</span>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="INVENTORY_STOCKOUT_PREDICTOR.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-400 hover:to-rose-500 text-slate-950 font-bold text-xs transition shadow-lg shadow-rose-500/20">Launch Predictor →</a>
-          <button onclick="copyLink('INVENTORY_STOCKOUT_PREDICTOR.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- 4. Storefront Interactive Dashboard -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="amazon" data-tags="storefront revenue listings studio 64 skus visual gallery dark luxe simulation">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              Storefront OS
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">9 Modules</span>
-          </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition flex items-center gap-2">
-            🏪 Storefront Interactive OS
-          </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Master 9-module storefront command center with live revenue simulator, 64-SKU catalog switchers, dual-format title copies, and visual photo lightboxes.
-          </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-amber-300 border border-amber-500/20">64 SKUs Studio</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Revenue Simulator</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">A10 Ready</span>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="STOREFRONT_INTERACTIVE_DASHBOARD.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-amber-500/20">Launch Storefront →</a>
-          <button onclick="copyLink('STOREFRONT_INTERACTIVE_DASHBOARD.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- 5. Customer Search Terms Analytics Panel -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="ppc" data-tags="search terms queries 3249 customer intent harvest cpc roas clicks keywords amazon ppc">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-              Keyword Intelligence
-            </span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Search Mining</span>
             <span class="text-[10px] font-mono text-slate-400">3,249 Queries</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition flex items-center gap-2">
-            🔍 Search Terms Analytics Panel
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Search Terms Analytics Panel
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Interactive analytical engine filtering 3,249 authentic Amazon customer queries with multi-column sorting for Spend, Orders, Sales, and ROAS.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Analytical engine filtering 3,249 authentic Amazon customer queries with multi-column sorting for Spend, Orders, Sales, and ROAS.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-cyan-300 border border-cyan-500/20">3,249 Queries</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Multi-Column Sort</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">1-Click CSV</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">3,249 Queries</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Multi-Sort</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">1-Click CSV</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="SEARCH_TERMS_INTERACTIVE_PANEL.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-cyan-500/20">Explore Search Terms →</a>
-          <button onclick="copyLink('SEARCH_TERMS_INTERACTIVE_PANEL.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="SEARCH_TERMS_INTERACTIVE_PANEL.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Explore Terms →</a>
+          <button onclick="copyLink('SEARCH_TERMS_INTERACTIVE_PANEL.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 6. Amazon PPC ROAS Restoration & Governance -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="ppc" data-tags="ppc roas restoration bids 4 campaigns exact phrase broad festive bleeder cuts">
+      <!-- 4. Amazon PPC ROAS Restoration & Governance -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="ppc" data-tags="ppc roas restoration bids 4 campaigns exact phrase broad festive bleeder cuts">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              ROAS Recovery
-            </span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">ROAS Recovery</span>
             <span class="text-[10px] font-mono text-slate-400">4 Stages</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition flex items-center gap-2">
-            📈 PPC ROAS Restore Console
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            PPC ROAS Restore Console
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Step-by-step ROAS recovery playbook with 4-campaign restructures (Broad, Phrase, Exact, Festive Broad), bid calibration, and bleeder cuts.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Structured ROAS recovery playbook with 4-campaign restructures (Broad, Phrase, Exact, Festive Broad), bid calibration, and bleeder cuts.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-emerald-300 border border-emerald-500/20">4 Staged Campaigns</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Bid Calibration</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Bleeder Cuts</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">4 Campaigns</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Bid Calibration</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Bleeder Cuts</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-emerald-500/20">Launch ROAS Console →</a>
-          <button onclick="copyLink('AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Console →</a>
+          <button onclick="copyLink('AMAZON_PPC_ROAS_RESTORE_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 7. X (Twitter) Account Command Center -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="secondbrain" data-tags="x twitter social command center threads growth analytics engagement schedule">
+      <!-- 5. Taarmi PPC Executive Dashboard -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="ppc" data-tags="taarmi ppc executive dashboard acos roas spend budget amazon campaigns">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-sky-500/15 text-sky-300 border border-sky-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-              Social Growth
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">@kartikey_jain</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Executive PPC</span>
+            <span class="text-[10px] font-mono text-slate-400">High ROAS</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition flex items-center gap-2">
-            🐦 X Command Center
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Taarmi PPC Executive Dashboard
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Autonomous growth operations on X/Twitter. Features viral thread generator, high-authority account target list, engagement scheduler, and live telemetry.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Executive financial command center for Amazon advertising. Audits spend efficiency, target placement multipliers, and category conquest performance.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-sky-300 border border-sky-500/20">Thread Generator</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Growth Playbook</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Engagement Engine</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Placement Multiplier</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">ACoS Control</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Profit Guard</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="X_ACCOUNT_COMMAND_CENTER.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-sky-500/20">Launch X Hub →</a>
-          <button onclick="copyLink('X_ACCOUNT_COMMAND_CENTER.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="TAARMI_PPC_EXECUTIVE_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Executive →</a>
+          <button onclick="copyLink('TAARMI_PPC_EXECUTIVE_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 8. Multi-Agent War Room & Autonomous Office Fleet -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="secondbrain" data-tags="war room fleet multi-agent team all hands kelly neo michael sophia jarvis autonomous">
+      <!-- 6. ROAS 5+ Mined Intelligence Dashboard -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="ppc" data-tags="roas 5 plus mined intelligence winners keywords exact match bids scale">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-purple-500/15 text-purple-300 border border-purple-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span>
-              Fleet War Room
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">5 Agents Live</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">ROAS 5.0x+</span>
+            <span class="text-[10px] font-mono text-slate-400">Proven Winners</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition flex items-center gap-2">
-            🛰️ Team All-Hands War Room
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            ROAS 5+ Mined Intelligence
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Autonomous multi-agent office monitoring terminal. Tracks Michael (Chief of Staff), Kelly (UI/UX Architect), Neo (Web Dev), Sophia (Copywriter), and Marcus (PPC Lead).
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Isolated repository of high-efficiency keywords that demonstrated 5x+ ROAS historically, ready for single-keyword exact ad group scaling.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-purple-300 border border-purple-500/20">5 Live Agents</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Task Routing</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Fleet Telemetry</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">5x+ ROAS Matrix</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">SKAG Ready</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Bleeder Protected</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="TEAM_ALL_HANDS_WAR_ROOM.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-purple-500 hover:bg-purple-400 text-white font-bold text-xs transition shadow-lg shadow-purple-500/20">Enter War Room →</a>
-          <button onclick="copyLink('TEAM_ALL_HANDS_WAR_ROOM.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="ROAS_5_PLUS_MINED_INTELLIGENCE_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Explore Winners →</a>
+          <button onclick="copyLink('ROAS_5_PLUS_MINED_INTELLIGENCE_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 9. Gift Basket Studio — Creative Packaging & Bundling -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="creative" data-tags="basket lab studio gift packaging hampers diwali bundles creative skus pricing">
+      <!-- 7. Amazon Campaigns Action Dashboard -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="amazon" data-tags="campaigns action amazon sponsored products brands display optimization">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              Studio Lab
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">Gift Baskets</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Action Board</span>
+            <span class="text-[10px] font-mono text-slate-400">PPC Ops</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition flex items-center gap-2">
-            🧺 Basket Lab Studio
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Amazon Campaigns Action Hub
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Interactive artisan gift basket configuration studio. Real-time cost modeling, festive packaging specs, SKU dimensions, and photographic mockups.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Operational dashboard staging real-time campaign actions: bid nudges, negative term injections, and daily budget reallocation triggers.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-amber-300 border border-amber-500/20">Cost Modeler</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Festive Hampers</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Specs & Margins</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Bid Adjustment</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Negation Queue</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Budget Sync</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="BASKET_LAB_STUDIO.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-amber-500/20">Open Basket Lab →</a>
-          <button onclick="copyLink('BASKET_LAB_STUDIO.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="AMAZON_CAMPAIGNS_ACTION_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Open Action Hub →</a>
+          <button onclick="copyLink('AMAZON_CAMPAIGNS_ACTION_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 10. Box Lab Studio — Rigid & Luxury Box Engineering -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="creative" data-tags="box lab studio rigid luxury boxes packaging dimensions diwali hampers margins">
+      <!-- 8. Listing Copy & Search Terms Studio -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="amazon" data-tags="copywriting a10 seo bullets 5x249b titles mobile desktop rufus keywords">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              Studio Lab
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">Rigid Boxes</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">A10 Copy Studio</span>
+            <span class="text-[10px] font-mono text-slate-400">15 Steps</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition flex items-center gap-2">
-            🎁 Box Lab Studio
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            A10 Listing Copy Studio
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Rigid and luxury gift box engineering platform. Calculates exact volumetric weight, tiered unit pricing, insert configurations, and production lead times.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Full 15-step conversion copywriting generator with live character counters, Rufus AI objection answering, and 5x249B backend generic search terms.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-amber-300 border border-amber-500/20">Box Engineering</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Volumetric Calc</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Tiered Pricing</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">5x249B Terms</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Rufus Bullets</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Byte Meter</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="BOX_LAB_STUDIO.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-amber-500/20">Open Box Lab →</a>
-          <button onclick="copyLink('BOX_LAB_STUDIO.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="LISTINGS_COPY_INTERACTIVE_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Copy Studio →</a>
+          <button onclick="copyLink('LISTINGS_COPY_INTERACTIVE_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 11. Metallic Ribbon Studio — Decorative Finishes & Trims -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="creative" data-tags="metallic ribbon studio ribbons bows gold silver packaging decorative">
+      <!-- 9. Amazon Seller Executive Toolkit -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="amazon" data-tags="seller executive toolkit margin calculator fba fee breakdown break even amazon profit">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              Studio Lab
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">Metallic Trims</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Executive Toolkit</span>
+            <span class="text-[10px] font-mono text-slate-400">P&L Suite</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition flex items-center gap-2">
-            🎀 Metallic Ribbon Studio
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Amazon Seller Executive Toolkit
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Catalog & spec sheet manager for high-gloss metallic ribbons, organza accents, and handcrafted bows for festive hamper packaging.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Financial modeling suite calculating Amazon referral fees, closing fees, FBA pick & pack, GST offsets, and exact contribution margins.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-amber-300 border border-amber-500/20">Metallic Finishes</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Per-Meter Costing</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Roll Calculator</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Margin Modeling</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">FBA Fee Calc</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">GST Offsets</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="METALLIC_RIBBON_STUDIO.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-amber-500/20">Open Ribbon Studio →</a>
-          <button onclick="copyLink('METALLIC_RIBBON_STUDIO.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="AMAZON_SELLER_EXECUTIVE_TOOLKIT.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Toolkit →</a>
+          <button onclick="copyLink('AMAZON_SELLER_EXECUTIVE_TOOLKIT.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 10. Amazon Inventory Stockout & Diwali Runway Predictor -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="amazon" data-tags="inventory stockout diwali runway reorder fba fbm velocity forecast 161 skus">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">Diwali Alert</span>
+            <span class="text-[10px] font-mono text-slate-400">161 SKUs</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Stockout & Diwali Runway Predictor
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Evaluates 161 catalog SKUs across on-hand inventory vs. 30-day velocity. Applies 2.2x Festive Diwali demand surge to forecast stockouts.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">2.2x Festive Multiplier</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Reorder Dates</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Units Matrix</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="INVENTORY_STOCKOUT_PREDICTOR.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Predictor →</a>
+          <button onclick="copyLink('INVENTORY_STOCKOUT_PREDICTOR.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 11. Amazon Growth Master Playbook -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="amazon" data-tags="growth playbook scale marketplace expansion brand registry ab testing taarmi">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Growth Playbook</span>
+            <span class="text-[10px] font-mono text-slate-400">Scale Blueprint</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Amazon Growth Master Playbook
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Strategic scaling framework covering Brand Registry protection, A/B title experiments, bundle pricing elasticity, and marketplace expansion.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Brand Registry</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">A/B Testing</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Expansion Roadmap</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="AMAZON_GROWTH_MASTER_PLAYBOOK_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Open Playbook →</a>
+          <button onclick="copyLink('AMAZON_GROWTH_MASTER_PLAYBOOK_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
       <!-- 12. Amazon Review Automation Studio -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="amazon" data-tags="reviews feedback automation amazon seller customer experience ratings complaints">
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="amazon" data-tags="reviews feedback automation amazon seller customer experience ratings complaints">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              Rating Engine
-            </span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Rating Engine</span>
             <span class="text-[10px] font-mono text-slate-400">4.6★ Target</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition flex items-center gap-2">
-            ⭐ Review Automation Studio
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Review Automation Studio
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
             Automated customer review monitoring, proactive buyer outreach sequences, negative review mitigation scripts, and TOS-compliant request triggers.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-emerald-300 border border-emerald-500/20">TOS Compliant</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Review Sequences</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Sentiment Guard</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">TOS Compliant</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Review Sequences</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Sentiment Guard</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="AMAZON_REVIEW_AUTOMATION_STUDIO.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-emerald-500/20">Open Review Studio →</a>
-          <button onclick="copyLink('AMAZON_REVIEW_AUTOMATION_STUDIO.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="AMAZON_REVIEW_AUTOMATION_STUDIO.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Open Review Studio →</a>
+          <button onclick="copyLink('AMAZON_REVIEW_AUTOMATION_STUDIO.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
       <!-- 13. SellerMate Strategy Execution Dashboard -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="ppc" data-tags="sellermate ai execution hard rules bids automation ad groups targets 55 tools">
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="ppc" data-tags="sellermate ai execution hard rules bids automation ad groups targets 55 tools">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-purple-500/15 text-purple-300 border border-purple-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-              SellerMate AI
-            </span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">SellerMate AI</span>
             <span class="text-[10px] font-mono text-slate-400">55 MCP Tools</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition flex items-center gap-2">
-            🤖 SellerMate Strategy Console
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            SellerMate Strategy Console
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            5-step automated PPC execution engine with 55 live SellerMate API tools, automated bid adjustments, dayparting schedules, and PAT targeting.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Automated PPC execution engine with 55 live SellerMate API tools, automated bid adjustments, dayparting schedules, and PAT targeting.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-purple-300 border border-purple-500/20">55 Live Tools</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">PAT Matrix</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Dayparting Rules</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">55 Live Tools</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">PAT Matrix</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Dayparting Rules</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="SELLERMATE_STRATEGY_EXECUTION_DASHBOARD.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-purple-500 hover:bg-purple-400 text-white font-bold text-xs transition shadow-lg shadow-purple-500/20">Launch SellerMate →</a>
-          <button onclick="copyLink('SELLERMATE_STRATEGY_EXECUTION_DASHBOARD.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="SELLERMATE_STRATEGY_EXECUTION_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch SellerMate →</a>
+          <button onclick="copyLink('SELLERMATE_STRATEGY_EXECUTION_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 14. Listing Copy & Search Terms Studio -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="amazon" data-tags="copywriting a10 seo bullets 5x249b titles mobile desktop rufus keywords">
+      <!-- 14. Gift Basket Lab Studio -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="creative" data-tags="basket lab studio gift packaging hampers diwali bundles creative skus pricing">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              A10 Copy Studio
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">15 Steps</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Studio Lab</span>
+            <span class="text-[10px] font-mono text-slate-400">Gift Baskets</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition flex items-center gap-2">
-            ✍️ A10 Listing Copy Studio
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Basket Lab Studio
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Full 15-step conversion copywriting generator with live character counters, Rufus AI objection answering, and 5x249B backend generic search terms.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Interactive artisan gift basket configuration studio. Real-time cost modeling, festive packaging specs, SKU dimensions, and photographic mockups.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-amber-300 border border-amber-500/20">5x249B Search Terms</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Rufus AI Bullets</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Live Byte Meter</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Cost Modeler</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Festive Hampers</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Dimensions</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="LISTINGS_COPY_INTERACTIVE_DASHBOARD.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-amber-500/20">Launch Copy Studio →</a>
-          <button onclick="copyLink('LISTINGS_COPY_INTERACTIVE_DASHBOARD.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="BASKET_LAB_STUDIO.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Open Basket Lab →</a>
+          <button onclick="copyLink('BASKET_LAB_STUDIO.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 15. Kartikey Jain Portfolio & OS -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="secondbrain" data-tags="kartikey jain portfolio proof of work webflow e-commerce architecture polymath polymath os">
+      <!-- 15. Box Lab Studio -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="creative" data-tags="box lab studio rigid luxury boxes packaging dimensions diwali hampers margins">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-sky-500/15 text-sky-300 border border-sky-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-              Proof of Work
-            </span>
-            <span class="text-[10px] font-mono text-slate-400">Executive</span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Studio Lab</span>
+            <span class="text-[10px] font-mono text-slate-400">Rigid Boxes</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition flex items-center gap-2">
-            💼 Kartikey Jain Portfolio
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Box Lab Studio
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            Production-grade personal showcase covering E-Commerce architecture, Webflow engineering, Amazon operations, and Polymath OS pipeline.
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Rigid and luxury gift box engineering platform. Calculates exact volumetric weight, tiered unit pricing, insert configurations, and production lead times.
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-sky-300 border border-sky-500/20">Case Studies</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Architecture Specs</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Interactive OS</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Box Engineering</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Volumetric Calc</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Tiered Pricing</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="KARTIKEY_PORTFOLIO_INTERACTIVE.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs transition shadow-lg shadow-sky-500/20">Launch Portfolio →</a>
-          <button onclick="copyLink('KARTIKEY_PORTFOLIO_INTERACTIVE.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="BOX_LAB_STUDIO.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Open Box Lab →</a>
+          <button onclick="copyLink('BOX_LAB_STUDIO.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
 
-      <!-- 16. Second Brain Command Center -->
-      <div class="dash-card glass-card rounded-3xl p-5 sm:p-6 flex flex-col justify-between" data-cat="secondbrain" data-tags="second brain office 5 departments content outreach web lab sysadmin clones jarvis">
+      <!-- 16. Metallic Ribbon Studio -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="creative" data-tags="metallic ribbon studio ribbons bows gold silver packaging decorative">
         <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="card-badge bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
-              <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
-              Autonomous Office
-            </span>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Studio Lab</span>
+            <span class="text-[10px] font-mono text-slate-400">Metallic Trims</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Metallic Ribbon Studio
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Catalog & spec sheet manager for high-gloss metallic ribbons, organza accents, and handcrafted bows for festive hamper packaging.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Metallic Finishes</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Cost/Meter</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Roll Calculator</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="METALLIC_RIBBON_STUDIO.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Open Ribbon Studio →</a>
+          <button onclick="copyLink('METALLIC_RIBBON_STUDIO.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 17. Discovered AI Tools & Workflow Hub -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="fleet" data-tags="discovered ai tools instagram reels second brain checkbox workflow apps test video audio code marketing">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Instagram Feed</span>
+            <span class="text-[10px] font-mono text-slate-400">30+ Apps</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Discovered AI Tools Hub
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Automated tool directory extracted from forwarded Instagram reels with interactive "Tried & Tested" checkboxes, 1-click links, and live sync.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Checkboxes</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">WhatsApp Feed</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Tag Filtering</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="DISCOVERED_TOOLS_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Explore Tools →</a>
+          <button onclick="copyLink('DISCOVERED_TOOLS_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 18. AI Models & Local LLM Monitor -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="fleet" data-tags="ai models llm ollama llama qwen deepseek local vram inference fleet">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">Local LLM</span>
+            <span class="text-[10px] font-mono text-slate-400">Port 11434</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            AI Models & LLM Fleet Monitor
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Real-time telemetry monitor for local Ollama instances, model quantization weights (Qwen, Llama, DeepSeek), token throughput, and VRAM memory.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Ollama API</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">VRAM Stats</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Model Switcher</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="AI_MODELS_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch LLM Monitor →</a>
+          <button onclick="copyLink('AI_MODELS_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 19. Team All-Hands War Room -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="fleet" data-tags="war room fleet multi-agent team all hands kelly neo michael sophia jarvis autonomous">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">Fleet Command</span>
+            <span class="text-[10px] font-mono text-slate-400">7 Agents</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Team All-Hands War Room
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Multi-agent office terminal tracking live task dispatches, inbox queues, token budgets, and breaker levels across all floor members.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Task Routing</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Breaker Guard</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Token Watch</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="TEAM_ALL_HANDS_WAR_ROOM.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Enter War Room →</a>
+          <button onclick="copyLink('TEAM_ALL_HANDS_WAR_ROOM.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 20. Second Brain Office Hub -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="fleet" data-tags="second brain office 5 departments content outreach web lab sysadmin clones jarvis">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Office Hub</span>
             <span class="text-[10px] font-mono text-slate-400">5 Depts</span>
           </div>
-          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition flex items-center gap-2">
-            🧠 Second Brain Office Hub
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Second Brain Office Hub
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
             Autonomous multi-agent office telemetry spanning 5 specialized departments (Media Studio, Client Outreach, Amazon Hub, Product Lab, Systems).
           </p>
-          <div class="flex flex-wrap gap-1.5 mb-6">
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-indigo-300 border border-indigo-500/20">5 Departments</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Fleet Telemetry</span>
-            <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-slate-800/90 text-slate-300 border border-white/5">Autonomous Clones</span>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">5 Departments</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Fleet State</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Knowledge Graph</span>
           </div>
         </div>
-        <div class="flex items-center gap-2 pt-4 border-t border-white/10">
-          <a href="SECOND_BRAIN_OFFICE_DASHBOARD.html" class="flex-1 text-center py-2.5 px-4 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white font-bold text-xs transition shadow-lg shadow-indigo-500/20">Launch Office Hub →</a>
-          <button onclick="copyLink('SECOND_BRAIN_OFFICE_DASHBOARD.html')" title="Copy Direct Link" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="SECOND_BRAIN_OFFICE_DASHBOARD.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Office Hub →</a>
+          <button onclick="copyLink('SECOND_BRAIN_OFFICE_DASHBOARD.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 21. Jarvis Voice & Telemetry Console -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="fleet" data-tags="jarvis voice console audio speech recognition websockets automation">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Voice Console</span>
+            <span class="text-[10px] font-mono text-slate-400">Port 4000</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Jarvis Voice & Telemetry Console
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Real-time speech-to-text and voice command terminal connecting directly to JARVIS loopback server for hands-free office orchestration.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Voice Synthesis</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Loopback API</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">WebSocket</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="JARVIS_VOICE_CONSOLE.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Open Voice Console →</a>
+          <button onclick="copyLink('JARVIS_VOICE_CONSOLE.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 22. X (Twitter) Growth Command Center -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="personal" data-tags="x twitter social command center threads growth analytics engagement schedule">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">Social OS</span>
+            <span class="text-[10px] font-mono text-slate-400">@kartikey_jain</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            X Growth Command Center
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Autonomous growth operations on X/Twitter. Features viral thread generator, high-authority target tracking, and engagement scheduling.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Thread Engine</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Target Accounts</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Analytics</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="X_ACCOUNT_COMMAND_CENTER.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch X Hub →</a>
+          <button onclick="copyLink('X_ACCOUNT_COMMAND_CENTER.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 23. Kartikey Jain Portfolio & Executive Showcase -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="personal" data-tags="kartikey jain portfolio proof of work webflow e-commerce architecture polymath polymath os">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">Executive Dossier</span>
+            <span class="text-[10px] font-mono text-slate-400">Portfolio</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Founder Portfolio & OS Dossier
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Interactive personal showcase covering E-Commerce architecture, Webflow engineering, Amazon operations, and Polymath OS pipelines.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Case Studies</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Architecture</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Interactive OS</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="KARTIKEY_PORTFOLIO_INTERACTIVE.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Launch Portfolio →</a>
+          <button onclick="copyLink('KARTIKEY_PORTFOLIO_INTERACTIVE.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 24. Mock LinkedIn Profile Interactive -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="personal" data-tags="mock linkedin profile interactive career executive proof of work">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">Executive Profile</span>
+            <span class="text-[10px] font-mono text-slate-400">Career OS</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Interactive Professional Profile
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Interactive digital executive CV and work showcase highlighting Amazon marketplace leadership, software engineering, and multi-agent systems.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Experience</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Recommendations</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Skills Matrix</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="MOCK_LINKEDIN_PROFILE_INTERACTIVE.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">View Profile →</a>
+          <button onclick="copyLink('MOCK_LINKEDIN_PROFILE_INTERACTIVE.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 25. Cinema Vault — Film Repository -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="personal" data-tags="cinema vault movies films imax tickets interstellar inception shawshank dark knight godspeed prestige">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Media Archive</span>
+            <span class="text-[10px] font-mono text-slate-400">IMAX 3D</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Cinema Vault Archive
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Curated film repository & personal viewing dossier. Features 3D poster tilts, vintage perforated IMAX ticket stubs, and local JSON sync.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">IMAX Mode</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Dossiers</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">JSON API</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="CINEMA_VAULT.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Enter Cinema Vault →</a>
+          <button onclick="copyLink('CINEMA_VAULT.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 26. Cinema Match Curator -->
+      <div class="dash-card rounded-2xl p-5 flex flex-col justify-between" data-cat="personal" data-tags="cinema match movies recommendations curator films taste pairing">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Curation Studio</span>
+            <span class="text-[10px] font-mono text-slate-400">Taste Engine</span>
+          </div>
+          <h3 class="text-base font-bold text-white mb-1.5 flex items-center gap-2">
+            Cinema Match Curator
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">
+            Algorithmic cinematic matchmaker pairing user taste vectors with iconic masterworks across cinematography, score, pacing, and directorial themes.
+          </p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Taste Vectors</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Pairing Logic</span>
+            <span class="px-2 py-0.5 rounded bg-slate-950 text-[10px] font-mono text-slate-300 border border-slate-800">Director Sets</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+          <a href="CINEMA_MATCH.html" class="flex-1 text-center py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Match Cinema →</a>
+          <button onclick="copyLink('CINEMA_MATCH.html')" title="Copy Direct Link" class="p-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           </button>
         </div>
       </div>
@@ -727,30 +910,30 @@
     </div>
 
     <!-- Empty Search State -->
-    <div id="noResults" class="hidden text-center py-20">
-      <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center mx-auto mb-4 text-slate-500 text-2xl shadow-inner">🔍</div>
-      <h4 class="font-bold text-lg text-white mb-1">No matching modules found</h4>
-      <p class="text-xs text-slate-400">Try searching for "Cinema", "PPC", "Listing", "Tools", "Stockout", or "War Room".</p>
-      <button onclick="clearSearchInput()" class="mt-4 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition shadow-md">Reset Search Filter</button>
+    <div id="noResults" class="hidden text-center py-16">
+      <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center mx-auto mb-3 text-slate-500 text-xl">🔍</div>
+      <h4 class="font-bold text-sm text-white mb-1">No matching dashboards found</h4>
+      <p class="text-xs text-slate-400">Try searching for keywords like "PPC", "Storefront", "Cinema", "Inventory", or "War Room".</p>
+      <button onclick="clearSearchInput()" class="mt-3 px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">Reset Search Filter</button>
     </div>
 
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-white/10 mt-20 py-8 bg-slate-950/80 backdrop-blur-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+  <footer class="border-t border-slate-800/80 mt-16 py-6 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-amber-400"></span>
         <span class="text-slate-300 font-semibold">Taarmi Executive Suite</span>
-        <span>• Autonomous Multi-Agent Office</span>
+        <span>• Audited by Autonomous UI/UX Fleet</span>
       </div>
-      <div>Designed & Engineered by <span class="text-amber-400 font-bold">Kartikey Jain</span> & Autonomous Antigravity Fleet</div>
+      <div>Maintained by <span class="text-amber-400 font-bold">Kartikey Jain</span> & Autonomous Antigravity Team</div>
     </div>
   </footer>
 
   <!-- Floating Toast Notification -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none px-4 py-3 rounded-2xl bg-slate-900/95 border border-amber-500/40 shadow-2xl backdrop-blur-2xl flex items-center gap-3">
-    <div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">✓</div>
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-200 pointer-events-none px-4 py-2.5 rounded-xl bg-slate-900 border border-amber-500/40 shadow-xl flex items-center gap-2.5">
+    <div class="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold">✓</div>
     <div id="toastText" class="text-xs font-medium text-slate-200">Copied to clipboard</div>
   </div>
 
@@ -770,7 +953,7 @@
     // 2. Category Counts Update
     function updateCategoryCounts() {
       const cards = document.querySelectorAll('.dash-card');
-      const counts = { all: cards.length, amazon: 0, ppc: 0, creative: 0, secondbrain: 0 };
+      const counts = { all: cards.length, amazon: 0, ppc: 0, creative: 0, fleet: 0, personal: 0 };
       cards.forEach(card => {
         const cat = card.dataset.cat;
         if (counts[cat] !== undefined) counts[cat]++;
@@ -788,9 +971,9 @@
       currentCategory = cat;
       document.querySelectorAll('.cat-btn').forEach(btn => {
         if (btn.dataset.cat === cat) {
-          btn.className = 'cat-btn shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition bg-amber-500 text-slate-950 shadow-md';
+          btn.className = 'cat-btn shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition bg-amber-500 text-slate-950 shadow-sm';
         } else {
-          btn.className = 'cat-btn shrink-0 px-4 py-2 rounded-xl text-xs font-medium transition text-slate-400 hover:text-white hover:bg-slate-800/60';
+          btn.className = 'cat-btn shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition text-slate-400 hover:text-white';
         }
       });
       applyFilters();
@@ -861,13 +1044,13 @@
       }
     });
 
-    // 7. 1-Click Copy Link
+    // 7. Copy Direct Link
     function copyLink(filename) {
       const url = window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + filename;
       navigator.clipboard.writeText(url).then(() => {
-        showToast('Link copied to clipboard: ' + filename);
+        showToast('Link copied: ' + filename);
       }).catch(() => {
-        showToast('Direct Link: ' + url);
+        showToast('Link: ' + url);
       });
     }
 
@@ -880,7 +1063,7 @@
       setTimeout(() => {
         toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
         toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 2500);
+      }, 2000);
     }
   </script>
 </body>
