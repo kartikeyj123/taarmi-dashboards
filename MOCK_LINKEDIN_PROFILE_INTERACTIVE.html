@@ -2171,8 +2171,67 @@ body {
 
 /* === END INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
 </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style id="anti-slop-obsidian-tokens">
+  :root {
+    --bg-base: #070A12;
+    --bg-surface: #0B1120;
+    --bg-card: #0F172A;
+    --bg-card-hover: #1E293B;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(245, 158, 11, 0.35);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --gold-primary: #F59E0B;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  body {
+    font-family: var(--font-sans) !important;
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .font-mono, td.mono {
+    font-family: var(--font-mono) !important;
+  }
+</style>
+
 </head>
 <body>
+
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">T</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="index.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>OPERATIONAL INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">Interactive Professional Profile Showcase</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          LIVE TELEMETRY
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="index.html" style="padding: 5px 12px; background: #1E293B; hover:background: #334155; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" style="padding: 5px 12px; background: #F59E0B; border-radius: 6px; color: #000; font-size: 12px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">Seller Central &rarr;</a>
+      </div>
+    </div>
+  </header>
+  
 
   <!-- ==========================================================================
        TOP PERSISTENT CONTROL BAR (BEFORE VS AFTER TOGGLE)
@@ -2191,11 +2250,11 @@ body {
     <!-- Toggle Switch -->
     <div class="mode-switch-container">
       <button class="mode-btn before-mode" id="btnModeBefore" onclick="setTransformationMode('before')">
-        <span>🔴</span>
+        <span></span>
         <span>Before: Generic Tool-User</span>
       </button>
       <button class="mode-btn after-mode active" id="btnModeAfter" onclick="setTransformationMode('after')">
-        <span>🟢</span>
+        <span></span>
         <span>After: Polymath Builder</span>
       </button>
     </div>
@@ -2477,7 +2536,7 @@ body {
               <span id="openToSubtitle">Modern Webflow Development, Amazon Marketplace Scaling, and Video/Media Production</span>
             </div>
             <button class="btn-copy" onclick="copyOpenToDetails()">
-              <span>📋 Copy</span>
+              <span>Copy</span>
             </button>
           </div>
       </section>
@@ -2524,7 +2583,7 @@ body {
             <span class="section-subtitle">Top verified outcomes & commercial leverage</span>
           </div>
           <button class="btn-copy" onclick="copyFeaturedListText()">
-            <span>📋 Copy Case Links</span>
+            <span>Copy Case Links</span>
           </button>
         </div>
 
@@ -2636,10 +2695,10 @@ body {
         <!-- Archetype Tabs -->
         <div class="archetype-tabs">
           <button class="archetype-tab active" id="tabNewAge" onclick="setFounderArchetype('newage')">
-            🚀 New-Age / Venture / D2C Founder
+            New-Age / Venture / D2C Founder
           </button>
           <button class="archetype-tab" id="tabLegacy" onclick="setFounderArchetype('legacy')">
-            🏭 Legacy / Traditional Business Founder
+            Legacy / Traditional Business Founder
           </button>
         </div>
 
@@ -2704,7 +2763,7 @@ body {
             <span class="section-subtitle">Real-world commercial proof, leadership, and execution</span>
           </div>
           <button class="btn-copy" onclick="copyAllExperienceText()">
-            <span>📋 Copy All Roles</span>
+            <span>Copy All Roles</span>
           </button>
         </div>
 
@@ -2723,20 +2782,20 @@ body {
             <span class="section-subtitle">Using the T.A.P.O. Curiosity Engine (Tension • Proof • Mechanism • Open Loop)</span>
           </div>
           <button class="btn-copy" onclick="copyActivePostText()">
-            <span>📋 Copy Active Post</span>
+            <span>Copy Active Post</span>
           </button>
         </div>
 
         <!-- Post Switcher Tabs -->
         <div class="activity-tabs">
           <button class="activity-tab-btn active" id="tabPost1" onclick="switchActivePost(1)">
-            📦 Amazon E-Commerce Teardown
+            Amazon E-Commerce Teardown
           </button>
           <button class="activity-tab-btn" id="tabPost2" onclick="switchActivePost(2)">
-            🤖 The Autonomous Agent Engine
+            The Autonomous Agent Engine
           </button>
           <button class="activity-tab-btn" id="tabPost3" onclick="switchActivePost(3)">
-            🎬 Video Production & Event Media
+            Video Production & Event Media
           </button>
         </div>
 
@@ -2904,7 +2963,43 @@ body {
       </div>
     </aside>
 
-  </main>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
 
   <!-- ==========================================================================
        MODAL 1: CONTACT INFO MODAL
@@ -2922,7 +3017,7 @@ body {
               <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Direct Email</div>
               <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">kartikeyjain14@gmail.com</div>
             </div>
-            <button class="btn-copy" onclick="copyTextDirect('kartikeyjain14@gmail.com', 'Email copied!')">📋 Copy</button>
+            <button class="btn-copy" onclick="copyTextDirect('kartikeyjain14@gmail.com', 'Email copied!')">Copy</button>
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-card-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
@@ -2930,7 +3025,7 @@ body {
               <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Phone / WhatsApp</div>
               <div style="font-size: 14px; font-weight: 600; color: var(--text-primary);">+91 8005890986</div>
             </div>
-            <button class="btn-copy" onclick="copyTextDirect('+918005890986', 'Phone number copied!')">📋 Copy</button>
+            <button class="btn-copy" onclick="copyTextDirect('+918005890986', 'Phone number copied!')">Copy</button>
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-card-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
@@ -2938,7 +3033,7 @@ body {
               <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Live LinkedIn Profile</div>
               <div style="font-size: 14px; font-weight: 600; color: var(--accent-blue);">linkedin.com/in/kartikey-jain-</div>
             </div>
-            <button class="btn-copy" onclick="copyTextDirect('https://www.linkedin.com/in/kartikey-jain-/', 'LinkedIn URL copied!')">📋 Copy</button>
+            <button class="btn-copy" onclick="copyTextDirect('https://www.linkedin.com/in/kartikey-jain-/', 'LinkedIn URL copied!')">Copy</button>
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-card-secondary); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
@@ -2991,7 +3086,7 @@ body {
           </div>
         </div>
         <button class="btn-primary" onclick="copyBannerText()">
-          <span>📋 Copy Banner Text Content</span>
+          <span>Copy Banner Text Content</span>
         </button>
       </div>
   </div>
@@ -3493,7 +3588,7 @@ If you’re organizing an event or building a brand that needs energetic video c
               </ul>
             </div>
             <div class="exp-copy-action">
-              <button class="btn-copy" onclick="copyRoleText(${idx})">📋 Copy Role</button>
+              <button class="btn-copy" onclick="copyRoleText(${idx})">Copy Role</button>
             </div>
           </div>
         `;
@@ -3712,7 +3807,7 @@ If you’re organizing an event or building a brand that needs energetic video c
             </p>
 
             <button class="btn-primary" onclick="copyTextDirect(taarmiDeepText, 'Copied Taarmi Case Breakdown!')">
-              <span>📋 Copy Case Study Summary</span>
+              <span>Copy Case Study Summary</span>
             </button>
           </div>
         `;
@@ -3742,7 +3837,7 @@ If you’re organizing an event or building a brand that needs energetic video c
             </p>
 
             <button class="btn-primary" onclick="copyTextDirect(webflowDeepText, 'Copied Webflow Craft Breakdown!')">
-              <span>📋 Copy Webflow Breakdown</span>
+              <span>Copy Webflow Breakdown</span>
             </button>
           </div>
         `;
@@ -3771,7 +3866,7 @@ If you’re organizing an event or building a brand that needs energetic video c
 
             <div style="margin-top: 16px;">
               <button class="btn-primary" onclick="copyTextDirect(videoDeepText, 'Copied Video Production Breakdown!')">
-                <span>📋 Copy Video Production Breakdown</span>
+                <span>Copy Video Production Breakdown</span>
               </button>
             </div>
           </div>
@@ -3944,5 +4039,24 @@ Email: kartikeyjain14@gmail.com | Phone: +91 8005890986 | Bangalore, India`;
     }
 
   </script>
+
+<script>
+(function() {
+  function updateMasterClock() {
+    const el = document.getElementById('master-os-ist-clock');
+    if (!el) return;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    const hours = String(ist.getHours()).padStart(2, '0');
+    const mins = String(ist.getMinutes()).padStart(2, '0');
+    const secs = String(ist.getSeconds()).padStart(2, '0');
+    el.textContent = 'IST ' + hours + ':' + mins + ':' + secs;
+  }
+  updateMasterClock();
+  setInterval(updateMasterClock, 1000);
+})();
+</script>
+
 </body>
 </html>
