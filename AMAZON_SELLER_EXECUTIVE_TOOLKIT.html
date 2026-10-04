@@ -370,8 +370,67 @@ body {
 
 /* === END INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
 </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style id="anti-slop-obsidian-tokens">
+  :root {
+    --bg-base: #070A12;
+    --bg-surface: #0B1120;
+    --bg-card: #0F172A;
+    --bg-card-hover: #1E293B;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(245, 158, 11, 0.35);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --gold-primary: #F59E0B;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  body {
+    font-family: var(--font-sans) !important;
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .font-mono, td.mono {
+    font-family: var(--font-mono) !important;
+  }
+</style>
+
 </head>
 <body class="selection:bg-indigo-500 selection:text-white flex flex-col lg:flex-row min-h-screen">
+
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">T</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="index.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>OPERATIONAL INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">Amazon Seller Executive Toolkit</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          LIVE TELEMETRY
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="index.html" style="padding: 5px 12px; background: #1E293B; hover:background: #334155; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" style="padding: 5px 12px; background: #F59E0B; border-radius: 6px; color: #000; font-size: 12px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">Seller Central &rarr;</a>
+      </div>
+    </div>
+  </header>
+  
 
   <!-- ========================================== -->
   <!-- FLOATING GLASS TOAST NOTIFICATION CONTAINER -->
@@ -387,7 +446,7 @@ body {
       <span class="font-extrabold text-sm text-white">Amazon A10 Toolkit</span>
     </div>
     <button onclick="toggleMobileSidebar()" class="p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white">
-      ☰ Menu
+      Menu
     </button>
   </div>
 
@@ -414,7 +473,7 @@ body {
         </div>
 
         <!-- Mobile close button -->
-        <button onclick="toggleMobileSidebar()" class="lg:hidden p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white text-xs font-mono">✕</button>
+        <button onclick="toggleMobileSidebar()" class="lg:hidden p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white text-xs font-mono"></button>
       </div>
 
       <!-- Live Clock & Status Widget -->
@@ -437,7 +496,7 @@ body {
         
         <button onclick="switchTab('keywords')" id="tab-btn-keywords" class="w-full px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">🔤</span>
+            <span class="text-base"></span>
             <span>249-Byte Optimizer</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-black/40 text-slate-300 font-mono">1</span>
@@ -445,7 +504,7 @@ body {
 
         <button onclick="switchTab('studio')" id="tab-btn-studio" class="tool-tab-active w-full px-3 py-2.5 rounded-xl text-xs font-bold text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">✍️</span>
+            <span class="text-base">️</span>
             <span class="text-white">Listing Studio (29 SKUs)</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono font-bold border border-indigo-500/30">29</span>
@@ -453,7 +512,7 @@ body {
 
         <button onclick="switchTab('a10')" id="tab-btn-a10" class="w-full px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">🏛️</span>
+            <span class="text-base">️</span>
             <span class="text-emerald-300">A10 & Policy Hub</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono border border-emerald-500/30 font-bold">3</span>
@@ -461,7 +520,7 @@ body {
 
         <button onclick="switchTab('audit')" id="tab-btn-audit" class="w-full px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">🚨</span>
+            <span class="text-base"></span>
             <span>Hero B0DHRXT2BD Audit</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-black/40 text-slate-400 font-mono">4</span>
@@ -474,7 +533,7 @@ body {
 
         <button onclick="switchTab('searchterms')" id="tab-btn-searchterms" class="w-full px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">🔍</span>
+            <span class="text-base"></span>
             <span>Search Terms (3.2k)</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-black/40 text-slate-400 font-mono">5</span>
@@ -482,7 +541,7 @@ body {
 
         <button onclick="switchTab('ppc')" id="tab-btn-ppc" class="w-full px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">🛡️</span>
+            <span class="text-base">️</span>
             <span>PPC Shield & Bids</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-black/40 text-slate-400 font-mono">6</span>
@@ -495,7 +554,7 @@ body {
 
         <button onclick="switchTab('simulator')" id="tab-btn-simulator" class="w-full px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">📈</span>
+            <span class="text-base"></span>
             <span>Profit & Revenue Sim</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-black/40 text-slate-400 font-mono">7</span>
@@ -503,7 +562,7 @@ body {
 
         <button onclick="switchTab('gallery')" id="tab-btn-gallery" class="w-full px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">🖼️</span>
+            <span class="text-base">️</span>
             <span>Visual Gallery</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-black/40 text-slate-400 font-mono">8</span>
@@ -511,7 +570,7 @@ body {
 
         <button onclick="switchTab('roadmap')" id="tab-btn-roadmap" class="w-full px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800/60 text-left transition-all flex items-center justify-between group">
           <div class="flex items-center gap-2.5">
-            <span class="text-base">📋</span>
+            <span class="text-base"></span>
             <span>Launch Roadmap</span>
           </div>
           <span class="text-[10px] px-1.5 py-0.5 rounded bg-black/40 text-slate-400 font-mono">9</span>
@@ -524,13 +583,13 @@ body {
       
       <!-- Copy Master Festive Terms -->
       <button onclick="copyMasterFestiveKeywords()" class="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-xs shadow-lg shadow-amber-500/20 transition-all flex items-center justify-center gap-2">
-        <span>✨</span> Copy 248B Festive Terms
+        <span></span> Copy 248B Festive Terms
       </button>
 
       <!-- System status -->
       <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono pt-1">
         <span>Press <kbd class="px-1 py-0.5 bg-slate-800 text-indigo-300 rounded font-bold">1-9</kbd> to switch</span>
-        <button onclick="resetAllTaskProgress()" title="Reset task completion" class="text-slate-400 hover:text-white">🔄 Reset</button>
+        <button onclick="resetAllTaskProgress()" title="Reset task completion" class="text-slate-400 hover:text-white">Reset</button>
       </div>
     </div>
   </aside>
@@ -583,13 +642,13 @@ body {
             <div class="flex flex-wrap items-center gap-2">
               <span class="text-xs font-bold text-slate-400">Load Preset:</span>
               <button onclick="loadKeywordPreset('b0dhrxt2bd_festive')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold transition-all border border-amber-500/30">
-                🎉 B0DHRXT2BD Festive (248B)
+                B0DHRXT2BD Festive (248B)
               </button>
               <button onclick="loadKeywordPreset('satin_black')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all">
-                🎗️ Black Satin (246B)
+                ️ Black Satin (246B)
               </button>
               <button onclick="loadKeywordPreset('golden_gota')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all">
-                ✨ Golden Gota (248B)
+                Golden Gota (248B)
               </button>
             </div>
         </div>
@@ -621,18 +680,18 @@ body {
               <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
                 <div class="flex flex-wrap items-center gap-2">
                   <button onclick="cleanAndDeduplicateKeywords()" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition-all flex items-center gap-1.5">
-                    <span>✨</span> Deduplicate & Strip Punctuation
+                    <span></span> Deduplicate & Strip Punctuation
                   </button>
                   <button onclick="convertDelimiter()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-all">
-                    🔄 Swap Delimiter (; &harr; space)
+                    Swap Delimiter (; &harr; space)
                   </button>
                   <button onclick="clearKeywordInput()" class="px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-rose-950 text-slate-400 hover:text-rose-300 font-semibold text-xs transition-all">
-                    ✕ Clear
+                    Clear
                   </button>
                 </div>
 
                 <button onclick="copyCleanedKeywords()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-1.5">
-                  <span>📋</span> Copy Optimized String
+                  <span></span> Copy Optimized String
                 </button>
               </div>
             </div>
@@ -642,7 +701,7 @@ body {
               <div class="flex items-center justify-between">
                 <div>
                   <h3 class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                    <span>📑 Amazon Flat File 5-Field Splitter</span>
+                    <span>Amazon Flat File 5-Field Splitter</span>
                     <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono">5 &times; 249 Bytes</span>
                   </h3>
                   <p class="text-[11px] text-slate-400">Distributes large keyword pools across Generic Keywords 1 through 5 without splitting words</p>
@@ -736,7 +795,7 @@ body {
 
             <!-- Master Copy Button -->
             <button id="btn-copy-full-pkg" onclick="copyActiveProductFullPackage()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-indigo-500/25 transition-all flex items-center gap-2 shrink-0">
-              <span>📋</span> Copy Full Listing Package
+              <span></span> Copy Full Listing Package
             </button>
           </div>
 
@@ -744,8 +803,8 @@ body {
           <div class="flex flex-wrap items-center gap-2 mt-5 pt-4 border-t border-slate-800">
             <span class="text-xs font-bold text-slate-400 mr-2">Filter Catalog:</span>
             <button onclick="filterCatalogCategory('all', this)" class="cat-pill px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs transition-all">All (64)</button>
-            <button onclick="filterCatalogCategory('Taarmi Gifting Baskets', this)" class="cat-pill px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 text-xs font-bold transition-all shadow-sm">🎁 Taarmi Gifting Baskets (13)</button>
-            <button onclick="filterCatalogCategory('core-6', this)" class="cat-pill px-3 py-1.5 rounded-xl bg-purple-900/60 text-purple-200 border border-purple-500/40 hover:bg-purple-800 text-xs font-bold transition-all shadow-sm">🎀 6 Core Relisting SKUs</button>
+            <button onclick="filterCatalogCategory('Taarmi Gifting Baskets', this)" class="cat-pill px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/30 text-xs font-bold transition-all shadow-sm">Taarmi Gifting Baskets (13)</button>
+            <button onclick="filterCatalogCategory('core-6', this)" class="cat-pill px-3 py-1.5 rounded-xl bg-purple-900/60 text-purple-200 border border-purple-500/40 hover:bg-purple-800 text-xs font-bold transition-all shadow-sm">6 Core Relisting SKUs</button>
             <button onclick="filterCatalogCategory('Store Hero Product', this)" class="cat-pill px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">Legacy Gifting Tray (1)</button>
             <button onclick="filterCatalogCategory('Fabric Satin Ribbons', this)" class="cat-pill px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">Satin Ribbons (5)</button>
             <button onclick="filterCatalogCategory('Sheer Organza Tissue Ribbons', this)" class="cat-pill px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">Organza Ribbons (5)</button>
@@ -844,7 +903,7 @@ body {
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 class="text-base font-bold text-white flex items-center gap-2">
-                <span>⚡</span> Amazon A10 vs Legacy A9 Algorithmic Architecture
+                <span></span> Amazon A10 vs Legacy A9 Algorithmic Architecture
               </h3>
               <p class="text-xs text-slate-400">How Amazon's next-generation search engine prioritizes organic sales, conversion rate, customer trust, and mobile CTR</p>
             </div>
@@ -906,7 +965,7 @@ body {
         <div class="space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="text-base font-bold text-white flex items-center gap-2">
-              <span>📜</span> The 5 Core Amazon Seller Central Help Guidelines
+              <span></span> The 5 Core Amazon Seller Central Help Guidelines
             </h3>
             <span class="text-xs text-slate-400 font-mono">100% Implementation Across All 16 Listings</span>
           </div>
@@ -1009,7 +1068,7 @@ body {
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
             <div>
               <h3 class="text-base font-bold text-white flex items-center gap-2">
-                <span>📋</span> 16-SKU Catalog Policy & A10 Audit Ledger
+                <span></span> 16-SKU Catalog Policy & A10 Audit Ledger
               </h3>
               <p class="text-xs text-slate-400">Live compliance verification score for every product across all 5 Amazon Seller Central policies and A10 indexing rules</p>
             </div>
@@ -1057,7 +1116,7 @@ body {
             </div>
 
             <button onclick="copyMasterFestiveKeywords()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold text-xs shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2 shrink-0">
-              <span>✨</span> Copy 248B Festive String
+              <span></span> Copy 248B Festive String
             </button>
           </div>
         </div>
@@ -1088,7 +1147,7 @@ body {
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 class="text-base font-bold text-white flex items-center gap-2">
-                <span>🪔</span> Festive Navratri & Diwali Master Search String (Format B)
+                <span></span> Festive Navratri & Diwali Master Search String (Format B)
               </h3>
               <p class="text-xs text-slate-400">Maximized to 248 UTF-8 bytes (99.6% capacity) targeting high-ticket festive buyer search intent</p>
             </div>
@@ -1126,7 +1185,7 @@ body {
 
             <!-- CSV Export Button -->
             <button onclick="exportSearchTermsCSV()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all flex items-center gap-2 shrink-0">
-              <span>📥</span> Export Filtered to CSV
+              <span></span> Export Filtered to CSV
             </button>
           </div>
 
@@ -1160,10 +1219,10 @@ body {
             <!-- Preset Filter Pills -->
             <div class="flex flex-wrap items-center gap-1.5">
               <button onclick="setStFilterPreset('all', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs transition-all">All (3,249)</button>
-              <button onclick="setStFilterPreset('winners', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">🏆 Orders &gt; 0 (156)</button>
-              <button onclick="setStFilterPreset('high_roas', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">🚀 ROAS &gt; 5x (104)</button>
-              <button onclick="setStFilterPreset('bleeders', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">🩸 Bleeders (&ge; ₹100)</button>
-              <button onclick="setStFilterPreset('high_spend', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">💸 High Spend (&ge; ₹150)</button>
+              <button onclick="setStFilterPreset('winners', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">Orders &gt; 0 (156)</button>
+              <button onclick="setStFilterPreset('high_roas', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">ROAS &gt; 5x (104)</button>
+              <button onclick="setStFilterPreset('bleeders', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">Bleeders (&ge; ₹100)</button>
+              <button onclick="setStFilterPreset('high_spend', this)" class="st-filter-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition-all">High Spend (&ge; ₹150)</button>
             </div>
 
             <!-- Search Input -->
@@ -1236,7 +1295,7 @@ body {
             </div>
 
             <button onclick="copyAllNegativeTerms()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-500/20 transition-all flex items-center gap-1.5 shrink-0">
-              <span>🛡️</span> Copy 18 Negative Exacts
+              <span>️</span> Copy 18 Negative Exacts
             </button>
           </div>
         </div>
@@ -1260,7 +1319,7 @@ body {
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
                 <h3 class="text-base font-bold text-white flex items-center gap-2">
-                  <span>🚀</span> Top 10 Scaling Exact Targets
+                  <span></span> Top 10 Scaling Exact Targets
                 </h3>
                 <p class="text-[11px] text-slate-400">Highest revenue search terms with stellar ROAS ready for isolated Exact-Match campaigns</p>
               </div>
@@ -1316,7 +1375,7 @@ body {
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
                 <h3 class="text-base font-bold text-white flex items-center gap-2">
-                  <span>🩸</span> 18 Zero-Order Bleeder Cuts
+                  <span></span> 18 Zero-Order Bleeder Cuts
                 </h3>
                 <p class="text-[11px] text-slate-400">Irrelevant terms burning ad budget with 0 sales — add as Negative Exact immediately</p>
               </div>
@@ -1355,7 +1414,7 @@ body {
         <div class="glass-panel p-6 rounded-3xl space-y-4 border-white/10">
           <div class="border-b border-slate-800 pb-3">
             <h3 class="text-base font-bold text-white flex items-center gap-2">
-              <span>🧮</span> Amazon A10 Optimal CPC Formula Calculator
+              <span></span> Amazon A10 Optimal CPC Formula Calculator
             </h3>
             <p class="text-xs text-slate-400">Target CPC = Average Order Value (AOV) &times; Conversion Rate (CVR) &times; Target ACoS</p>
           </div>
@@ -1797,7 +1856,7 @@ body {
                 <div id="lightbox-title" class="text-base font-bold text-white truncate max-w-lg">Studio Photography Preview</div>
                 <p id="lightbox-desc" class="text-xs text-indigo-400 font-mono truncate"></p>
               </div>
-              <button onclick="closeLightbox()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-mono text-xs transition-all border border-slate-700">✕ Close (ESC)</button>
+              <button onclick="closeLightbox()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-mono text-xs transition-all border border-slate-700">Close (ESC)</button>
             </div>
             <div class="max-h-[70vh] bg-slate-950 rounded-2xl flex items-center justify-center border border-slate-800 overflow-hidden p-3 relative">
               <img id="lightbox-img" src="" alt="Studio Product Photo" class="max-h-[65vh] w-auto object-contain rounded-xl shadow-2xl transition-all" onerror="this.src='https://via.placeholder.com/600x600?text=Studio+Photo'">
@@ -1825,13 +1884,13 @@ body {
             <!-- Task Controls -->
             <div class="flex flex-wrap items-center gap-2">
               <button onclick="promptAddNewTask()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md shadow-indigo-500/20 flex items-center gap-1.5 active:scale-95">
-                <span>➕</span> Add Task
+                <span></span> Add Task
               </button>
               <button onclick="toggleShowCompletedRoadmap()" id="btn-toggle-completed-tasks" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all border border-slate-700 flex items-center gap-1.5 active:scale-95">
-                <span>👁️</span> <span id="toggle-completed-text">Show Removed</span>
+                <span>️</span> <span id="toggle-completed-text">Show Removed</span>
               </button>
               <button onclick="resetAllTaskProgress()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-rose-900/40 text-slate-400 hover:text-rose-300 text-xs font-semibold transition-all border border-slate-700 flex items-center gap-1.5 active:scale-95">
-                <span>🔄</span> Reset All
+                <span></span> Reset All
               </button>
             </div>
         </div>
@@ -2231,7 +2290,7 @@ ${k.text}`).join('\n\n');
               </div>
             </div>
             <button type="button" onclick="event.stopPropagation(); toggleListingDone('${item.id}')" title="${done ? 'Mark as Unlisted' : 'Mark as Done & Hide'}" class="done-toggle-action shrink-0 px-2.5 py-1.5 rounded-xl text-[10px] font-bold transition-all shadow-sm flex items-center gap-1 ${done ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-slate-800' : 'bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-300 border border-slate-700/60'}">
-              ${done ? '✓ Done' : '✔ Done'}
+              ${done ? 'Done' : 'Done'}
             </button>
           </div>
         `;
@@ -2354,7 +2413,7 @@ ${k.text}`).join('\n\n');
               <div class="text-[11px] text-slate-400 mt-0.5">Click the tick button when done to automatically hide this listing from your active queue</div>
           </div>
           <button type="button" onclick="toggleListingDone('${item.id}')" class="px-4 py-2 rounded-xl font-bold text-xs transition-all shadow-lg flex items-center gap-2 ${isDone ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700' : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-950/50'}">
-            <span>${isDone ? '↩ Mark as Pending (Restore)' : '✔ Mark as Listed & Hide'}</span>
+            <span>${isDone ? '↩ Mark as Pending (Restore)' : 'Mark as Listed & Hide'}</span>
           </button>
         </div>
       `;
@@ -2419,10 +2478,10 @@ ${k.text}`).join('\n\n');
             <!-- Master Action Buttons -->
             <div class="flex items-center gap-2 flex-wrap">
               <button onclick="copyActiveProductFullPackage(this)" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-indigo-500/25 transition-all flex items-center gap-1.5">
-                <span>📋</span> Copy Full Package
+                <span></span> Copy Full Package
               </button>
               <button onclick="copyActiveProductTsv(this)" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-all flex items-center gap-1.5">
-                <span>📊</span> Copy Excel TSV
+                <span></span> Copy Excel TSV
               </button>
             </div>
           </div>
@@ -2503,7 +2562,7 @@ ${k.text}`).join('\n\n');
               <span class="text-[10px] text-slate-400 font-mono">Format: Header: Text (No End Period)</span>
             </div>
             <button onclick="copyAllBulletsForActiveProduct(this)" class="text-xs px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all shadow-sm">
-              📋 Copy All 5 Bullets
+              Copy All 5 Bullets
             </button>
           </div>
           <div class="space-y-2.5">
@@ -2515,11 +2574,11 @@ ${k.text}`).join('\n\n');
         <div class="glass-panel p-5 rounded-3xl space-y-3.5 border-white/10">
           <div class="flex items-center justify-between">
             <div>
-              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">🗂️ Backend Search Terms</h4>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">️ Backend Search Terms</h4>
               <p class="text-[10px] text-slate-400 font-mono">5 &times; &le; 249 UTF-8 Bytes • Semicolon (;) Delimited</p>
             </div>
             <button onclick="copyAllKeywordsForActiveProduct(this)" class="text-xs px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all shadow-sm">
-              📋 Copy All 5 Inputs
+              Copy All 5 Inputs
             </button>
           </div>
           <div class="space-y-2.5">
@@ -2531,7 +2590,7 @@ ${k.text}`).join('\n\n');
         <div class="glass-panel p-5 rounded-3xl space-y-3.5 border-white/10">
           <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
             <div>
-              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">📊 Product Specifications & Authoritative Values</h4>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Product Specifications & Authoritative Values</h4>
               <p class="text-[10px] text-slate-400 font-mono">Click copy beside any value to paste directly into Seller Central</p>
             </div>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs font-mono">
@@ -2555,13 +2614,13 @@ ${k.text}`).join('\n\n');
           <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
             <div>
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                <span>📝 Plain Text Product Description</span>
+                <span>Plain Text Product Description</span>
                 <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">100% HTML-Free Compliant</span>
               </h4>
               <p class="text-[10px] text-slate-400 font-mono">Structured for Rufus AI semantic parsing & Seller Central description field</p>
             </div>
             <button onclick="copyActiveProductPlainDescription(this)" class="text-xs px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all shadow-sm">
-              📋 Copy Plain Description
+              Copy Plain Description
             </button>
           </div>
           <div class="p-4 bg-slate-950/80 rounded-2xl border border-slate-800/80 text-xs text-slate-300 font-mono whitespace-pre-line max-h-64 overflow-y-auto leading-relaxed select-all cursor-pointer" onclick="window.getSelection().selectAllChildren(this)">
@@ -2573,7 +2632,7 @@ ${k.text}`).join('\n\n');
         <div class="glass-panel p-5 rounded-3xl space-y-3.5 border-white/10">
           <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
             <div>
-              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">📸 Commercial Photography Suite</h4>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Commercial Photography Suite</h4>
               <p class="text-[10px] text-slate-400 font-mono">${(item.images || []).length} High-Resolution Studio Photos • Click any photo to view in full resolution</p>
             </div>
           <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
@@ -2748,10 +2807,10 @@ ${k.text}`).join('\n\n');
           <div class="flex items-center gap-2 shrink-0 self-end sm:self-center">
             ${!isRemoved ? `
               <button onclick="markTaskDoneAndRemove('${step.id}')" title="Mark Done & Remove from my list" class="px-3.5 py-1.5 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all flex items-center gap-1.5 active:scale-95">
-                <span>✔</span> Done
+                <span></span> Done
               </button>
               <button onclick="deleteTaskFromList('${step.id}')" title="Delete & Remove from my list" class="px-3.5 py-1.5 rounded-xl bg-rose-600/80 hover:bg-rose-500 text-white font-bold text-xs shadow-md shadow-rose-600/20 transition-all flex items-center gap-1.5 active:scale-95">
-                <span>🗑</span> Delete
+                <span></span> Delete
               </button>
             ` : `
               <button onclick="restoreTaskToList('${step.id}')" title="Restore this task to active list" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300 font-bold text-xs border border-indigo-500/30 transition-all flex items-center gap-1.5 active:scale-95">
@@ -2772,10 +2831,10 @@ ${k.text}`).join('\n\n');
             <p class="text-xs text-slate-400 max-w-md mx-auto">Your launch task list is completely empty. You have handled all items on this dashboard.</p>
             <div class="flex flex-wrap items-center justify-center gap-3 pt-3">
               <button onclick="toggleShowCompletedRoadmap()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition-all flex items-center gap-2">
-                <span>👁️</span> View ${removedCount} Removed Task${removedCount !== 1 ? 's' : ''}
+                <span>️</span> View ${removedCount} Removed Task${removedCount !== 1 ? 's' : ''}
               </button>
               <button onclick="resetAllTaskProgress()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-lg shadow-indigo-500/25 flex items-center gap-2">
-                <span>🔄</span> Restore All Tasks
+                <span></span> Restore All Tasks
               </button>
             </div>
           </div>
@@ -3214,5 +3273,24 @@ ${k.text}`).join('\n\n');
       try { if (typeof initSearchTerms === 'function') initSearchTerms(); } catch(e) { console.error('initSearchTerms failed:', e); }
     });
   </script>
+
+<script>
+(function() {
+  function updateMasterClock() {
+    const el = document.getElementById('master-os-ist-clock');
+    if (!el) return;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    const hours = String(ist.getHours()).padStart(2, '0');
+    const mins = String(ist.getMinutes()).padStart(2, '0');
+    const secs = String(ist.getSeconds()).padStart(2, '0');
+    el.textContent = 'IST ' + hours + ':' + mins + ':' + secs;
+  }
+  updateMasterClock();
+  setInterval(updateMasterClock, 1000);
+})();
+</script>
+
 </body>
 </html>
