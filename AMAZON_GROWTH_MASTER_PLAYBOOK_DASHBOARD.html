@@ -164,8 +164,67 @@
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #F59E0B; }
   </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style id="anti-slop-obsidian-tokens">
+  :root {
+    --bg-base: #070A12;
+    --bg-surface: #0B1120;
+    --bg-card: #0F172A;
+    --bg-card-hover: #1E293B;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(245, 158, 11, 0.35);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --gold-primary: #F59E0B;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  body {
+    font-family: var(--font-sans) !important;
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .font-mono, td.mono {
+    font-family: var(--font-mono) !important;
+  }
+</style>
+
 </head>
 <body class="bg-grid relative filter-show-unchecked">
+
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">T</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="index.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>OPERATIONAL INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">Amazon Growth Master Playbook Dashboard</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          LIVE TELEMETRY
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="index.html" style="padding: 5px 12px; background: #1E293B; hover:background: #334155; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" style="padding: 5px 12px; background: #F59E0B; border-radius: 6px; color: #000; font-size: 12px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">Seller Central &rarr;</a>
+      </div>
+    </div>
+  </header>
+  
   <div class="ambient-glow"></div>
 
   <!-- STICKY TOP NAV -->
@@ -258,22 +317,22 @@
     <!-- TAB NAVIGATION FOR SECTIONS -->
     <div class="flex items-center gap-2 border-b border-white/10 pb-2 overflow-x-auto">
       <button onclick="switchTab('tab-todos')" id="btn-tab-todos" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-amber-500/20 text-amber-400 border border-amber-500/40">
-        <span>📋</span> Master Action To-Do Engine
+        <span></span> Master Action To-Do Engine
       </button>
       <button onclick="switchTab('tab-simulator')" id="btn-tab-simulator" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
-        <span>🧮</span> Dynamic Revenue & CVR Simulator
+        <span></span> Dynamic Revenue & CVR Simulator
       </button>
       <button onclick="switchTab('tab-economics')" id="btn-tab-economics" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
-        <span>💰</span> SKU Unit Economics & Guardrails
+        <span></span> SKU Unit Economics & Guardrails
       </button>
       <button onclick="switchTab('tab-ppc')" id="btn-tab-ppc" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
-        <span>🎯</span> 4-Tier PPC Architecture
+        <span></span> 4-Tier PPC Architecture
       </button>
       <button onclick="switchTab('tab-cosmo')" id="btn-tab-cosmo" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
-        <span>🤖</span> COSMO, Rufus & 9-Image Blueprint
+        <span></span> COSMO, Rufus & 9-Image Blueprint
       </button>
       <button onclick="switchTab('tab-cadence')" id="btn-tab-cadence" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 bg-slate-800/60 text-slate-400 hover:text-white border border-transparent">
-        <span>📅</span> Mon–Fri Operating Cadence
+        <span></span> Mon–Fri Operating Cadence
       </button>
     </div>
 
@@ -288,7 +347,7 @@
         <div class="flex items-center gap-2 flex-wrap">
           <span class="text-xs font-mono font-bold text-slate-400 uppercase mr-1">Sprint:</span>
           <button onclick="filterSprint('all')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/40" data-sprint="all">All Sprints</button>
-          <button onclick="filterSprint('48h')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="48h">⚡ 48-Hour Wins</button>
+          <button onclick="filterSprint('48h')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="48h">48-Hour Wins</button>
           <button onclick="filterSprint('w1')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="w1">Week 1: Structure</button>
           <button onclick="filterSprint('w2')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="w2">Week 2: Listing CVR</button>
           <button onclick="filterSprint('w3')" class="sprint-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white" data-sprint="w3">Week 3: Traffic & FBT</button>
@@ -300,7 +359,7 @@
         <div class="flex items-center gap-3 flex-wrap">
           <div class="flex items-center gap-1 p-1 rounded-xl bg-slate-900/90 border border-white/10 shadow-inner">
             <button onclick="setStatusView('unchecked')" id="btn-status-unchecked" class="status-view-btn px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center gap-1.5 transition">
-              <span>⚡ Only Unchecked</span>
+              <span>Only Unchecked</span>
               <span id="badge-unchecked-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-500/30 text-amber-300 font-mono font-bold">36</span>
             </button>
             <button onclick="setStatusView('all')" id="btn-status-all" class="status-view-btn px-3 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-white flex items-center gap-1.5 transition">
@@ -1591,5 +1650,24 @@
       updateByteCount();
     });
   </script>
+
+<script>
+(function() {
+  function updateMasterClock() {
+    const el = document.getElementById('master-os-ist-clock');
+    if (!el) return;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    const hours = String(ist.getHours()).padStart(2, '0');
+    const mins = String(ist.getMinutes()).padStart(2, '0');
+    const secs = String(ist.getSeconds()).padStart(2, '0');
+    el.textContent = 'IST ' + hours + ':' + mins + ':' + secs;
+  }
+  updateMasterClock();
+  setInterval(updateMasterClock, 1000);
+})();
+</script>
+
 </body>
 </html>
