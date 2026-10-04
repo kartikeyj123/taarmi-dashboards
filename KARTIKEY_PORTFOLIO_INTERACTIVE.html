@@ -2081,8 +2081,67 @@ body {
 
 /* === END INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
 </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style id="anti-slop-obsidian-tokens">
+  :root {
+    --bg-base: #070A12;
+    --bg-surface: #0B1120;
+    --bg-card: #0F172A;
+    --bg-card-hover: #1E293B;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(245, 158, 11, 0.35);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --gold-primary: #F59E0B;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  body {
+    font-family: var(--font-sans) !important;
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .font-mono, td.mono {
+    font-family: var(--font-mono) !important;
+  }
+</style>
+
 </head>
 <body>
+
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">T</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="index.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>OPERATIONAL INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">Founder Digital Portfolio & Executive Dossier</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          LIVE TELEMETRY
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="index.html" style="padding: 5px 12px; background: #1E293B; hover:background: #334155; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" style="padding: 5px 12px; background: #F59E0B; border-radius: 6px; color: #000; font-size: 12px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">Seller Central &rarr;</a>
+      </div>
+    </div>
+  </header>
+  
 
   <!-- Ambient Light Fields -->
   <div class="ambient-glow-top"></div>
@@ -2220,7 +2279,7 @@ body {
             <li><span class="check-icon">✓</span> 100/100 Core Web Vitals with sub-800ms First Contentful Paint</li>
             <li><span class="check-icon">✓</span> Custom CMS structures built for frictionless editorial updates</li>
           </ul>
-          <button class="btn-action-primary" onclick="openDrawer('urban-vault')">Inspect Webflow Case Study ➔</button>
+          <button class="btn-action-primary" onclick="openDrawer('urban-vault')">Inspect Webflow Case Study </button>
         </div>
         <div class="sp-card-box">
           <div class="sp-box-title">Webflow Benchmarks & Metrics</div>
@@ -2252,7 +2311,7 @@ body {
             <li><span class="check-icon">✓</span> Automated Excel COM flat-file generators for rapid 40-variant feeds</li>
             <li><span class="check-icon">✓</span> Isolated PPC targeting architecture: Exact vs. Phrase vs. Broad isolation</li>
           </ul>
-          <button class="btn-action-primary" onclick="openDrawer('taarmi-amazon')">Inspect Amazon Marketplace Case Study ➔</button>
+          <button class="btn-action-primary" onclick="openDrawer('taarmi-amazon')">Inspect Amazon Marketplace Case Study </button>
         </div>
         <div class="sp-card-box">
           <div class="sp-box-title">Verified Marketplace Proof</div>
@@ -2284,7 +2343,7 @@ body {
             <li><span class="check-icon">✓</span> 100% compliant pure-white RGB (255, 255, 255) main hero studio photography</li>
             <li><span class="check-icon">✓</span> Millimeter caliper dimension callouts cutting product returns</li>
           </ul>
-          <button class="btn-action-primary" onclick="openDrawer('bts-media')">Inspect BTS Media Case Study ➔</button>
+          <button class="btn-action-primary" onclick="openDrawer('bts-media')">Inspect BTS Media Case Study </button>
         </div>
         <div class="sp-card-box">
           <div class="sp-box-title">Visual Production Records</div>
@@ -2316,7 +2375,7 @@ body {
             <li><span class="check-icon">✓</span> Rejection of vanity credentials: strictly proof-of-work over paper</li>
             <li><span class="check-icon">✓</span> 72-Hour Purge Rule: captured insights must convert into shipped code</li>
           </ul>
-          <button class="btn-action-primary" onclick="openContactModal()">Connect with Kartikey ➔</button>
+          <button class="btn-action-primary" onclick="openContactModal()">Connect with Kartikey </button>
         </div>
         <div class="sp-card-box">
           <div class="sp-box-title">The Execution Loop</div>
@@ -2358,7 +2417,7 @@ body {
             <span>⊞ Grid</span>
           </button>
           <button class="view-toggle-btn" id="btnViewTable" onclick="setViewMode('table')" title="Index Table View">
-            <span>☰ Table</span>
+            <span>Table</span>
           </button>
         </div>
     </div>
@@ -2403,8 +2462,7 @@ body {
           </div>
           <div class="card-actions">
             <button class="btn-inspect" onclick="openDrawer('urban-vault')">
-              <span>Inspect Case Study</span> ➔
-            </button>
+              <span>Inspect Case Study</span> </button>
             <a href="#playground" class="btn-live-link" title="Test in Viewport Playground">Playground ↗</a>
           </div>
       </div>
@@ -2451,8 +2509,7 @@ body {
           </div>
           <div class="card-actions">
             <button class="btn-inspect" onclick="openDrawer('taarmi-amazon')">
-              <span>Inspect Case Study</span> ➔
-            </button>
+              <span>Inspect Case Study</span> </button>
           </div>
       </div>
 
@@ -2501,8 +2558,7 @@ body {
           </div>
           <div class="card-actions">
             <button class="btn-inspect" onclick="openDrawer('bts-media')">
-              <span>Inspect Case Study</span> ➔
-            </button>
+              <span>Inspect Case Study</span> </button>
           </div>
       </div>
 
@@ -2540,8 +2596,7 @@ body {
           </div>
           <div class="card-actions">
             <button class="btn-inspect" onclick="openDrawer('commercial-photos')">
-              <span>Inspect Case Study</span> ➔
-            </button>
+              <span>Inspect Case Study</span> </button>
           </div>
       </div>
 
@@ -2582,8 +2637,7 @@ body {
           </div>
           <div class="card-actions">
             <button class="btn-inspect" onclick="openDrawer('brand-campaigns')">
-              <span>Inspect Case Study</span> ➔
-            </button>
+              <span>Inspect Case Study</span> </button>
           </div>
       </div>
 
@@ -2621,8 +2675,7 @@ body {
           </div>
           <div class="card-actions">
             <button class="btn-inspect" onclick="openDrawer('autonomous-brain')">
-              <span>Inspect Case Study</span> ➔
-            </button>
+              <span>Inspect Case Study</span> </button>
           </div>
       </div>
 
@@ -2791,14 +2844,63 @@ body {
           </div>
       </div>
     </section>
-  </main>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
 
   <!-- Slide-Over Detailed Case Study Drawer -->
   <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
   <div class="drawer" id="drawer">
     <div class="drawer-header">
       <span style="font-family: var(--font-mono); font-size: 12px; color: var(--cyan-accent); letter-spacing:0.05em;" id="drawerMetaDomain">CASE STUDY</span>
-      <button class="drawer-close" onclick="closeDrawer()" title="Close Drawer (Esc)">✕</button>
+      <button class="drawer-close" onclick="closeDrawer()" title="Close Drawer (Esc)"></button>
     </div>
     <div class="drawer-content" id="drawerContent">
       <!-- Injected via JavaScript -->
@@ -2821,7 +2923,7 @@ body {
   <!-- Contact & Availability Modal -->
   <div class="contact-modal-overlay" id="contactModal" onclick="closeContactModal(event)">
     <div class="contact-modal-card">
-      <button class="contact-modal-close" onclick="closeContactModalDirect()">✕</button>
+      <button class="contact-modal-close" onclick="closeContactModalDirect()"></button>
       <span class="section-eyebrow">DIRECT REACH</span>
       <h3 style="font-size:22px; font-weight:800; margin-bottom:6px; color:#fff;">Let's Build Something Great</h3>
       <p style="font-size:14px; color:var(--text-muted); margin-bottom:20px;">
@@ -2867,7 +2969,7 @@ body {
       <span>💬 Direct WhatsApp</span>
     </a>
     <button class="dock-link" onclick="copyEmail()">
-      <span>📧 Copy Email</span>
+      <span>Copy Email</span>
     </button>
     <a href="https://www.linkedin.com/in/kartikey-jain-/" target="_blank" class="dock-link">
       <span>LinkedIn ↗</span>
@@ -3400,5 +3502,24 @@ const result = await transcriber(audioBuffer);`,
       });
     }
   </script>
+
+<script>
+(function() {
+  function updateMasterClock() {
+    const el = document.getElementById('master-os-ist-clock');
+    if (!el) return;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    const hours = String(ist.getHours()).padStart(2, '0');
+    const mins = String(ist.getMinutes()).padStart(2, '0');
+    const secs = String(ist.getSeconds()).padStart(2, '0');
+    el.textContent = 'IST ' + hours + ':' + mins + ':' + secs;
+  }
+  updateMasterClock();
+  setInterval(updateMasterClock, 1000);
+})();
+</script>
+
 </body>
 </html>
