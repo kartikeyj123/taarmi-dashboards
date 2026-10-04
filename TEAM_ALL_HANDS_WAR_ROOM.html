@@ -62,6 +62,33 @@
 </head>
 <body class="flex flex-col h-screen selection:bg-amber-500 selection:text-black">
 
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">T</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="index.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>OPERATIONAL INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">Team All-Hands Autonomous War Room</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          LIVE TELEMETRY
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="index.html" style="padding: 5px 12px; background: #1E293B; hover:background: #334155; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" style="padding: 5px 12px; background: #F59E0B; border-radius: 6px; color: #000; font-size: 12px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">Seller Central &rarr;</a>
+      </div>
+    </div>
+  </header>
+  
+
   <!-- Header -->
   <header class="border-b border-white/10 bg-slate-950/90 backdrop-blur-xl px-4 py-3 shrink-0">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
@@ -221,7 +248,7 @@
         </div>
         <div class="flex items-center gap-2">
           <button id="ttsToggleBtn" onclick="toggleTts()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono transition flex items-center gap-1">
-            <span id="ttsIcon">🔇</span> Voice Readback: <span id="ttsState" class="font-bold text-slate-400">OFF</span>
+            <span id="ttsIcon"></span> Voice Readback: <span id="ttsState" class="font-bold text-slate-400">OFF</span>
           </button>
           <span class="px-2 py-1 rounded text-[10px] font-mono bg-slate-800/90 text-emerald-300 border border-emerald-500/20 flex items-center gap-1">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Port 4000 Online
@@ -265,16 +292,16 @@
       <div class="px-4 py-2 bg-slate-950/40 border-t border-white/5 flex items-center gap-2 overflow-x-auto no-scrollbar">
         <span class="text-[10px] font-mono text-slate-500 shrink-0">Quick Commands:</span>
         <button onclick="sendQuickPrompt('Jarvis, give me a full operational status report.')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-cyan-950 hover:text-cyan-300 border border-white/5 hover:border-cyan-500/30 text-[11px] text-slate-300 transition shrink-0">
-          📊 Status Report
+          Status Report
         </button>
         <button onclick="sendQuickPrompt('What is our current PPC strategy and budget status?')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-red-950 hover:text-red-300 border border-white/5 hover:border-red-500/30 text-[11px] text-slate-300 transition shrink-0">
-          🎯 PPC Check
+          PPC Check
         </button>
         <button onclick="sendQuickPrompt('Jarvis, check server telemetry and background tasks.')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-blue-950 hover:text-blue-300 border border-white/5 hover:border-blue-500/30 text-[11px] text-slate-300 transition shrink-0">
-          🛠️ Server Telemetry
+          ️ Server Telemetry
         </button>
         <button onclick="sendQuickPrompt('How many cinema titles are in our vault?')" class="px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-amber-950 hover:text-amber-300 border border-white/5 hover:border-amber-500/30 text-[11px] text-slate-300 transition shrink-0">
-          🎬 Cinema Vault
+          Cinema Vault
         </button>
       </div>
 
@@ -525,5 +552,24 @@
       selectAgent('jarvis');
     });
   </script>
+
+<script>
+(function() {
+  function updateMasterClock() {
+    const el = document.getElementById('master-os-ist-clock');
+    if (!el) return;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    const hours = String(ist.getHours()).padStart(2, '0');
+    const mins = String(ist.getMinutes()).padStart(2, '0');
+    const secs = String(ist.getSeconds()).padStart(2, '0');
+    el.textContent = 'IST ' + hours + ':' + mins + ':' + secs;
+  }
+  updateMasterClock();
+  setInterval(updateMasterClock, 1000);
+})();
+</script>
+
 </body>
 </html>
