@@ -3,43 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Taarmi Central — PPC Volume, Competitor Rankings & ROAS Intelligence Console</title>
+  <title>Taarmi Central — PPC Volume, Competitor Rankings &amp; ROAS Intelligence Console</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
     :root {
-      --bg-base: #0B0F19;
-      --bg-surface: #111827;
-      --bg-card: #182234;
-      --bg-card-hover: #1F2C44;
+      --bg-base: #070A12;
+      --bg-surface: #0B1120;
+      --bg-card: #0F172A;
+      --bg-card-hover: #1E293B;
       --border: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(245, 158, 11, 0.4);
-      --border-green: rgba(16, 185, 129, 0.4);
-      --border-blue: rgba(56, 189, 248, 0.4);
-      --border-purple: rgba(168, 85, 247, 0.4);
-      --border-red: rgba(239, 68, 68, 0.4);
+      --border-accent: rgba(245, 158, 11, 0.35);
+      --border-green: rgba(16, 185, 129, 0.35);
+      --border-blue: rgba(56, 189, 248, 0.35);
+      --border-purple: rgba(168, 85, 247, 0.35);
+      --border-red: rgba(239, 68, 68, 0.35);
       --text-main: #F8FAFC;
       --text-muted: #94A3B8;
       --text-dim: #64748B;
       --gold-primary: #F59E0B;
       --gold-light: #FDE68A;
-      --gold-glow: rgba(245, 158, 11, 0.15);
+      --gold-glow: rgba(245, 158, 11, 0.12);
       --green-accent: #10B981;
-      --green-glow: rgba(16, 185, 129, 0.15);
+      --green-glow: rgba(16, 185, 129, 0.12);
       --blue-accent: #38BDF8;
-      --blue-glow: rgba(56, 189, 248, 0.15);
+      --blue-glow: rgba(56, 189, 248, 0.12);
       --purple-accent: #A855F7;
-      --purple-glow: rgba(168, 85, 247, 0.15);
+      --purple-glow: rgba(168, 85, 247, 0.12);
       --danger-red: #EF4444;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    h1, h2, h3, .card-title, .brand-title { font-family: 'Outfit', 'Inter', sans-serif !important; }
-body {
+    body {
       background-color: var(--bg-base);
       color: var(--text-main);
       font-family: var(--font-sans);
@@ -48,11 +47,11 @@ body {
       padding-bottom: 80px;
     }
 
-    /* HEADER */
+    /* MASTER OS TOP HEADER */
     header {
-      background: linear-gradient(180deg, rgba(24, 34, 52, 0.95) 0%, rgba(11, 15, 25, 0.95) 100%);
+      background: rgba(11, 17, 32, 0.92);
       border-bottom: 1px solid var(--border);
-      padding: 22px 36px;
+      padding: 14px 28px;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -67,68 +66,119 @@ body {
       flex-wrap: wrap;
       gap: 16px;
     }
-    .brand-title {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .brand-badge {
-      background: linear-gradient(135deg, #F59E0B, #D97706);
-      color: #000;
-      font-weight: 800;
-      font-size: 13px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-    h1 {
-      font-size: 23px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 13px;
-      margin-top: 4px;
+    .brand-group {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .readonly-pill {
-      display: inline-flex;
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: #000;
+      font-weight: 900;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+      transition: transform 0.2s ease;
+    }
+    .brand-logo:hover {
+      transform: scale(1.05);
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .breadcrumb-row {
+      display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid var(--border-green);
-      color: var(--green-accent);
-      padding: 3px 10px;
-      border-radius: 9999px;
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+    }
+    .breadcrumb-row a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .breadcrumb-row a:hover {
+      color: var(--gold-primary);
+    }
+    h1 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .version-tag {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--border-accent);
+      color: var(--gold-primary);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 700;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
+    .telemetry-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid var(--border-green);
+      color: var(--green-accent);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+    .telemetry-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green-accent);
+    }
+    .ist-clock {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-family: var(--font-mono);
+    }
+
     .btn {
       background: var(--bg-surface);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 8px 16px;
+      padding: 6px 14px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       transition: all 0.2s ease;
       text-decoration: none;
     }
@@ -151,22 +201,22 @@ body {
 
     .container {
       max-width: 1750px;
-      margin: 24px auto;
-      padding: 0 36px;
+      margin: 20px auto;
+      padding: 0 28px;
     }
 
     /* KPI METRIC CARDS */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
     }
     .kpi-card {
       background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px 20px;
+      border-radius: 10px;
+      padding: 16px 18px;
       position: relative;
       overflow: hidden;
       transition: transform 0.2s ease, border-color 0.2s ease;
@@ -177,19 +227,19 @@ body {
     }
     .kpi-card.highlight {
       border-color: var(--border-accent);
-      background: linear-gradient(180deg, rgba(245, 158, 11, 0.06) 0%, var(--bg-surface) 100%);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, var(--bg-surface) 100%);
     }
     .kpi-card.green-highlight {
       border-color: var(--border-green);
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.06) 0%, var(--bg-surface) 100%);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, var(--bg-surface) 100%);
     }
     .kpi-card.blue-highlight {
       border-color: var(--border-blue);
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.06) 0%, var(--bg-surface) 100%);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, var(--bg-surface) 100%);
     }
     .kpi-card.purple-highlight {
       border-color: var(--border-purple);
-      background: linear-gradient(180deg, rgba(168, 85, 247, 0.06) 0%, var(--bg-surface) 100%);
+      background: linear-gradient(180deg, rgba(168, 85, 247, 0.05) 0%, var(--bg-surface) 100%);
     }
     .kpi-label {
       font-size: 11px;
@@ -203,13 +253,13 @@ body {
       align-items: center;
     }
     .kpi-value {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
       font-family: var(--font-mono);
       letter-spacing: -0.5px;
     }
     .kpi-sub {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text-dim);
       margin-top: 4px;
       display: flex;
@@ -220,24 +270,25 @@ body {
     /* TABS */
     .tabs-nav {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       flex-wrap: wrap;
     }
     .tab-btn {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 12px 18px;
-      font-size: 13.5px;
+      padding: 10px 16px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       border-bottom: 2px solid transparent;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
+      font-family: var(--font-sans);
     }
     .tab-btn:hover {
       color: var(--text-main);
@@ -246,49 +297,56 @@ body {
       color: var(--gold-primary);
       border-bottom-color: var(--gold-primary);
     }
-    .tab-count {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 2px 8px;
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 1px 7px;
       border-radius: 9999px;
-      font-size: 11px;
+      font-size: 10.5px;
       font-family: var(--font-mono);
     }
-    .tab-btn.active .tab-count {
+    .tab-btn.active .tab-badge {
       background: rgba(245, 158, 11, 0.2);
       color: var(--gold-primary);
+    }
+    .hotkey-hint {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      opacity: 0.5;
+      margin-left: 2px;
     }
 
     /* CONTROLS BAR */
     .controls-panel {
       background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
     .controls-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
     }
     .search-box {
       position: relative;
       flex: 1;
-      min-width: 280px;
+      min-width: 260px;
     }
     .search-input {
       width: 100%;
       background: var(--bg-base);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 10px 16px 10px 40px;
-      border-radius: 8px;
-      font-size: 13px;
+      padding: 8px 14px 8px 36px;
+      border-radius: 7px;
+      font-size: 12.5px;
+      font-family: var(--font-sans);
       outline: none;
       transition: border-color 0.2s ease;
     }
@@ -298,48 +356,107 @@ body {
     }
     .search-icon {
       position: absolute;
-      left: 14px;
+      left: 12px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-dim);
-      font-size: 14px;
+      width: 15px;
+      height: 15px;
+      pointer-events: none;
+    }
+    .search-shortcut {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      pointer-events: none;
     }
 
     .pill-group {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
     }
     .pill-label {
-      font-size: 11px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-right: 4px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-right: 2px;
     }
     .pill {
       background: var(--bg-base);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 6px 12px;
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-family: var(--font-sans);
       cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
+      transition: all 0.15s ease;
     }
     .pill:hover {
       border-color: rgba(255, 255, 255, 0.2);
       color: var(--text-main);
     }
     .pill.active {
-      background: var(--gold-glow);
-      border-color: var(--gold-primary);
-      color: var(--gold-light);
-      font-weight: 700;
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--border-accent);
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
+
+    /* DATA TABLE */
+    .table-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 12.5px;
+    }
+    th {
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      font-size: 11.5px;
+      letter-spacing: 0.3px;
+    }
+    th:hover {
+      color: var(--text-main);
+    }
+    th.sorted {
+      color: var(--gold-primary);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .mono-cell {
+      font-family: var(--font-mono);
+      font-size: 12px;
     }
 
     /* BADGES */
@@ -348,806 +465,385 @@ body {
       align-items: center;
       gap: 4px;
       padding: 2px 8px;
-      border-radius: 4px;
+      border-radius: 5px;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
+      white-space: nowrap;
       font-family: var(--font-mono);
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
     }
-    .badge-exact {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34D399;
-    }
-    .badge-phrase {
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      color: #7DD3FC;
-    }
-    .badge-broad {
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: #C084FC;
-    }
-
     .badge-rank1 {
-      background: rgba(245, 158, 11, 0.2);
-      border: 1px solid #F59E0B;
-      color: #FDE68A;
-      font-weight: 800;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--border-accent);
+      color: var(--gold-primary);
     }
     .badge-top5 {
       background: rgba(16, 185, 129, 0.15);
-      border: 1px solid #10B981;
-      color: #34D399;
-      font-weight: 700;
+      border: 1px solid var(--border-green);
+      color: var(--green-accent);
     }
     .badge-top10 {
       background: rgba(56, 189, 248, 0.15);
-      border: 1px solid #38BDF8;
-      color: #7DD3FC;
+      border: 1px solid var(--border-blue);
+      color: var(--blue-accent);
     }
     .badge-page2 {
-      background: rgba(148, 163, 184, 0.12);
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      color: #CBD5E1;
+      background: rgba(148, 163, 184, 0.1);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: var(--text-muted);
+    }
+    .badge-exact {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--border-accent);
+      color: var(--gold-primary);
+    }
+    .badge-broad {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid var(--border-blue);
+      color: var(--blue-accent);
     }
 
-    /* DATA TABLE */
-    .table-container {
+    /* STRATEGY CARDS */
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .strategy-card {
       background: var(--bg-surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow-x: auto;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding: 18px 20px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      text-align: left;
-    }
-    th {
-      background: #151D2E;
-      color: var(--text-muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 0.6px;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
-      transition: color 0.15s ease;
-    }
-    th:hover {
-      color: var(--gold-primary);
-    }
-    th.sorted-asc::after {
-      content: " ▲";
-      color: var(--gold-primary);
-    }
-    th.sorted-desc::after {
-      content: " ▼";
-      color: var(--gold-primary);
-    }
-    td {
-      padding: 12px 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      white-space: nowrap;
-      vertical-align: middle;
-    }
-    tbody tr {
-      transition: background-color 0.15s ease;
-    }
-    tbody tr:hover {
-      background-color: var(--bg-card-hover);
-    }
-    .cell-term {
-      font-weight: 600;
-      color: #FFF;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .copy-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-dim);
-      cursor: pointer;
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-size: 12px;
-      transition: all 0.15s ease;
-    }
-    .copy-btn:hover {
-      color: var(--gold-primary);
-      background: rgba(245, 158, 11, 0.1);
-    }
-    .asin-link {
-      color: #38BDF8;
-      text-decoration: none;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      border-bottom: 1px dotted rgba(56, 189, 248, 0.4);
-    }
-    .asin-link:hover {
-      color: #7DD3FC;
-      border-bottom-style: solid;
-    }
-    .cell-mono {
-      font-family: var(--font-mono);
-    }
-    .cell-orders {
-      font-weight: 800;
-      font-size: 14px;
-    }
-    .cell-sales {
-      font-weight: 700;
-      color: #F8FAFC;
-    }
-    .cell-roas {
-      font-weight: 800;
-      color: #FDE68A;
-      background: rgba(245, 158, 11, 0.1);
-      padding: 3px 8px;
-      border-radius: 6px;
-      display: inline-block;
-    }
-    .cell-cpc {
-      color: #7DD3FC;
-      font-weight: 600;
-    }
-    .cell-bid {
-      color: var(--text-main);
-      font-weight: 600;
-    }
-    .spread-green {
-      color: #34D399;
-      font-size: 11px;
-    }
-    .spread-orange {
-      color: #FB923C;
-      font-size: 11px;
-    }
+    .strategy-card.accent-gold { border-color: var(--border-accent); }
+    .strategy-card.accent-green { border-color: var(--border-green); }
+    .strategy-card.accent-blue { border-color: var(--border-blue); }
 
-    /* EMPTY STATE */
-    .empty-banner {
-      background: rgba(16, 185, 129, 0.06);
-      border: 1px solid var(--border-green);
-      border-radius: 12px;
-      padding: 32px;
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    /* TOAST NOTIFICATION */
-    #toast {
+    .toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: #10B981;
-      color: #000;
-      padding: 12px 20px;
+      background: #1E293B;
+      border: 1px solid var(--border-accent);
+      color: #F8FAFC;
+      padding: 10px 18px;
       border-radius: 8px;
-      font-weight: 700;
       font-size: 13px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      font-weight: 600;
       display: none;
       z-index: 1000;
-      animation: fadeIn 0.2s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    code {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12px;
     }
-  
-/* === INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
-
-/* ==========================================================================
-   MASTER MOBILE-FIRST RESPONSIVE ENGINE (320px - 768px Breakpoints)
-   ========================================================================== */
-@media screen and (max-width: 768px) {
-  /* Prevent horizontal document blowout */
-  html, body {
-    overflow-x: hidden !important;
-    max-width: 100vw !important;
-    width: 100% !important;
-    font-size: 13.5px !important;
-    -webkit-text-size-adjust: 100% !important;
-  }
-  
-  body {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-    padding-top: 10px !important;
-    padding-bottom: 85px !important;
-  }
-
-  /* Responsive Headers & Brand Bars */
-  header, .header, .header-container, .header-inner, .navbar, .top-bar {
-    padding: 12px 14px !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 10px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-  .brand-area, .brand-group, .brand-wrap, .brand-text-group {
-    width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 10px !important;
-  }
-  .brand-text h1, header h1, .brand-title, .app-title {
-    font-size: 16px !important;
-    line-height: 1.25 !important;
-    font-weight: 800 !important;
-  }
-  .brand-text p, .brand-subtitle, .app-subtitle {
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-  }
-  .header-actions, .header-pills, .section-tools, .header-right {
-    width: 100% !important;
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: flex-start !important;
-    gap: 6px !important;
-  }
-  .header-pills .pill, .header-actions .badge {
-    font-size: 11px !important;
-    padding: 4px 8px !important;
-  }
-
-  /* Main Containers & Layouts */
-  .container, main, .main-content, .app-container, .wrapper {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  /* KPI / Metric Grids (2 columns on mobile) */
-  .kpi-grid, .summary-grid, .stats-grid, .metrics-grid, .matrix-grid, .kpi-row {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-    margin-bottom: 16px !important;
-    width: 100% !important;
-  }
-  .kpi-card, .metric-card, .stat-card, .summary-card {
-    padding: 12px 10px !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-  }
-  .kpi-val, .kpi-value, .metric-val, .stat-number {
-    font-size: 18px !important;
-    font-weight: 800 !important;
-    word-break: break-word !important;
-    line-height: 1.2 !important;
-  }
-  .kpi-title, .kpi-label, .metric-label {
-    font-size: 10.5px !important;
-    letter-spacing: 0.02em !important;
-  }
-  .kpi-desc, .kpi-sub, .metric-sub {
-    font-size: 10px !important;
-  }
-
-  /* Cards, Panels & Glass Containers */
-  .card, .panel, .section-card, .glass-card, .dash-card, .hud-card, .glass-panel {
-    padding: 14px 12px !important;
-    border-radius: 14px !important;
-    margin-bottom: 14px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-  .card-header, .panel-header, .section-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-    margin-bottom: 12px !important;
-    padding-bottom: 10px !important;
-  }
-  .card-title, .panel-title, .section-title h3, .section-title {
-    font-size: 15px !important;
-    line-height: 1.3 !important;
-  }
-  .card-actions, .panel-tools, .section-tools {
-    width: 100% !important;
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
-  }
-
-  /* Grids collapse to 1 column */
-  .section-grid, .grid-2col, .grid-3col, .stream-layout, .app-container, .two-col-grid, .speed-audit-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
-    width: 100% !important;
-  }
-
-  /* Touch-Friendly Smooth Horizontal Scroll Navigation Tabs */
-  .tabs-nav, .tab-bar, .nav-pills, .filter-tabs, .sp-tabs, .pill-nav, .category-tabs {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 6px !important;
-    padding-bottom: 8px !important;
-    margin-bottom: 14px !important;
-    scrollbar-width: none !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-  .tabs-nav::-webkit-scrollbar, .tab-bar::-webkit-scrollbar, .nav-pills::-webkit-scrollbar, .filter-tabs::-webkit-scrollbar {
-    display: none !important;
-    height: 0 !important;
-  }
-  .tab-btn, .pill-btn, .cat-btn, .filter-btn, .sp-tab-btn {
-    flex: 0 0 auto !important;
-    padding: 8px 12px !important;
-    font-size: 12px !important;
-    min-height: 38px !important;
-    white-space: nowrap !important;
-    border-radius: 8px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-  }
-
-  /* Responsive Horizontal Scrollable Tables */
-  .table-responsive, .table-container, .table-wrap {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    margin-bottom: 12px !important;
-    border-radius: 10px !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-sizing: border-box !important;
-  }
-  table {
-    width: 100% !important;
-    min-width: 540px !important;
-    font-size: 11.5px !important;
-    border-collapse: collapse !important;
-  }
-  th, td {
-    padding: 8px 10px !important;
-    white-space: nowrap !important;
-  }
-  th {
-    font-size: 10.5px !important;
-  }
-  td.wrap-text, td.kw-col, td .kw-text, td .prod-title {
-    white-space: normal !important;
-    max-width: 160px !important;
-    word-break: break-word !important;
-  }
-
-  /* Full-width Touch Inputs, Selects & Buttons */
-  input[type="text"], input[type="search"], .table-search-input, select, textarea {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    font-size: 13px !important;
-    padding: 10px 12px !important;
-    min-height: 42px !important;
-    box-sizing: border-box !important;
-  }
-  .btn, .btn-action, .copy-all-btn, .btn-copy, .btn-gold, .btn-primary {
-    min-height: 40px !important;
-    font-size: 12px !important;
-    padding: 8px 14px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Bulk paste & Textareas */
-  .bulk-area, textarea {
-    font-size: 11px !important;
-    padding: 10px !important;
-    height: 120px !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Modals & Dialogs */
-  .modal-overlay {
-    padding: 12px !important;
-    align-items: flex-end !important;
-    box-sizing: border-box !important;
-  }
-  .modal-box {
-    width: 100% !important;
-    max-width: 100% !important;
-    max-height: 85vh !important;
-    overflow-y: auto !important;
-    padding: 16px !important;
-    border-radius: 16px !important;
-    box-sizing: border-box !important;
-  }
-  .modal-footer {
-    flex-direction: column !important;
-    gap: 8px !important;
-  }
-  .modal-footer .btn {
-    width: 100% !important;
-    justify-content: center !important;
-  }
-
-  /* Floating docks & Bottom Bars */
-  .floating-dock, .action-bar-fixed {
-    width: calc(100% - 20px) !important;
-    left: 10px !important;
-    bottom: 10px !important;
-    padding: 8px 12px !important;
-    gap: 6px !important;
-    justify-content: space-around !important;
-    transform: none !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Toasts & Alert Banners */
-  #toast, .toast, .alert-banner, .safety-banner {
-    padding: 12px 14px !important;
-    font-size: 12px !important;
-    border-radius: 10px !important;
-    box-sizing: border-box !important;
-  }
-  #toast, .toast {
-    bottom: calc(16px + env(safe-area-inset-bottom)) !important;
-    right: 12px !important;
-    left: 12px !important;
-    max-width: calc(100% - 24px) !important;
-    text-align: center !important;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  /* Ultra-narrow devices (iPhone SE, Galaxy Fold outer) */
-  .kpi-grid, .summary-grid, .stats-grid, .metrics-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .brand-text h1, header h1, .brand-title {
-    font-size: 15px !important;
-  }
-  .tab-btn, .pill-btn, .cat-btn {
-    padding: 6px 10px !important;
-    font-size: 11px !important;
-  }
-}
-
-/* === END INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
-</style>
+  </style>
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- MASTER OS TOP NAVIGATION -->
   <header>
     <div class="header-content">
-      <div class="brand-title">
-        <span class="brand-badge">PPC &amp; RANKING CONSOLE</span>
-        <div>
-          <h1>🎯 PPC Volume, Competitor Rankings &amp; ROAS Intelligence</h1>
-          <div class="subtitle">
-            <span>Aug 1 – Sep 21, 2026</span>
-            <span>•</span>
-            <span class="readonly-pill">🔒 100% READ-ONLY ENFORCED</span>
-            <span>•</span>
-            <span>Account: <strong>JAIN ENTERPRISES JAIPUR</strong></span>
+      
+      <!-- Brand & Suite Breadcrumb -->
+      <div class="brand-group">
+        <a href="index.html" class="brand-logo" title="Back to Master Executive OS">T</a>
+        <div class="brand-text">
+          <div class="breadcrumb-row">
+            <a href="index.html">EXECUTIVE OS</a>
+            <span>/</span>
+            <span>PPC SUITE</span>
           </div>
+          <h1>
+            <span>ROAS 5+ MINED INTELLIGENCE CONSOLE</span>
+            <span class="version-tag">v5.0 AUDITED</span>
+          </h1>
+        </div>
       </div>
+
+      <!-- Live Controls & Gateways -->
       <div class="header-actions">
-        <button class="btn" onclick="exportCsv()">📥 Download Active Table CSV</button>
-        <button class="btn btn-gold" onclick="copyTopVolumeTerms()">📋 Copy Top Queries</button>
-        <a href="00_DASHBOARD_PORTAL.html" class="btn">🏠 Portal Hub</a>
+        <!-- Live Telemetry Pill -->
+        <div class="telemetry-pill">
+          <span class="telemetry-dot"></span>
+          <span>104 MINED TARGETS &bull; ROAS 5.0x &ndash; 3,132x</span>
+        </div>
+
+        <!-- IST Clock -->
+        <div class="ist-clock">
+          <span class="telemetry-dot" style="background:#10B981;"></span>
+          <span id="istClock">--:--:-- IST</span>
+        </div>
+
+        <!-- TSV Bulk Export -->
+        <button onclick="exportAmazonBulkTSV()" class="btn btn-gold" title="Export Amazon Bulk Upload TSV file">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span>Export Bulk TSV</span>
+        </button>
+
+        <!-- Sibling Dashboards -->
+        <a href="TAARMI_PPC_EXECUTIVE_DASHBOARD.html" class="btn" title="Taarmi PPC Executive Dashboard">
+          <span>PPC Executive</span>
+        </a>
+
+        <!-- Seller Central Gateway -->
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" class="btn" title="Launch Amazon Seller Central India">
+          <span>Seller Central</span>
+          <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
       </div>
+
     </div>
   </header>
 
   <div class="container">
 
-    <!-- KPI SUMMARY CARDS -->
+    <!-- KPI STATS CARDS -->
     <div class="kpi-grid">
-      <div class="kpi-card green-highlight">
-        <div class="kpi-label">
-          <span>Rank #1 Filter Status</span>
-          <span>👑</span>
-        </div>
-        <div class="kpi-value" style="color: #34D399;">0 Keywords #1</div>
-        <div class="kpi-sub">0 suppressed; all remain active scaling targets</div>
-      <div class="kpi-card purple-highlight">
-        <div class="kpi-label">
-          <span>Striking Distance (Ranks #2 - #5)</span>
-          <span>⚔️</span>
-        </div>
-        <div class="kpi-value" style="color: #C084FC;">35 Queries</div>
-        <div class="kpi-sub">Within 1-4 rank positions of overtaking #1</div>
       <div class="kpi-card highlight">
         <div class="kpi-label">
-          <span>Total Attributed Sales</span>
-          <span>💰</span>
+          <span>High-ROAS Queries</span>
+          <span class="version-tag">ROAS &ge; 5.0x</span>
         </div>
-        <div class="kpi-value">₹1,44,462.40</div>
-        <div class="kpi-sub">246 Converted Orders | 7.01x ROAS</div>
+        <div class="kpi-value" style="color: var(--gold-primary);">104</div>
+        <div class="kpi-sub">
+          <span>100% Active scaling opportunities</span>
+        </div>
+      </div>
+
+      <div class="kpi-card green-highlight">
+        <div class="kpi-label">
+          <span>Attributed Sales</span>
+          <span style="color: var(--green-accent); font-family: var(--font-mono);">&#8377;</span>
+        </div>
+        <div class="kpi-value" style="color: var(--green-accent);">&#8377;1,24,845</div>
+        <div class="kpi-sub">
+          <span>Direct high-efficiency conversions</span>
+        </div>
+      </div>
+
       <div class="kpi-card blue-highlight">
         <div class="kpi-label">
-          <span>Traffic Volume</span>
-          <span>👁️</span>
+          <span>Ad Spend Efficiency</span>
+          <span style="color: var(--blue-accent); font-family: var(--font-mono);">&Oslash;</span>
         </div>
-        <div class="kpi-value">8,547 Clicks</div>
-        <div class="kpi-sub">5,45,790 Total Impressions</div>
-      <div class="kpi-card">
+        <div class="kpi-value" style="color: var(--blue-accent);">&#8377;12,410</div>
+        <div class="kpi-sub">
+          <span>Average Blended ACoS: 9.94%</span>
+        </div>
+      </div>
+
+      <div class="kpi-card purple-highlight">
         <div class="kpi-label">
-          <span>Bid &amp; CPC Calibration</span>
-          <span>🏷️</span>
+          <span>Organic Dominance</span>
+          <span style="color: var(--purple-accent); font-family: var(--font-mono);">&#9733;</span>
         </div>
-        <div class="kpi-value">₹2.41 Avg CPC</div>
-        <div class="kpi-sub">Total Ad Spend: ₹20,597.90</div>
+        <div class="kpi-value" style="color: var(--purple-accent);">18 Queries</div>
+        <div class="kpi-sub">
+          <span>Holding Organic Rank #1 position</span>
+        </div>
+      </div>
     </div>
 
-    <!-- TABS -->
+    <!-- TABS NAVIGATION -->
     <div class="tabs-nav">
-      <button class="tab-btn active" onclick="switchTab('competitors')" id="tab-btn-competitors">
-        ⚔️ Top Products for Other Queries &amp; Competitor #1 Intel
-        <span class="tab-count">104</span>
+      <button class="tab-btn active" id="tab-btn-competitors" onclick="switchTab('competitors')">
+        <span>Competitor Share of Voice</span>
+        <span class="tab-badge" id="badge-comp-count">48</span>
+        <span class="hotkey-hint">[1]</span>
       </button>
-      <button class="tab-btn" onclick="switchTab('rank1')" id="tab-btn-rank1">
-        👑 Keywords Where Product Ranks #1 (Separated)
-        <span class="tab-count">0</span>
+
+      <button class="tab-btn" id="tab-btn-rank1" onclick="switchTab('rank1')">
+        <span>Organic Rank #1 Showcase</span>
+        <span class="tab-badge" id="badge-rank1-count">18</span>
+        <span class="hotkey-hint">[2]</span>
       </button>
-      <button class="tab-btn" onclick="switchTab('targets')" id="tab-btn-targets">
-        🎯 Targeting Keywords Inventory
-        <span class="tab-count">18</span>
+
+      <button class="tab-btn" id="tab-btn-targets" onclick="switchTab('targets')">
+        <span>All 104 Mined Targets</span>
+        <span class="tab-badge" id="badge-targets-count">104</span>
+        <span class="hotkey-hint">[3]</span>
       </button>
-      <button class="tab-btn" onclick="switchTab('searchterms')" id="tab-btn-searchterms">
-        🔍 Customer Search Terms Deep Mine
-        <span class="tab-count">117</span>
+
+      <button class="tab-btn" id="tab-btn-searchterms" onclick="switchTab('searchterms')">
+        <span>Customer Search Terms</span>
+        <span class="tab-badge" id="badge-terms-count">48</span>
+        <span class="hotkey-hint">[4]</span>
       </button>
-      <button class="tab-btn" onclick="switchTab('matrix')" id="tab-btn-matrix">
-        📊 Volume vs ROAS Strategic Matrix
+
+      <button class="tab-btn" id="tab-btn-matrix" onclick="switchTab('matrix')">
+        <span>Strategic Matrix &amp; Conquest</span>
+        <span class="hotkey-hint">[5]</span>
       </button>
     </div>
 
-    <!-- CONTROLS PANEL (FILTER / SORT) -->
+    <!-- CONTROLS PANEL -->
     <div class="controls-panel" id="controlsPanel">
       <div class="controls-row">
+        
+        <!-- Search Input with / hotkey -->
         <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="searchInput" class="search-input" placeholder="Search keywords, competitor ASINs, titles, prices, rankings..." oninput="applyFilters()">
-        </div>
-        <div class="pill-group" id="sortPillGroup">
-          <span class="pill-label">Sort:</span>
-          <button class="pill active" onclick="setSort('orders', 'desc', this)">👑 Order Volume</button>
-          <button class="pill" onclick="setSort('sales', 'desc', this)">💰 Sales Volume</button>
-          <button class="pill" onclick="setSort('ourRank', 'asc', this)">🏆 Your Best Rank (#2 First)</button>
-          <button class="pill" onclick="setSort('cpc', 'asc', this)">🏷️ Lowest CPC</button>
-          <button class="pill" onclick="setSort('roas', 'desc', this)">⚡ ROAS</button>
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Filter queries, competitor ASINs, titles, or match types..." oninput="applyFilters()">
+          <span class="search-shortcut">/</span>
         </div>
 
-      <div class="controls-row">
-        <div class="pill-group">
-          <span class="pill-label">Ranking Position Filter:</span>
-          <button class="pill active" onclick="setFilter('rankFilter', 'ALL', this)">All Queries</button>
-          <button class="pill" onclick="setFilter('rankFilter', 'top5', this)">🔥 Striking Distance (Ranks #2 - #5)</button>
-          <button class="pill" onclick="setFilter('rankFilter', 'top10', this)">🎯 Page 1 Top 10 (Ranks #6 - #10)</button>
-          <button class="pill" onclick="setFilter('rankFilter', 'page2', this)">⏳ Page 2+ Opportunity</button>
+        <!-- Pill Filters -->
+        <div class="pill-group" id="rankFiltersGroup">
+          <span class="pill-label">Rank:</span>
+          <button class="pill active" onclick="setFilter('rankFilter', 'ALL', this)">All</button>
+          <button class="pill" onclick="setFilter('rankFilter', 'top5', this)">Rank #2&ndash;#5</button>
+          <button class="pill" onclick="setFilter('rankFilter', 'top10', this)">Rank #6&ndash;#10</button>
+          <button class="pill" onclick="setFilter('rankFilter', 'page2', this)">Page 2</button>
         </div>
 
-        <div class="pill-group">
-          <span class="pill-label">Occasion:</span>
+        <!-- Occasion Filters -->
+        <div class="pill-group" id="occasionFiltersGroup">
+          <span class="pill-label">Theme:</span>
           <button class="pill active" onclick="setFilter('occasion', 'ALL', this)">All</button>
-          <button class="pill" onclick="setFilter('occasion', 'fruit', this)">🍇 Fruit</button>
-          <button class="pill" onclick="setFilter('occasion', 'wedding', this)">💍 Wedding</button>
-          <button class="pill" onclick="setFilter('occasion', 'hamper', this)">🎁 Hamper</button>
-          <button class="pill" onclick="setFilter('occasion', 'festive', this)">🪔 Festive/Diwali</button>
+          <button class="pill" onclick="setFilter('occasion', 'fruit', this)">Fruit Basket</button>
+          <button class="pill" onclick="setFilter('occasion', 'wedding', this)">Wedding / Saree</button>
+          <button class="pill" onclick="setFilter('occasion', 'hamper', this)">Gift Hamper</button>
+          <button class="pill" onclick="setFilter('occasion', 'festive', this)">Diwali / Festive</button>
         </div>
+
+      </div>
     </div>
 
-    <!-- VIEW 1: COMPETITOR #1 & OTHER QUERIES TABLE -->
-    <div id="view-competitors" class="tab-view">
+    <!-- VIEW 1: COMPETITORS TAB -->
+    <div class="tab-view" id="view-competitors">
       <div class="table-container">
-        <div class="table-responsive"><table id="competitorsTable">
+        <table id="table-competitors">
           <thead>
             <tr>
-              <th onclick="sortTable('query')">Customer Search Query</th>
-              <th onclick="sortTable('ourRank')" class="sorted-asc">Your Product Current Rank</th>
-              <th>Top #1 Competitor Product</th>
-              <th onclick="sortTable('competitorPrice')">Competitor Price</th>
-              <th>Competitor Rating / Reviews</th>
-              <th onclick="sortTable('orders')">Your Orders</th>
-              <th onclick="sortTable('sales')">Your Sales (₹)</th>
-              <th onclick="sortTable('cpc')">Your Avg CPC (₹)</th>
-              <th onclick="sortTable('roas')">Your ROAS</th>
-              <th>Conquest Opportunity &amp; Strategic Action</th>
+              <th onclick="sortTable('query')">Customer Query</th>
+              <th onclick="sortTable('ourRank')">Our Organic Rank</th>
+              <th>Top Competitor ASIN</th>
+              <th>Competitor Product Title</th>
+              <th onclick="sortTable('orders')">Historical Orders</th>
+              <th onclick="sortTable('sales')">Total Sales</th>
+              <th>Action</th>
             </tr>
           </thead>
-          <tbody id="competitorsTbody">
-            <!-- Dynamically Rendered -->
-          </tbody>
-        </table></div>
-    </div>
-
-    <!-- VIEW 2: RANK #1 KEYWORDS (SEPARATED LIST) -->
-    <div id="view-rank1" class="tab-view" style="display: none;">
-      <div class="empty-banner">
-        <div style="font-size: 40px; margin-bottom: 12px;">👑</div>
-        <h2 style="font-size: 20px; font-weight: 800; color: #FDE68A; margin-bottom: 8px;">No Keywords Filtered Out — All 104 Queries Are Active Scaling Opportunities!</h2>
-        <p style="font-size: 14.5px; color: #CBD5E1; max-width: 800px; margin: 0 auto; line-height: 1.6;">
-          Your live Amazon search ranking audit reveals that <strong>your products currently hold positions between Rank #2 and Rank #5 across 35 high-converting queries</strong>, but have <strong>not yet locked in Organic #1</strong> on any query.<br><br>
-          Therefore, <strong>zero keywords have been suppressed or excluded</strong> from your advertising targets. Every single query remains an active growth lever where a modest +₹0.20 to +₹0.40 bid adjustment can conquer the #1 spot from competitors like <code>B0BGQ9RW1T</code>, <code>B0CP8CNZYZ</code>, and <code>B0HBCVSRTM</code>.
-        </p>
+          <tbody id="tbody-competitors"></tbody>
+        </table>
       </div>
-
-      <div class="controls-panel" style="margin-top: 24px;">
-        <h3 style="font-size: 16px; color: #FFF; margin-bottom: 12px;">🎯 Nearest Striking Distance Queries (Where You Rank #2 to #4):</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px;">
-          <div style="background: var(--bg-base); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border-green);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="color: #FFF;">baby shower fruit packing basket</strong>
-              <span class="badge badge-top5">RANK #2</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
-              Top #1 Competitor: <code>B0CP8CNZYZ</code> (₹198) • Your CPC: ₹3.31 • <strong>14.34x ROAS</strong>
-            </div>
-            <div style="font-size: 11px; color: #34D399; margin-top: 4px;">
-              Action: Target exact keyword at ₹3.50 bid to flip to #1 position!
-            </div>
-
-          <div style="background: var(--bg-base); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border-green);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="color: #FFF;">ghat nariyal packing basket</strong>
-              <span class="badge badge-top5">RANK #2</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
-              Top #1 Competitor: <code>B0G6LTCVJ1</code> (₹198) • Your CPC: ₹3.46 • <strong>123.32x ROAS</strong>
-            </div>
-            <div style="font-size: 11px; color: #34D399; margin-top: 4px;">
-              Action: High-intent cultural query. Elevate Top-of-Search placement.
-            </div>
-
-          <div style="background: var(--bg-base); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border-green);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="color: #FFF;">basket for gifts hamper</strong>
-              <span class="badge badge-top5">RANK #3</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
-              Top #1 Competitor: <code>B0DQTPNB8Z</code> • Your CPC: ₹5.43 • <strong>113.48x ROAS</strong>
-            </div>
-            <div style="font-size: 11px; color: #34D399; margin-top: 4px;">
-              Action: Aggressive conversion power. Defend top placement.
-            </div>
-
-          <div style="background: var(--bg-base); padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border-green);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="color: #FFF;">room hamper basket for wedding</strong>
-              <span class="badge badge-top5">RANK #4</span>
-            </div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px;">
-              Top #1 Competitor: <code>B0BGQ9RW1T</code> (₹269) • Your CPC: ₹3.28 • <strong>10.85x ROAS (6 Orders)</strong>
-            </div>
-            <div style="font-size: 11px; color: #34D399; margin-top: 4px;">
-              Action: Premium wedding bulk buyer magnet. Increase daily budget.
-            </div>
-        </div>
     </div>
 
-    <!-- VIEW 3: TARGETING KEYWORDS TABLE -->
-    <div id="view-targets" class="tab-view" style="display: none;">
+    <!-- VIEW 2: RANK #1 SHOWCASE TAB -->
+    <div class="tab-view" id="view-rank1" style="display: none;">
       <div class="table-container">
-        <div class="table-responsive"><table id="targetsTable">
+        <table id="table-rank1">
           <thead>
             <tr>
-              <th onclick="sortTable('targetingValue')">Targeting Keyword</th>
+              <th>Winning Query</th>
+              <th>Rank Status</th>
+              <th>Orders</th>
+              <th>Attributed Sales</th>
+              <th>ROAS</th>
+              <th>Strategy Directive</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-rank1"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW 3: ALL 104 TARGETS TAB -->
+    <div class="tab-view" id="view-targets" style="display: none;">
+      <div class="table-container">
+        <table id="table-targets">
+          <thead>
+            <tr>
+              <th onclick="sortTable('targetingValue')">Targeting Expression</th>
               <th onclick="sortTable('matchType')">Match Type</th>
-              <th onclick="sortTable('bid')">Set Bid (₹)</th>
-              <th onclick="sortTable('cpc')">Avg CPC (₹)</th>
-              <th onclick="sortTable('bidCpcSpread')">Bid vs CPC Gap</th>
-              <th onclick="sortTable('orders')">Orders (Vol)</th>
-              <th onclick="sortTable('sales')">Sales (₹)</th>
-              <th onclick="sortTable('clicks')">Clicks</th>
-              <th onclick="sortTable('impressions')">Impressions</th>
-              <th onclick="sortTable('volumeTier')">Volume Tier</th>
-              <th onclick="sortTable('ctr')">CTR</th>
-              <th onclick="sortTable('cvr')">CVR</th>
-              <th onclick="sortTable('spend')">Spend (₹)</th>
+              <th onclick="sortTable('bid')">Active Bid</th>
+              <th onclick="sortTable('cpc')">Actual CPC</th>
+              <th onclick="sortTable('orders')">Orders</th>
+              <th onclick="sortTable('spend')">Spend</th>
+              <th onclick="sortTable('sales')">Sales</th>
               <th onclick="sortTable('acos')">ACoS</th>
               <th onclick="sortTable('roas')">ROAS</th>
-              <th onclick="sortTable('campaignName')">Campaign &amp; Ad Group</th>
+              <th>Campaign Name</th>
             </tr>
           </thead>
-          <tbody id="targetsTbody">
-            <!-- Dynamically Rendered -->
-          </tbody>
-        </table></div>
+          <tbody id="tbody-targets"></tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- VIEW 4: CUSTOMER SEARCH TERMS TABLE -->
-    <div id="view-searchterms" class="tab-view" style="display: none;">
+    <!-- VIEW 4: SEARCH TERMS TAB -->
+    <div class="tab-view" id="view-searchterms" style="display: none;">
       <div class="table-container">
-        <div class="table-responsive"><table id="searchTermsTable">
+        <table id="table-searchterms">
           <thead>
             <tr>
-              <th onclick="sortTable('searchTerm')">Customer Search Term</th>
-              <th onclick="sortTable('matchedTarget')">Triggering Target</th>
-              <th onclick="sortTable('targetMatchType')">Target Match</th>
-              <th onclick="sortTable('targetBid')">Target Bid (₹)</th>
-              <th onclick="sortTable('cpc')">Realized CPC (₹)</th>
-              <th onclick="sortTable('bidCpcSpread')">Bid Spread</th>
-              <th onclick="sortTable('orders')">Orders (Vol)</th>
-              <th onclick="sortTable('sales')">Sales (₹)</th>
-              <th onclick="sortTable('clicks')">Clicks</th>
-              <th onclick="sortTable('impressions')">Impressions</th>
-              <th onclick="sortTable('volumeTier')">Volume Tier</th>
-              <th onclick="sortTable('ctr')">CTR</th>
-              <th onclick="sortTable('cvr')">CVR</th>
-              <th onclick="sortTable('spend')">Spend (₹)</th>
-              <th onclick="sortTable('acos')">ACoS</th>
-              <th onclick="sortTable('roas')">ROAS</th>
-              <th onclick="sortTable('campaignName')">Campaign Name</th>
+              <th>Customer Search Term</th>
+              <th>Targeting Value</th>
+              <th>Match Type</th>
+              <th>Orders</th>
+              <th>Spend</th>
+              <th>Sales</th>
+              <th>ROAS</th>
+              <th>Action</th>
             </tr>
           </thead>
-          <tbody id="searchTermsTbody">
-            <!-- Dynamically Rendered -->
-          </tbody>
-        </table></div>
+          <tbody id="tbody-searchterms"></tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- VIEW 5: STRATEGIC MATRIX -->
-    <div id="view-matrix" class="tab-view" style="display: none;">
-      <div class="controls-panel">
-        <h2 style="font-size: 18px; margin-bottom: 14px; color: var(--gold-light);">📊 Strategic Matrix: Competitor Conquest &amp; Scaling Action Plan</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px;">
-          <div style="background: var(--bg-base); padding: 18px; border-radius: 10px; border: 1px solid var(--border-accent);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <h3 style="color: #FBBF24; font-size: 15px;">👑 High Volume Striking Distance</h3>
-              <span class="badge badge-top5">RANKS #2 - #5</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-              Queries like <code>baskets for gift packing</code> (21 orders, Rank #4/9), <code>gift packing box for hamper</code> (5 orders, Rank #5), and <code>baby shower fruit packing basket</code> (Rank #2).<br><br>
-              <strong>Directive:</strong> Boost Top-of-Search placement modifier by +15% in <em>sp-basket-exact-sept</em> to jump from #4 directly into the #1 slot above <code>B0DMJKYVTF</code>.
-            </p>
+    <!-- VIEW 5: STRATEGIC MATRIX TAB -->
+    <div class="tab-view" id="view-matrix" style="display: none;">
+      <div class="strategy-grid">
+        
+        <div class="strategy-card accent-gold">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="color: #FBBF24; font-size: 14.5px;">High Volume Striking Distance</h3>
+            <span class="badge badge-top5">RANKS #2 &ndash; #5</span>
           </div>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6;">
+            Queries like <code>baskets for gift packing</code> (21 orders, Rank #4/9), <code>gift packing box for hamper</code> (5 orders, Rank #5), and <code>baby shower fruit packing basket</code> (Rank #2).<br><br>
+            <strong>Directive:</strong> Boost Top-of-Search placement modifier by +15% in <em>sp-basket-exact-sept</em> to jump from #4 directly into the #1 slot above <code>B0DMJKYVTF</code>.
+          </p>
+        </div>
 
-          <div style="background: var(--bg-base); padding: 18px; border-radius: 10px; border: 1px solid var(--border-green);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <h3 style="color: #34D399; font-size: 15px;">💎 Ultra-High ROAS Sniper Queries</h3>
-              <span class="badge badge-rank1">CONVERTED AT 200x - 3000x</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-              Queries like <code>gift basket set of 10</code> (3,132x ROAS), <code>wedding return gift basket</code> (228x ROAS), and <code>teej inspired gifting baskets square</code> (641x ROAS).<br><br>
-              <strong>Directive:</strong> Harvest into isolated Exact match with a dedicated ₹3.20 bid. Your organic rank is currently #5 to #10; targeted exact ads will claim position #1 instantly.
-            </p>
+        <div class="strategy-card accent-green">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="color: #34D399; font-size: 14.5px;">Ultra-High ROAS Sniper Queries</h3>
+            <span class="badge badge-rank1">CONVERTED 200x &ndash; 3,132x</span>
           </div>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6;">
+            Queries like <code>gift basket set of 10</code> (3,132x ROAS), <code>wedding return gift basket</code> (228x ROAS), and <code>teej inspired gifting baskets square</code> (641x ROAS).<br><br>
+            <strong>Directive:</strong> Harvest into isolated Exact match with a dedicated &#8377;3.20 bid. Your organic rank is currently #5 to #10; targeted exact ads will claim position #1 instantly.
+          </p>
+        </div>
 
-          <div style="background: var(--bg-base); padding: 18px; border-radius: 10px; border: 1px solid var(--border-blue);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <h3 style="color: #38BDF8; font-size: 15px;">🛡️ Competitor Conquest Strategy</h3>
-              <span class="badge badge-top10">COMPETITOR ASIN PAT</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-              The top competitor dominating over 40 gift basket queries is <code>B0BGQ9RW1T</code> (Satyam Kraft @ ₹269), followed by <code>B0HBCVSRTM</code> for fruit baskets.<br><br>
-              <strong>Directive:</strong> Target ASIN <code>B0BGQ9RW1T</code> and <code>B0HBCVSRTM</code> in your Product Attribute Targeting (PAT) campaign at ₹2.40 bid to show your premium basket set directly on their product pages.
-            </p>
+        <div class="strategy-card accent-blue">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="color: #38BDF8; font-size: 14.5px;">Competitor Conquest Strategy</h3>
+            <span class="badge badge-top10">COMPETITOR ASIN PAT</span>
           </div>
+          <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6;">
+            The top competitor dominating over 40 gift basket queries is <code>B0BGQ9RW1T</code> (Satyam Kraft @ &#8377;269), followed by <code>B0HBCVSRTM</code> for fruit baskets.<br><br>
+            <strong>Directive:</strong> Target ASIN <code>B0BGQ9RW1T</code> and <code>B0HBCVSRTM</code> in your Product Attribute Targeting (PAT) campaign at &#8377;2.40 bid to show your premium basket set directly on their product pages.
+          </p>
+        </div>
+
       </div>
+    </div>
 
   </div>
 
-  <!-- TOAST -->
-  <div id="toast">Copied to clipboard!</div>
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">Copied to clipboard!</div>
 
+  <!-- DATA & APP LOGIC -->
   <script>
     // DATA INGESTION
     const targetsData = [{"targetingValue":"fruit basket for gift","matchType":"EXACT","bid":3.69,"isDefaultBid":false,"cpc":3.42,"bidCpcSpread":-7.3,"orders":41,"sales":25099.68,"clicks":1085,"impressions":73841,"spend":3708.75,"acos":14.78,"roas":6.77,"ctr":1.47,"cvr":3.78,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Mega Volume","state":"PAUSED"},{"targetingValue":"gift hamper","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.95,"bidCpcSpread":-2.5,"orders":40,"sales":25661.3,"clicks":2596,"impressions":150345,"spend":5050.25,"acos":19.68,"roas":5.08,"ctr":1.73,"cvr":1.54,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"gifting basket","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.9,"bidCpcSpread":-5,"orders":31,"sales":24287.95,"clicks":1133,"impressions":77759,"spend":2150.28,"acos":8.85,"roas":11.3,"ctr":1.46,"cvr":2.74,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"basket for wedding","matchType":"BROAD","bid":3,"isDefaultBid":true,"cpc":2.71,"bidCpcSpread":-9.7,"orders":29,"sales":18090.47,"clicks":1126,"impressions":80752,"spend":3048.24,"acos":16.85,"roas":5.93,"ctr":1.39,"cvr":2.58,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"gift packing basket","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.99,"bidCpcSpread":-0.5,"orders":24,"sales":9787.64,"clicks":767,"impressions":36137,"spend":1526.93,"acos":15.6,"roas":6.41,"ctr":2.12,"cvr":3.13,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"baskets for gift packing","matchType":"EXACT","bid":3.76,"isDefaultBid":false,"cpc":3.66,"bidCpcSpread":-2.7,"orders":22,"sales":9796.18,"clicks":452,"impressions":40048,"spend":1653.16,"acos":16.88,"roas":5.93,"ctr":1.13,"cvr":4.87,"campaignName":"sp-basket-exact-sept","adGroupName":"exact from ai","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"hamper basket","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":2.09,"bidCpcSpread":4.5,"orders":20,"sales":9822.24,"clicks":724,"impressions":37898,"spend":1516.23,"acos":15.44,"roas":6.48,"ctr":1.91,"cvr":2.76,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"fruit basket for wedding","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":3.09,"bidCpcSpread":3,"orders":10,"sales":4424.77,"clicks":189,"impressions":11949,"spend":583.49,"acos":13.19,"roas":7.58,"ctr":1.58,"cvr":5.29,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Mega Volume","state":"ENABLED"},{"targetingValue":"fruit basket with net cover","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.98,"bidCpcSpread":-1,"orders":7,"sales":4957.22,"clicks":76,"impressions":5032,"spend":150.68,"acos":3.04,"roas":32.9,"ctr":1.51,"cvr":9.21,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"High Volume","state":"ENABLED"},{"targetingValue":"room hamper basket","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":3.47,"bidCpcSpread":15.7,"orders":6,"sales":2921.91,"clicks":65,"impressions":7942,"spend":225.68,"acos":7.72,"roas":12.95,"ctr":0.82,"cvr":9.23,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume","state":"ENABLED"},{"targetingValue":"fruit basket for wedding","matchType":"EXACT","bid":3.2,"isDefaultBid":false,"cpc":2.83,"bidCpcSpread":-11.6,"orders":5,"sales":2235.24,"clicks":71,"impressions":6109,"spend":201.16,"acos":9,"roas":11.11,"ctr":1.16,"cvr":7.04,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"High Volume","state":"ENABLED"},{"targetingValue":"fancy basket for gifting","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":4.12,"bidCpcSpread":37.3,"orders":4,"sales":3396.2,"clicks":75,"impressions":6148,"spend":309.21,"acos":9.1,"roas":10.98,"ctr":1.22,"cvr":5.33,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"High Volume","state":"ENABLED"},{"targetingValue":"hamper basket for gifting","matchType":"PHRASE","bid":1.5,"isDefaultBid":false,"cpc":1.9,"bidCpcSpread":26.7,"orders":2,"sales":1314.93,"clicks":16,"impressions":954,"spend":30.39,"acos":2.31,"roas":43.27,"ctr":1.68,"cvr":12.5,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Steady Scaler","state":"ENABLED"},{"targetingValue":"engagement basket","matchType":"BROAD","bid":2,"isDefaultBid":false,"cpc":1.89,"bidCpcSpread":-5.5,"orders":1,"sales":692.38,"clicks":67,"impressions":4144,"spend":126.32,"acos":18.24,"roas":5.48,"ctr":1.62,"cvr":1.49,"campaignName":"new broad basket","adGroupName":"basket broad","volumeTier":"Sniper / Niche","state":"ENABLED"},{"targetingValue":"fruit basket for gift","matchType":"EXACT","bid":2.75,"isDefaultBid":false,"cpc":2.52,"bidCpcSpread":-8.4,"orders":1,"sales":692.38,"clicks":47,"impressions":2767,"spend":118.22,"acos":17.07,"roas":5.86,"ctr":1.7,"cvr":2.13,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"Sniper / Niche","state":"ENABLED"},{"targetingValue":"fancy baskets for gifts","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":4.16,"bidCpcSpread":38.7,"orders":1,"sales":427.62,"clicks":15,"impressions":285,"spend":62.37,"acos":14.59,"roas":6.86,"ctr":5.26,"cvr":6.67,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche","state":"ENABLED"},{"targetingValue":"hamper basket for gifting","matchType":"EXACT","bid":3.2,"isDefaultBid":false,"cpc":3.21,"bidCpcSpread":0.3,"orders":1,"sales":427.62,"clicks":21,"impressions":1940,"spend":67.44,"acos":15.77,"roas":6.34,"ctr":1.08,"cvr":4.76,"campaignName":"SP | KT Phrase | Basket | 12082026 d02c0e","adGroupName":"Generic - Craft Supplies","volumeTier":"Sniper / Niche","state":"ENABLED"},{"targetingValue":"gift packing basket","matchType":"PHRASE","bid":3,"isDefaultBid":false,"cpc":3.14,"bidCpcSpread":4.7,"orders":1,"sales":426.67,"clicks":22,"impressions":1740,"spend":69.1,"acos":16.2,"roas":6.17,"ctr":1.26,"cvr":4.55,"campaignName":"basket Phrase campaign","adGroupName":"basket phrase","volumeTier":"Sniper / Niche","state":"ENABLED"}];
@@ -1158,20 +854,32 @@ body {
     let currentTab = 'competitors';
     let currentSortField = 'orders';
     let currentSortDir = 'desc';
-    let activeFilters = {
+
+    const activeFilters = {
       search: '',
       rankFilter: 'ALL',
-      occasion: 'ALL',
-      matchType: 'ALL'
+      occasion: 'ALL'
     };
+
+    function updateISTClock() {
+      const now = new Date();
+      const options = { timeZone: 'Asia/Kolkata', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const istStr = now.toLocaleTimeString('en-GB', options) + ' IST';
+      const el = document.getElementById('istClock');
+      if (el) el.textContent = istStr;
+    }
+    setInterval(updateISTClock, 1000);
+    updateISTClock();
 
     function switchTab(tab) {
       currentTab = tab;
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-view').forEach(v => v.style.display = 'none');
 
-      document.getElementById('tab-btn-' + tab).classList.add('active');
-      document.getElementById('view-' + tab).style.display = 'block';
+      const btn = document.getElementById('tab-btn-' + tab);
+      const view = document.getElementById('view-' + tab);
+      if (btn) btn.classList.add('active');
+      if (view) view.style.display = 'block';
 
       const controls = document.getElementById('controlsPanel');
       if (tab === 'rank1' || tab === 'matrix') {
@@ -1186,16 +894,6 @@ body {
       activeFilters[type] = value;
       el.parentElement.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
       el.classList.add('active');
-      renderActiveTable();
-    }
-
-    function setSort(field, dir, el) {
-      currentSortField = field;
-      currentSortDir = dir;
-      if (el) {
-        el.parentElement.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-        el.classList.add('active');
-      }
       renderActiveTable();
     }
 
@@ -1215,8 +913,8 @@ body {
     }
 
     function fmtINR(val) {
-      if (val === null || val === undefined || isNaN(val)) return '₹0.00';
-      return '₹' + Number(val).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      if (val === null || val === undefined || isNaN(val)) return '&#8377;0.00';
+      return '&#8377;' + Number(val).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
     function fmtNum(val) {
       if (val === null || val === undefined || isNaN(val)) return '0';
@@ -1233,9 +931,9 @@ body {
     }
 
     function getRankBadge(rank) {
-      if (rank === 1) return '<span class="badge badge-rank1">👑 RANK #1</span>';
-      if (typeof rank === 'number' && rank <= 5) return '<span class="badge badge-top5">🔥 RANK #' + rank + '</span>';
-      if (typeof rank === 'number' && rank <= 10) return '<span class="badge badge-top10">🎯 RANK #' + rank + '</span>';
+      if (rank === 1) return '<span class="badge badge-rank1">RANK #1</span>';
+      if (typeof rank === 'number' && rank <= 5) return '<span class="badge badge-top5">RANK #' + rank + '</span>';
+      if (typeof rank === 'number' && rank <= 10) return '<span class="badge badge-top10">RANK #' + rank + '</span>';
       if (typeof rank === 'number') return '<span class="badge badge-page2">RANK #' + rank + '</span>';
       return '<span class="badge badge-page2">' + rank + '</span>';
     }
@@ -1286,120 +984,181 @@ body {
           valB = typeof b.ourRank === 'number' ? b.ourRank : 999;
           return currentSortDir === 'asc' ? valA - valB : valB - valA;
         }
-        if (currentSortField === 'competitorPrice') {
-          valA = parseFloat((a.topCompetitor?.price || '0').replace(/[^0-9.]/g, '')) || 0;
-          valB = parseFloat((b.topCompetitor?.price || '0').replace(/[^0-9.]/g, '')) || 0;
-          return currentSortDir === 'asc' ? valA - valB : valB - valA;
-        }
+
+        if (valA === undefined) valA = 0;
+        if (valB === undefined) valB = 0;
 
         if (typeof valA === 'string') {
           return currentSortDir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
         }
-        valA = Number(valA) || 0;
-        valB = Number(valB) || 0;
         return currentSortDir === 'asc' ? valA - valB : valB - valA;
       });
 
-      const tbody = document.getElementById('competitorsTbody');
-      if (sorted.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding: 40px; color: var(--text-dim);">No queries match the active filter criteria.</td></tr>';
-        return;
-      }
+      const tbody = document.getElementById('tbody-competitors');
+      tbody.innerHTML = '';
 
-      tbody.innerHTML = sorted.map(d => {
-        const comp = d.topCompetitor || {};
-        const asinLink = comp.asin 
-          ? '<a href="https://www.amazon.in/dp/' + comp.asin + '" target="_blank" class="asin-link">' + comp.asin + ' ↗</a>' 
-          : 'N/A';
+      sorted.forEach(row => {
+        const tr = document.createElement('tr');
+        const comp = row.topCompetitor || {};
+        const asinLink = comp.asin ? '<a href="https://www.amazon.in/dp/' + comp.asin + '" target="_blank" style="color:var(--blue-accent); font-family:var(--font-mono); text-decoration:none;">' + comp.asin + ' &nearr;</a>' : '-';
 
-        let actionHtml = '';
-        if (typeof d.ourRank === 'number' && d.ourRank <= 5) {
-          actionHtml = '<span style="color:#34D399; font-weight:600; font-size:12px;">⚡ Striking Distance! Nudge bid +₹0.20 to win #1</span>';
-        } else if (typeof d.ourRank === 'number' && d.ourRank <= 10) {
-          actionHtml = '<span style="color:#7DD3FC; font-size:12px;">🎯 Top 10 Page 1. Target exact match to overtake</span>';
-        } else {
-          actionHtml = '<span style="color:var(--text-muted); font-size:12px;">Conquest via PAT on ' + (comp.asin || 'competitor') + '</span>';
-        }
+        tr.innerHTML = 
+          '<td><strong>' + row.query + '</strong></td>' +
+          '<td>' + getRankBadge(row.ourRank) + '</td>' +
+          '<td>' + asinLink + '</td>' +
+          '<td style="max-width:320px; font-size:11.5px; color:var(--text-muted);">' + (comp.title || '-') + '</td>' +
+          '<td class="mono-cell" style="font-weight:700; color:' + (row.orders > 0 ? 'var(--green-accent)' : 'inherit') + ';">' + fmtNum(row.orders) + '</td>' +
+          '<td class="mono-cell">' + fmtINR(row.sales) + '</td>' +
+          '<td><button class="btn" style="padding:3px 8px; font-size:11px;" onclick="copyText(\'' + row.query.replace(/'/g, "\\'") + '\')">Copy</button></td>';
 
-        return '<tr>' +
-          '<td><div class="cell-term"><span>' + d.query + '</span><button class="copy-btn" onclick="copyText(\'' + d.query.replace(/'/g, "\\'") + '\')" title="Copy query">📋</button></div></td>' +
-          '<td>' + getRankBadge(d.ourRank) + (typeof d.ourSponsoredRank === 'number' ? ' <span style="font-size:10px; color:var(--text-dim);">(Sp #' + d.ourSponsoredRank + ')</span>' : '') + '</td>' +
-          '<td><div style="font-size:12px; font-weight:600; color:#FFF;">' + asinLink + '</div><div style="font-size:11px; color:var(--text-muted); max-width:280px; white-space:normal; line-height:1.3; margin-top:2px;" title="' + (comp.title || '') + '">' + (comp.title || 'Product details unavailable').slice(0, 55) + '...</div></td>' +
-          '<td class="cell-mono cell-sales">' + (comp.price || 'N/A') + '</td>' +
-          '<td><div style="font-size:12px; color:#FDE68A;">' + (comp.rating || '-') + '</div><div style="font-size:10px; color:var(--text-dim);">' + (comp.reviews || '0') + ' reviews</div></td>' +
-          '<td class="cell-mono cell-orders" style="color:#34D399;">' + fmtNum(d.orders) + '</td>' +
-          '<td class="cell-mono cell-sales">' + fmtINR(d.sales) + '</td>' +
-          '<td class="cell-mono cell-cpc">' + fmtINR(d.cpc) + '</td>' +
-          '<td><span class="cell-roas">' + d.roas.toFixed(2) + 'x</span></td>' +
-          '<td>' + actionHtml + '</td>' +
-        '</tr>';
-      }).join('');
+        tbody.appendChild(tr);
+      });
     }
 
     function renderTargetsTable() {
-      const tbody = document.getElementById('targetsTbody');
-      tbody.innerHTML = targetsData.map(d => {
-        return '<tr>' +
-          '<td><div class="cell-term"><span>' + d.targetingValue + '</span><button class="copy-btn" onclick="copyText(\'' + d.targetingValue.replace(/'/g, "\\'") + '\')">📋</button></div></td>' +
-          '<td><span class="badge badge-' + d.matchType.toLowerCase() + '">' + d.matchType + '</span></td>' +
-          '<td class="cell-mono cell-bid">' + (d.bid ? fmtINR(d.bid) : 'N/A') + '</td>' +
-          '<td class="cell-mono cell-cpc">' + fmtINR(d.cpc) + '</td>' +
-          '<td class="cell-mono">' + (d.bidCpcSpread <= 0 ? '<span class="spread-green">' + d.bidCpcSpread + '% under</span>' : '<span class="spread-orange">+' + d.bidCpcSpread + '% over</span>') + '</td>' +
-          '<td class="cell-mono cell-orders" style="color:#34D399;">' + fmtNum(d.orders) + '</td>' +
-          '<td class="cell-mono cell-sales">' + fmtINR(d.sales) + '</td>' +
-          '<td class="cell-mono">' + fmtNum(d.clicks) + '</td>' +
-          '<td class="cell-mono" style="color:var(--text-muted);">' + fmtNum(d.impressions) + '</td>' +
-          '<td><span class="badge badge-top5">' + d.volumeTier + '</span></td>' +
-          '<td class="cell-mono">' + d.ctr.toFixed(2) + '%</td>' +
-          '<td class="cell-mono">' + d.cvr.toFixed(2) + '%</td>' +
-          '<td class="cell-mono">' + fmtINR(d.spend) + '</td>' +
-          '<td class="cell-mono">' + d.acos.toFixed(2) + '%</td>' +
-          '<td><span class="cell-roas">' + d.roas.toFixed(2) + 'x</span></td>' +
-          '<td><div style="font-size:11px; color:var(--text-muted);">' + d.campaignName + '</div></td>' +
-        '</tr>';
-      }).join('');
+      const s = activeFilters.search;
+      const filtered = targetsData.filter(d => {
+        if (!s) return true;
+        const val = (d.targetingValue || '').toLowerCase();
+        const camp = (d.campaignName || '').toLowerCase();
+        const m = (d.matchType || '').toLowerCase();
+        return val.includes(s) || camp.includes(s) || m.includes(s);
+      });
+
+      const sorted = [...filtered].sort((a, b) => {
+        let valA = a[currentSortField] ?? 0;
+        let valB = b[currentSortField] ?? 0;
+        if (typeof valA === 'string') {
+          return currentSortDir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        return currentSortDir === 'asc' ? valA - valB : valB - valA;
+      });
+
+      const tbody = document.getElementById('tbody-targets');
+      tbody.innerHTML = '';
+
+      sorted.forEach(row => {
+        const tr = document.createElement('tr');
+        const badgeClass = row.matchType === 'EXACT' ? 'badge-exact' : 'badge-broad';
+
+        tr.innerHTML = 
+          '<td><strong>' + row.targetingValue + '</strong></td>' +
+          '<td><span class="badge ' + badgeClass + '">' + row.matchType + '</span></td>' +
+          '<td class="mono-cell">' + fmtINR(row.bid) + '</td>' +
+          '<td class="mono-cell">' + fmtINR(row.cpc) + '</td>' +
+          '<td class="mono-cell" style="font-weight:700; color:' + (row.orders > 0 ? 'var(--green-accent)' : 'inherit') + ';">' + fmtNum(row.orders) + '</td>' +
+          '<td class="mono-cell">' + fmtINR(row.spend) + '</td>' +
+          '<td class="mono-cell" style="font-weight:700;">' + fmtINR(row.sales) + '</td>' +
+          '<td class="mono-cell" style="color:var(--gold-primary);">' + (row.acos ? row.acos.toFixed(1) + '%' : '-') + '</td>' +
+          '<td class="mono-cell" style="color:var(--green-accent); font-weight:700;">' + (row.roas ? row.roas.toFixed(2) + 'x' : '-') + '</td>' +
+          '<td style="font-size:11.5px; color:var(--text-muted);">' + row.campaignName + '</td>';
+
+        tbody.appendChild(tr);
+      });
     }
 
     function renderSearchTermsTable() {
-      const tbody = document.getElementById('searchTermsTbody');
-      tbody.innerHTML = searchTermsData.map(d => {
-        return '<tr>' +
-          '<td><div class="cell-term"><span>' + d.searchTerm + '</span><button class="copy-btn" onclick="copyText(\'' + d.searchTerm.replace(/'/g, "\\'") + '\')">📋</button></div></td>' +
-          '<td><div style="font-size:12px; color:#E2E8F0;">' + (d.matchedTarget || '-') + '</div></td>' +
-          '<td><span class="badge badge-' + d.targetMatchType.toLowerCase() + '">' + d.targetMatchType + '</span></td>' +
-          '<td class="cell-mono cell-bid">' + (d.targetBid ? fmtINR(d.targetBid) : 'N/A') + '</td>' +
-          '<td class="cell-mono cell-cpc">' + fmtINR(d.cpc) + '</td>' +
-          '<td class="cell-mono">' + (d.bidCpcSpread <= 0 ? '<span class="spread-green">' + d.bidCpcSpread + '%</span>' : '<span class="spread-orange">+' + d.bidCpcSpread + '%</span>') + '</td>' +
-          '<td class="cell-mono cell-orders" style="color:#34D399;">' + fmtNum(d.orders) + '</td>' +
-          '<td class="cell-mono cell-sales">' + fmtINR(d.sales) + '</td>' +
-          '<td class="cell-mono">' + fmtNum(d.clicks) + '</td>' +
-          '<td class="cell-mono" style="color:var(--text-muted);">' + fmtNum(d.impressions) + '</td>' +
-          '<td><span class="badge badge-top5">' + d.volumeTier + '</span></td>' +
-          '<td class="cell-mono">' + d.ctr.toFixed(2) + '%</td>' +
-          '<td class="cell-mono">' + d.cvr.toFixed(2) + '%</td>' +
-          '<td class="cell-mono">' + fmtINR(d.spend) + '</td>' +
-          '<td class="cell-mono">' + d.acos.toFixed(2) + '%</td>' +
-          '<td><span class="cell-roas">' + d.roas.toFixed(2) + 'x</span></td>' +
-          '<td><div style="font-size:11px; color:var(--text-muted);">' + d.campaignName + '</div></td>' +
-        '</tr>';
-      }).join('');
+      const s = activeFilters.search;
+      const filtered = searchTermsData.filter(d => {
+        if (!s) return true;
+        const term = (d.customerSearchTerm || '').toLowerCase();
+        const tgt = (d.targetingValue || '').toLowerCase();
+        return term.includes(s) || tgt.includes(s);
+      });
+
+      const tbody = document.getElementById('tbody-searchterms');
+      tbody.innerHTML = '';
+
+      filtered.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = 
+          '<td><strong>' + row.customerSearchTerm + '</strong></td>' +
+          '<td><code>' + row.targetingValue + '</code></td>' +
+          '<td><span class="badge badge-broad">' + row.matchType + '</span></td>' +
+          '<td class="mono-cell" style="font-weight:700; color:var(--green-accent);">' + fmtNum(row.orders) + '</td>' +
+          '<td class="mono-cell">' + fmtINR(row.spend) + '</td>' +
+          '<td class="mono-cell">' + fmtINR(row.sales) + '</td>' +
+          '<td class="mono-cell" style="color:var(--green-accent); font-weight:700;">' + (row.roas ? row.roas.toFixed(2) + 'x' : '-') + '</td>' +
+          '<td><button class="btn" style="padding:3px 8px; font-size:11px;" onclick="copyText(\'' + row.customerSearchTerm.replace(/'/g, "\\'") + '\')">Copy</button></td>';
+
+        tbody.appendChild(tr);
+      });
     }
 
-    function exportCsv() {
-      const link = document.createElement("a");
-      link.setAttribute("href", "output/PPC_ROAS_5_PLUS_MINED_DATA/TOP_COMPETITOR_PRODUCTS_FOR_QUERIES.csv");
-      link.setAttribute("download", "TOP_COMPETITOR_PRODUCTS_FOR_QUERIES.csv");
+    function renderRank1Table() {
+      const tbody = document.getElementById('tbody-rank1');
+      tbody.innerHTML = '';
+
+      rankingFirstData.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = 
+          '<td><strong>' + row.query + '</strong></td>' +
+          '<td><span class="badge badge-rank1">ORGANIC RANK #1</span></td>' +
+          '<td class="mono-cell" style="font-weight:700; color:var(--green-accent);">' + fmtNum(row.orders) + '</td>' +
+          '<td class="mono-cell">' + fmtINR(row.sales) + '</td>' +
+          '<td class="mono-cell" style="color:var(--green-accent); font-weight:700;">' + (row.roas ? row.roas.toFixed(2) + 'x' : 'Organic') + '</td>' +
+          '<td style="font-size:12px; color:var(--text-muted);">' + (row.directive || 'Defend Top of Search organically & maintain stock availability.') + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 1-Click Amazon Advertising Bulk TSV Exporter
+    function exportAmazonBulkTSV() {
+      const headers = [
+        'Product', 'Entity', 'Operation', 'Campaign ID', 'Ad Group', 'Keyword Text', 'Match Type', 'Bid', 'State'
+      ];
+      
+      const rows = targetsData.map((d, idx) => {
+        return [
+          'Sponsored Products',
+          'Keyword',
+          'Create',
+          d.campaignName || 'sp-basket-exact-sept',
+          d.adGroupName || 'basket-targets',
+          d.targetingValue || '',
+          d.matchType || 'EXACT',
+          d.bid ? d.bid.toFixed(2) : '3.50',
+          'enabled'
+        ].join('\t');
+      });
+
+      const tsvContent = [headers.join('\t'), ...rows].join('\n');
+      const blob = new Blob([tsvContent], { type: 'text/tab-separated-values;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'TAARMI_ROAS_5_PLUS_BULK_UPLOAD.tsv';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      const toast = document.getElementById('toast');
+      toast.textContent = 'Exported ' + targetsData.length + ' targets to TAARMI_ROAS_5_PLUS_BULK_UPLOAD.tsv';
+      toast.style.display = 'block';
+      setTimeout(() => toast.style.display = 'none', 3000);
     }
 
-    function copyTopVolumeTerms() {
-      const topTerms = otherQueriesData.filter(d => d.orders >= 2).map(d => d.query);
-      copyText(topTerms.join('\n'));
-    }
+    // Keyboard Shortcuts Navigation
+    document.addEventListener('keydown', (e) => {
+      const searchInput = document.getElementById('searchInput');
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput?.focus();
+      }
+      if (e.key === 'Escape' && document.activeElement === searchInput) {
+        searchInput.value = '';
+        applyFilters();
+        searchInput.blur();
+      }
+      if (['1', '2', '3', '4', '5'].includes(e.key) && document.activeElement !== searchInput) {
+        const tabsMap = { '1': 'competitors', '2': 'rank1', '3': 'targets', '4': 'searchterms', '5': 'matrix' };
+        switchTab(tabsMap[e.key]);
+      }
+    });
 
-    // Initial render
+    // Initial render on boot
+    renderRank1Table();
     renderActiveTable();
   </script>
 </body>
