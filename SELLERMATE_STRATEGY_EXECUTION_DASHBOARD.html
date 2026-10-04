@@ -871,8 +871,67 @@ body {
 
 /* === END INJECTED MOBILE-FIRST RESPONSIVE ENGINE === */
 </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style id="anti-slop-obsidian-tokens">
+  :root {
+    --bg-base: #070A12;
+    --bg-surface: #0B1120;
+    --bg-card: #0F172A;
+    --bg-card-hover: #1E293B;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(245, 158, 11, 0.35);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --gold-primary: #F59E0B;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  body {
+    font-family: var(--font-sans) !important;
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .font-mono, td.mono {
+    font-family: var(--font-mono) !important;
+  }
+</style>
+
 </head>
 <body>
+
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">T</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="index.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>OPERATIONAL INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">SellerMate Strategy Execution Dashboard</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          LIVE TELEMETRY
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="index.html" style="padding: 5px 12px; background: #1E293B; hover:background: #334155; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" style="padding: 5px 12px; background: #F59E0B; border-radius: 6px; color: #000; font-size: 12px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">Seller Central &rarr;</a>
+      </div>
+    </div>
+  </header>
+  
 
   <!-- HEADER -->
   <header>
@@ -934,11 +993,11 @@ body {
     <!-- TAB NAVIGATION -->
     <div class="tab-bar">
       <button class="tab-btn active" onclick="switchTab('step1')">
-        🛑 Step 1: Bleeder Negation
+        Step 1: Bleeder Negation
         <span class="tab-badge tab-badge-red">-₹2,110 Bleed</span>
       </button>
       <button class="tab-btn" onclick="switchTab('step2')">
-        🚀 Step 2: Winner Graduation
+        Step 2: Winner Graduation
         <span class="tab-badge tab-badge-green">6 Super Winners</span>
       </button>
       <button class="tab-btn" onclick="switchTab('step3')">
@@ -946,15 +1005,15 @@ body {
         <span class="tab-badge tab-badge-gold">₹29.2k Revenue</span>
       </button>
       <button class="tab-btn" onclick="switchTab('step4')">
-        🎯 Step 4: Competitor PAT
+        Step 4: Competitor PAT
         <span class="tab-badge tab-badge-purple">20 Pure Baskets</span>
       </button>
       <button class="tab-btn" onclick="switchTab('step5')">
-        ⚙️ Step 5: Dayparting & Rules
+        ️ Step 5: Dayparting & Rules
         <span class="tab-badge tab-badge-gold">24/7 Engine</span>
       </button>
       <button class="tab-btn" onclick="switchTab('step6')">
-        🔐 Double-Approval Sandbox
+        Double-Approval Sandbox
         <span class="tab-badge tab-badge-red">Locked</span>
       </button>
     </div>
@@ -964,13 +1023,13 @@ body {
       <div class="card">
         <div class="card-header">
           <div class="card-title-group">
-            <h3>🛑 Step 1: Negative Exact Bleeder Isolation</h3>
+            <h3>Step 1: Negative Exact Bleeder Isolation</h3>
             <p>Immediate savings of <strong>₹2,110.15/month</strong> by cutting queries with 0 orders and non-converting box traffic.</p>
           </div>
           <div class="card-actions">
-            <button class="btn btn-danger" onclick="copyNegativeKeywords()">📋 Copy 6 Negative Exact Terms</button>
+            <button class="btn btn-danger" onclick="copyNegativeKeywords()">Copy 6 Negative Exact Terms</button>
             <button class="btn btn-secondary" onclick="downloadNegativesCsv()">⬇️ Download Negatives CSV</button>
-            <button class="btn btn-secondary" onclick="openSafetyModal('add_negative_keywords', '6 Negative Exact search terms staged')">🔒 Stage for Double Approval</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('add_negative_keywords', '6 Negative Exact search terms staged')">Stage for Double Approval</button>
           </div>
 
         <div class="table-wrap">
@@ -1058,11 +1117,11 @@ gift basket hamper wedding</div>
       <div class="card">
         <div class="card-header">
           <div class="card-title-group">
-            <h3>⚠️ Non-Basket Product Bleeders to Review</h3>
+            <h3>️ Non-Basket Product Bleeders to Review</h3>
             <p>Non-basket products in your active campaigns burning budget without conversions.</p>
           </div>
           <div class="card-actions">
-            <button class="btn btn-secondary" onclick="copyBleederAsins()">📋 Copy Bleeder ASINs</button>
+            <button class="btn btn-secondary" onclick="copyBleederAsins()">Copy Bleeder ASINs</button>
           </div>
 
         <div class="grid-4">
@@ -1121,14 +1180,14 @@ gift basket hamper wedding</div>
       <div class="card">
         <div class="card-header">
           <div class="card-title-group">
-            <h3>🚀 Step 2: Super-Winner Exact Match Graduation</h3>
+            <h3>Step 2: Super-Winner Exact Match Graduation</h3>
             <p>These 6 keywords generated <strong>₹27,941.67 in sales (46 orders) at an incredible 8.11x ROAS</strong>. Promote to Exact Match with dedicated budgets.</p>
           </div>
           <div class="card-actions">
-            <button class="btn btn-green" onclick="copyExactWinners()">📋 Copy Exact Keywords & Bids</button>
-            <button class="btn btn-secondary" onclick="copyExactPureTerms()">📋 Copy Pure Keywords (Seller Central)</button>
+            <button class="btn btn-green" onclick="copyExactWinners()">Copy Exact Keywords & Bids</button>
+            <button class="btn btn-secondary" onclick="copyExactPureTerms()">Copy Pure Keywords (Seller Central)</button>
             <button class="btn btn-secondary" onclick="downloadWinnersCsv()">⬇️ Download Winners CSV</button>
-            <button class="btn btn-secondary" onclick="openSafetyModal('add_targets', '6 Exact Match targets staged')">🔒 Stage for Double Approval</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('add_targets', '6 Exact Match targets staged')">Stage for Double Approval</button>
           </div>
 
         <div class="table-wrap">
@@ -1229,9 +1288,9 @@ hamper basket for gifting</div>
             <p>These 4 listings generated <strong>₹29,221.84 in sales with ₹0 ad spend</strong>. Activating low-bid PPC (₹1.90–₹2.30) will scale sales without hurting margins.</p>
           </div>
           <div class="card-actions">
-            <button class="btn btn-gold" onclick="copyOrganicAsins()">📋 Copy 4 Champion ASINs</button>
+            <button class="btn btn-gold" onclick="copyOrganicAsins()">Copy 4 Champion ASINs</button>
             <button class="btn btn-secondary" onclick="downloadOrganicCsv()">⬇️ Download Organic Stars CSV</button>
-            <button class="btn btn-secondary" onclick="openSafetyModal('create_campaign', 'Low-Bid SP campaign for 4 organic stars staged')">🔒 Stage for Double Approval</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('create_campaign', 'Low-Bid SP campaign for 4 organic stars staged')">Stage for Double Approval</button>
           </div>
 
         <div class="grid-2">
@@ -1317,14 +1376,14 @@ B0DHV4WL9L</div>
       <div class="card">
         <div class="card-header">
           <div class="card-title-group">
-            <h3>🎯 Step 4: Competitor PAT Conquesting (Baskets Only)</h3>
+            <h3>Step 4: Competitor PAT Conquesting (Baskets Only)</h3>
             <p>Target the 20 live, high-priced physical basket competitors on Amazon India to conquest market share directly on their product pages.</p>
           </div>
           <div class="card-actions">
-            <button class="btn btn-gold" onclick="copyPatCompetitors()">📋 Copy 20 Competitor ASINs</button>
-            <button class="btn btn-green" onclick="copyDefensiveAsins()">🛡️ Copy 5 Taarmi Defensive ASINs</button>
+            <button class="btn btn-gold" onclick="copyPatCompetitors()">Copy 20 Competitor ASINs</button>
+            <button class="btn btn-green" onclick="copyDefensiveAsins()">️ Copy 5 Taarmi Defensive ASINs</button>
             <button class="btn btn-secondary" onclick="downloadPatCsv()">⬇️ Download PAT CSV</button>
-            <button class="btn btn-secondary" onclick="openSafetyModal('add_targets', '20 Competitor ASIN PAT targets staged')">🔒 Stage for Double Approval</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('add_targets', '20 Competitor ASIN PAT targets staged')">Stage for Double Approval</button>
           </div>
 
         <div class="table-wrap">
@@ -1437,12 +1496,12 @@ B0HJ9TNMTX</div>
       <div class="card">
         <div class="card-header">
           <div class="card-title-group">
-            <h3>⚙️ Step 5: 24/7 Dayparting & Automated Rules Engine</h3>
+            <h3>️ Step 5: 24/7 Dayparting & Automated Rules Engine</h3>
             <p>Current Status: <strong>0 active automations and 0 dayparting schedules</strong> in SellerMate. Here is the blueprint to automate bid boosts and bleeder cuts.</p>
           </div>
           <div class="card-actions">
-            <button class="btn btn-secondary" onclick="copyAutomationRules()">📋 Copy Rules Blueprint</button>
-            <button class="btn btn-secondary" onclick="openSafetyModal('create_automation', '24/7 Automation Rules Staged')">🔒 Stage for Double Approval</button>
+            <button class="btn btn-secondary" onclick="copyAutomationRules()">Copy Rules Blueprint</button>
+            <button class="btn btn-secondary" onclick="openSafetyModal('create_automation', '24/7 Automation Rules Staged')">Stage for Double Approval</button>
           </div>
 
         <div class="grid-2">
@@ -1507,7 +1566,7 @@ B0HJ9TNMTX</div>
       <div class="card">
         <div class="card-header">
           <div class="card-title-group">
-            <h3>🔐 Double-Approval Safety Sandbox & Audit Trail</h3>
+            <h3>Double-Approval Safety Sandbox & Audit Trail</h3>
             <p>Verification protocol guaranteeing zero unauthorized mutations across SellerMate or Amazon Seller Central.</p>
           </div>
           <div class="card-actions">
@@ -1564,7 +1623,44 @@ B0HJ9TNMTX</div>
       </div>
   </div>
 
-  <script>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
     // Tab switching
     function switchTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -1762,5 +1858,24 @@ DAYPARTING: 11AM-4PM (+15%), 7PM-11:30PM (+25%), 1AM-7AM (-35%)`;
       showToast('Staged securely! Zero live mutations submitted.');
     }
   </script>
+
+<script>
+(function() {
+  function updateMasterClock() {
+    const el = document.getElementById('master-os-ist-clock');
+    if (!el) return;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    const hours = String(ist.getHours()).padStart(2, '0');
+    const mins = String(ist.getMinutes()).padStart(2, '0');
+    const secs = String(ist.getSeconds()).padStart(2, '0');
+    el.textContent = 'IST ' + hours + ':' + mins + ':' + secs;
+  }
+  updateMasterClock();
+  setInterval(updateMasterClock, 1000);
+})();
+</script>
+
 </body>
 </html>
