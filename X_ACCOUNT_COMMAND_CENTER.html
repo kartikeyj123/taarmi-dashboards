@@ -59,8 +59,67 @@
     ::-webkit-scrollbar-track { background: #000000; }
     ::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
   </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style id="anti-slop-obsidian-tokens">
+  :root {
+    --bg-base: #070A12;
+    --bg-surface: #0B1120;
+    --bg-card: #0F172A;
+    --bg-card-hover: #1E293B;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(245, 158, 11, 0.35);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --gold-primary: #F59E0B;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  body {
+    font-family: var(--font-sans) !important;
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .font-mono, td.mono {
+    font-family: var(--font-mono) !important;
+  }
+</style>
+
 </head>
 <body class="selection:bg-sky-500 selection:text-white">
+
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">T</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="index.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>OPERATIONAL INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">X (Twitter) Growth Command Center</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          LIVE TELEMETRY
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="index.html" style="padding: 5px 12px; background: #1E293B; hover:background: #334155; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" style="padding: 5px 12px; background: #F59E0B; border-radius: 6px; color: #000; font-size: 12px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">Seller Central &rarr;</a>
+      </div>
+    </div>
+  </header>
+  
 
   <!-- Header -->
   <header class="sticky top-0 z-40 border-b border-zinc-800 bg-black/80 backdrop-blur-xl">
@@ -74,7 +133,7 @@
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-base sm:text-lg text-white tracking-tight">VALKYRIE 𝕏 GROWTH BOT</h1>
+            <h1 class="font-extrabold text-base sm:text-lg text-white tracking-tight">VALKYRIE �GROWTH BOT</h1>
             <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-sky-500/20 text-sky-400 border border-sky-500/30 rounded-full">AI Social Manager</span>
           </div>
           <p class="text-xs text-zinc-400 flex items-center gap-1.5">
@@ -111,7 +170,7 @@
             </span>
           </div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Personal 𝕏 Workspace: <span id="handleDisplay" class="text-sky-400">@kartikey</span>
+            Personal �Workspace: <span id="handleDisplay" class="text-sky-400">@kartikey</span>
           </h2>
           <p class="text-xs sm:text-sm text-zinc-400 max-w-2xl leading-relaxed">
             Curious 20-year-old living in Bangalore, building around business, AI, and web development. Witty, conversational, friendly, and smart observations on figuring things out in public.
@@ -125,7 +184,7 @@
               ⏳ Next Run: <strong id="nextDropText" class="text-purple-300">08:00 PM IST</strong>
             </span>
             <button onclick="triggerSchedulerNow()" class="px-3 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-black text-xs font-bold transition flex items-center gap-1 shadow-md shadow-sky-500/20">
-              ⚡ Trigger Post Now
+              Trigger Post Now
             </button>
           </div>
         </div>
@@ -187,7 +246,7 @@
       <div class="x-panel p-6 max-w-3xl mx-auto space-y-6">
         <div>
           <h3 class="text-lg font-bold text-white flex items-center gap-2">
-            <span>✨</span> Compose with Valkyrie AI
+            <span></span> Compose with Valkyrie AI
           </h3>
           <p class="text-xs text-zinc-400">Draft high-impact single tweets or multi-part threads optimized for X engagement.</p>
         </div>
@@ -197,10 +256,10 @@
             <label class="block text-xs font-mono text-zinc-400 mb-1.5">Post Type</label>
             <div class="grid grid-cols-2 gap-3">
               <button type="button" onclick="setComposerType('single')" id="typeBtn-single" class="p-3 rounded-xl border border-sky-500 bg-sky-500/10 text-white text-xs font-semibold flex items-center justify-center gap-2">
-                <span>💬</span> Single Tweet (&le;280 chars)
+                <span></span> Single Tweet (&le;280 chars)
               </button>
               <button type="button" onclick="setComposerType('thread')" id="typeBtn-thread" class="p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white text-xs font-semibold flex items-center justify-center gap-2">
-                <span>🧵</span> Multi-Tweet Thread (3–5 parts)
+                <span></span> Multi-Tweet Thread (3–5 parts)
               </button>
             </div>
           </div>
@@ -242,7 +301,7 @@
       <div class="x-panel p-6 max-w-3xl mx-auto space-y-6">
         <div>
           <h3 class="text-lg font-bold text-white flex items-center gap-2">
-            <span>⚙️</span> X (Twitter) Account Connection
+            <span>️</span> X (Twitter) Account Connection
           </h3>
           <p class="text-xs text-zinc-400">Choose between Assisted Pilot Mode (Zero credentials needed) or Full X API v2 Automation.</p>
         </div>
@@ -283,7 +342,7 @@
           <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/30 space-y-3">
             <div class="flex items-center justify-between">
               <h4 class="text-xs font-mono font-semibold text-purple-300 flex items-center gap-1.5">
-                <span>🤖</span> 100% Autonomous Headless Browser Mode (Zero Paid API Required)
+                <span></span> 100% Autonomous Headless Browser Mode (Zero Paid API Required)
               </h4>
               <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 font-bold">RECOMMENDED</span>
             </div>
@@ -292,7 +351,7 @@
             </p>
             <div class="flex items-center gap-3 py-1">
               <button type="button" onclick="launchBrowserLogin()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition shadow-lg shadow-purple-500/20 flex items-center gap-1.5">
-                <span>🔑</span> Launch Browser to Connect (Automatic)
+                <span></span> Launch Browser to Connect (Automatic)
               </button>
               <span class="text-[11px] text-zinc-500">or paste <code class="text-purple-300">auth_token</code> below manually</span>
             </div>
@@ -343,7 +402,7 @@
       <div class="x-panel p-6 max-w-4xl mx-auto space-y-6">
         <div>
           <h3 class="text-lg font-bold text-white flex items-center gap-2">
-            <span>📈</span> Valkyrie's High-Converting X Growth Framework
+            <span></span> Valkyrie's High-Converting X Growth Framework
           </h3>
           <p class="text-xs text-zinc-400">Battle-tested formulas for D2C brands, luxury hampers, and Amazon sellers.</p>
         </div>
@@ -548,8 +607,7 @@
                   Publish via API
                 </button>
                 <button onclick="deleteDraft('${draft.id}')" class="p-1.5 rounded-lg text-zinc-500 hover:text-rose-400 hover:bg-zinc-900 transition" title="Delete">
-                  ✕
-                </button>
+                  </button>
               </div>
             </div>
           </div>
@@ -754,5 +812,24 @@
     // Initial load
     refreshData();
   </script>
+
+<script>
+(function() {
+  function updateMasterClock() {
+    const el = document.getElementById('master-os-ist-clock');
+    if (!el) return;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    const hours = String(ist.getHours()).padStart(2, '0');
+    const mins = String(ist.getMinutes()).padStart(2, '0');
+    const secs = String(ist.getSeconds()).padStart(2, '0');
+    el.textContent = 'IST ' + hours + ':' + mins + ':' + secs;
+  }
+  updateMasterClock();
+  setInterval(updateMasterClock, 1000);
+})();
+</script>
+
 </body>
 </html>
