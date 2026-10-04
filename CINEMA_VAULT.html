@@ -134,8 +134,67 @@
       outline-offset: 2px !important;
     }
   </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<style id="anti-slop-obsidian-tokens">
+  :root {
+    --bg-base: #070A12;
+    --bg-surface: #0B1120;
+    --bg-card: #0F172A;
+    --bg-card-hover: #1E293B;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(245, 158, 11, 0.35);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-dim: #64748B;
+    --gold-primary: #F59E0B;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  body {
+    font-family: var(--font-sans) !important;
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  code, pre, .font-mono, td.mono {
+    font-family: var(--font-mono) !important;
+  }
+</style>
+
 </head>
 <body class="selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="index.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #F59E0B, #D97706); color: #000; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);">T</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F59E0B; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="index.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>OPERATIONAL INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">Cinema Vault Multimedia Engine</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          LIVE TELEMETRY
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="index.html" style="padding: 5px 12px; background: #1E293B; hover:background: #334155; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="https://sellercentral.amazon.in" target="_blank" rel="noopener noreferrer" style="padding: 5px 12px; background: #F59E0B; border-radius: 6px; color: #000; font-size: 12px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);">Seller Central &rarr;</a>
+      </div>
+    </div>
+  </header>
+  
 
   <!-- Ambient Dynamic Darkroom Backlight -->
   <div id="ambientGlow" class="ambient-screen-glow"></div>
@@ -163,7 +222,7 @@
         <!-- Center: Primary 2-Option Segmented Switcher -->
         <div class="flex items-center p-1 bg-zinc-900/90 rounded-xl border border-white/[0.08] text-xs font-medium shadow-sm">
           <button id="tabWatchedBtn" onclick="setVaultTab('watched')" class="px-4 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition bg-zinc-800 text-white shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400" title="View Watched Movies & Series (Hotkey: W)">
-            <span>🎬 Watched (Latest)</span>
+            <span>Watched (Latest)</span>
             <span id="tabCountWatched" class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-zinc-950 text-amber-400 font-bold border border-amber-500/20">0</span>
           </button>
           <button id="tabWatchlistBtn" onclick="setVaultTab('watchlist')" class="px-4 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus-visible:ring-2 focus-visible:ring-amber-400" title="View Watchlist / What I Want to Watch (Hotkey: W)">
@@ -182,7 +241,7 @@
 
           <!-- Bulk Add Button -->
           <button onclick="openAddModal('bulk')" class="px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/[0.08] hover:border-amber-400/40 text-amber-400 font-medium text-xs flex items-center gap-1.5 transition shadow-sm" title="Bulk Add List of Movies/Series (Hotkey: B)">
-            <span>⚡</span>
+            <span></span>
             <span class="hidden sm:inline">Bulk Add</span>
           </button>
 
@@ -246,7 +305,7 @@
             placeholder="Search movie or series name... ('/' to focus)" 
             class="w-full bg-zinc-900 border border-white/[0.08] rounded-xl py-2 pl-10 pr-9 text-xs sm:text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition"
           >
-          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-2.5 text-xs text-zinc-500 hover:text-white p-1" title="Clear">✕</button>
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-2.5 text-xs text-zinc-500 hover:text-white p-1" title="Clear"></button>
         </div>
 
         <!-- Format Filter Pills -->
@@ -270,7 +329,7 @@
           <p class="text-xs text-zinc-400 max-w-sm mx-auto" id="emptyStateDesc">Add movies or series individually, or paste a bulk list to auto-fetch all posters instantly.</p>
           <div class="flex items-center justify-center gap-3 pt-2">
             <button onclick="openAddModal('bulk')" class="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-amber-400 font-semibold text-xs transition flex items-center gap-2">
-              <span>⚡ Bulk Add List</span>
+              <span>Bulk Add List</span>
             </button>
             <button onclick="openAddModal('single')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition shadow-sm flex items-center gap-2">
               <span>+ Add Single Title</span>
@@ -301,7 +360,7 @@
     <div class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-2xl p-6 sm:p-7 shadow-2xl shadow-black relative text-left max-h-[92vh] overflow-y-auto">
       
       <!-- Close Button -->
-      <button onclick="closeAddModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition" title="Close (Esc)">✕</button>
+      <button onclick="closeAddModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition" title="Close (Esc)"></button>
 
       <!-- Top Mode Switcher: Single vs Bulk -->
       <div class="flex items-center justify-between gap-4 mb-5 pr-10 border-b border-white/[0.08] pb-4">
@@ -321,7 +380,7 @@
             Single
           </button>
           <button type="button" id="modeBtnBulk" onclick="switchAddMode('bulk')" class="px-3 py-1 rounded-lg font-medium transition text-zinc-400 hover:text-white">
-            ⚡ Bulk List
+            Bulk List
           </button>
         </div>
       </div>
@@ -334,7 +393,7 @@
           <label class="block text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1.5">Where are you adding this?</label>
           <div class="p-1 bg-zinc-950 rounded-xl border border-white/[0.08] flex items-center gap-1.5">
             <button type="button" id="statusPillWatched" onclick="setFormStatus('watched')" class="flex-1 py-2 px-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition bg-zinc-800 text-white shadow-sm focus:outline-none">
-              <span>🎬</span> <span>Watched (Already Seen)</span>
+              <span></span> <span>Watched (Already Seen)</span>
             </button>
             <button type="button" id="statusPillWatchlist" onclick="setFormStatus('watchlist')" class="flex-1 py-2 px-3 rounded-lg text-xs font-medium flex items-center justify-center gap-2 transition text-zinc-400 hover:text-white focus:outline-none">
               <span>⏳</span> <span>Watchlist (Want to Watch)</span>
@@ -361,7 +420,7 @@
               class="absolute right-1.5 top-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-amber-500 hover:text-black text-zinc-300 font-mono text-[11px] font-medium flex items-center gap-1.5 transition shadow-sm"
               title="Click to fetch poster"
             >
-              <span>🖼</span> <span>Auto-Fetch</span>
+              <span></span> <span>Auto-Fetch</span>
             </button>
           </div>
         </div>
@@ -443,7 +502,7 @@
         <div class="flex items-center justify-end gap-3 pt-3 border-t border-white/[0.08]">
           <button type="button" onclick="closeAddModal()" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-zinc-300 transition">Cancel</button>
           <button type="submit" id="saveMemoryBtn" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition shadow-lg shadow-amber-500/10">
-            ✦ Add to Watched (Latest)
+            Add to Watched (Latest)
           </button>
         </div>
 
@@ -458,7 +517,7 @@
             <label class="block text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1.5">Add All As:</label>
             <div class="p-1 bg-zinc-950 rounded-xl border border-white/[0.08] flex items-center gap-1">
               <button type="button" id="bulkStatusWatched" onclick="setBulkStatus('watched')" class="flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition bg-zinc-800 text-white shadow-sm">
-                <span>🎬</span> <span>Watched</span>
+                <span></span> <span>Watched</span>
               </button>
               <button type="button" id="bulkStatusWatchlist" onclick="setBulkStatus('watchlist')" class="flex-1 py-1.5 px-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition text-zinc-400 hover:text-white">
                 <span>⏳</span> <span>Watchlist</span>
@@ -498,7 +557,7 @@
             onclick="processBulkList()"
             class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-black font-semibold text-xs flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/10"
           >
-            <span>⚡</span>
+            <span></span>
             <span>Auto-Fetch All Posters & Preview</span>
           </button>
         </div>
@@ -535,7 +594,7 @@
               onclick="commitBulkSave()"
               class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition shadow-lg shadow-amber-500/10 flex items-center gap-2"
             >
-              <span>✦ Add All</span>
+              <span>Add All</span>
               <span id="bulkFinalCountBadge" class="px-1.5 py-0.2 rounded bg-black/20 font-mono text-[11px]">0</span>
               <span>to Cinema Vault</span>
             </button>
@@ -550,7 +609,7 @@
   <!-- MODAL: MARK AS WATCHED (GRADUATION FROM WATCHLIST) -->
   <dialog id="graduateModal" class="fixed inset-0 w-full h-full p-4 sm:p-6 z-50 items-center justify-center border-none bg-transparent">
     <div class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-md p-6 shadow-2xl shadow-black relative text-left">
-      <button onclick="closeGraduateModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition">✕</button>
+      <button onclick="closeGraduateModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition"></button>
 
       <div class="flex items-center gap-3 mb-4">
         <div class="w-12 h-16 rounded-lg overflow-hidden bg-zinc-950 border border-white/10 shrink-0">
@@ -576,7 +635,7 @@
 
         <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-white/[0.08]">
           <button type="button" onclick="closeGraduateModal()" class="px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-zinc-300 transition">Cancel</button>
-          <button type="submit" class="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition">✦ Move to Watched</button>
+          <button type="submit" class="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition">Move to Watched</button>
         </div>
       </form>
     </div>
@@ -811,7 +870,7 @@
                     class="w-full py-1.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow"
                     title="Mark as watched and move to Watched archive"
                   >
-                    <span>✦</span> <span>Mark as Watched</span>
+                    <span></span> <span>Mark as Watched</span>
                   </button>
                 </div>
               ` : `
@@ -1369,8 +1428,7 @@
             class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-zinc-800 hover:bg-rose-500 text-zinc-400 hover:text-white flex items-center justify-center text-[10px] font-bold border border-white/10 transition z-10"
             title="Remove item"
           >
-            ✕
-          </button>
+            </button>
 
           <div class="w-12 aspect-[2/3] rounded-lg overflow-hidden bg-zinc-900 border border-white/5 shrink-0">
             <img src="${item.posterUrl}" alt="${item.title}" class="w-full h-full object-cover">
@@ -1549,7 +1607,7 @@
       const content = document.getElementById('detailModalContent');
 
       content.innerHTML = `
-        <button onclick="closeDetailModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition">✕</button>
+        <button onclick="closeDetailModal()" class="absolute right-5 top-5 p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition"></button>
 
         <div class="flex flex-col sm:flex-row gap-5">
           <div class="w-full sm:w-44 aspect-[2/3] rounded-xl overflow-hidden bg-zinc-950 border border-white/10 shrink-0">
@@ -1584,7 +1642,7 @@
               <div class="flex items-center gap-2">
                 ${isWatchlist ? `
                   <button onclick="closeDetailModal(); openGraduateModal('${item.id}')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-semibold text-xs transition">
-                    ✦ Mark as Watched
+                    Mark as Watched
                   </button>
                 ` : ''}
                 <button onclick="closeDetailModal()" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-medium text-white transition">
@@ -1690,5 +1748,24 @@
       });
     }
   </script>
+
+<script>
+(function() {
+  function updateMasterClock() {
+    const el = document.getElementById('master-os-ist-clock');
+    if (!el) return;
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const ist = new Date(utc + (3600000 * 5.5));
+    const hours = String(ist.getHours()).padStart(2, '0');
+    const mins = String(ist.getMinutes()).padStart(2, '0');
+    const secs = String(ist.getSeconds()).padStart(2, '0');
+    el.textContent = 'IST ' + hours + ':' + mins + ':' + secs;
+  }
+  updateMasterClock();
+  setInterval(updateMasterClock, 1000);
+})();
+</script>
+
 </body>
 </html>
