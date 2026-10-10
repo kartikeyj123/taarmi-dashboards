@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&amp;family=Plus+Jakarta+Sans:wght@400;600&amp;display=swap');
+      .bg { fill: #FAF8F5; }
+      .brand-arch { fill: none; stroke: #121214; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+      .brand-dot { fill: #C4B59D; }
+      .wordmark { font-family: 'Tenor Sans', serif; font-size: 52px; fill: #121214; letter-spacing: 0.38em; text-anchor: middle; font-weight: 400; }
+      .subline { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; fill: #7E7C77; letter-spacing: 0.45em; text-anchor: middle; font-weight: 600; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" class="bg" rx="16"/>
+  
+  <!-- Icon: The Architectural Bag Arch / Minimalist "A" -->
+  <g transform="translate(400, 160)">
+    <!-- Arch handle silhouette -->
+    <path d="M -45 50 L -45 -10 C -45 -48, 45 -48, 45 -10 L 45 50" class="brand-arch" />
+    <!-- Horizontal Crossbar / Leather Strap -->
+    <line x1="-30" y1="18" x2="30" y2="18" class="brand-arch" stroke-width="5"/>
+    <!-- Gold accent rivet -->
+    <circle cx="0" cy="18" r="4.5" class="brand-dot"/>
+  </g>
+  
+  <!-- Primary Wordmark -->
+  <text x="410" y="310" class="wordmark">ALET</text>
+  
+  <!-- Sub-label -->
+  <text x="405" y="350" class="subline">OBJECTS OF DAILY LIVING</text>
+</svg>

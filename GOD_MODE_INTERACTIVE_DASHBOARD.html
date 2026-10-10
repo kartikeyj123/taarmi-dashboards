@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>God Mode Academy — Interactive 33-Day Curriculum & Dossier Operating System</title>
+  <meta name="description" content="Official autonomous dashboard for the 33-Day God Mode curriculum modeled on Reved Academy Cohort 11. Complete 10 modules, 30 live classes, and 26 Dossier deliverables from home.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            gold: {
+              300: '#eddab0',
+              400: '#e3cd9c',
+              500: '#ddc48b',
+              600: '#c5aa70',
+              700: '#a38a53'
+            },
+            dark: {
+              950: '#060708',
+              900: '#0a0b0d',
+              850: '#101215',
+              800: '#16181d',
+              700: '#21242b',
+              600: '#2d313b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg: #07080a;
+      --card: #0f1115;
+      --card-border: rgba(255, 255, 255, 0.07);
+      --gold: #ddc48b;
+      --gold-glow: rgba(221, 196, 139, 0.12);
+    }
+
+    body {
+      background-color: var(--bg);
+      color: #e5e7eb;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(221, 196, 139, 0.05) 0%, transparent 60%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    /* Custom subtle scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0b0d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #232730;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ddc48b;
+    }
+
+    .border-subtle {
+      border: 1px solid var(--card-border);
+    }
+
+    .editorial-quote {
+      border-left: 2px solid var(--gold);
+      background: linear-gradient(90deg, rgba(221, 196, 139, 0.04) 0%, transparent 100%);
+    }
+
+    .active-pill {
+      background: rgba(221, 196, 139, 0.15);
+      border-color: #ddc48b;
+      color: #ddc48b;
+    }
+
+    .glow-gold:hover {
+      box-shadow: 0 0 25px rgba(221, 196, 139, 0.15);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-200 antialiased selection:bg-gold-500 selection:text-black">
+
+  <!-- TOP PERSISTENT STATUS HEADER -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-dark-950/85 border-b border-white/10 px-4 lg:px-8 py-3.5 transition-all">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+      
+      <!-- Brand & Cohort Identity -->
+      <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-start">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-md bg-dark-800 border border-gold-500/40 flex items-center justify-center shadow-inner">
+            <span class="font-serif font-bold text-gold-500 text-lg">⚡</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-serif font-bold tracking-wide text-white text-base">GOD MODE ACADEMY</span>
+              <span class="text-[10px] uppercase font-mono tracking-wider px-1.5 py-0.5 rounded bg-gold-500/15 text-gold-400 border border-gold-500/30">Cohort 11</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-mono">Standard: Reved Academy · 33 Days · 110 Hours</p>
+          </div>
+        </div>
+
+        <!-- Student Indicator Mobile -->
+        <div class="flex items-center gap-2 md:hidden">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-mono text-slate-300" id="mobileCurrentDayLabel">Day 1/33</span>
+        </div>
+      </div>
+
+      <!-- Quick Metrics & Progress Center -->
+      <div class="flex items-center gap-6 text-xs font-mono">
+        <div class="hidden lg:flex items-center gap-4 border-r border-white/10 pr-6">
+          <div class="text-right">
+            <span class="text-slate-400 text-[10px] block">TOTAL COMMITMENT</span>
+            <span class="font-semibold text-white">33 Consecutive Days</span>
+          </div>
+          <div class="text-right">
+            <span class="text-slate-400 text-[10px] block">SEATS NORM</span>
+            <span class="font-semibold text-gold-400">1-on-1 Dedicated</span>
+          </div>
+        </div>
+
+        <!-- Live Progress Indicator -->
+        <div class="flex items-center gap-3">
+          <div class="text-right">
+            <div class="flex items-center gap-1.5 justify-end">
+              <span class="text-slate-400 text-[10px]">DOSSIER COMPLETION:</span>
+              <span class="text-gold-400 font-bold" id="headerProgressPct">0%</span>
+            </div>
+            <span class="text-[10px] text-slate-500 font-mono" id="headerDeliverablesCount">0 / 26 Deliverables Done</span>
+          </div>
+          <div class="w-24 h-2 bg-dark-800 rounded-full overflow-hidden border border-white/10">
+            <div id="headerProgressBar" class="h-full bg-gradient-to-r from-gold-600 to-gold-400 w-0 transition-all duration-500"></div>
+          </div>
+        </div>
+
+        <!-- Action Tools -->
+        <div class="flex items-center gap-2">
+          <button onclick="toggleVoicecraftModal()" class="px-2.5 py-1.5 rounded bg-dark-800 hover:bg-dark-700 text-slate-300 hover:text-white border border-white/10 text-[11px] flex items-center gap-1.5 transition">
+            <span>🎙️</span> <span class="hidden sm:inline">Voicecraft Lab</span>
+          </button>
+          <button onclick="exportDossierMarkdown()" class="px-2.5 py-1.5 rounded bg-gold-500/20 hover:bg-gold-500 text-gold-300 hover:text-black border border-gold-500/40 text-[11px] font-semibold flex items-center gap-1.5 transition">
+            <span>📑</span> <span class="hidden sm:inline">Export Dossier</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 pb-24">
+
+    <!-- HERO EDITORIAL BANNER -->
+    <div class="relative overflow-hidden rounded-xl border-subtle bg-gradient-to-b from-dark-850 to-dark-900 p-6 lg:p-8 mb-8">
+      <div class="max-w-3xl">
+        <span class="text-xs uppercase font-mono tracking-widest text-gold-500 block mb-2 font-semibold">The Anti-School Paradigm</span>
+        <h1 class="text-2xl lg:text-3xl font-serif text-white leading-tight mb-3">
+          "I don’t teach ambition. You already have that.<br class="hidden sm:block">
+          <span class="text-gold-400 italic">I teach the thing ambition is useless without.</span>"
+        </h1>
+        <p class="text-sm text-slate-400 leading-relaxed font-sans mb-4">
+          In an AI-first era, execution is copy-paste. Standardized answers are zero-marginal-cost. The only things that cannot be prompt-engineered are <strong>sound judgment, taste, dangerous articulation, social physics, and original synthesis</strong>.
+        </p>
+        <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-slate-300">
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-white/10">Mentor: Chai (God Mode Sensei)</span>
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-white/10">Format: 33 Live Classes & Daily Sparring</span>
+          <span class="px-2.5 py-1 rounded bg-black/40 border border-gold-500/30 text-gold-400">Vault: 26 Tangible Artifacts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIMARY NAVIGATION TABS -->
+    <div class="flex items-center justify-between border-b border-white/10 mb-6 overflow-x-auto pb-2 gap-4">
+      <div class="flex items-center gap-2 text-xs font-mono shrink-0">
+        <button onclick="switchMainTab('curriculum')" id="tabBtnCurriculum" class="px-4 py-2 rounded-t font-semibold transition border-b-2 border-gold-500 text-gold-400 bg-gold-500/10">
+          📅 33-Day Curriculum & Classes
+        </button>
+        <button onclick="switchMainTab('dossier')" id="tabBtnDossier" class="px-4 py-2 rounded-t font-semibold transition border-b-2 border-transparent text-slate-400 hover:text-white hover:bg-dark-800">
+          💼 The Dossier (26 Deliverables)
+        </button>
+        <button onclick="switchMainTab('voicecraft')" id="tabBtnVoicecraft" class="px-4 py-2 rounded-t font-semibold transition border-b-2 border-transparent text-slate-400 hover:text-white hover:bg-dark-800">
+          🎙️ Voicecraft & Modulation Lab
+        </button>
+        <button onclick="switchMainTab('principles')" id="tabBtnPrinciples" class="px-4 py-2 rounded-t font-semibold transition border-b-2 border-transparent text-slate-400 hover:text-white hover:bg-dark-800">
+          🧠 The 10 Mental Modules
+        </button>
+      </div>
+
+      <!-- Quick Reset / Sync controls -->
+      <div class="flex items-center gap-2 shrink-0 text-[11px] font-mono">
+        <button onclick="resetDataPrompt()" class="text-slate-500 hover:text-rose-400 transition" title="Reset all local progress">
+          Reset All
+        </button>
+        <span class="text-slate-700">|</span>
+        <button onclick="saveCurrentStateManually()" class="text-gold-400/80 hover:text-gold-300 transition flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Autosaved
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 1: CURRICULUM & DAILY CLASSROOM -->
+    <div id="viewCurriculum" class="space-y-6">
+
+      <!-- SECTION FILTER PILLS -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 text-xs font-mono">
+        <button onclick="filterSection('ALL')" class="sec-filter active-pill px-3 py-1.5 rounded border border-white/10 hover:border-gold-500/50 transition">All 33 Days</button>
+        <button onclick="filterSection('INITIATION')" class="sec-filter px-3 py-1.5 rounded border border-white/10 hover:border-gold-500/50 transition">Phase 0: Initiation</button>
+        <button onclick="filterSection('SEC1')" class="sec-filter px-3 py-1.5 rounded border border-white/10 hover:border-gold-500/50 transition">Sec I: Build Your Base</button>
+        <button onclick="filterSection('SEC2')" class="sec-filter px-3 py-1.5 rounded border border-white/10 hover:border-gold-500/50 transition">Sec II: Unfuckwithable</button>
+        <button onclick="filterSection('SEC3')" class="sec-filter px-3 py-1.5 rounded border border-white/10 hover:border-gold-500/50 transition">Sec III: Cast Your Influence</button>
+        <button onclick="filterSection('SEC4')" class="sec-filter px-3 py-1.5 rounded border border-white/10 hover:border-gold-500/50 transition">Sec IV: Convergence</button>
+        <button onclick="filterSection('CONVOCATION')" class="sec-filter px-3 py-1.5 rounded border border-white/10 hover:border-gold-500/50 transition">Phase 5: Convocation</button>
+      </div>
+
+      <!-- 33-DAY HORIZONTAL CALENDAR STRIP -->
+      <div class="p-3 rounded-lg border-subtle bg-dark-900 overflow-x-auto">
+        <div class="flex items-center gap-2 min-w-max" id="daysTimelineStrip">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- ACTIVE DAY WORKSPACE (2-COLUMN SPLIT: LECTURE & SPARROWS VS DELIVERABLE SUBMISSION) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- LEFT COLUMN: DEEP LECTURE & SOCRATIC SPARRING (7 Cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Class Header Card -->
+          <div class="p-6 rounded-xl border-subtle bg-dark-850 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase px-2 py-0.5 rounded bg-gold-500/10 text-gold-400 border border-gold-500/30" id="currentSectionBadge">Phase 0 · Initiation</span>
+              <span class="text-xs font-mono text-slate-400" id="currentHoursBadge">Estimated 3 Hours</span>
+            </div>
+
+            <div>
+              <h2 class="text-xl lg:text-2xl font-serif text-white mb-1" id="currentDayTitle">Day 01: Onboarding · Diagnostic Baseline</h2>
+              <p class="text-xs font-mono text-gold-400/90" id="currentModuleBadge">Module 01: Baseline Audit & Setup</p>
+            </div>
+
+            <div class="editorial-quote p-4 rounded-r-lg text-sm text-slate-300 italic font-serif leading-relaxed" id="currentQuote">
+              "Before we build, we map the terrain as it actually exists today—not how you wish it were."
+            </div>
+
+            <!-- Core Insight Body -->
+            <div class="space-y-3 text-sm text-slate-300 leading-relaxed font-sans border-t border-white/10 pt-4" id="currentLectureContent">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- Socratic Sparring Room -->
+          <div class="p-6 rounded-xl border-subtle bg-dark-900 border-l-4 border-l-gold-500 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-base">🥊</span>
+                <h3 class="text-sm font-semibold text-white tracking-wide font-mono uppercase">The Socratic Hot Seat</h3>
+              </div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-dark-800 text-slate-400">Pressure Test</span>
+            </div>
+
+            <p class="text-xs text-slate-400 font-sans" id="currentSparringPrompt">
+              Answer the question below without rationalizations or textbook buzzwords. Chai will evaluate the sharpness of your judgment.
+            </p>
+
+            <div class="space-y-3">
+              <textarea id="sparringInput" rows="3" class="w-full bg-dark-950 border border-white/10 rounded-lg p-3 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-gold-500 font-sans" placeholder="State your unvarnished reasoning here..."></textarea>
+              
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-mono text-slate-500" id="sparringCharCount">0 chars</span>
+                <button onclick="submitSocraticSparring()" class="px-4 py-1.5 rounded bg-gold-500 hover:bg-gold-400 text-black text-xs font-semibold font-mono flex items-center gap-1.5 transition">
+                  <span>Spar with Sensei</span> <span>→</span>
+                </button>
+              </div>
+
+              <!-- Mentor Feedback Feedback Box -->
+              <div id="sparringFeedbackBox" class="hidden p-4 rounded-lg bg-dark-950 border border-gold-500/30 space-y-2 mt-3">
+                <div class="flex items-center gap-2 text-xs font-mono text-gold-400 font-semibold">
+                  <span>⚡</span> <span>Sensei Chai's Critique:</span>
+                </div>
+                <div class="text-xs text-slate-300 font-sans leading-relaxed" id="sparringFeedbackText">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: DELIVERABLE SUBMISSION & CHECKLIST (5 Cols) -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Deliverable Execution Card -->
+          <div class="p-6 rounded-xl border-subtle bg-dark-850 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono uppercase text-slate-400 flex items-center gap-1.5">
+                <span>📂</span> <span>The Dossier Artifact</span>
+              </span>
+              <span id="deliverableStatusBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30">In Progress</span>
+            </div>
+
+            <div>
+              <h3 class="text-base font-serif font-bold text-white mb-1" id="currentDeliverableName">Artifact #1: Diagnostic Baseline</h3>
+              <p class="text-xs text-slate-400 font-sans" id="currentDeliverableDesc">
+                Four diagnostic shocks mapping your current operating reality, commercial understanding, and articulation baseline.
+              </p>
+            </div>
+
+            <!-- Deliverable Editor -->
+            <div class="space-y-3 border-t border-white/10 pt-4">
+              <label class="block text-xs font-mono text-slate-300">Deliverable Submission Field:</label>
+              <textarea id="deliverableContentInput" rows="12" class="w-full bg-dark-950 border border-white/10 rounded-lg p-3 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-gold-500 leading-relaxed" placeholder="Fill in your deliverable specifications or paste your completed template here..."></textarea>
+
+              <div class="flex items-center justify-between gap-3 pt-2">
+                <button onclick="saveDeliverableDraft()" class="px-3 py-1.5 rounded bg-dark-800 hover:bg-dark-700 text-slate-300 text-xs font-mono transition">
+                  Save Draft
+                </button>
+                <button onclick="commitDeliverableFinal()" class="px-4 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold font-mono flex items-center gap-1.5 transition">
+                  <span>✓ Mark Completed in Dossier</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Day Navigation Controls -->
+          <div class="flex items-center justify-between p-4 rounded-xl border-subtle bg-dark-900 text-xs font-mono">
+            <button onclick="navigateDay(-1)" id="btnPrevDay" class="px-3 py-1.5 rounded bg-dark-800 hover:bg-dark-700 text-slate-300 disabled:opacity-30 disabled:pointer-events-none transition">
+              ← Previous Day
+            </button>
+            <span class="text-gold-400 font-semibold" id="dayIndicatorNumber">Day 1 / 33</span>
+            <button onclick="navigateDay(1)" id="btnNextDay" class="px-3 py-1.5 rounded bg-dark-800 hover:bg-dark-700 text-slate-300 transition">
+              Next Day →
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 2: THE DOSSIER VAULT (26 DELIVERABLES GRID) -->
+    <div id="viewDossier" class="hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-xl border-subtle bg-dark-850">
+        <div>
+          <h2 class="text-xl font-serif text-white mb-1">The 26 Master Deliverables Vault</h2>
+          <p class="text-xs text-slate-400 font-sans">
+            Every artifact you construct across the 33 days is indexed here. At Day 33 Convocation, this becomes your permanent intellectual armory.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="exportDossierMarkdown()" class="px-4 py-2 rounded bg-gold-500 hover:bg-gold-400 text-black text-xs font-semibold font-mono transition">
+            Export Master Markdown
+          </button>
+        </div>
+      </div>
+
+      <!-- Deliverables 26 Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="dossierCardsGrid">
+        <!-- Rendered dynamically via JS -->
+      </div>
+
+    </div>
+
+    <!-- TAB 3: VOICECRAFT LAB (SPEECH TIMER & TELEPROMPTER) -->
+    <div id="viewVoicecraft" class="hidden space-y-6">
+      
+      <div class="p-6 rounded-xl border-subtle bg-dark-850 space-y-4">
+        <div class="max-w-2xl">
+          <span class="text-xs uppercase font-mono text-gold-500 block mb-1">Module 02 · Voicecraft Studio</span>
+          <h2 class="text-xl font-serif text-white mb-2">The Articulation, Cadence & Tonal Authority Lab</h2>
+          <p class="text-xs text-slate-400 font-sans leading-relaxed">
+            School taught you to sound loud or passive. God Mode teaches you to be <strong>dangerously articulate</strong>. Practice your 3-minute impromptu speeches, calculate your words per minute (target: 130–150 WPM), and identify filler words.
+          </p>
+        </div>
+
+        <!-- Teleprompter / Prompt Deck -->
+        <div class="p-4 rounded-lg bg-dark-900 border border-white/10 space-y-2">
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-gold-400 font-semibold">TODAY'S MONOLOGUE PROMPT:</span>
+            <button onclick="generateRandomPrompt()" class="text-slate-400 hover:text-white transition">↻ Draw New Prompt</button>
+          </div>
+          <p class="text-base font-serif text-slate-200 italic" id="voicePromptText">
+            "Why do most ambitious people fail to build anything of lasting consequence in the AI era?"
+          </p>
+        </div>
+
+        <!-- Interactive Voice Timer & Recorder Deck -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-white/10 pt-4">
+          
+          <!-- Timer Display -->
+          <div class="p-4 rounded-lg bg-dark-950 border border-white/10 text-center space-y-2">
+            <span class="text-[11px] font-mono text-slate-400 block">RECORDING TIMER</span>
+            <div class="text-4xl font-mono font-bold text-gold-400" id="timerClock">03:00</div>
+            <div class="flex items-center justify-center gap-2 pt-1">
+              <button onclick="startVoiceTimer()" id="btnTimerStart" class="px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono">Start</button>
+              <button onclick="pauseVoiceTimer()" id="btnTimerPause" class="px-3 py-1 rounded bg-amber-600 hover:bg-amber-500 text-white text-xs font-mono">Pause</button>
+              <button onclick="resetVoiceTimer()" class="px-3 py-1 rounded bg-dark-800 hover:bg-dark-700 text-slate-300 text-xs font-mono">Reset</button>
+            </div>
+          </div>
+
+          <!-- Live Metrics (WPM & Fillers) -->
+          <div class="p-4 rounded-lg bg-dark-950 border border-white/10 space-y-2">
+            <span class="text-[11px] font-mono text-slate-400 block">CADENCE ANALYTICS</span>
+            <div class="flex items-center justify-between text-xs font-mono pt-1">
+              <span class="text-slate-400">Total Words:</span>
+              <span class="text-white font-bold" id="statWordCount">0</span>
+            </div>
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-400">Pace (WPM):</span>
+              <span class="text-gold-400 font-bold" id="statWpm">0 WPM</span>
+            </div>
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-400">Filler Detections:</span>
+              <span class="text-rose-400 font-bold" id="statFillerCount">0</span>
+            </div>
+          </div>
+
+          <!-- Audio Record Toggle -->
+          <div class="p-4 rounded-lg bg-dark-950 border border-white/10 space-y-2 flex flex-col justify-between">
+            <span class="text-[11px] font-mono text-slate-400 block">BROWSER AUDIO CAPTURE</span>
+            <div id="audioRecStatus" class="text-xs text-slate-400 font-sans">Ready to record microphone audio.</div>
+            <button onclick="toggleAudioRecording()" id="btnAudioRec" class="w-full py-1.5 rounded bg-rose-600/30 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/40 text-xs font-mono font-semibold transition flex items-center justify-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span> Record Voice Drill
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Transcription & Speech Audit Box -->
+        <div class="space-y-2 pt-2">
+          <label class="block text-xs font-mono text-slate-300">Speech Transcription / Speech-to-Text Input:</label>
+          <textarea id="speechTranscribeInput" oninput="analyzeSpeechText()" rows="5" class="w-full bg-dark-950 border border-white/10 rounded-lg p-3 text-xs font-sans text-slate-200 placeholder-slate-600 focus:outline-none focus:border-gold-500" placeholder="Paste your spoken speech transcript here to analyze fillers, tonal pacing, and sentence density..."></textarea>
+          <div class="text-[11px] font-mono text-slate-500" id="fillerWordReport">
+            Fillers flagged: None detected.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 4: THE 10 MENTAL MODULES REFERENCE -->
+    <div id="viewPrinciples" class="hidden space-y-6">
+      <div class="p-6 rounded-xl border-subtle bg-dark-850">
+        <h2 class="text-xl font-serif text-white mb-2">The 10 Intellectual Modules of God Mode</h2>
+        <p class="text-xs text-slate-400 font-sans">
+          Curated from 5,000+ hours of research across economics, consumer psychology, evolutionary biology, and rhetoric.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="modulesMasterGrid">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- DELIVERABLE MODAL VIEWER / EDITOR -->
+  <div id="deliverableModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-dark-900 border border-white/10 rounded-xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-4 border-b border-white/10 flex items-center justify-between bg-dark-950">
+        <div>
+          <span class="text-[10px] font-mono uppercase text-gold-400 block" id="modalArtifactNum">Artifact #</span>
+          <h3 class="text-base font-serif font-bold text-white" id="modalArtifactTitle">Artifact Title</h3>
+        </div>
+        <button onclick="closeDeliverableModal()" class="text-slate-400 hover:text-white font-mono text-lg">✕</button>
+      </div>
+      <div class="p-6 space-y-4 overflow-y-auto">
+        <div class="p-3 rounded bg-dark-950 border border-white/5 text-xs text-slate-300 font-sans" id="modalArtifactDesc">
+          Artifact specifications.
+        </div>
+        <div>
+          <label class="block text-xs font-mono text-slate-400 mb-1">Your Submission Content:</label>
+          <textarea id="modalArtifactContent" rows="10" class="w-full bg-dark-950 border border-white/10 rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-gold-500 leading-relaxed"></textarea>
+        </div>
+      </div>
+      <div class="p-4 border-t border-white/10 bg-dark-950 flex items-center justify-between">
+        <span class="text-xs font-mono text-slate-500" id="modalArtifactStatusText">Status: In Progress</span>
+        <div class="flex items-center gap-2">
+          <button onclick="closeDeliverableModal()" class="px-3 py-1.5 rounded bg-dark-800 text-slate-300 text-xs font-mono">Close</button>
+          <button onclick="saveModalDeliverable()" class="px-4 py-1.5 rounded bg-gold-500 hover:bg-gold-400 text-black text-xs font-semibold font-mono">Save & Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT: COMPREHENSIVE CURRICULUM DATA & ENGINE INTERACTION -->
+  <script>
+    // --- MASTER 33-DAY DATA DEFINITION ---
+    const CURRICULUM_DATA = [
+      {
+        day: 1,
+        section: "INITIATION",
+        sectionLabel: "Phase 0 · Initiation",
+        title: "Day 01: Onboarding · The Diagnostic Baseline",
+        module: "Module 01: Baseline Audit & Setup",
+        hours: "3 Hours",
+        quote: "Before we build, we map the terrain as it actually exists today—not how you wish it were.",
+        lecture: `
+          <p><strong>The Core Objective:</strong> Establish your absolute ground truth across self-concept, commercial judgment, and verbal authority. You cannot measure asymmetric growth without an uncompromising baseline.</p>
+          <p>Most ambitious people fail because they inhabit an imagined future rather than auditing their present bottlenecks. Today we run four diagnostic shocks:</p>
+          <ul class="list-disc pl-5 space-y-1 text-slate-400">
+            <li><strong>Raw Identity:</strong> Strip away all aspirational titles. What have you actually closed, built, and shipped under pressure?</li>
+            <li><strong>The Delusion Audit:</strong> Identifying where busywork and information consumption are masquerading as real leverage.</li>
+            <li><strong>The 1,825-Day Model:</strong> Explicitly quantifying your financial, spatial, and autonomous target 5 years out.</li>
+            <li><strong>Commercial Acumen Shock:</strong> Deconstructing the unit economics and mortal vulnerability of an everyday business.</li>
+          </ul>
+        `,
+        sparringPrompt: "Pick the biggest project you spent time on over the past 6 months. In two sentences: what was the tangible commercial outcome, and why did you not achieve 5x more?",
+        deliverableId: "DELIV_01",
+        deliverableName: "Artifact #1: Diagnostic Baseline & Self-Concept Audit",
+        deliverableDesc: "Four diagnostic shocks mapping your current operating reality, commercial understanding, and articulation baseline.",
+        defaultTemplate: `# DAY 01: DIAGNOSTIC BASELINE
+## 1. Raw Identity:
+[Who are you today when all future titles and promises are removed? What have you actually shipped?]
+
+## 2. Delusion Audit:
+[Where in your daily routine are you mistaking consumption for real leverage?]
+
+## 3. 1,825-Day Reality:
+[Target post-tax income, location, autonomous leverage, relationship commitments 5 years out.]
+
+## 4. Commercial Acumen Shock:
+[Company name, core unit economics, gross margin source, and 36-month lethal threat.]`
+      },
+      {
+        day: 2,
+        section: "INITIATION",
+        sectionLabel: "Phase 0 · Initiation",
+        title: "Day 02: Initiation · The Mental Reset & Standards",
+        module: "Module 01: The New World Playbook",
+        hours: "3 Hours",
+        quote: "School rewarded you for standing out less. Real life rewards the exact opposite.",
+        lecture: `
+          <p><strong>The Post-AI Paradigm:</strong> The old script was simple: get a degree, memorize standard answers, join a corporation. In the post-AI era, execution is copy-paste. Generic effort is repriced to zero.</p>
+          <p>Originality, high-bandwidth communication, and sound judgment are the only remaining moats. Today we establish the non-negotiables of the 33-day sprint: radical candor, zero fluff, and building daily proof-of-work in The Dossier.</p>
+        `,
+        sparringPrompt: "What is one belief your family or university taught you about success that is actively harming your earning power right now?",
+        deliverableId: "DELIV_02",
+        deliverableName: "Artifact #2: 33-Day Non-Negotiable Covenant",
+        deliverableDesc: "Contract of personal stakes, penalties for checking out, and commitment to the 33-day sprint.",
+        defaultTemplate: `# 33-DAY COVENANT
+1. The Non-Negotiable Stakes: [Why failure is not an option]
+2. The Self-Imposed Penalty: [What I will forfeit if I skip a single day]
+3. Core Personal Metric: [The single needle I am moving]`
+      },
+      {
+        day: 3,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 03 (Class 01): Cash, Tax & Narrative",
+        module: "Module 01: Money, Meaning & Milestones",
+        hours: "4 Hours",
+        quote: "Cashflow is the oxygen of sovereignty. Accounting is an opinion; cash in bank is physics.",
+        lecture: `
+          <p>Understanding the gap between vanity metrics (revenue, valuation) and actual net free cashflow. How narrative drives asset valuation and capital allocation.</p>
+          <p>Structuring business entities, understanding tax minimization legally, and identifying gross margin leakage in active businesses.</p>
+        `,
+        sparringPrompt: "Why do bootstrapped companies with 1 Cr profit often have more real autonomy than venture-backed founders with 50 Cr revenue?",
+        deliverableId: "DELIV_03",
+        deliverableName: "Artifact #3: Business Analysis One-Pagers (Batch 1)",
+        deliverableDesc: "Dissect 5 business models: CAC, LTV, switching friction, gross margins, and vulnerabilities.",
+        defaultTemplate: `# BUSINESS ANALYSIS ONE-PAGERS (1-5)
+1. Business 1: [Name] | Payers: [Archetype] | Margin Engine: [How they profit] | Vulnerability: [...]
+2. Business 2: [...]`
+      },
+      {
+        day: 4,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 04 (Class 02): Startups End-to-End & Supply Chains",
+        module: "Module 01: Money, Meaning & Milestones",
+        hours: "4 Hours",
+        quote: "Every product is the end of a long, invisible chain of human incentives and logistics.",
+        lecture: `
+          <p>Mapping physical and digital supply chains. Tier-1 manufacturers, working capital cycles, Days Inventory Outstanding (DIO), and gross margin capture points.</p>
+          <p>Designing ready-to-test startup capstones that solve real supply bottlenecks.</p>
+        `,
+        sparringPrompt: "If a competitor cuts prices by 40%, how do you defend your gross margin without lowering price?",
+        deliverableId: "DELIV_04",
+        deliverableName: "Artifact #4: Supply-Chain Canvases & 5 Capstone Sheets",
+        deliverableDesc: "Full supply-chain breakdown from raw material to doorstep + 5 ready-to-build venture concepts.",
+        defaultTemplate: `# SUPPLY CHAIN CANVAS & CAPSTONE SHEETS
+- Raw Input -> Tier 1 Factory -> Shipping -> Buffer Hub -> End User
+- Bottleneck: [...]
+- Capstone 1 Offer: [...]`
+      },
+      {
+        day: 5,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 05 (Class 03): Life Design & Solo AI Automations",
+        module: "Module 01: Money, Meaning & Milestones",
+        hours: "4 Hours",
+        quote: "Design a life worth funding, then let automated leverage pay for it.",
+        lecture: `
+          <p>Architecting solo-founder operations. Deploying AI agents, MCP pipelines, and asynchronous automations that do the work of a 5-person agency team.</p>
+          <p>Reverse-engineering your exact lifestyle cost to create an uncompromising Aspirational Life Map.</p>
+        `,
+        sparringPrompt: "If you had to run your entire revenue engine in only 90 minutes per day, what 80% of tasks would you eliminate immediately?",
+        deliverableId: "DELIV_05",
+        deliverableName: "Artifact #5: Aspirational Life Map & AI/MCP Automations",
+        deliverableDesc: "Detailed 5-year lifestyle budget model + deployed task automation agent scripts.",
+        defaultTemplate: `# ASPIRATIONAL LIFE MAP & AI STACK
+1. Target Monthly Post-Tax Spend: ₹[...]
+2. Core Autonomous Pipelines Built: [Lead gen, triage, research]
+3. Time Recovered per Week: [...] hours`
+      },
+      {
+        day: 6,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 06 (Class 04): Voicecraft · Vocabulary",
+        module: "Module 02: Voicecraft",
+        hours: "3.5 Hours",
+        quote: "The limits of your vocabulary are the limits of your world.",
+        lecture: `
+          <p>High-bandwidth language. Eliminating vague words ('good', 'nice', 'bad', 'stuff') in favor of precise, surgical vocabulary that communicates high status and deep clarity.</p>
+          <p>The speed of thought to speech: training mental retrieval without audible fillers.</p>
+        `,
+        sparringPrompt: "Describe a catastrophic failure you experienced without using the words: hard, bad, stressful, or problem.",
+        deliverableId: "DELIV_06",
+        deliverableName: "Artifact #6: Vocabulary Precision Lexicon",
+        deliverableDesc: "Personal dictionary of 50 high-bandwidth operational terms replacing low-status filler adjectives.",
+        defaultTemplate: `# VOCABULARY PRECISION LEXICON
+1. Instead of [Vague Term] -> [High-Bandwidth Term] (Context: ...)
+2. ...`
+      },
+      {
+        day: 7,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 07 (Class 05): Voicecraft · Verb & Syntactic Speed",
+        module: "Module 02: Voicecraft",
+        hours: "3.5 Hours",
+        quote: "Verbs drive reality. Passive voice is the dialect of victims.",
+        lecture: `
+          <p>Stripping passive constructions from your speech and writing. Forceful, direct verbs that convey executive decisiveness.</p>
+          <p>Compressing sentences: saying in 8 words what others stumble through in 40.</p>
+        `,
+        sparringPrompt: "Rephrase this sentence in 6 words or fewer: 'We are currently looking into the various options available in order to hopefully improve customer satisfaction.'",
+        deliverableId: "DELIV_07",
+        deliverableName: "Artifact #7: Syntactic Compression Scorecard",
+        deliverableDesc: "20 converted corporate-speak statements compressed into forceful, verb-driven declarations.",
+        defaultTemplate: `# SYNTACTIC COMPRESSION SCORECARD
+Original: [...] -> Compressed: [...]`
+      },
+      {
+        day: 8,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 08 (Class 06): Voicecraft · Vivacity & Modulation",
+        module: "Module 02: Voicecraft",
+        hours: "4 Hours",
+        quote: "Monotone speech is an apology for existing. Vocal modulation commands attention.",
+        lecture: `
+          <p>Tonal gravity: eliminating upward inflection at the end of statements (which signals approval-seeking).</p>
+          <p>Mastering the tactical pause. Cadence variations: speeding up for excitement, slowing down for gravity.</p>
+        `,
+        sparringPrompt: "Why does speaking 15% slower make people perceive you as significantly higher status?",
+        deliverableId: "DELIV_08",
+        deliverableName: "Artifact #8: 5-Hour Video Articulation Log & Scorecard",
+        deliverableDesc: "Recorded speaking drill logs with scored cadence, filler counts, and tonal authority metrics.",
+        defaultTemplate: `# ARTICULATION SCORECARD
+- Average WPM: [...]
+- Filler Count per Minute: [...]
+- Downward Inflection Audit: [Passed / Needs Drill]`
+      },
+      {
+        day: 9,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 09 (Class 07): Knowing Yourself · Psychometrics",
+        module: "Module 03: Knowing Self & Others",
+        hours: "3.5 Hours",
+        quote: "Until you make the unconscious conscious, it will direct your life and you will call it fate.",
+        lecture: `
+          <p>Deep psychometric profiling: Big 5 personality traits, Locus of Control, and Thomas-Kilmann conflict resolution modes.</p>
+          <p>Deconstructing your shadow traits: the coping mechanisms you developed in adolescence that now bottleneck your adult career.</p>
+        `,
+        sparringPrompt: "What is your primary psychological trigger that makes you defensive in an argument?",
+        deliverableId: "DELIV_09",
+        deliverableName: "Artifact #9: Psychometric Self-Concept Audit",
+        deliverableDesc: "Exhaustive report on your Big Five percentiles, conflict resolution style, and emotional tripwires.",
+        defaultTemplate: `# PSYCHOMETRIC AUDIT
+- Openness: [...] | Conscientiousness: [...] | Extraversion: [...] | Agreeableness: [...] | Neuroticism: [...]
+- Primary Reactive Shadow: [...]`
+      },
+      {
+        day: 10,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 10 (Class 08): Knowing Others · Incentive Mapping",
+        module: "Module 03: Knowing Self & Others",
+        hours: "3.5 Hours",
+        quote: "Never attribute to malice or stupidity that which is explained by financial incentives.",
+        lecture: `
+          <p>Incentive mapping: how to profile anyone within 10 minutes. Distinguishing what people say they care about vs. what their compensation, status, and fear dictate.</p>
+          <p>Behavioral archetypes: the insecure achiever, the rent-seeker, the empire builder, the saboteur.</p>
+        `,
+        sparringPrompt: "If a manager promises you equity 'after we see how things go', what is their true incentive?",
+        deliverableId: "DELIV_10",
+        deliverableName: "Artifact #10: 5 Behavioral Incentive Maps",
+        deliverableDesc: "Incentive teardowns of key stakeholders in your career or business circle.",
+        defaultTemplate: `# INCENTIVE MAPS
+Person 1: [Role] | Public Motive: [...] | True Incentive: [...] | Leverage Point: [...]`
+      },
+      {
+        day: 11,
+        section: "SEC1",
+        sectionLabel: "Sec I · Build Your Base",
+        title: "Day 11 (Class 09): Reading Rooms & Power Vacuums",
+        module: "Module 03: Knowing Self & Others",
+        hours: "4 Hours",
+        quote: "In every room there is an unstated hierarchy. If you do not see it, you are at the bottom of it.",
+        lecture: `
+          <p>Spatial awareness and room dynamics: eye contact flows, seating choices, conversational pacing, and conversational interruptions.</p>
+          <p>Spotting power vacuums: when leadership falters, how high-agency individuals naturally step in without appearing aggressive.</p>
+        `,
+        sparringPrompt: "You walk into a 10-person boardroom where two executives disagree. How do you identify who actually holds the veto power without asking?",
+        deliverableId: "DELIV_11",
+        deliverableName: "Artifact #11: Live Profiling Sheets (Self, Others, Rooms)",
+        deliverableDesc: "Decoding 3 high-stakes real-world rooms with power flows and recommended counter-moves.",
+        defaultTemplate: `# ROOM PROFILING REPORT
+Meeting/Event: [...] | Veto Holder: [...] | Underlying Alliances: [...] | Tactical Move Executed: [...]`
+      },
+      {
+        day: 12,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 12 (Class 10): Origins of Now · Evolution & Status",
+        module: "Module 04: Origins of Now",
+        hours: "3.5 Hours",
+        quote: "We carry Stone Age brains into digital glass towers.",
+        lecture: `
+          <p>Evolutionary psychology of status, hierarchy, tribalism, and gossip. Why modern humans fear ostracism more than physical injury.</p>
+          <p>Understanding why social media exploits evolutionary status triggers to keep smart people distracted and compliant.</p>
+        `,
+        sparringPrompt: "Why does modern corporate life cause chronic low-grade anxiety even when physical survival is 100% guaranteed?",
+        deliverableId: "DELIV_12",
+        deliverableName: "Artifact #12: Evolutionary Status Audit",
+        deliverableDesc: "Deconstruction of your personal status pursuits: distinguishing genuine signaling from evolutionary traps.",
+        defaultTemplate: `# STATUS AUDIT
+1. Where am I playing zero-sum status games: [...]
+2. Positive-sum game to replace it with: [...]`
+      },
+      {
+        day: 13,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 13 (Class 11): Civilisations, Power & Debt",
+        module: "Module 04: Origins of Now",
+        hours: "4 Hours",
+        quote: "Those who do not understand how money and empires rose become collateral damage when they fall.",
+        lecture: `
+          <p>A macro-history of currency: commodity money, gold backing, fractional reserve banking, fiat debt cycles, and digital networks.</p>
+          <p>How power structures consolidate and why technological revolutions permanently reprice labour every 50 years.</p>
+        `,
+        sparringPrompt: "How does inflation act as a silent wealth transfer from those with earned wages to those with leveraged assets?",
+        deliverableId: "DELIV_13",
+        deliverableName: "Artifact #13: Annotated Timeline of Power, Tech & Money",
+        deliverableDesc: "Comprehensive chronological map of monetary and technological disruptions from antiquity to AI.",
+        defaultTemplate: `# ANNOTATED TIMELINE OF POWER
+- Agricultural Revolution -> Bronze -> Banking Guilds -> Industrial -> Digital -> AI Sovereign
+- Key Inflection Principle: [...]`
+      },
+      {
+        day: 14,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 14 (Class 12): Mental Models of Decision-Making",
+        module: "Module 04: Origins of Now",
+        hours: "3.5 Hours",
+        quote: "A mental model is a compressed algorithm for navigating complexity.",
+        lecture: `
+          <p>Core algorithmic thinking: Inversion (Jacobi), Second-Order Consequences, Asymmetric Payoffs, Circle of Competence, Lindy Effect, and Gresham's Law.</p>
+          <p>Training your intuition to catch base-rate fallacies and statistical noise.</p>
+        `,
+        sparringPrompt: "Apply the principle of Inversion to your primary career goal: What is the most reliable way to guarantee failure, and are you currently doing any of it?",
+        deliverableId: "DELIV_14",
+        deliverableName: "Artifact #14: Mental Model Flashcard Index (25 Models)",
+        deliverableDesc: "Index of 25 core mental models applied directly to active personal and commercial decisions.",
+        defaultTemplate: `# MENTAL MODEL INDEX
+1. Model: Inversion | Personal Decision Applied To: [...] | Insight Unlocked: [...]
+2. Model: Second-Order Thinking | [...]`
+      },
+      {
+        day: 15,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 15 (Class 13): The Theory of Doubt · Delusion Inventory",
+        module: "Module 05: The Reved Theory of Doubt",
+        hours: "4 Hours",
+        quote: "The easiest person to fool is yourself. And you do it every single day.",
+        lecture: `
+          <p>The anatomy of rationalization: confirmation bias, sunk-cost fallacy, and self-serving attribution.</p>
+          <p>Constructing a Delusion Inventory: cataloging the lies you tell yourself regarding your discipline, relationship value, and market readiness.</p>
+        `,
+        sparringPrompt: "What is an excuse you give for why you aren't earning 3x more that you know deep down is completely false?",
+        deliverableId: "DELIV_15",
+        deliverableName: "Artifact #15: Personal Delusion Inventory Worksheet",
+        deliverableDesc: "Brutally honest worksheet naming personal biases, hidden benefits of excuses, and falsification tests.",
+        defaultTemplate: `# DELUSION INVENTORY
+- The Delusion: "..."
+- The Hidden Comfort: [What staying stuck protects me from]
+- The Empirical Reality: [...]
+- The Falsification Test: [...]`
+      },
+      {
+        day: 16,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 16 (Class 14): A Century of Social Experiments",
+        module: "Module 05: The Reved Theory of Doubt",
+        hours: "3.5 Hours",
+        quote: "Normal people do terrifying things when social pressure and authority remove personal accountability.",
+        lecture: `
+          <p>Analyzing Milgram (authority deference), Asch (line-length conformity), and behavioral economics findings (Kahneman & Tversky).</p>
+          <p>How social consensus manufactures artificial realities in corporate, political, and consumer environments.</p>
+        `,
+        sparringPrompt: "Describe a situation where you stayed silent in a meeting despite knowing the consensus idea was catastrophically flawed. Why?",
+        deliverableId: "DELIV_16",
+        deliverableName: "Artifact #16: Conformity & Social Experiment Synthesis",
+        deliverableDesc: "Analysis of 5 famous behavioral experiments and their direct application to defending your independent judgment.",
+        defaultTemplate: `# SOCIAL EXPERIMENTS SYNTHESIS
+1. Asch Line Test -> Corporate Equivalent: [...] -> My Defense Heuristic: [...]`
+      },
+      {
+        day: 17,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 17 (Class 15): Emotional Self-Regulation Protocol",
+        module: "Module 05: The Reved Theory of Doubt",
+        hours: "3.5 Hours",
+        quote: "If you cannot control your autonomic nervous system, anyone can buy your judgment for free.",
+        lecture: `
+          <p>The physiology of panic: amygdala hijack, cortisol spikes, and cognitive narrowing.</p>
+          <p>Building a personal protocol for emotional resets: physiological sighs, temperature shifts, mandatory cognitive pauses before reactive emails or negotiations.</p>
+        `,
+        sparringPrompt: "When an adversary insults or provokes you, what is the exact physical protocol you will use to retain complete frame control?",
+        deliverableId: "DELIV_17",
+        deliverableName: "Artifact #17: Personal Coping & Self-Regulation Protocol",
+        deliverableDesc: "Written emergency operating manual for handling acute stress, volatility, and conflict without losing composure.",
+        defaultTemplate: `# EMOTIONAL SELF-REGULATION PROTOCOL
+1. Acute Trigger Reset (0-60s): [Physiological sigh, posture shift]
+2. Mental Reframe (60s-5m): [Inversion / Sovereign perspective]
+3. Non-negotiable Rule: [No response sent under elevated heart rate]`
+      },
+      {
+        day: 18,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 18 (Class 16): Social Physics · Class Dogma",
+        module: "Module 06: Social Physics",
+        hours: "3.5 Hours",
+        quote: "Middle-class conditioning is designed to produce obedient workers, not sovereign operators.",
+        lecture: `
+          <p>Deconstructing middle-class dogma: credentialism over competence, excessive politeness, fear of asking for money, and deference to institutional titles.</p>
+          <p>How the truly sovereign navigate social class dynamics without resentment or servility.</p>
+        `,
+        sparringPrompt: "Why does asking for a high fee upfront feel uncomfortable for you, and how does that discomfort reveal your class conditioning?",
+        deliverableId: "DELIV_18",
+        deliverableName: "Artifact #18: Dogma Deference & Class Mobility Audit",
+        deliverableDesc: "Written audit dismantling limiting socioeconomic beliefs about money, authority, and entitlement.",
+        defaultTemplate: `# CLASS DOGMA AUDIT
+- Conditioning: [Fear of charging high prices / over-politeness]
+- Root Cause: [...]
+- Sovereign Counter-Protocol: [...]`
+      },
+      {
+        day: 19,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 19 (Class 17): Social Physics · Signals & Undertones",
+        module: "Module 06: Social Physics",
+        hours: "3.5 Hours",
+        quote: "The loudest person in the room is rarely the most powerful. Power whispers.",
+        lecture: `
+          <p>Costly signaling vs. cheap talk. Luxury beliefs, virtue signaling, and counter-signaling (why tech billionaires wear plain t-shirts while mid-level managers wear suits).</p>
+          <p>Hearing the undertones: decoding what people mean when they use passive-aggressive hedges.</p>
+        `,
+        sparringPrompt: "What is an example of counter-signaling you could execute right now that would increase your perceived authority?",
+        deliverableId: "DELIV_19",
+        deliverableName: "Artifact #19: Signals & Undertones Decode Sheet",
+        deliverableDesc: "Breakdown of 5 subtle social signals, counter-signals, and subtextual interactions in your industry.",
+        defaultTemplate: `# SIGNALS DECODE SHEET
+Signal: [Expensive watch vs Casio] | Underlying Reality: [...] | How to Interpret: [...]`
+      },
+      {
+        day: 20,
+        section: "SEC2",
+        sectionLabel: "Sec II · Unfuckwithable",
+        title: "Day 20 (Class 18): Social Physics · Frames & Dominance",
+        module: "Module 06: Social Physics",
+        hours: "4 Hours",
+        quote: "Whoever sets the frame controls the reality of the room.",
+        lecture: `
+          <p>Frame control dynamics: recognizing when someone is pulling you into their moral, comedic, or bureaucratic frame.</p>
+          <p>Dominance vs. Prestige. Reframing adversarial traps effortlessly without engaging in low-status arguing.</p>
+        `,
+        sparringPrompt: "A client says: 'Your competitor is offering this for half your price. Why shouldn't I just go with them?' How do you reframe without defending your price?",
+        deliverableId: "DELIV_20",
+        deliverableName: "Artifact #20: Behavior Analysis & Frame Control Logs",
+        deliverableDesc: "Analysis of 5 real interactions where frame control was tested, held, or surrendered.",
+        defaultTemplate: `# FRAME CONTROL AUDIT
+Scenario: [...] | Adversary's Frame: [...] | Pivot Executed: [...] | Outcome: [...]`
+      },
+      {
+        day: 21,
+        section: "SEC3",
+        sectionLabel: "Sec III · Cast Your Influence",
+        title: "Day 21 (Class 19): Persuasion · Stories That Move",
+        module: "Module 07: Art of Persuasion",
+        hours: "3.5 Hours",
+        quote: "Facts inform. Stories transform. Narratives govern human civilization.",
+        lecture: `
+          <p>The mechanics of mythic narrative arcs: status quo, catalyst, descent into the abyss, transformation, and inevitable vision.</p>
+          <p>Crafting founder and product stories that make prospective customers feel they are joining an exclusive movement rather than buying a commodity.</p>
+        `,
+        sparringPrompt: "What is the core narrative of your career? If it sounds like a chronological resume, rewrite it as an unavoidable quest.",
+        deliverableId: "DELIV_21",
+        deliverableName: "Artifact #21: The Movement Narrative Manuscript",
+        deliverableDesc: "Definitive 500-word founder and venture origin story engineered with tension and inevitable resolution.",
+        defaultTemplate: `# MOVEMENT NARRATIVE MANUSCRIPT
+1. The Old Broken World: [...]
+2. The Epiphany / Crucible: [...]
+3. The Sovereign New Standard: [...]`
+      },
+      {
+        day: 22,
+        section: "SEC3",
+        sectionLabel: "Sec III · Cast Your Influence",
+        title: "Day 22 (Class 20): Persuasion · High-Stakes Negotiation",
+        module: "Module 07: Art of Persuasion",
+        hours: "4 Hours",
+        quote: "You don’t get what you deserve in business. You get what you negotiate.",
+        lecture: `
+          <p>Tactical empathy (Voss methodology), anchoring with audacity, identifying the adversary's Black Swan, and BATNA establishment.</p>
+          <p>Using tactical silence: why the first person who speaks after an anchor offer loses leverage.</p>
+        `,
+        sparringPrompt: "In an ongoing negotiation, what is your genuine walk-away point, and do they know you are willing to walk?",
+        deliverableId: "DELIV_22",
+        deliverableName: "Artifact #22: High-Stakes Negotiation Preparation Sheet",
+        deliverableDesc: "Complete prep sheet for an upcoming high-stakes negotiation with anchor, BATNA, and calibrated questions.",
+        defaultTemplate: `# NEGOTIATION PREP SHEET
+- Counterparty: [...]
+- My Anchor: ₹[...] | Walk-Away Threshold: ₹[...]
+- Their Hidden Vulnerability: [...]
+- Calibrated Opening Query: "How am I supposed to do that?"`
+      },
+      {
+        day: 23,
+        section: "SEC3",
+        sectionLabel: "Sec III · Cast Your Influence",
+        title: "Day 23 (Class 21): Persuasion · The Inevitable Pitch",
+        module: "Module 07: Art of Persuasion",
+        hours: "4 Hours",
+        quote: "A pitch is not a presentation. It is an argument for the inevitability of your solution.",
+        lecture: `
+          <p>The Pitch Skeleton: Hook, Agony, Panacea, Proof, Economics, and Call to Action.</p>
+          <p>Elevator pitching: delivering the full value proposition in 30 seconds without rushed breathing or nervous inflection.</p>
+        `,
+        sparringPrompt: "Pitch your main product or service to a distracted billionaire who has exactly 20 seconds before their elevator doors open.",
+        deliverableId: "DELIV_23",
+        deliverableName: "Artifact #23: 15 Elevator Pitches & Recorded Pitch Review",
+        deliverableDesc: "15 distinct 30-second pitches across different formats + self-evaluation of a recorded 10-minute pitch.",
+        defaultTemplate: `# 15 ELEVATOR PITCHES
+1. The Curiosity Hook: [...]
+2. The Contrarian Hook: [...]
+3. The Economic Pain Hook: [...]`
+      },
+      {
+        day: 24,
+        section: "SEC3",
+        sectionLabel: "Sec III · Cast Your Influence",
+        title: "Day 24 (Class 22): Demand Design · Narratives With Gravity",
+        module: "Module 08: Demand Design",
+        hours: "3.5 Hours",
+        quote: "Don’t compete in an existing category. Create a category where you are the only option.",
+        lecture: `
+          <p>Category creation vs. feature fighting. Developing narrative gravity that makes alternatives look obsolete or irresponsible.</p>
+          <p>High-converting copywriting: headline hooks, micro-copy, and value statements that arrest attention on mobile feeds.</p>
+        `,
+        sparringPrompt: "How can your product make its main competitor look like an outdated relic without mentioning their name?",
+        deliverableId: "DELIV_24",
+        deliverableName: "Artifact #24: Copywriting Swipe File (50 Hooks)",
+        deliverableDesc: "Curated swipe file of 50 high-converting headlines, value statements, and call-to-action hooks.",
+        defaultTemplate: `# COPYWRITING SWIPE FILE
+- Headlines: [1-10]
+- Value Statements: [11-20]
+- Closing Hooks: [21-30]`
+      },
+      {
+        day: 25,
+        section: "SEC3",
+        sectionLabel: "Sec III · Cast Your Influence",
+        title: "Day 25 (Class 23): Demand Design · Emotional Resonance",
+        module: "Module 08: Demand Design",
+        hours: "3.5 Hours",
+        quote: "People buy on identity and justify with logic.",
+        lecture: `
+          <p>Audience identification and tribal signaling. Why people buy luxury goods, Apple devices, or high-end consulting to confirm who they are.</p>
+          <p>Crafting marketing offers that appeal directly to customer aspirational identity.</p>
+        `,
+        sparringPrompt: "What aspirational identity does your target customer secretly want to project to their peers?",
+        deliverableId: "DELIV_25",
+        deliverableName: "Artifact #25: 10 Go-To-Market Strategic Blueprints",
+        deliverableDesc: "10 end-to-end launch and distribution blueprints across unique product categories.",
+        defaultTemplate: `# GTM BLUEPRINTS
+Blueprint 1: [Category] | Target Identity: [...] | Distribution Hook: [...] | Conversion Loop: [...]`
+      },
+      {
+        day: 26,
+        section: "SEC3",
+        sectionLabel: "Sec III · Cast Your Influence",
+        title: "Day 26 (Class 24): Demand Design · Automated Ad Systems",
+        module: "Module 08: Demand Design",
+        hours: "4 Hours",
+        quote: "Scale is when your distribution operates while you sleep.",
+        lecture: `
+          <p>Designing modern programmatic distribution: multichannel ad campaigns, creative matrix testing, and MCP automation pipelines.</p>
+          <p>Tracking Customer Acquisition Cost (CAC) against 30-day cash payback.</p>
+        `,
+        sparringPrompt: "If you had a ₹50,000 ad budget, how would you split it across testing creative vs scaling the winning angle?",
+        deliverableId: "DELIV_26",
+        deliverableName: "Artifact #26: Live Ad Campaigns & MCP Automation Briefs",
+        deliverableDesc: "Executed campaign architectures, creative test variations, and automation pipelines.",
+        defaultTemplate: `# AD CAMPAIGN & MCP BRIEFS
+- Channels: Meta / Google / LinkedIn
+- Creative Variations Tested: [...]
+- Payback Model: [...]`
+      },
+      {
+        day: 27,
+        section: "SEC4",
+        sectionLabel: "Sec IV · Convergence",
+        title: "Day 27 (Class 25): Peak Brain · Neurochemistry & Focus",
+        module: "Module 09: Make Your Brain Brain More",
+        hours: "3.5 Hours",
+        quote: "Your brain is a biological engine. Feed it trash and expect misfires.",
+        lecture: `
+          <p>Dopamine management: eliminating cheap digital dopamine loops that destroy sustained focus and cognitive endurance.</p>
+          <p>Baseline cognitive benchmarking: measuring reaction latency, working memory capacity, and deep work block tolerance.</p>
+        `,
+        sparringPrompt: "What is your single biggest source of cheap dopamine that is stealing 2 hours of your peak morning cognition?",
+        deliverableId: "DELIV_27",
+        deliverableName: "Artifact #27: Cognition Baseline Test (Before & After)",
+        deliverableDesc: "Standardized cognitive test scores tracking mental speed and focus capacity.",
+        defaultTemplate: `# COGNITION BASELINE
+- Deep Work Block Duration: [...] min
+- Daily Screen Time Audit: [...] hours
+- Cheap Dopamine Triggers Removed: [...]`
+      },
+      {
+        day: 28,
+        section: "SEC4",
+        sectionLabel: "Sec IV · Convergence",
+        title: "Day 28 (Class 26): Peak Brain · Nutrition & Circadian Biology",
+        module: "Module 09: Make Your Brain Brain More",
+        hours: "3.5 Hours",
+        quote: "Without sleep, judgment degrades into reactive emotionalism.",
+        lecture: `
+          <p>Circadian biology: morning sunlight exposure, cortisol timing, sleep architecture (REM vs. Deep), and sleep hygiene.</p>
+          <p>Blood glucose stabilization: avoiding post-lunch brain fog by managing glycemic spikes.</p>
+        `,
+        sparringPrompt: "What does your sleep routine look like 60 minutes before bed, and how is blue light sabotaging your deep sleep?",
+        deliverableId: "DELIV_28",
+        deliverableName: "Artifact #28: Circadian & Nutritional Blueprint",
+        deliverableDesc: "Custom biological protocol for meal timing, light exposure, and sleep architecture.",
+        defaultTemplate: `# NUTRITION & CIRCADIAN PROTOCOL
+- Morning Sunlight: 15 min by [Time]
+- Last Meal: [Time] (Min 3 hrs before sleep)
+- Sleep Target: 7.5 hrs uninterrupted`
+      },
+      {
+        day: 29,
+        section: "SEC4",
+        sectionLabel: "Sec IV · Convergence",
+        title: "Day 29 (Class 27): Peak Brain · The Peak Protocol",
+        module: "Module 09: Make Your Brain Brain More",
+        hours: "3.5 Hours",
+        quote: "High-agency operators do not rely on motivation. They execute non-negotiable protocols.",
+        lecture: `
+          <p>Constructing your daily peak operating protocol: morning priming, deep work blocks, recovery periods, and evening audits.</p>
+          <p>Eliminating cognitive fatigue by automating routine decisions.</p>
+        `,
+        sparringPrompt: "Write down your non-negotiable first 90 minutes of the morning: What happens from the second your eyes open?",
+        deliverableId: "DELIV_29",
+        deliverableName: "Artifact #29: Personal Peak-Performance Protocol",
+        deliverableDesc: "Comprehensive daily operating schedule balancing deep work, physical energy, and cognitive recovery.",
+        defaultTemplate: `# PEAK PERFORMANCE PROTOCOL
+- 06:30 - Wake, hydrate, sunlight
+- 07:30 - Deep Work Sprint 1 (Zero notifications)
+- 12:00 - Protein + low glycemic nourishment
+- 14:00 - High-bandwidth collaboration
+- 21:30 - Digital shutdown`
+      },
+      {
+        day: 30,
+        section: "SEC4",
+        sectionLabel: "Sec IV · Convergence",
+        title: "Day 30 (Class 28): The Missing Piece · Convergence",
+        module: "Module 10: The Missing Piece",
+        hours: "4 Hours",
+        quote: "Everything you learned only works when it operates as one unified engine.",
+        lecture: `
+          <p>Fusing the five pillars: Capital, Voicecraft, Social Dynamics, Asymmetric Influence, and Biology into a singular operating identity.</p>
+          <p>Resolving internal friction: bridging the gap between who you were 30 days ago and the high-agency sovereign operator you are today.</p>
+        `,
+        sparringPrompt: "In what specific situation will you immediately apply this integrated judgment next week?",
+        deliverableId: "DELIV_30",
+        deliverableName: "Artifact #30: Five Pillars Convergence Matrix",
+        deliverableDesc: "Cross-disciplinary integration matrix linking business, speech, psychology, influence, and biology.",
+        defaultTemplate: `# CONVERGENCE MATRIX
+- Capital Leverage: [...]
+- Verbal Authority: [...]
+- Social Physics: [...]
+- Influence Engine: [...]
+- Biological Substrate: [...]`
+      },
+      {
+        day: 31,
+        section: "SEC4",
+        sectionLabel: "Sec IV · Convergence",
+        title: "Day 31 (Class 29): Your Written Worldview",
+        module: "Module 10: The Missing Piece",
+        hours: "4 Hours",
+        quote: "If you do not write your worldview, someone else will write it for you.",
+        lecture: `
+          <p>Codifying your personal operating principles into a definitive document: your ethics, your boundaries, your criteria for partners, your risk tolerance, and your non-negotiables.</p>
+          <p>This is your personal constitution—the document you consult during moments of chaos.</p>
+        `,
+        sparringPrompt: "What is your single most important operating principle that you will never violate, even if offered 10 Crore rupees?",
+        deliverableId: "DELIV_31",
+        deliverableName: "Artifact #31: The Worldview Document (Personal Operating System)",
+        deliverableDesc: "3,000-word definitive personal manifesto on your operating axioms, boundaries, and decision heuristics.",
+        defaultTemplate: `# THE WRITTEN WORLDVIEW
+1. First Principles of My Reality: [...]
+2. Commercial Axioms: [...]
+3. Relational Boundaries: [...]
+4. Non-negotiable Heuristics: [...]`
+      },
+      {
+        day: 32,
+        section: "SEC4",
+        sectionLabel: "Sec IV · Convergence",
+        title: "Day 32 (Class 30): The Five-Year Strategic Map",
+        module: "Module 10: The Missing Piece",
+        hours: "4 Hours",
+        quote: "Not the end. Merely the initiation of your sovereign trajectory.",
+        lecture: `
+          <p>Developing your 1,825-day roadmap: what to read, what to build, what to ignore, and who to associate with over the next five years.</p>
+          <p>Designing quarterly checkpoints to review progress against your Aspirational Life Map.</p>
+        `,
+        sparringPrompt: "What is the single highest-leverage asset you will build over the next 12 months that compounds over the next decade?",
+        deliverableId: "DELIV_32",
+        deliverableName: "Artifact #32: Five-Year Strategic Life Roadmap",
+        deliverableDesc: "60-month execution plan detailing milestones, asset acquisition, and autonomous leverage points.",
+        defaultTemplate: `# FIVE-YEAR STRATEGIC MAP
+- Year 1: Foundations & Initial Cashflow Engine
+- Year 2: Asymmetric Scale & Capital Compounding
+- Year 3-5: Sovereign Operations & Institutional Legacy`
+      },
+      {
+        day: 33,
+        section: "CONVOCATION",
+        sectionLabel: "Phase 5 · Convocation",
+        title: "Day 33: The Convocation & The Dossier Handover",
+        module: "Convocation",
+        hours: "4 Hours",
+        quote: "You came in seeking opinions. You leave armed with judgment.",
+        lecture: `
+          <p>The final defense of your Dossier. Review of all completed deliverables. Binding your digital and physical operating vault.</p>
+          <p>Induction into the lifelong Reved God Mode alumni network. The start of your true sovereign career.</p>
+        `,
+        sparringPrompt: "Look at your Day 01 baseline vs where your judgment sits today. What is the single most fundamental shift in how you see the world?",
+        deliverableId: "DELIV_33",
+        deliverableName: "Artifact #33: The Complete Dossier Vault Binder",
+        deliverableDesc: "Compiled, indexed, and finalized binder containing all deliverables produced during the cohort.",
+        defaultTemplate: `# CONVOCATION CERTIFICATION & DOSSIER VAULT
+- Student: Kartikey
+- Cohort: 11 (God Mode)
+- Dossier Status: Fully Defended & Certified`
+      }
+    ];
+
+    // --- STATE MANAGEMENT VIA LOCAL STORAGE ---
+    const STORAGE_KEY = "GOD_MODE_ACADEMY_STATE_V1";
+
+    function loadState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        try { return JSON.parse(raw); } catch (e) {}
+      }
+      return {
+        currentDay: 1,
+        completedDays: [],
+        deliverables: {},
+        sparringHistory: {}
+      };
+    }
+
+    let appState = loadState();
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      updateProgressDisplay();
+    }
+
+    // --- INITIALIZATION ---
+    let activeDayNumber = appState.currentDay || 1;
+    let currentFilteredSection = "ALL";
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDaysTimeline();
+      renderDayDetails(activeDayNumber);
+      renderDossierGrid();
+      renderModulesGrid();
+      updateProgressDisplay();
+    });
+
+    // --- TIMELINE RENDERING ---
+    function renderDaysTimeline() {
+      const container = document.getElementById('daysTimelineStrip');
+      container.innerHTML = '';
+
+      CURRICULUM_DATA.forEach(d => {
+        const isCompleted = appState.completedDays.includes(d.day);
+        const isActive = d.day === activeDayNumber;
+        
+        let borderClass = "border-white/10 text-slate-400 bg-dark-950";
+        if (isCompleted) {
+          borderClass = "border-emerald-500/50 text-emerald-400 bg-emerald-950/20";
+        }
+        if (isActive) {
+          borderClass = "border-gold-500 text-gold-400 bg-gold-500/15 shadow-sm";
+        }
+
+        const btn = document.createElement('button');
+        btn.className = `flex flex-col items-center justify-center w-14 h-14 rounded-lg border text-xs font-mono transition shrink-0 hover:border-gold-400 ${borderClass}`;
+        btn.onclick = () => selectDay(d.day);
+        btn.innerHTML = `
+          <span class="text-[9px] uppercase tracking-wider text-slate-500">${isCompleted ? '✓ DONE' : 'DAY'}</span>
+          <span class="text-sm font-bold ${isActive ? 'text-gold-300' : ''}">${d.day < 10 ? '0' + d.day : d.day}</span>
+        `;
+        container.appendChild(btn);
+      });
+    }
+
+    function selectDay(dayNumber) {
+      activeDayNumber = dayNumber;
+      appState.currentDay = dayNumber;
+      saveState();
+      renderDaysTimeline();
+      renderDayDetails(dayNumber);
+      window.scrollTo({ top: 180, behavior: 'smooth' });
+    }
+
+    function navigateDay(offset) {
+      const target = activeDayNumber + offset;
+      if (target >= 1 && target <= 33) {
+        selectDay(target);
+      }
+    }
+
+    // --- DAY DETAILS RENDERING ---
+    function renderDayDetails(dayNumber) {
+      const dayData = CURRICULUM_DATA.find(d => d.day === dayNumber) || CURRICULUM_DATA[0];
+      
+      document.getElementById('currentSectionBadge').textContent = dayData.sectionLabel;
+      document.getElementById('currentHoursBadge').textContent = `Duration: ${dayData.hours}`;
+      document.getElementById('currentDayTitle').textContent = dayData.title;
+      document.getElementById('currentModuleBadge').textContent = dayData.module;
+      document.getElementById('currentQuote').textContent = dayData.quote;
+      document.getElementById('currentLectureContent').innerHTML = dayData.lecture;
+      document.getElementById('currentSparringPrompt').textContent = dayData.sparringPrompt;
+      
+      document.getElementById('currentDeliverableName').textContent = dayData.deliverableName;
+      document.getElementById('currentDeliverableDesc').textContent = dayData.deliverableDesc;
+
+      // Deliverable Input Value
+      const savedDeliverable = appState.deliverables[dayData.deliverableId] || dayData.defaultTemplate;
+      document.getElementById('deliverableContentInput').value = savedDeliverable;
+
+      // Deliverable Status Badge
+      const isDone = appState.completedDays.includes(dayData.day);
+      const badge = document.getElementById('deliverableStatusBadge');
+      if (isDone) {
+        badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30";
+        badge.textContent = "✓ Completed";
+      } else {
+        badge.className = "text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30";
+        badge.textContent = "In Progress";
+      }
+
+      // Sparring input reset / load
+      document.getElementById('sparringInput').value = appState.sparringHistory[dayData.day] || "";
+      document.getElementById('sparringFeedbackBox').classList.add('hidden');
+
+      // Buttons
+      document.getElementById('dayIndicatorNumber').textContent = `Day ${dayNumber} / 33`;
+      document.getElementById('mobileCurrentDayLabel').textContent = `Day ${dayNumber}/33`;
+      document.getElementById('btnPrevDay').disabled = (dayNumber === 1);
+      document.getElementById('btnNextDay').disabled = (dayNumber === 33);
+    }
+
+    // --- DELIVERABLE ACTIONS ---
+    function saveDeliverableDraft() {
+      const dayData = CURRICULUM_DATA.find(d => d.day === activeDayNumber);
+      const val = document.getElementById('deliverableContentInput').value;
+      appState.deliverables[dayData.deliverableId] = val;
+      saveState();
+      alert(`Draft saved for ${dayData.deliverableName}`);
+    }
+
+    function commitDeliverableFinal() {
+      const dayData = CURRICULUM_DATA.find(d => d.day === activeDayNumber);
+      const val = document.getElementById('deliverableContentInput').value;
+      appState.deliverables[dayData.deliverableId] = val;
+      if (!appState.completedDays.includes(dayData.day)) {
+        appState.completedDays.push(dayData.day);
+      }
+      saveState();
+      renderDaysTimeline();
+      renderDayDetails(activeDayNumber);
+      renderDossierGrid();
+      alert(`✓ Marked Day ${dayData.day} & ${dayData.deliverableName} as COMPLETED in your Dossier!`);
+    }
+
+    // --- SOCRATIC SPARRING SIMULATION ---
+    function submitSocraticSparring() {
+      const input = document.getElementById('sparringInput').value.trim();
+      if (!input) {
+        alert("Enter your reasoning before sparring with the Sensei.");
+        return;
+      }
+      const dayData = CURRICULUM_DATA.find(d => d.day === activeDayNumber);
+      appState.sparringHistory[dayData.day] = input;
+      saveState();
+
+      // Socratic analysis heuristics based on length, keywords, precision
+      let critique = "";
+      if (input.length < 50) {
+        critique = "Too brief and defensive. You're hedging. State your actual numbers and the real mechanism. Don't speak in generalizations.";
+      } else if (input.toLowerCase().includes("hope") || input.toLowerCase().includes("maybe") || input.toLowerCase().includes("try")) {
+        critique = "Flagged timid language: 'hope', 'maybe', or 'try'. Sovereign operators do not 'hope' for outcomes—they engineer asymmetric incentives. Rephrase with direct verbs.";
+      } else {
+        critique = "Sharp formulation. You clearly distinguished between public optics and internal mechanics. Notice how much clearer your thinking becomes when you strip away performative modesty. Approved for Day " + dayData.day + " standard.";
+      }
+
+      document.getElementById('sparringFeedbackText').innerHTML = critique;
+      document.getElementById('sparringFeedbackBox').classList.remove('hidden');
+    }
+
+    // --- PROGRESS CALCULATION ---
+    function updateProgressDisplay() {
+      const completedCount = appState.completedDays.length;
+      const pct = Math.round((completedCount / 33) * 100);
+
+      document.getElementById('headerProgressPct').textContent = `${pct}%`;
+      document.getElementById('headerDeliverablesCount').textContent = `${completedCount} / 33 Days Logged`;
+      document.getElementById('headerProgressBar').style.width = `${pct}%`;
+    }
+
+    // --- DOSSIER GRID RENDERING ---
+    function renderDossierGrid() {
+      const grid = document.getElementById('dossierCardsGrid');
+      grid.innerHTML = '';
+
+      CURRICULUM_DATA.forEach(d => {
+        const isDone = appState.completedDays.includes(d.day);
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-xl border-subtle bg-dark-900 flex flex-col justify-between gap-3 hover:border-gold-500/40 transition`;
+        
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between text-[10px] font-mono mb-1.5">
+              <span class="text-gold-400 font-semibold">DAY ${d.day < 10 ? '0' + d.day : d.day}</span>
+              <span class="${isDone ? 'text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded' : 'text-slate-500'}">
+                ${isDone ? '✓ Completed' : 'Pending'}
+              </span>
+            </div>
+            <h4 class="text-sm font-serif font-bold text-white mb-1">${d.deliverableName}</h4>
+            <p class="text-[11px] text-slate-400 font-sans line-clamp-2">${d.deliverableDesc}</p>
+          </div>
+          <div class="flex items-center justify-between pt-2 border-t border-white/5">
+            <span class="text-[10px] font-mono text-slate-500">${d.module.split(':')[0]}</span>
+            <button onclick="openDeliverableModal(${d.day})" class="text-[11px] font-mono text-gold-400 hover:text-gold-300 font-semibold">
+              Open Artifact →
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openDeliverableModal(dayNumber) {
+      const d = CURRICULUM_DATA.find(item => item.day === dayNumber);
+      document.getElementById('modalArtifactNum').textContent = `Day ${d.day} · Artifact #${d.day}`;
+      document.getElementById('modalArtifactTitle').textContent = d.deliverableName;
+      document.getElementById('modalArtifactDesc').textContent = d.deliverableDesc;
+      document.getElementById('modalArtifactContent').value = appState.deliverables[d.deliverableId] || d.defaultTemplate;
+      document.getElementById('modalArtifactStatusText').textContent = appState.completedDays.includes(d.day) ? "Status: Completed" : "Status: In Progress";
+      
+      document.getElementById('deliverableModal').dataset.day = d.day;
+      document.getElementById('deliverableModal').classList.remove('hidden');
+    }
+
+    function closeDeliverableModal() {
+      document.getElementById('deliverableModal').classList.add('hidden');
+    }
+
+    function saveModalDeliverable() {
+      const day = parseInt(document.getElementById('deliverableModal').dataset.day);
+      const d = CURRICULUM_DATA.find(item => item.day === day);
+      const val = document.getElementById('modalArtifactContent').value;
+      
+      appState.deliverables[d.deliverableId] = val;
+      if (!appState.completedDays.includes(day)) {
+        appState.completedDays.push(day);
+      }
+      saveState();
+      renderDossierGrid();
+      renderDaysTimeline();
+      if (activeDayNumber === day) {
+        renderDayDetails(day);
+      }
+      closeDeliverableModal();
+    }
+
+    // --- VOICECRAFT STUDIO ACTIONS ---
+    const PROMPT_DECK = [
+      "Why do most ambitious people fail to build anything of lasting consequence in the AI era?",
+      "Defend why high gross margins matter more than viral top-of-funnel customer traffic.",
+      "Explain the concept of frame control to a 12-year-old without using academic jargon.",
+      "Tell a prospective client why charging ₹1 Lakh is significantly cheaper than hiring a ₹30,000 junior employee.",
+      "Why does passive voice in speech correlate with low executive leverage?"
+    ];
+
+    function generateRandomPrompt() {
+      const p = PROMPT_DECK[Math.floor(Math.random() * PROMPT_DECK.length)];
+      document.getElementById('voicePromptText').textContent = `"${p}"`;
+    }
+
+    let timerInterval = null;
+    let timerSeconds = 180;
+
+    function startVoiceTimer() {
+      if (timerInterval) return;
+      timerInterval = setInterval(() => {
+        if (timerSeconds <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          alert("Time's up! Conclude your speech with tonal authority.");
+          return;
+        }
+        timerSeconds--;
+        const mins = Math.floor(timerSeconds / 60);
+        const secs = timerSeconds % 60;
+        document.getElementById('timerClock').textContent = 
+          `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+      }, 1000);
+    }
+
+    function pauseVoiceTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function resetVoiceTimer() {
+      pauseVoiceTimer();
+      timerSeconds = 180;
+      document.getElementById('timerClock').textContent = "03:00";
+    }
+
+    function analyzeSpeechText() {
+      const text = document.getElementById('speechTranscribeInput').value;
+      const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+      const totalWords = words.length;
+      document.getElementById('statWordCount').textContent = totalWords;
+
+      // Filler words audit
+      const fillers = ['um', 'uh', 'like', 'you know', 'basically', 'literally', 'actually', 'sort of', 'kind of'];
+      let flagged = 0;
+      let flaggedList = [];
+      const lower = text.toLowerCase();
+      fillers.forEach(f => {
+        const matches = lower.match(new RegExp(`\\b${f}\\b`, 'g'));
+        if (matches) {
+          flagged += matches.length;
+          flaggedList.push(`${f} (${matches.length})`);
+        }
+      });
+
+      document.getElementById('statFillerCount').textContent = flagged;
+      document.getElementById('fillerWordReport').textContent = 
+        flaggedList.length > 0 ? `Fillers flagged: ${flaggedList.join(', ')}` : 'Fillers flagged: Clean cadence (0 detected).';
+
+      // WPM estimate (assuming 3 min total monologue)
+      const wpm = Math.round(totalWords / 3);
+      document.getElementById('statWpm').textContent = `${wpm} WPM`;
+    }
+
+    // Audio recording stub using browser MediaRecorder
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecordingAudio = false;
+
+    async function toggleAudioRecording() {
+      const btn = document.getElementById('btnAudioRec');
+      const status = document.getElementById('audioRecStatus');
+
+      if (!isRecordingAudio) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+          mediaRecorder.onstop = () => {
+            const blob = new Blob(audioChunks, { type: 'audio/webm' });
+            status.textContent = `Recorded ${(blob.size / 1024).toFixed(1)} KB voice note locally.`;
+          };
+          mediaRecorder.start();
+          isRecordingAudio = true;
+          startVoiceTimer();
+          btn.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span> Stop Recording`;
+          status.textContent = "Recording in progress... speak with deliberate downward inflection.";
+        } catch (err) {
+          alert("Microphone permission denied or not supported in this browser context: " + err.message);
+        }
+      } else {
+        if (mediaRecorder) mediaRecorder.stop();
+        isRecordingAudio = false;
+        pauseVoiceTimer();
+        btn.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500"></span> Record Voice Drill`;
+      }
+    }
+
+    // --- TAB SWITCHING ---
+    function switchMainTab(tab) {
+      document.getElementById('viewCurriculum').classList.add('hidden');
+      document.getElementById('viewDossier').classList.add('hidden');
+      document.getElementById('viewVoicecraft').classList.add('hidden');
+      document.getElementById('viewPrinciples').classList.add('hidden');
+
+      const tabs = ['tabBtnCurriculum', 'tabBtnDossier', 'tabBtnVoicecraft', 'tabBtnPrinciples'];
+      tabs.forEach(t => {
+        const el = document.getElementById(t);
+        el.className = "px-4 py-2 rounded-t font-semibold transition border-b-2 border-transparent text-slate-400 hover:text-white hover:bg-dark-800";
+      });
+
+      if (tab === 'curriculum') {
+        document.getElementById('viewCurriculum').classList.remove('hidden');
+        document.getElementById('tabBtnCurriculum').className = "px-4 py-2 rounded-t font-semibold transition border-b-2 border-gold-500 text-gold-400 bg-gold-500/10";
+      } else if (tab === 'dossier') {
+        document.getElementById('viewDossier').classList.remove('hidden');
+        document.getElementById('tabBtnDossier').className = "px-4 py-2 rounded-t font-semibold transition border-b-2 border-gold-500 text-gold-400 bg-gold-500/10";
+      } else if (tab === 'voicecraft') {
+        document.getElementById('viewVoicecraft').classList.remove('hidden');
+        document.getElementById('tabBtnVoicecraft').className = "px-4 py-2 rounded-t font-semibold transition border-b-2 border-gold-500 text-gold-400 bg-gold-500/10";
+      } else if (tab === 'principles') {
+        document.getElementById('viewPrinciples').classList.remove('hidden');
+        document.getElementById('tabBtnPrinciples').className = "px-4 py-2 rounded-t font-semibold transition border-b-2 border-gold-500 text-gold-400 bg-gold-500/10";
+      }
+    }
+
+    function toggleVoicecraftModal() {
+      switchMainTab('voicecraft');
+    }
+
+    function filterSection(sec) {
+      currentFilteredSection = sec;
+      const pills = document.querySelectorAll('.sec-filter');
+      pills.forEach(p => p.classList.remove('active-pill'));
+      event.target.classList.add('active-pill');
+
+      // Scroll timeline to first match
+      if (sec !== 'ALL') {
+        const match = CURRICULUM_DATA.find(d => d.section === sec);
+        if (match) selectDay(match.day);
+      }
+    }
+
+    // --- MODULES GRID ---
+    const MODULES_LIST = [
+      { id: "01", name: "Money, Meaning & Milestones", hrs: "12 Hours", desc: "Cashflow physics, startup economics, supply-chain canvases, and solo AI automation systems." },
+      { id: "02", name: "Voicecraft: Vivacity, Verb & Vocabulary", hrs: "11 Hours", desc: "Verbal speed, eliminating weak fillers, downward tonal inflection, and commanding the room." },
+      { id: "03", name: "Knowing: Self & Everybody Else", hrs: "11 Hours", desc: "Psychometric profiling, reading room power flows, and unmasking hidden incentives." },
+      { id: "04", name: "Origins of Now & How We Got Here", hrs: "11 Hours", desc: "Evolutionary status, history of money/debt/empires, and high-leverage mental models." },
+      { id: "05", name: "The Reved Theory of Doubt", hrs: "11 Hours", desc: "Anti-delusion recipe, cognitive bias audits, and emergency emotional self-regulation protocols." },
+      { id: "06", name: "Social Physics: Status, Signals & Frames", hrs: "11 Hours", desc: "Class dogma deconstruction, counter-signaling, and mastering conversational frame control." },
+      { id: "07", name: "Art of Persuasion", hrs: "11 Hours", desc: "Movement storytelling, tactical negotiation empathy, and inevitable elevator pitches." },
+      { id: "08", name: "Demand Design", hrs: "11 Hours", desc: "Category creation, narrative gravity, identity marketing, and programmatic ad systems." },
+      { id: "09", name: "Make Your Brain Brain More", hrs: "10 Hours", desc: "Dopamine hygiene, circadian biology, glucose stability, and the peak performance daily protocol." },
+      { id: "10", name: "The Missing Piece", hrs: "11 Hours", desc: "Convergence of all five pillars into your personal written Worldview operating constitution." }
+    ];
+
+    function renderModulesGrid() {
+      const container = document.getElementById('modulesMasterGrid');
+      container.innerHTML = '';
+      MODULES_LIST.forEach(m => {
+        const card = document.createElement('div');
+        card.className = "p-5 rounded-xl border-subtle bg-dark-900 space-y-2 hover:border-gold-500/30 transition";
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono text-gold-400 font-bold">MODULE ${m.id}</span>
+            <span class="text-[10px] font-mono text-slate-500">${m.hrs}</span>
+          </div>
+          <h3 class="text-base font-serif font-bold text-white">${m.name}</h3>
+          <p class="text-xs text-slate-400 font-sans leading-relaxed">${m.desc}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // --- EXPORT DOSSIER MARKDOWN ---
+    function exportDossierMarkdown() {
+      let md = `# THE GOD MODE DOSSIER\n**Student:** Kartikey\n**Generated:** ${new Date().toISOString()}\n**Status:** ${appState.completedDays.length} / 33 Days Completed\n\n---\n\n`;
+      CURRICULUM_DATA.forEach(d => {
+        md += `## Day ${d.day < 10 ? '0' + d.day : d.day}: ${d.title}\n`;
+        md += `*Module:* ${d.module} | *Status:* ${appState.completedDays.includes(d.day) ? 'COMPLETED' : 'PENDING'}\n\n`;
+        md += `### ${d.deliverableName}\n\n`;
+        md += (appState.deliverables[d.deliverableId] || d.defaultTemplate) + "\n\n---\n\n";
+      });
+
+      const blob = new Blob([md], { type: 'text/markdown' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `KARTIKEY_GOD_MODE_DOSSIER_${new Date().toISOString().split('T')[0]}.md`;
+      a.click();
+    }
+
+    function saveCurrentStateManually() {
+      saveState();
+      alert("State synced and persisted to browser local storage.");
+    }
+
+    function resetDataPrompt() {
+      if (confirm("Reset all local progress, deliverables, and sparring history?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        appState = loadState();
+        activeDayNumber = 1;
+        renderDaysTimeline();
+        renderDayDetails(1);
+        renderDossierGrid();
+        updateProgressDisplay();
+      }
+    }
+  </script>
+</body>
+</html>

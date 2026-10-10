@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📦 Jarvis Reels Review Box // Manual Extraction Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+            },
+            dark: {
+              900: '#090a0f',
+              800: '#11131a',
+              700: '#181b26',
+              600: '#232738'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Poppins', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #090a0f; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Poppins', sans-serif; }
+    .glass-panel {
+      background: rgba(17, 19, 26, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .glass-card {
+      background: rgba(24, 27, 38, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+  </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col selection:bg-purple-500/30 selection:text-purple-300">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-white/[0.08] px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-purple-500/20 text-xl font-bold">
+          📦
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-heading font-bold text-lg text-white tracking-wide">Jarvis Reels Review Box</h1>
+            <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Manual Extraction Hub</span>
+          </div>
+          <p class="text-xs text-slate-400">Archived Instagram Reels pending manual review & Second Brain extraction</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="fetchReels()" class="px-3.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-200 transition-all flex items-center gap-1.5">
+          <span>🔄</span> Refresh
+        </button>
+        <a href="http://localhost:4000/" class="px-3.5 py-1.5 rounded-lg bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-xs font-semibold text-purple-300 transition-all">
+          ← Jarvis Hub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+
+    <!-- KPI & Filters Bar -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">Pending Review</span>
+          <div id="kpiPending" class="text-2xl font-bold text-amber-400 mt-1">0</div>
+        </div>
+        <span class="text-2xl">⏳</span>
+      </div>
+
+      <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">Manually Resolved</span>
+          <div id="kpiResolved" class="text-2xl font-bold text-emerald-400 mt-1">0</div>
+        </div>
+        <span class="text-2xl">✅</span>
+      </div>
+
+      <div class="glass-card rounded-2xl p-4 flex items-center justify-between">
+        <div>
+          <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">Total Saved Reels</span>
+          <div id="kpiTotal" class="text-2xl font-bold text-purple-400 mt-1">0</div>
+        </div>
+        <span class="text-2xl">📼</span>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="flex items-center justify-between flex-wrap gap-3 pb-2 border-b border-white/5">
+      <div class="flex gap-2">
+        <button onclick="setFilter('pending')" id="tabPending" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white shadow-md shadow-purple-600/20">Pending Review</button>
+        <button onclick="setFilter('resolved')" id="tabResolved" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all">Resolved</button>
+        <button onclick="setFilter('all')" id="tabAll" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all">All Reels</button>
+      </div>
+
+      <div class="text-xs text-slate-400 flex items-center gap-1">
+        <span>💡 Click any reel to extract & save to Tools, Movies, Books, or Notes.</span>
+      </div>
+    </div>
+
+    <!-- Reels Grid -->
+    <div id="reelsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Dynamic Reel Cards Rendered Here -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden glass-card rounded-2xl p-12 text-center max-w-md mx-auto my-8">
+      <div class="text-4xl mb-3">✨</div>
+      <h3 class="text-base font-bold text-white mb-1">No Unreviewed Reels in Box</h3>
+      <p class="text-xs text-slate-400">All incoming Instagram reels have either been automatically parsed by Jarvis or manually resolved by you!</p>
+    </div>
+  </main>
+
+  <!-- Manual Extraction Modal -->
+  <div id="extractionModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="glass-panel rounded-2xl max-w-lg w-full p-6 border border-white/10 shadow-2xl relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">✕</button>
+      
+      <div class="flex items-center gap-2 mb-4">
+        <span class="text-xl">🛠️</span>
+        <h3 class="font-heading font-bold text-base text-white">Manual Extraction</h3>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1">Reel Source:</label>
+          <a id="modalReelUrl" href="#" target="_blank" class="font-mono text-purple-400 hover:underline break-all block"></a>
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Reel Caption / Snippet:</label>
+          <p id="modalReelCaption" class="p-2.5 rounded-lg bg-black/40 border border-white/5 text-slate-300 max-h-24 overflow-y-auto custom-scrollbar"></p>
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Destination Category:</label>
+          <select id="modalCategory" onchange="updateModalFormFields()" class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-purple-500">
+            <option value="TOOLS">🛠️ Discovered Tool (AI / Web App)</option>
+            <option value="MOVIES">🎬 Movie / TV Show (Watchlist)</option>
+            <option value="BOOKS">📚 Book Recommendation (Reading List)</option>
+            <option value="NOTE">💡 Second Brain Quick Note</option>
+          </select>
+        </div>
+
+        <div>
+          <label id="modalTitleLabel" class="block text-slate-400 mb-1">Tool / Item Name:</label>
+          <input id="modalItemTitle" type="text" placeholder="e.g. Cursor AI, Inception, Atomic Habits..." class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-purple-500" />
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Description / Key Notes:</label>
+          <textarea id="modalItemDesc" rows="3" placeholder="Summary of what this reel was about or how to use it..." class="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-purple-500"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button onclick="closeModal()" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 font-medium">Cancel</button>
+          <button onclick="submitManualExtraction()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold shadow-lg shadow-purple-500/25">
+            Save & Resolve Reel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allReels = [];
+    let currentFilter = 'pending';
+    let selectedReelId = null;
+
+    async function fetchReels() {
+      try {
+        const res = await fetch('/api/reels-review-box');
+        if (res.ok) {
+          allReels = await res.json();
+          renderReels();
+        }
+      } catch (err) {
+        console.error('Error fetching reels:', err);
+      }
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.getElementById('tabPending').className = filter === 'pending' ? 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white shadow-md shadow-purple-600/20' : 'px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all';
+      document.getElementById('tabResolved').className = filter === 'resolved' ? 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white shadow-md shadow-purple-600/20' : 'px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all';
+      document.getElementById('tabAll').className = filter === 'all' ? 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 text-white shadow-md shadow-purple-600/20' : 'px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-all';
+      renderReels();
+    }
+
+    function renderReels() {
+      const container = document.getElementById('reelsContainer');
+      const emptyState = document.getElementById('emptyState');
+
+      const pending = allReels.filter(r => r.status === 'pending_review');
+      const resolved = allReels.filter(r => r.status === 'resolved');
+
+      document.getElementById('kpiPending').innerText = pending.length;
+      document.getElementById('kpiResolved').innerText = resolved.length;
+      document.getElementById('kpiTotal').innerText = allReels.length;
+
+      let filtered = allReels;
+      if (currentFilter === 'pending') filtered = pending;
+      if (currentFilter === 'resolved') filtered = resolved;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      container.innerHTML = filtered.map(r => `
+        <div class="glass-card rounded-2xl p-5 flex flex-col justify-between border border-white/5 hover:border-purple-500/30 transition-all group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold ${r.status === 'resolved' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">
+                ${r.status === 'resolved' ? '✅ Resolved' : '⏳ Pending Review'}
+              </span>
+              <span class="text-[11px] text-slate-400 font-mono">${r.receivedFormatted || ''}</span>
+            </div>
+
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-sm">📸</span>
+              <span class="font-semibold text-xs text-white">@${r.author || 'instagram'}</span>
+            </div>
+
+            <p class="text-xs text-slate-300 line-clamp-3 mb-3 bg-black/20 p-2.5 rounded-lg border border-white/5 font-mono">
+              ${r.caption || 'No caption available for this reel.'}
+            </p>
+
+            <div class="text-[11px] text-slate-400 mb-4">
+              <span class="text-slate-500">Jarvis Status:</span> ${r.reason || 'Unidentified'}
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+            <a href="${r.url}" target="_blank" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs text-purple-300 font-medium transition-all flex items-center gap-1">
+              <span>🔗</span> Open Reel
+            </a>
+
+            <div class="flex items-center gap-1.5">
+              ${r.status === 'pending_review' ? `
+                <button onclick="openExtractionModal('${r.id}')" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-xs font-semibold text-white shadow-md shadow-purple-600/20 transition-all">
+                  ✍️ Extract
+                </button>
+              ` : `
+                <span class="text-xs text-emerald-400 font-medium">Saved as ${r.extractedCategory || 'Item'}</span>
+              `}
+              <button onclick="deleteReel('${r.id}')" title="Delete" class="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-all">
+                🗑️
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openExtractionModal(id) {
+      selectedReelId = id;
+      const reel = allReels.find(r => r.id === id);
+      if (!reel) return;
+
+      document.getElementById('modalReelUrl').href = reel.url;
+      document.getElementById('modalReelUrl').innerText = reel.url;
+      document.getElementById('modalReelCaption').innerText = reel.caption || 'No caption provided';
+      document.getElementById('modalItemTitle').value = '';
+      document.getElementById('modalItemDesc').value = '';
+      
+      document.getElementById('extractionModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('extractionModal').classList.add('hidden');
+      selectedReelId = null;
+    }
+
+    function updateModalFormFields() {
+      const cat = document.getElementById('modalCategory').value;
+      const label = document.getElementById('modalTitleLabel');
+      if (cat === 'TOOLS') label.innerText = 'Tool Name:';
+      if (cat === 'MOVIES') label.innerText = 'Movie / Series Title:';
+      if (cat === 'BOOKS') label.innerText = 'Book Title:';
+      if (cat === 'NOTE') label.innerText = 'Note Headline:';
+    }
+
+    async function submitManualExtraction() {
+      if (!selectedReelId) return;
+
+      const category = document.getElementById('modalCategory').value;
+      const title = document.getElementById('modalItemTitle').value.trim();
+      const desc = document.getElementById('modalItemDesc').value.trim();
+
+      if (!title) {
+        alert('Please enter a title/name for the extracted item.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/reels-review-box/convert', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: selectedReelId,
+            category,
+            data: {
+              title,
+              name: title,
+              description: desc
+            }
+          })
+        });
+
+        if (res.ok) {
+          closeModal();
+          await fetchReels();
+        } else {
+          alert('Failed to save manual extraction.');
+        }
+      } catch (err) {
+        console.error('Error submitting extraction:', err);
+      }
+    }
+
+    async function deleteReel(id) {
+      if (!confirm('Are you sure you want to remove this reel from the review box?')) return;
+      try {
+        await fetch('/api/reels-review-box/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        await fetchReels();
+      } catch (err) {
+        console.error('Error deleting reel:', err);
+      }
+    }
+
+    // Initialize
+    fetchReels();
+  </script>
+</body>
+</html>

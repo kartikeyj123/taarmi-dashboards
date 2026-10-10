@@ -1,0 +1,5 @@
+*.bak_audit
+*.tmp
+*.log
+.DS_Store
+Thumbs.db

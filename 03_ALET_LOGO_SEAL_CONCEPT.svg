@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&amp;family=Plus+Jakarta+Sans:wght@500;700&amp;display=swap');
+      .bg { fill: #F4EFEA; }
+      .seal-border { fill: none; stroke: #121214; stroke-width: 2.5; stroke-dasharray: 6,4; }
+      .seal-inner { fill: none; stroke: #C4B59D; stroke-width: 1.5; }
+      .wordmark { font-family: 'Tenor Sans', serif; font-size: 46px; fill: #121214; letter-spacing: 0.32em; text-anchor: middle; font-weight: 400; }
+      .circle-text { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10.5px; fill: #52504C; letter-spacing: 0.28em; font-weight: 600; text-transform: uppercase; }
+    </style>
+    <path id="textPathTop" d="M 310 170 A 90 90 0 0 1 490 170" fill="none"/>
+    <path id="textPathBottom" d="M 490 170 A 90 90 0 0 1 310 170" fill="none"/>
+  </defs>
+  <rect width="100%" height="100%" class="bg" rx="16"/>
+  
+  <!-- Seal / Emblem -->
+  <g transform="translate(400, 175)">
+    <!-- Outer stitched ring -->
+    <circle cx="0" cy="0" r="82" class="seal-border"/>
+    <!-- Inner solid ring -->
+    <circle cx="0" cy="0" r="74" class="seal-inner"/>
+    
+    <!-- Central Monogram Monolith -->
+    <path d="M -18 24 L 0 -26 L 18 24 M -12 8 L 12 8" fill="none" stroke="#121214" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="0" cy="-26" r="3" fill="#C4B59D"/>
+  </g>
+  
+  <!-- Primary Wordmark -->
+  <text x="408" y="325" class="wordmark">ALET</text>
+  
+  <!-- Sub-label -->
+  <text x="405" y="360" class="circle-text" text-anchor="middle">EVERYDAY CARRY • ATELIER</text>
+</svg>
