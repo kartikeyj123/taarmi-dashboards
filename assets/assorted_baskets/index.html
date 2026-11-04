@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAARMI™ Assorted Royal Baskets — Amazon Listing Image Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #D4AF37;
+      --gold-dark: #855800;
+      --emerald: #047857;
+      --navy: #0F172A;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      color: var(--navy);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+    header {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      color: #FFFFFF;
+      padding: 60px 40px;
+      text-align: center;
+      border-bottom: 4px solid var(--gold);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid var(--gold);
+      color: #F3E5AB;
+      font-size: 13px; font-weight: 800; letter-spacing: 2.5px;
+      padding: 6px 20px; border-radius: 30px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 46px; font-weight: 800; margin-bottom: 12px;
+    }
+    p.lead {
+      font-size: 19px; color: #94A3B8; max-width: 840px; margin: 0 auto;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 40px auto 0 auto;
+      padding: 0 30px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 800; margin-bottom: 8px; color: var(--navy);
+    }
+    .section-sub {
+      font-size: 16px; color: #64748B; margin-bottom: 30px;
+    }
+
+    /* 4 Designs Strip */
+    .baskets-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .basket-box {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .basket-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.08);
+      border-color: var(--gold);
+    }
+    .basket-img-holder {
+      width: 100%; height: 260px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+      background: #FFFFFF;
+      border-radius: 14px;
+    }
+    .basket-img-holder img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+    }
+    .basket-tag {
+      display: inline-block;
+      background: #F1F5F9; color: #475569;
+      font-size: 12px; font-weight: 800; letter-spacing: 1px;
+      padding: 4px 12px; border-radius: 12px; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .basket-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700; color: var(--navy);
+    }
+    .basket-sub {
+      font-size: 14px; color: #64748B; margin-top: 4px;
+    }
+
+    /* 5 Amazon Master Images Gallery */
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 34px;
+      margin-bottom: 60px;
+    }
+    .image-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+    }
+    .image-card:hover {
+      border-color: var(--emerald);
+      box-shadow: 0 16px 45px rgba(0,0,0,0.1);
+    }
+    .image-preview {
+      width: 100%; height: 420px;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .image-preview img {
+      width: 100%; height: 100%; object-fit: contain;
+      cursor: zoom-in;
+      transition: transform 0.25s ease;
+    }
+    .image-preview img:hover {
+      transform: scale(1.02);
+    }
+    .image-meta {
+      padding: 24px 28px;
+    }
+    .image-badge {
+      display: inline-block;
+      background: #ECFDF5; color: var(--emerald); border: 1px solid #A7F3D0;
+      font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+      padding: 4px 14px; border-radius: 12px; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .image-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 8px;
+    }
+    .image-desc {
+      font-size: 15px; color: #64748B; margin-bottom: 18px; line-height: 1.5;
+    }
+    .btn-download {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--navy); color: #FFFFFF; text-decoration: none;
+      font-size: 14px; font-weight: 700; padding: 10px 20px; border-radius: 12px;
+      transition: background 0.2s;
+    }
+    .btn-download:hover {
+      background: var(--emerald);
+    }
+
+    /* Modal */
+    .modal {
+      display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.95);
+      align-items: center; justify-content: center;
+    }
+    .modal.active { display: flex; }
+    .modal img { max-width: 92vw; max-height: 92vh; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .close-modal {
+      position: absolute; top: 30px; right: 40px; font-size: 40px; color: #FFFFFF; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">✨ Verified Studio Suite • 2000×2000 High-Res</div>
+    <h1>TAARMI™ Assorted Royal Baskets — Amazon Suite</h1>
+    <p class="lead">Complete, professional Amazon product image suite featuring 4 authentic Indian heritage designs unified under identical 3D perspective, studio lighting, golden shimmer organza net, and hand-stitched gota lace.</p>
+  </header>
+
+  <div class="container">
+    <!-- 4 Designs -->
+    <h2 class="section-title">The 4 Handcrafted Royal Designs</h2>
+    <p class="section-sub">Rendered with 100% unified studio craft: exact same golden dome net, tied bow, lace rim, and perspective.</p>
+
+    <div class="baskets-grid">
+      <div class="basket-box">
+        <div class="basket-img-holder"><img src="basket_01_master_peacock.png" alt="Master Peacock" /></div>
+        <div class="basket-tag" style="background: #ECFDF5; color: #047857;">DESIGN 01 • POPULAR</div>
+        <div class="basket-name">Master Royal Peacock</div>
+        <div class="basket-sub">Live Listing ASIN B0HLLRQZPL • Heritage Medallion</div>
+      </div>
+
+      <div class="basket-box">
+        <div class="basket-img-holder"><img src="basket_02_floral_peacock.png" alt="Floral Peacock" /></div>
+        <div class="basket-tag" style="background: #FDF8E8; color: #855800;">DESIGN 02 • BOTANICAL</div>
+        <div class="basket-name">Floral Heritage Peacock</div>
+        <div class="basket-sub">Twin Peacocks with Blooming Wild Roses Arch</div>
+      </div>
+
+      <div class="basket-box">
+        <div class="basket-img-holder"><img src="basket_03_pichwai_cow.png" alt="Pichwai Cow" /></div>
+        <div class="basket-tag">DESIGN 03 • SACRED</div>
+        <div class="basket-name">Sacred Pichwai Cow</div>
+        <div class="basket-sub">Kamdhenu & Shrinathji Temple Mandir Pavilion</div>
+      </div>
+
+      <div class="basket-box">
+        <div class="basket-img-holder"><img src="basket_04_royal_elephant.png" alt="Royal Elephant" /></div>
+        <div class="basket-tag">DESIGN 04 • IMPERIAL</div>
+        <div class="basket-name">Imperial Royal Elephant</div>
+        <div class="basket-sub">Majestic Caparisoned Gajraj with Golden Lotus</div>
+      </div>
+    </div>
+
+    <!-- 5 Master Images -->
+    <h2 class="section-title">Final Amazon Listing Suite (2000×2000 JPEG)</h2>
+    <p class="section-sub">Click any image to view in ultra high-resolution full screen.</p>
+
+    <div class="images-grid">
+      <!-- Image 1 -->
+      <div class="image-card">
+        <div class="image-preview"><img src="01_ASSORTED_HERITAGE_HERO.jpg" onclick="openModal(this.src)" alt="Hero Showcase" /></div>
+        <div class="image-meta">
+          <div class="image-badge">MAIN / HERO SHOWCASE</div>
+          <div class="image-title">01. Assorted Heritage Prints Showcase</div>
+          <div class="image-desc">Staggered 4-basket studio showcase highlighting all 4 prints with clear assorted disclosure and matching set guarantee banner.</div>
+          <a href="01_ASSORTED_HERITAGE_HERO.jpg" download class="btn-download">⬇ Download 2000×2000</a>
+        </div>
+      </div>
+
+      <!-- Image 2 -->
+      <div class="image-card">
+        <div class="image-badge-corner"></div>
+        <div class="image-preview"><img src="02_UNIFORM_MATCHING_SET_GUARANTEE.jpg" onclick="openModal(this.src)" alt="Matching Guarantee" /></div>
+        <div class="image-meta">
+          <div class="image-badge">TRUST & CONVERSION</div>
+          <div class="image-title">02. 100% Uniform Matching Set Guarantee</div>
+          <div class="image-desc">Answers the #1 customer question: guarantees that all baskets in Pack of 2, 4, or 6 will receive the EXACT same design.</div>
+          <a href="02_UNIFORM_MATCHING_SET_GUARANTEE.jpg" download class="btn-download">⬇ Download 2000×2000</a>
+        </div>
+      </div>
+
+      <!-- Image 3 -->
+      <div class="image-card">
+        <div class="image-preview"><img src="03_FOUR_DESIGNS_COLLECTION_GRID.jpg" onclick="openModal(this.src)" alt="Collection Grid" /></div>
+        <div class="image-meta">
+          <div class="image-badge">COLLECTION GALLERY</div>
+          <div class="image-title">03. The 4 Royal Heritage Editions</div>
+          <div class="image-desc">Clean 2×2 grid displaying close-up photos of each design with art form name, origin, and aesthetic description.</div>
+          <a href="03_FOUR_DESIGNS_COLLECTION_GRID.jpg" download class="btn-download">⬇ Download 2000×2000</a>
+        </div>
+      </div>
+
+      <!-- Image 4 -->
+      <div class="image-card">
+        <div class="image-preview"><img src="04_SIZES_AND_COMPATIBILITY_GUIDE.jpg" onclick="openModal(this.src)" alt="Size Guide" /></div>
+        <div class="image-meta">
+          <div class="image-badge">DIMENSIONS & CAPACITY</div>
+          <div class="image-title">04. Size & Compatibility Guide</div>
+          <div class="image-desc">Detailed comparison of 8×6 Rectangle (Primary) and 8×8 Square editions, dry-fruit holding capacity (500g–1kg), and pack sizes.</div>
+          <a href="04_SIZES_AND_COMPATIBILITY_GUIDE.jpg" download class="btn-download">⬇ Download 2000×2000</a>
+        </div>
+      </div>
+
+      <!-- Image 5 -->
+      <div class="image-card">
+        <div class="image-preview"><img src="05_AMAZON_MOBILE_SWIPE_BANNER.jpg" onclick="openModal(this.src)" alt="Mobile Swipe Banner" /></div>
+        <div class="image-meta">
+          <div class="image-badge">MOBILE-FIRST INFOGRAPHIC</div>
+          <div class="image-title">05. Why Choose TAARMI Hamper Baskets</div>
+          <div class="image-desc">High-contrast, mobile-optimized infographic highlighting 4mm pine MDF, pre-stitched shimmer net dome, and eco-friendly reuse.</div>
+          <a href="05_AMAZON_MOBILE_SWIPE_BANNER.jpg" download class="btn-download">⬇ Download 2000×2000</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal" onclick="closeModal()">
+    <span class="close-modal">&times;</span>
+    <img id="modal-img" src="" alt="Expanded View" />
+  </div>
+
+  <script>
+    function openModal(src) {
+      document.getElementById('modal-img').src = src;
+      document.getElementById('modal').classList.add('active');
+    }
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>

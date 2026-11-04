@@ -1,0 +1,3888 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Taarmi Amazon Unit Economics & Profitability Command Center</title>
+  <meta name="description" content="Production-grade real-time unit economics financial model and margin simulator for all 85 Amazon listing SKU combinations across Taarmi.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+          },
+          colors: {
+            brand: {
+              surface: '#0B0F19',
+              card: '#0F172A',
+              border: '#1E293B',
+              gold: '#F59E0B',
+              'gold-hover': '#D97706',
+              emerald: '#10B981',
+              cyan: '#06B6D4',
+              purple: '#8B5CF6',
+              rose: '#EF4444'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg-dark: #070A12;
+      --card-bg: #0F172A;
+      --card-border: #1E293B;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: #E2E8F0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0B0F19;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #1E293B;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #F59E0B;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      background: #1E293B;
+      height: 6px;
+      border-radius: 3px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: #F59E0B;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+      transition: transform 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    .badge-healthy {
+      background-color: rgba(16, 185, 129, 0.12);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+    .badge-moderate {
+      background-color: rgba(245, 158, 11, 0.12);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+    .badge-risk {
+      background-color: rgba(239, 68, 68, 0.12);
+      color: #F87171;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(30, 41, 59, 0.8);
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-6 lg:p-8">
+
+  <div class="max-w-[1680px] mx-auto space-y-6">
+
+    <!-- Top Navigation & Header -->
+    <header class="glass-panel rounded-2xl p-4 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 shadow-2xl relative overflow-hidden">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="space-y-1.5 z-10">
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <a href="00_DASHBOARD_PORTAL.html" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Master Portal
+          </a>
+          <span class="text-slate-600">/</span>
+          <span class="text-xs font-mono text-amber-400 font-semibold uppercase tracking-wider">Catalog Finance & Unit Economics</span>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            A10 & GST 18% Calibrated
+          </span>
+        </div>
+        <h1 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
+          <span>📊 Taarmi Unit Economics Command Center</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-400 max-w-3xl">
+          Real-time margin modeling across all 85 Amazon listings and multipack combinations. Simulates factory COGS, Amazon referral & closing fees, Easy Ship logistics, and break-even ACoS sensitivity.
+        </p>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-2.5 flex-wrap z-10 self-stretch lg:self-auto justify-end">
+        <button onclick="exportToCSV()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 hover:border-amber-500/50 transition shadow-lg">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          Export CSV (Matrix)
+        </button>
+        <button onclick="resetGlobalControls()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition shadow-lg shadow-amber-500/20">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          Reset Sliders
+        </button>
+      </div>
+    </header>
+
+    <!-- Global Interactive Control Center (The Steering Wheel) -->
+    <section class="glass-panel rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-800">
+      <div class="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <div class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></div>
+          <h2 class="text-sm sm:text-base font-bold text-white uppercase tracking-wider flex items-center gap-2 font-mono">
+            🎛️ Interactive Global Financial Levers
+          </h2>
+        </div>
+        <span class="text-[11px] font-mono text-slate-400 hidden sm:inline-block">Real-time dynamic recalculation</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- 1. Target ACoS Slider -->
+        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300">Target ACoS (%)</span>
+            <span id="targetAcosDisplay" class="text-sm font-mono font-extrabold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">8.8%</span>
+          </div>
+          <input 
+            type="range" 
+            id="targetAcosSlider" 
+            min="0" 
+            max="30" 
+            step="0.1" 
+            value="8.8" 
+            oninput="handleAcosChange(this.value)"
+            class="w-full cursor-pointer accent-amber-500"
+          >
+          <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono">
+            <span>0% (Organic)</span>
+            <span>8.8% (Diwali)</span>
+            <span>30% (Max)</span>
+          </div>
+          <!-- Preset Chips -->
+          <div class="flex items-center gap-1.5 flex-wrap pt-1">
+            <button onclick="setAcos(0.0)" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition">0% No Ads</button>
+            <button onclick="setAcos(8.8)" class="px-2 py-0.5 text-[10px] rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 transition">8.8% Diwali</button>
+            <button onclick="setAcos(15.0)" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition">15% Standard</button>
+            <button onclick="setAcos(22.0)" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition">22% Aggressive</button>
+          </div>
+        </div>
+
+        <!-- 2. COGS Adjustment Slider -->
+        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300">COGS Material Shift</span>
+            <span id="cogsAdjDisplay" class="text-sm font-mono font-extrabold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">0%</span>
+          </div>
+          <input 
+            type="range" 
+            id="cogsAdjSlider" 
+            min="-20" 
+            max="30" 
+            step="1" 
+            value="0" 
+            oninput="handleCogsChange(this.value)"
+            class="w-full cursor-pointer accent-cyan-500"
+          >
+          <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono">
+            <span>-20% (Bulk)</span>
+            <span>0% (Base)</span>
+            <span>+30% (Surge)</span>
+          </div>
+          <!-- Preset Chips -->
+          <div class="flex items-center gap-1.5 flex-wrap pt-1">
+            <button onclick="setCogs(-10)" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition">-10% Bulk</button>
+            <button onclick="setCogs(0)" class="px-2 py-0.5 text-[10px] rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition">0% Baseline</button>
+            <button onclick="setCogs(15)" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition">+15% Hike</button>
+          </div>
+        </div>
+
+        <!-- 3. Price Multiplier Slider -->
+        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300">Price Multiplier (ASP)</span>
+            <span id="priceMultDisplay" class="text-sm font-mono font-extrabold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">1.00x</span>
+          </div>
+          <input 
+            type="range" 
+            id="priceMultSlider" 
+            min="0.80" 
+            max="1.40" 
+            step="0.05" 
+            value="1.00" 
+            oninput="handlePriceChange(this.value)"
+            class="w-full cursor-pointer accent-purple-500"
+          >
+          <div class="flex items-center justify-between text-[10px] text-slate-400 font-mono">
+            <span>0.80x (-20%)</span>
+            <span>1.00x (Base)</span>
+            <span>1.40x (+40%)</span>
+          </div>
+          <!-- Preset Chips -->
+          <div class="flex items-center gap-1.5 flex-wrap pt-1">
+            <button onclick="setPrice(0.90)" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition">0.90x Sale</button>
+            <button onclick="setPrice(1.00)" class="px-2 py-0.5 text-[10px] rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 transition">1.00x Catalog</button>
+            <button onclick="setPrice(1.15)" class="px-2 py-0.5 text-[10px] rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition">1.15x Boost</button>
+          </div>
+        </div>
+
+        <!-- 4. Fulfillment Mode Selector -->
+        <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3 flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300">Fulfillment Model</span>
+            <span id="modeBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold">Easy Ship Standard</span>
+          </div>
+          <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-900 rounded-lg border border-slate-800 text-[11px] font-semibold">
+            <button id="btnModeEasyShip" onclick="setFulfillmentMode('EASY_SHIP')" class="py-1.5 px-1 rounded text-center transition bg-amber-500 text-slate-950 font-bold shadow">
+              Easy Ship
+            </button>
+            <button id="btnModeFBA" onclick="setFulfillmentMode('FBA')" class="py-1.5 px-1 rounded text-center transition text-slate-400 hover:text-white">
+              FBA
+            </button>
+            <button id="btnModeSelfShip" onclick="setFulfillmentMode('SELF_SHIP')" class="py-1.5 px-1 rounded text-center transition text-slate-400 hover:text-white">
+              Self-Ship
+            </button>
+          </div>
+          <p id="modeDescription" class="text-[10px] text-slate-400 leading-tight">
+            Standard Amazon Easy Ship National rate: ₹65 / 500g, slab-based closing fees (₹5/₹13/₹25/₹61) + 18% GST.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Executive Summary Cards -->
+    <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+
+      <!-- Card 1: Average Net Margin -->
+      <div class="p-4 rounded-2xl glass-panel border border-slate-800/80 flex flex-col justify-between relative overflow-hidden">
+        <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Avg Net Margin</span>
+        <div class="my-2">
+          <div id="kpiAvgMargin" class="text-2xl sm:text-3xl font-mono font-extrabold text-emerald-400">33.8%</div>
+          <div id="kpiAvgMarginBadge" class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold badge-healthy">Optimal Portfolio Health</div>
+        </div>
+        <span class="text-[10px] text-slate-400">Post-Amazon fees & ad spend</span>
+      </div>
+
+      <!-- Card 2: Top Profit SKU -->
+      <div class="p-4 rounded-2xl glass-panel border border-slate-800/80 flex flex-col justify-between">
+        <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Top Profit Winner</span>
+        <div class="my-2">
+          <div id="kpiTopSkuProfit" class="text-xl sm:text-2xl font-mono font-extrabold text-amber-400">₹458.7</div>
+          <div id="kpiTopSkuCode" class="text-[11px] font-mono text-slate-300 truncate cursor-pointer hover:text-amber-300" onclick="openDeepDiveBySku('peacock_large_10x10_pack_of_6')">peacock_large_10x10_pack_of_6</div>
+        </div>
+        <span id="kpiTopSkuSub" class="text-[10px] text-emerald-400 font-mono">32.8% Margin (Pack of 6)</span>
+      </div>
+
+      <!-- Card 3: Lowest Margin / Risk SKU -->
+      <div class="p-4 rounded-2xl glass-panel border border-slate-800/80 flex flex-col justify-between">
+        <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">At-Risk / Low SKU</span>
+        <div class="my-2">
+          <div id="kpiLowSkuProfit" class="text-xl sm:text-2xl font-mono font-extrabold text-rose-400">-₹15.2</div>
+          <div id="kpiLowSkuCode" class="text-[11px] font-mono text-slate-300 truncate cursor-pointer hover:text-rose-300" onclick="openDeepDiveBySku('Basket_Rectangle_Small_2')">Basket_Rectangle_Small_2</div>
+        </div>
+        <span id="kpiLowSkuSub" class="text-[10px] text-rose-400 font-mono">Legacy Loss Leader (₹198)</span>
+      </div>
+
+      <!-- Card 4: Projected Monthly Net Profit -->
+      <div class="p-4 rounded-2xl glass-panel border border-slate-800/80 flex flex-col justify-between">
+        <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Projected Mo. Profit</span>
+        <div class="my-2">
+          <div id="kpiMonthlyProfit" class="text-2xl sm:text-3xl font-mono font-extrabold text-cyan-400">₹5.48L</div>
+          <span class="text-[10px] text-slate-400 block font-mono">Run-rate (~2,800 units/mo)</span>
+        </div>
+        <span class="text-[10px] text-cyan-300 font-mono">Festive / Q4 Benchmark</span>
+      </div>
+
+      <!-- Card 5: Avg Break-Even ACoS -->
+      <div class="p-4 rounded-2xl glass-panel border border-slate-800/80 flex flex-col justify-between">
+        <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Avg Break-Even ACoS</span>
+        <div class="my-2">
+          <div id="kpiAvgBreakEven" class="text-2xl sm:text-3xl font-mono font-extrabold text-purple-400">42.6%</div>
+          <span class="text-[10px] text-slate-400 block font-mono">Max allowable ad spend</span>
+        </div>
+        <span class="text-[10px] text-purple-300 font-mono">Current safety buffer: +33.8%</span>
+      </div>
+
+      <!-- Card 6: Amazon Fee Take-Rate -->
+      <div class="p-4 rounded-2xl glass-panel border border-slate-800/80 flex flex-col justify-between">
+        <span class="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">Amazon Take-Rate</span>
+        <div class="my-2">
+          <div id="kpiAmazonTakeRate" class="text-2xl sm:text-3xl font-mono font-extrabold text-amber-300">24.2%</div>
+          <span class="text-[10px] text-slate-400 block font-mono">Referral + Closing + Shipping</span>
+        </div>
+        <span class="text-[10px] text-slate-400 font-mono">GST 18% inclusive</span>
+      </div>
+
+    </section>
+
+    <!-- Visual Analytics Charts Hub -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Chart 1: Profit Margin by Size Category -->
+      <div class="glass-panel rounded-2xl p-5 border border-slate-800">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+            <span>📈 Profit Margin % by Size Category</span>
+          </h3>
+          <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Target ACoS Included</span>
+        </div>
+        <div class="h-64 sm:h-72">
+          <canvas id="marginBySizeChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: Revenue Cost Waterfall Stack -->
+      <div class="glass-panel rounded-2xl p-5 border border-slate-800">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+            <span>🍰 Average Order Value Cost Stack (Waterfall)</span>
+          </h3>
+          <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">100% ASP Decomposition</span>
+        </div>
+        <div class="h-64 sm:h-72 flex items-center justify-center">
+          <canvas id="costStackChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Master Real-Time Data Table Section -->
+    <section class="glass-panel rounded-2xl p-5 border border-slate-800 space-y-4">
+
+      <!-- Table Header & Filters Toolbar -->
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+        
+        <!-- Left: Search & Filter Chips -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1">
+          <!-- Search Input -->
+          <div class="relative min-w-[260px] sm:w-80">
+            <input 
+              type="text" 
+              id="tableSearchInput" 
+              oninput="handleSearch(this.value)" 
+              placeholder="Search SKU, Title, Design..." 
+              class="w-full px-3.5 py-2 pl-9 pr-8 text-xs bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 font-sans"
+            >
+            <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <button id="clearSearchBtn" onclick="clearSearch()" class="hidden text-xs text-slate-400 hover:text-white absolute right-3 top-2.5">✕</button>
+          </div>
+
+          <!-- Size Filter Buttons -->
+          <div class="flex items-center gap-1 overflow-x-auto whitespace-nowrap p-1 bg-slate-950/80 rounded-xl border border-slate-800 text-[11px] font-semibold">
+            <button onclick="filterSize('all')" id="btnSizeAll" class="px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-bold">All (<span id="countSizeAll">85</span>)</button>
+            <button onclick="filterSize('10x10')" id="btnSize10x10" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">10x10" (<span id="countSize10x10">15</span>)</button>
+            <button onclick="filterSize('8x8')" id="btnSize8x8" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">8x8" (<span id="countSize8x8">15</span>)</button>
+            <button onclick="filterSize('6x6')" id="btnSize6x6" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">6x6" (<span id="countSize6x6">14</span>)</button>
+            <button onclick="filterSize('8x6')" id="btnSize8x6" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">8x6" (<span id="countSize8x6">6</span>)</button>
+            <button onclick="filterSize('Trays')" id="btnSizeTrays" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Trays (<span id="countSizeTrays">30</span>)</button>
+            <button onclick="filterSize('Combos')" id="btnSizeCombos" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">Combos (<span id="countSizeCombos">5</span>)</button>
+          </div>
+        </div>
+
+        <!-- Right: Pack Filter & Health Filter -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <!-- Pack Size Filter -->
+          <select id="packFilterSelect" onchange="filterPack(this.value)" class="text-xs bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-300 focus:outline-none focus:border-amber-500 font-mono">
+            <option value="all">All Packs (1, 2, 4, 6)</option>
+            <option value="1">Pack of 1</option>
+            <option value="2">Pack of 2</option>
+            <option value="4">Pack of 4</option>
+            <option value="6">Pack of 6</option>
+          </select>
+
+          <!-- Margin Health Filter -->
+          <select id="healthFilterSelect" onchange="filterHealth(this.value)" class="text-xs bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-300 focus:outline-none focus:border-amber-500 font-mono">
+            <option value="all">All Health Tiers</option>
+            <option value="healthy">🟢 Healthy (&gt;25%)</option>
+            <option value="moderate">🟡 Moderate (15-25%)</option>
+            <option value="risk">🔴 At Risk (&lt;15%)</option>
+          </select>
+
+          <!-- Rows per Page -->
+          <select id="pageSizeSelect" onchange="setPageSize(this.value)" class="text-xs bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-300 focus:outline-none focus:border-amber-500 font-mono">
+            <option value="15">15 rows</option>
+            <option value="30" selected>30 rows</option>
+            <option value="50">50 rows</option>
+            <option value="1000">All rows</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Scrollable Data Table Container -->
+      <div class="overflow-x-auto rounded-xl border border-slate-800 custom-scrollbar max-h-[700px] relative">
+        <table class="w-full text-left text-xs whitespace-nowrap">
+          <thead class="bg-slate-950/95 text-[11px] font-mono uppercase text-slate-400 sticky top-0 z-20 backdrop-blur border-b border-slate-800">
+            <tr>
+              <th onclick="sortTable('sku')" class="py-3 px-3.5 cursor-pointer hover:text-white transition">SKU & Design <span id="sort_sku"></span></th>
+              <th onclick="sortTable('size')" class="py-3 px-3 cursor-pointer hover:text-white transition">Size / Wt <span id="sort_size"></span></th>
+              <th onclick="sortTable('pack')" class="py-3 px-2.5 text-center cursor-pointer hover:text-white transition">Pack <span id="sort_pack"></span></th>
+              <th onclick="sortTable('price')" class="py-3 px-3 text-right cursor-pointer hover:text-amber-400 transition">Price (ASP) <span id="sort_price"></span></th>
+              <th onclick="sortTable('cogs')" class="py-3 px-3 text-right cursor-pointer hover:text-white transition">COGS <span id="sort_cogs"></span></th>
+              <th onclick="sortTable('packaging')" class="py-3 px-2.5 text-right cursor-pointer hover:text-white transition">Packg. <span id="sort_packaging"></span></th>
+              <th onclick="sortTable('referralFee')" class="py-3 px-3 text-right cursor-pointer hover:text-white transition">Referral (GST) <span id="sort_referralFee"></span></th>
+              <th onclick="sortTable('closingFee')" class="py-3 px-2.5 text-right cursor-pointer hover:text-white transition">Closing <span id="sort_closingFee"></span></th>
+              <th onclick="sortTable('shippingFee')" class="py-3 px-3 text-right cursor-pointer hover:text-white transition">Shipping <span id="sort_shippingFee"></span></th>
+              <th onclick="sortTable('adSpend')" class="py-3 px-3 text-right cursor-pointer hover:text-amber-400 transition">Ad Spend <span id="sort_adSpend"></span></th>
+              <th onclick="sortTable('netProfit')" class="py-3 px-3.5 text-right cursor-pointer text-emerald-400 hover:text-emerald-300 transition font-bold">Net Profit <span id="sort_netProfit">▼</span></th>
+              <th onclick="sortTable('netMargin')" class="py-3 px-3.5 text-right cursor-pointer text-emerald-400 hover:text-emerald-300 transition font-bold">Net Margin % <span id="sort_netMargin"></span></th>
+              <th onclick="sortTable('breakEvenAcos')" class="py-3 px-3 text-right cursor-pointer hover:text-purple-400 transition">BE ACoS % <span id="sort_breakEvenAcos"></span></th>
+              <th class="py-3 px-3 text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody" class="divide-y divide-slate-800/60 bg-slate-900/40">
+            <!-- Dynamically populated rows via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Table Footer with Pagination & Status -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 font-mono pt-2">
+        <div class="flex items-center gap-2">
+          <span>Showing <span id="showingStart">1</span>-<span id="showingEnd">30</span> of <span id="showingTotal">85</span> listings</span>
+          <span class="text-slate-600">|</span>
+          <span id="filteredHealthStats" class="text-slate-300 text-[11px]">🟢 78 Healthy &bull; 🟡 5 Moderate &bull; 🔴 2 At Risk</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnPrevPage" onclick="changePage(-1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:pointer-events-none transition">Previous</button>
+          <span id="paginationPages" class="px-2 font-bold text-white">Page 1 of 3</span>
+          <button id="btnNextPage" onclick="changePage(1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-30 disabled:pointer-events-none transition">Next</button>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- SKU Deep-Dive & Margin Simulator Modal / Drawer -->
+  <div id="skuModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="glass-panel rounded-2xl border border-slate-700 w-full max-w-4xl shadow-2xl overflow-hidden my-auto relative animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="p-5 bg-slate-950/90 border-b border-slate-800 flex items-start justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap mb-1">
+            <span id="modalSkuBadge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">peacock_large_10x10_pack_of_2</span>
+            <span id="modalFamilyBadge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300">Standalone Optimized</span>
+            <span id="modalHealthBadge" class="px-2 py-0.5 rounded text-[10px] font-bold badge-healthy">🟢 34.1% Net Margin</span>
+          </div>
+          <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-white leading-snug">
+            Taarmi Large Gift Basket Hamper Basket Set of 2 with Net Cover (10x10", Royal Peacock Ivory)
+          </h3>
+        </div>
+        <button onclick="closeDeepDiveModal()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 sm:p-6 space-y-6 max-h-[75vh] overflow-y-auto custom-scrollbar">
+
+        <!-- Top Specs Bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+            <span class="text-[10px] font-mono text-slate-400 uppercase block">Size Dimensions</span>
+            <span id="modalDim" class="text-sm font-mono font-bold text-white">10" × 10" × 4"</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+            <span class="text-[10px] font-mono text-slate-400 uppercase block">Gross Shipping Wt</span>
+            <span id="modalWeight" class="text-sm font-mono font-bold text-amber-400">520 g</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+            <span class="text-[10px] font-mono text-slate-400 uppercase block">Pack Quantity</span>
+            <span id="modalPack" class="text-sm font-mono font-bold text-cyan-400">Pack of 2</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+            <span class="text-[10px] font-mono text-slate-400 uppercase block">Amazon MRP</span>
+            <span id="modalMrp" class="text-sm font-mono font-bold text-purple-400">₹999</span>
+          </div>
+        </div>
+
+        <!-- 2 Columns: Left = Interactive Unit Cost Adjuster, Right = Financial Waterfall & Sensitivity -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          <!-- Left Column: Individual Cost Component Sliders -->
+          <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+                <span>🔧 SKU Unit Cost Calibration</span>
+              </h4>
+              <button onclick="resetSkuSliders()" class="text-[10px] text-amber-400 hover:underline font-mono">Reset to Defaults</button>
+            </div>
+
+            <!-- Price Slider -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-300 font-semibold">Selling Price (ASP)</span>
+                <span id="modalPriceVal" class="font-mono text-amber-400 font-bold">₹549</span>
+              </div>
+              <input type="range" id="modalPriceSlider" min="150" max="2500" step="10" oninput="updateModalCalculations()" class="w-full accent-amber-500">
+            </div>
+
+            <!-- Rigid Board Slider -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Rigid Paperboard Core</span>
+                <span id="modalBoardVal" class="font-mono text-white font-bold">₹32</span>
+              </div>
+              <input type="range" id="modalBoardSlider" min="5" max="150" step="1" oninput="updateModalCalculations()" class="w-full accent-slate-400">
+            </div>
+
+            <!-- Fabric Slider -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Brocade / Velvet Fabric Wrap</span>
+                <span id="modalFabricVal" class="font-mono text-white font-bold">₹29</span>
+              </div>
+              <input type="range" id="modalFabricSlider" min="5" max="120" step="1" oninput="updateModalCalculations()" class="w-full accent-slate-400">
+            </div>
+
+            <!-- Zari Lace Slider -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Metallic Gota Zari Lace Trim</span>
+                <span id="modalZariVal" class="font-mono text-white font-bold">₹19</span>
+              </div>
+              <input type="range" id="modalZariSlider" min="2" max="80" step="1" oninput="updateModalCalculations()" class="w-full accent-slate-400">
+            </div>
+
+            <!-- Net Cover Slider -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Organza Net &amp; Drawstring</span>
+                <span id="modalNetVal" class="font-mono text-white font-bold">₹19</span>
+              </div>
+              <input type="range" id="modalNetSlider" min="2" max="80" step="1" oninput="updateModalCalculations()" class="w-full accent-slate-400">
+            </div>
+
+            <!-- Artisan Labor Slider -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Artisan Handcrafting Labor</span>
+                <span id="modalLaborVal" class="font-mono text-white font-bold">₹20</span>
+              </div>
+              <input type="range" id="modalLaborSlider" min="5" max="100" step="1" oninput="updateModalCalculations()" class="w-full accent-slate-400">
+            </div>
+
+            <!-- Packaging Materials Slider -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Packaging (Carton + Bubble + Poly)</span>
+                <span id="modalPackagingVal" class="font-mono text-white font-bold">₹20</span>
+              </div>
+              <input type="range" id="modalPackagingSlider" min="5" max="80" step="1" oninput="updateModalCalculations()" class="w-full accent-slate-400">
+            </div>
+
+          </div>
+
+          <!-- Right Column: Live Computed Economics & Sensitivity Chart -->
+          <div class="space-y-4">
+            
+            <!-- Live SKU Profit Card -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-white font-mono">
+                ⚡ Calibrated Profit Breakdown
+              </h4>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                  <span class="text-[10px] text-slate-400 block">Total Landed Cost</span>
+                  <span id="modalTotalCost" class="text-base font-mono font-bold text-slate-200">₹331.0</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-900 border border-slate-800">
+                  <span class="text-[10px] text-slate-400 block">Ad Spend (<span id="modalAcosPct">8.8%</span>)</span>
+                  <span id="modalAdSpend" class="text-base font-mono font-bold text-amber-400">₹48.3</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30">
+                  <span class="text-[10px] text-emerald-400 block font-semibold">Net Profit (₹)</span>
+                  <span id="modalNetProfit" class="text-lg font-mono font-extrabold text-emerald-400">₹169.7</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30">
+                  <span class="text-[10px] text-emerald-400 block font-semibold">Net Margin (%)</span>
+                  <span id="modalNetMargin" class="text-lg font-mono font-extrabold text-emerald-400">30.9%</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-800/80">
+                <span class="text-slate-400">Break-Even ACoS Ceiling:</span>
+                <span id="modalBreakEven" class="font-mono font-bold text-purple-400">39.7%</span>
+              </div>
+            </div>
+
+            <!-- Dynamic Sensitivity Graph (Profit vs ACoS) -->
+            <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-300 font-mono">
+                  📉 Profit vs ACoS Sensitivity Curve
+                </h4>
+                <span class="text-[9px] font-mono text-slate-400">0% to 50% ACoS Range</span>
+              </div>
+              <div class="h-44">
+                <canvas id="skuSensitivityChart"></canvas>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between gap-3 flex-wrap">
+        <button onclick="copyCurrentSkuSpec()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          Copy Unit Spec
+        </button>
+        <button onclick="closeDeepDiveModal()" class="px-5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition">
+          Close Simulator
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 px-4 py-2.5 rounded-xl bg-slate-900 border border-amber-500/40 text-xs font-mono text-white shadow-2xl flex items-center gap-2">
+    <span class="text-amber-400 font-bold">✓</span>
+    <span id="toastMsg">Action completed</span>
+  </div>
+
+  <!-- Embedded Master Database & Application Logic -->
+  <script>
+    // Master SKU Database (85 SKUs)
+    const MASTER_SKUS = [
+  {
+    "sku": "peacock_large_10x10_pack_of_2",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 2 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Royal Peacock Ivory)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 2,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 549,
+    "mrp": 988,
+    "grossWeight": 520,
+    "netWeight": 400,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 116,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 32,
+      "fabric": 29,
+      "zariLace": 19,
+      "netCover": 19,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "peacock_large_10x10_pack_of_4",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 4 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Royal Peacock Ivory)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 4,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 999,
+    "mrp": 1798,
+    "grossWeight": 960,
+    "netWeight": 800,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 232,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 64,
+      "fabric": 58,
+      "zariLace": 39,
+      "netCover": 39,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "peacock_large_10x10_pack_of_6",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 6 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Royal Peacock Ivory)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 6,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 1399,
+    "mrp": 2518,
+    "grossWeight": 1440,
+    "netWeight": 1200,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 348,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 97,
+      "fabric": 87,
+      "zariLace": 58,
+      "netCover": 58,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "pink_large_10x10_pack_of_2",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 2 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Rani Pink Brocade)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 2,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 549,
+    "mrp": 988,
+    "grossWeight": 520,
+    "netWeight": 400,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 116,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 32,
+      "fabric": 29,
+      "zariLace": 19,
+      "netCover": 19,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "pink_large_10x10_pack_of_4",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 4 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Rani Pink Brocade)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 4,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 999,
+    "mrp": 1798,
+    "grossWeight": 960,
+    "netWeight": 800,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 232,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 64,
+      "fabric": 58,
+      "zariLace": 39,
+      "netCover": 39,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "pink_large_10x10_pack_of_6",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 6 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Rani Pink Brocade)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 6,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 1399,
+    "mrp": 2518,
+    "grossWeight": 1440,
+    "netWeight": 1200,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 348,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 97,
+      "fabric": 87,
+      "zariLace": 58,
+      "netCover": 58,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "red_large_10x10_pack_of_2",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 2 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Royal Red Shagun)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 2,
+    "design": "Royal Red Shagun (Royal Red Shagun)",
+    "color": "Royal Red Shagun (Royal Red Shagun)",
+    "price": 549,
+    "mrp": 988,
+    "grossWeight": 520,
+    "netWeight": 400,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 116,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 32,
+      "fabric": 29,
+      "zariLace": 19,
+      "netCover": 19,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "red_large_10x10_pack_of_4",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 4 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Royal Red Shagun)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 4,
+    "design": "Royal Red Shagun (Royal Red Shagun)",
+    "color": "Royal Red Shagun (Royal Red Shagun)",
+    "price": 999,
+    "mrp": 1798,
+    "grossWeight": 960,
+    "netWeight": 800,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 232,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 64,
+      "fabric": 58,
+      "zariLace": 39,
+      "netCover": 39,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "red_large_10x10_pack_of_6",
+    "title": "Taarmi Large Gift Basket Hamper Basket Set of 6 with Net Cover – Decorative Empty Gift Basket for Fruit Hampers, Wedding Return Gifts, Dry Fruits & Festive Gifting (10x10\", Royal Red Shagun)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 6,
+    "design": "Royal Red Shagun (Royal Red Shagun)",
+    "color": "Royal Red Shagun (Royal Red Shagun)",
+    "price": 1399,
+    "mrp": 2518,
+    "grossWeight": 1440,
+    "netWeight": 1200,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 348,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 97,
+      "fabric": 87,
+      "zariLace": 58,
+      "netCover": 58,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "peacock_medium_8x8_pack_of_2",
+    "title": "Taarmi Gift Basket Hamper Basket Set of 2 with Net Cover – Decorative Empty Gift Basket, Gift Packing Basket for Wedding Return Gifts, Dry Fruits & Festive Gifting (8x8\", Royal Peacock Ivory)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 2,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 449,
+    "mrp": 808,
+    "grossWeight": 380,
+    "netWeight": 280,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 86,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 24,
+      "fabric": 22,
+      "zariLace": 14,
+      "netCover": 14,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "peacock_medium_8x8_pack_of_4",
+    "title": "Taarmi Gift Basket Hamper Basket Set of 4 with Net Cover – Decorative Empty Gift Basket, Gift Packing Basket for Wedding Return Gifts, Dry Fruits & Festive Gifting (8x8\", Royal Peacock Ivory)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 4,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 799,
+    "mrp": 1438,
+    "grossWeight": 700,
+    "netWeight": 560,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 172,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 48,
+      "fabric": 43,
+      "zariLace": 29,
+      "netCover": 29,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "peacock_medium_8x8_pack_of_6",
+    "title": "Taarmi Gift Basket Hamper Basket Set of 6 with Net Cover – Decorative Empty Gift Basket, Gift Packing Basket for Wedding Return Gifts, Dry Fruits & Festive Gifting (8x8\", Royal Peacock Ivory)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 6,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 1149,
+    "mrp": 2068,
+    "grossWeight": 1050,
+    "netWeight": 840,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 258,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 72,
+      "fabric": 65,
+      "zariLace": 43,
+      "netCover": 43,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "pink_medium_8x8_pack_of_2",
+    "title": "Taarmi Gift Basket Hamper Basket Set of 2 with Net Cover – Decorative Empty Gift Basket, Gift Packing Basket for Wedding Return Gifts, Dry Fruits & Festive Gifting (8x8\", Rani Pink Brocade)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 2,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 449,
+    "mrp": 808,
+    "grossWeight": 380,
+    "netWeight": 280,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 86,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 24,
+      "fabric": 22,
+      "zariLace": 14,
+      "netCover": 14,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "pink_medium_8x8_pack_of_4",
+    "title": "Taarmi Gift Basket Hamper Basket Set of 4 with Net Cover – Decorative Empty Gift Basket, Gift Packing Basket for Wedding Return Gifts, Dry Fruits & Festive Gifting (8x8\", Rani Pink Brocade)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 4,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 799,
+    "mrp": 1438,
+    "grossWeight": 700,
+    "netWeight": 560,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 172,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 48,
+      "fabric": 43,
+      "zariLace": 29,
+      "netCover": 29,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "pink_medium_8x8_pack_of_6",
+    "title": "Taarmi Gift Basket Hamper Basket Set of 6 with Net Cover – Decorative Empty Gift Basket, Gift Packing Basket for Wedding Return Gifts, Dry Fruits & Festive Gifting (8x8\", Rani Pink Brocade)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 6,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 1149,
+    "mrp": 2068,
+    "grossWeight": 1050,
+    "netWeight": 840,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 258,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 72,
+      "fabric": 65,
+      "zariLace": 43,
+      "netCover": 43,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "peacock_small_6x6_pack_of_2",
+    "title": "Taarmi 2 Small Square Dry Fruit Gifting Basket, Golden Festive Gifting, Wedding Hamper Basket, wedding return gift, Net Material, Pack of 2 (Royal Peacock Ivory)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 2,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 349,
+    "mrp": 628,
+    "grossWeight": 330,
+    "netWeight": 240,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 60,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 17,
+      "fabric": 15,
+      "zariLace": 10,
+      "netCover": 10,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "peacock_small_6x6_pack_of_4",
+    "title": "Taarmi 4 Small Square Dry Fruit Gifting Basket, Golden Festive Gifting, Wedding Hamper Basket, wedding return gift, Net Material, Pack of 4 (Royal Peacock Ivory)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 4,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 599,
+    "mrp": 1078,
+    "grossWeight": 590,
+    "netWeight": 480,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 120,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 33,
+      "fabric": 30,
+      "zariLace": 20,
+      "netCover": 20,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "peacock_small_6x6_pack_of_6",
+    "title": "Taarmi 6 Small Square Dry Fruit Gifting Basket, Golden Festive Gifting, Wedding Hamper Basket, wedding return gift, Net Material, Pack of 6 (Royal Peacock Ivory)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 6,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 849,
+    "mrp": 1528,
+    "grossWeight": 800,
+    "netWeight": 720,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 180,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 50,
+      "fabric": 45,
+      "zariLace": 30,
+      "netCover": 30,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "pink_small_6x6_pack_of_2",
+    "title": "Taarmi 2 Small Square Dry Fruit Gifting Basket, Golden Festive Gifting, Wedding Hamper Basket, wedding return gift, Net Material, Pack of 2 (Rani Pink Brocade)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 2,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 349,
+    "mrp": 628,
+    "grossWeight": 330,
+    "netWeight": 240,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 60,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 17,
+      "fabric": 15,
+      "zariLace": 10,
+      "netCover": 10,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "pink_small_6x6_pack_of_4",
+    "title": "Taarmi 4 Small Square Dry Fruit Gifting Basket, Golden Festive Gifting, Wedding Hamper Basket, wedding return gift, Net Material, Pack of 4 (Rani Pink Brocade)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 4,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 599,
+    "mrp": 1078,
+    "grossWeight": 590,
+    "netWeight": 480,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 120,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 33,
+      "fabric": 30,
+      "zariLace": 20,
+      "netCover": 20,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "pink_small_6x6_pack_of_6",
+    "title": "Taarmi 6 Small Square Dry Fruit Gifting Basket, Golden Festive Gifting, Wedding Hamper Basket, wedding return gift, Net Material, Pack of 6 (Rani Pink Brocade)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 6,
+    "design": "Rani Pink Brocade (Rani Pink Brocade)",
+    "color": "Rani Pink Brocade (Rani Pink Brocade)",
+    "price": 849,
+    "mrp": 1528,
+    "grossWeight": 800,
+    "netWeight": 720,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 180,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 50,
+      "fabric": 45,
+      "zariLace": 30,
+      "netCover": 30,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "peacock_rectangle_8x6_pack_of_2",
+    "title": "Taarmi 2 Small Rectangle Dry Fruit Gifting Basket, Wedding Hamper Basket, Golden Festive Gifting, wedding return gift, Net Material, Pack of 2 (Royal Peacock Ivory)",
+    "size": "8x6\"",
+    "sizeCategory": "8x6",
+    "pack": 2,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 399,
+    "mrp": 718,
+    "grossWeight": 380,
+    "netWeight": 280,
+    "dimensions": "8\" × 6\" × 3\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 72,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 20,
+      "fabric": 18,
+      "zariLace": 12,
+      "netCover": 12,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "peacock_rectangle_8x6_pack_of_4",
+    "title": "Taarmi 4 Small Rectangle Dry Fruit Gifting Basket, Wedding Hamper Basket, Golden Festive Gifting, wedding return gift, Net Material, Pack of 4 (Royal Peacock Ivory)",
+    "size": "8x6\"",
+    "sizeCategory": "8x6",
+    "pack": 4,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 699,
+    "mrp": 1258,
+    "grossWeight": 680,
+    "netWeight": 560,
+    "dimensions": "8\" × 6\" × 3\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 144,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 40,
+      "fabric": 36,
+      "zariLace": 24,
+      "netCover": 24,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "peacock_rectangle_8x6_pack_of_6",
+    "title": "Taarmi 6 Small Rectangle Dry Fruit Gifting Basket, Wedding Hamper Basket, Golden Festive Gifting, wedding return gift, Net Material, Pack of 6 (Royal Peacock Ivory)",
+    "size": "8x6\"",
+    "sizeCategory": "8x6",
+    "pack": 6,
+    "design": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "color": "Royal Peacock Ivory (Peacock Royal Arch)",
+    "price": 999,
+    "mrp": 1798,
+    "grossWeight": 980,
+    "netWeight": 840,
+    "dimensions": "8\" × 6\" × 3\"",
+    "catalogFamily": "Standalone Optimized (New)",
+    "cogs": 216,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 60,
+      "fabric": 54,
+      "zariLace": 36,
+      "netCover": 36,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "taarmi_curated_hamper_combo_6pack_SEO",
+    "title": "Taarmi 6-Piece Assorted Gift Basket Hamper Trays with Net Cover, 3-Size Combo Set (2 Medium 8x8, 2 Small 6x6, 2 Rectangle 8x6)",
+    "size": "Combo (8x8 + 6x6 + 8x6)",
+    "sizeCategory": "Combos",
+    "pack": 6,
+    "design": "Royal Peacock Ivory",
+    "color": "Royal Peacock Ivory",
+    "price": 899,
+    "mrp": 1599,
+    "grossWeight": 1180,
+    "netWeight": 840,
+    "dimensions": "Nested Combo 12\" × 10\" × 5\"",
+    "catalogFamily": "Curated Combos",
+    "cogs": 218,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 72,
+      "fabric": 65,
+      "zariLace": 43,
+      "netCover": 43,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "peacock_rectangle_10x7_pack_of_2_tray",
+    "title": "Taarmi 10x7 Rectangular Gift Basket for Hamper, Decorative Wedding Sagan Trays with Attached Net Cover for Roka Ceremony Sweets, Shagun Envelopes & Dry Fruits (Pack of 2)",
+    "size": "10x7 Inch",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 399,
+    "mrp": 699,
+    "grossWeight": 380,
+    "netWeight": 280,
+    "dimensions": "10\" × 7\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 72,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 20,
+      "fabric": 18,
+      "zariLace": 12,
+      "netCover": 12,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "peacock_rectangle_10x7_pack_of_4_tray",
+    "title": "Taarmi 10x7 Wedding Shagun Trays with Net Cover, Decorative Gifting Baskets for Engagement Ring Ceremony, Trousseau Hampers & Auspicious Festive Sweets (Pack of 4)",
+    "size": "10x7 Inch",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 699,
+    "mrp": 1199,
+    "grossWeight": 680,
+    "netWeight": 560,
+    "dimensions": "10\" × 7\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 144,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 40,
+      "fabric": 36,
+      "zariLace": 24,
+      "netCover": 24,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "peacock_rectangle_10x7_pack_of_6_tray",
+    "title": "Taarmi 10x7 Marriage Trousseau Packing Trays with Net Cover, Decorative Rectangular Gifting Baskets for Wedding Sagan Hampers, Sweet Boxes & Dry Fruits (Pack of 6)",
+    "size": "10x7 Inch",
+    "sizeCategory": "Trays",
+    "pack": 6,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 999,
+    "mrp": 1699,
+    "grossWeight": 980,
+    "netWeight": 840,
+    "dimensions": "10\" × 7\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 216,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 60,
+      "fabric": 54,
+      "zariLace": 36,
+      "netCover": 36,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "peacock_small_6x6_pack_of_2_tray",
+    "title": "Taarmi 6x6 Small Wedding Shagun Gift Basket Trays with Net Cover, Decorative Square Empty Boxes for Gold Silver Coins, Dry Fruit Token & Sweets (Pack of 2)",
+    "size": "6x6 Inch",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 349,
+    "mrp": 599,
+    "grossWeight": 330,
+    "netWeight": 240,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 60,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 17,
+      "fabric": 15,
+      "zariLace": 10,
+      "netCover": 10,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "peacock_small_6x6_pack_of_4_tray",
+    "title": "Taarmi 6x6 Wedding Haldi Mehendi Favours Trays with Net Cover, Decorative Square Gift Packing Baskets for Floral Jewellery, Ubtan Jars & Shagun (Pack of 4)",
+    "size": "6x6 Inch",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 599,
+    "mrp": 999,
+    "grossWeight": 590,
+    "netWeight": 480,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 120,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 33,
+      "fabric": 30,
+      "zariLace": 20,
+      "netCover": 20,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "peacock_small_6x6_pack_of_6_tray",
+    "title": "Taarmi 6x6 Diwali Gift Baskets for Hamper with Net Cover, Decorative Square Trays for Deepawali Pooja Offerings, Sweets & Navratri Return Gifts (Pack of 6)",
+    "size": "6x6 Inch",
+    "sizeCategory": "Trays",
+    "pack": 6,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 849,
+    "mrp": 1399,
+    "grossWeight": 800,
+    "netWeight": 720,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 180,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 50,
+      "fabric": 45,
+      "zariLace": 30,
+      "netCover": 30,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "peacock_medium_8x8_pack_of_2_tray",
+    "title": "Taarmi 8x8 Diwali Gift Hamper Trays with Net Cover, Decorative Medium Square Baskets for Deepawali Sweets, Dry Fruits & Premium Festive Gifting (Pack of 2)",
+    "size": "8x8 Inch",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 449,
+    "mrp": 799,
+    "grossWeight": 380,
+    "netWeight": 280,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 86,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 24,
+      "fabric": 22,
+      "zariLace": 14,
+      "netCover": 14,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "peacock_medium_8x8_pack_of_4_tray",
+    "title": "Taarmi 8x8 Festive Gift Baskets for Hamper with Net Cover, Decorative Medium Square Trays for Diwali Sweets, Dry Fruits & Family Celebrations (Pack of 4)",
+    "size": "8x8 Inch",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 799,
+    "mrp": 1399,
+    "grossWeight": 680,
+    "netWeight": 560,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 172,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 48,
+      "fabric": 43,
+      "zariLace": 29,
+      "netCover": 29,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "peacock_medium_8x8_pack_of_6_tray",
+    "title": "Taarmi 8x8 Grand Festival Hamper Trays with Net Cover, Decorative Square Gift Baskets for Diwali Parties, Pooja Prasad & Neighborhood Gifting (Pack of 6)",
+    "size": "8x8 Inch",
+    "sizeCategory": "Trays",
+    "pack": 6,
+    "design": "Peacock Royal Arch",
+    "color": "Royal Peacock Ivory",
+    "price": 1149,
+    "mrp": 1999,
+    "grossWeight": 1050,
+    "netWeight": 840,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 258,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 72,
+      "fabric": 65,
+      "zariLace": 43,
+      "netCover": 43,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "pink_small_6x6_pack_of_2_tray",
+    "title": "Taarmi 6x6 Festive Gift Baskets with Net Cover, Rani Pink Brocade Small Square Trays for Karwa Chauth Sargi, Bhai Dooj & Deepawali Sweets (Pack of 2)",
+    "size": "6x6 Inch",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 349,
+    "mrp": 599,
+    "grossWeight": 330,
+    "netWeight": 240,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 60,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 17,
+      "fabric": 15,
+      "zariLace": 10,
+      "netCover": 10,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "pink_small_6x6_pack_of_4_tray",
+    "title": "Taarmi 6x6 Bridal Trousseau Accessories Trays with Net Cover, Rani Pink Brocade Square Gift Baskets for Chunni, Bangles & Wedding Jewellery (Pack of 4)",
+    "size": "6x6 Inch",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 599,
+    "mrp": 999,
+    "grossWeight": 590,
+    "netWeight": 480,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 120,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 33,
+      "fabric": 30,
+      "zariLace": 20,
+      "netCover": 20,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "pink_small_6x6_pack_of_6_tray",
+    "title": "Taarmi 6x6 Bridesmaid Gown Gift Trays with Net Cover, Rani Pink Brocade Square Baskets for Bridal Shower Favours & Sangeet Giveaways (Pack of 6)",
+    "size": "6x6 Inch",
+    "sizeCategory": "Trays",
+    "pack": 6,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 849,
+    "mrp": 1399,
+    "grossWeight": 800,
+    "netWeight": 720,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 180,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 50,
+      "fabric": 45,
+      "zariLace": 30,
+      "netCover": 30,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "pink_medium_8x8_pack_of_2_tray",
+    "title": "Taarmi 8x8 Bridal Apparel Trousseau Trays with Net Cover, Rani Pink Brocade Medium Square Baskets for Designer Dupatta, Stole & Silk Gifts (Pack of 2)",
+    "size": "8x8 Inch",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 449,
+    "mrp": 799,
+    "grossWeight": 380,
+    "netWeight": 280,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 86,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 24,
+      "fabric": 22,
+      "zariLace": 14,
+      "netCover": 14,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "pink_medium_8x8_pack_of_4_tray",
+    "title": "Taarmi 8x8 Wedding Silk Saree Packing Trays with Net Cover, Rani Pink Brocade Baskets for Bridal Trousseau Apparel & Designer Suits (Pack of 4)",
+    "size": "8x8 Inch",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 799,
+    "mrp": 1399,
+    "grossWeight": 680,
+    "netWeight": 560,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 172,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 48,
+      "fabric": 43,
+      "zariLace": 29,
+      "netCover": 29,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "pink_medium_8x8_pack_of_6_tray",
+    "title": "Taarmi 8x8 Bridal Lehenga Trousseau Trays with Net Cover, Rani Pink Brocade Baskets for Wedding Saree Packing, Anarkali & Bridal Gifts (Pack of 6)",
+    "size": "8x8 Inch",
+    "sizeCategory": "Trays",
+    "pack": 6,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 1149,
+    "mrp": 1999,
+    "grossWeight": 1050,
+    "netWeight": 840,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 258,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 72,
+      "fabric": 65,
+      "zariLace": 43,
+      "netCover": 43,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "pink_large_10x10_pack_of_2_tray",
+    "title": "Taarmi 10x10 Large Dry Fruit Packing Trays with Net Cover, Rani Pink Brocade Gift Baskets for Jumbo Sweet Boxes, Mithai & Nut Hampers (Pack of 2)",
+    "size": "10x10 Inch",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 549,
+    "mrp": 999,
+    "grossWeight": 520,
+    "netWeight": 400,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 116,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 32,
+      "fabric": 29,
+      "zariLace": 19,
+      "netCover": 19,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "pink_large_10x10_pack_of_4_tray",
+    "title": "Taarmi 10x10 Large Festive Mithai Trays with Net Cover, Rani Pink Brocade Gift Baskets for 1kg Dry Fruit Jars, Confectionery & Hampers (Pack of 4)",
+    "size": "10x10 Inch",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 999,
+    "mrp": 1799,
+    "grossWeight": 950,
+    "netWeight": 800,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 232,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 64,
+      "fabric": 58,
+      "zariLace": 39,
+      "netCover": 39,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "pink_large_10x10_pack_of_6_tray",
+    "title": "Taarmi 10x10 Large Sweet Shop & Hamper Trays with Net Cover, Rani Pink Brocade Baskets for Wholesale Mithai & Dry Fruit Packaging (Pack of 6)",
+    "size": "10x10 Inch",
+    "sizeCategory": "Trays",
+    "pack": 6,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 1399,
+    "mrp": 2499,
+    "grossWeight": 1440,
+    "netWeight": 1200,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 348,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 97,
+      "fabric": 87,
+      "zariLace": 58,
+      "netCover": 58,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "red_large_10x10_pack_of_2_tray",
+    "title": "Taarmi 10x10 Large Shagun Dry Fruit Trays with Net Cover, Royal Red Festive Gift Baskets for Wedding Mithai Platters & Sweet Jars (Pack of 2)",
+    "size": "10x10 Inch",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 549,
+    "mrp": 999,
+    "grossWeight": 520,
+    "netWeight": 400,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 116,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 32,
+      "fabric": 29,
+      "zariLace": 19,
+      "netCover": 19,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "red_large_10x10_pack_of_4_tray",
+    "title": "Taarmi 10x10 Wedding Red Mithai Trays with Net Cover, Large Decorative Gift Baskets for Marriage Shagun Sweets & Dry Fruit Hampers (Pack of 4)",
+    "size": "10x10 Inch",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 999,
+    "mrp": 1799,
+    "grossWeight": 950,
+    "netWeight": 800,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 232,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 64,
+      "fabric": 58,
+      "zariLace": 39,
+      "netCover": 39,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "red_large_10x10_pack_of_6_tray",
+    "title": "Taarmi 10x10 Rigid Gift Hamper Trays with Net Cover, Pre-Assembled Alternative to Paper Folding Boxes for Wedding Sweets & Hampers (Pack of 6)",
+    "size": "10x10 Inch",
+    "sizeCategory": "Trays",
+    "pack": 6,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 1399,
+    "mrp": 2499,
+    "grossWeight": 1440,
+    "netWeight": 1200,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 348,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 97,
+      "fabric": 87,
+      "zariLace": 58,
+      "netCover": 58,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "combo_sml_set_of_1_tray",
+    "title": "Taarmi 3-Piece Nested Rigid Gift Hamper Trays with Net Cover, Pre-Built S+M+L Baskets Alternative to DIY Folding Boxes for Presents (Set of 1)",
+    "size": "3-Piece Set (S+M+L)",
+    "sizeCategory": "Trays",
+    "pack": 1,
+    "design": "Curated Multi-Size Suite",
+    "color": "Multicolor Assorted",
+    "price": 599,
+    "mrp": 1099,
+    "grossWeight": 600,
+    "netWeight": 460,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 36,
+    "packaging": 12,
+    "cogsBreakdown": {
+      "rigidBoard": 10,
+      "fabric": 9,
+      "zariLace": 6,
+      "netCover": 6,
+      "artisanLabor": 10,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "combo_sml_set_of_2_tray",
+    "title": "Taarmi 6-Piece S+M+L Rigid Hamper Trays with Net Cover, Pre-Assembled Gift Baskets Alternative to Paper Folding Boxes for Events (Set of 2)",
+    "size": "3-Piece Set (S+M+L)",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Curated Multi-Size Suite",
+    "color": "Multicolor Assorted",
+    "price": 1099,
+    "mrp": 1999,
+    "grossWeight": 1150,
+    "netWeight": 920,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 72,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 20,
+      "fabric": 18,
+      "zariLace": 12,
+      "netCover": 12,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "combo_sml_set_of_4_tray",
+    "title": "Taarmi 12-Piece S+M+L Rigid Hamper Trays with Net Cover, Pre-Assembled Gift Baskets Alternative to DIY Folding Boxes for Weddings (Set of 4)",
+    "size": "3-Piece Set (S+M+L)",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Curated Multi-Size Suite",
+    "color": "Multicolor Assorted",
+    "price": 1999,
+    "mrp": 3699,
+    "grossWeight": 2200,
+    "netWeight": 1840,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 144,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 40,
+      "fabric": 36,
+      "zariLace": 24,
+      "netCover": 24,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "combo_grand_6pc_set_of_1_tray",
+    "title": "Taarmi 6-Piece Grand Rigid Hamper Trays with Net Cover, Multi-Shape Baskets Alternative to Paper Folding Boxes for Festive Presents (Set of 1)",
+    "size": "6-Piece Grand Set",
+    "sizeCategory": "Trays",
+    "pack": 1,
+    "design": "Grand Multi-Shape Suite",
+    "color": "Multicolor Assorted",
+    "price": 899,
+    "mrp": 1599,
+    "grossWeight": 1180,
+    "netWeight": 800,
+    "dimensions": "10\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 36,
+    "packaging": 12,
+    "cogsBreakdown": {
+      "rigidBoard": 10,
+      "fabric": 9,
+      "zariLace": 6,
+      "netCover": 6,
+      "artisanLabor": 10,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "combo_grand_6pc_set_of_2_tray",
+    "title": "Taarmi 12-Piece Grand Corporate Hamper Trays with Net Cover, Decorative Multi-Shape Baskets for Executive Diwali Gifting & Client Hampers (Set of 2)",
+    "size": "6-Piece Grand Set",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Grand Multi-Shape Suite",
+    "color": "Multicolor Assorted",
+    "price": 1699,
+    "mrp": 2999,
+    "grossWeight": 2250,
+    "netWeight": 1600,
+    "dimensions": "10\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 72,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 20,
+      "fabric": 18,
+      "zariLace": 12,
+      "netCover": 12,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "combo_grand_6pc_set_of_4_tray",
+    "title": "Taarmi 24-Piece Grand Corporate Event Hamper Trays with Net Cover, Multi-Shape Baskets for Annual Gala, Employee Rewards & Conferences (Set of 4)",
+    "size": "6-Piece Grand Set",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Grand Multi-Shape Suite",
+    "color": "Multicolor Assorted",
+    "price": 3199,
+    "mrp": 5799,
+    "grossWeight": 4400,
+    "netWeight": 3200,
+    "dimensions": "10\" × 8\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 144,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 40,
+      "fabric": 36,
+      "zariLace": 24,
+      "netCover": 24,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "combo_mix_duo_set_of_1_tray",
+    "title": "Taarmi 6-Piece Mixed Duo Gift Hamper Trays with Net Cover, Decorative Rectangular & Square Baskets for Corporate Return Gifts & Events (Set of 1)",
+    "size": "6-Piece Duo Set",
+    "sizeCategory": "Trays",
+    "pack": 1,
+    "design": "Duo Square & Rect Suite",
+    "color": "Multicolor Assorted",
+    "price": 849,
+    "mrp": 1499,
+    "grossWeight": 1100,
+    "netWeight": 780,
+    "dimensions": "10\" × 7\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 36,
+    "packaging": 12,
+    "cogsBreakdown": {
+      "rigidBoard": 10,
+      "fabric": 9,
+      "zariLace": 6,
+      "netCover": 6,
+      "artisanLabor": 10,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "combo_mix_duo_set_of_2_tray",
+    "title": "Taarmi 12-Piece Mixed Duo Event Gift Trays with Net Cover, Rectangular & Square Baskets for Corporate Seminars & Delegate Hampers (Set of 2)",
+    "size": "6-Piece Duo Set",
+    "sizeCategory": "Trays",
+    "pack": 2,
+    "design": "Duo Square & Rect Suite",
+    "color": "Multicolor Assorted",
+    "price": 1599,
+    "mrp": 2799,
+    "grossWeight": 2150,
+    "netWeight": 1560,
+    "dimensions": "10\" × 7\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 72,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 20,
+      "fabric": 18,
+      "zariLace": 12,
+      "netCover": 12,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "combo_mix_duo_set_of_4_tray",
+    "title": "Taarmi 24-Piece Mixed Duo Corporate Trays with Net Cover, Rectangular & Square Baskets for Annual Summits & Institutional Hampers (Set of 4)",
+    "size": "6-Piece Duo Set",
+    "sizeCategory": "Trays",
+    "pack": 4,
+    "design": "Duo Square & Rect Suite",
+    "color": "Multicolor Assorted",
+    "price": 2999,
+    "mrp": 5399,
+    "grossWeight": 4200,
+    "netWeight": 3120,
+    "dimensions": "10\" × 7\" × 3.5\"",
+    "catalogFamily": "Tray Variations (Opp Explorer)",
+    "cogs": 144,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 40,
+      "fabric": 36,
+      "zariLace": 24,
+      "netCover": 24,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "PINK_SQ_SMALL_2_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (6x6\", Rani Pink Brocade, Pack of 2)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 2,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 225,
+    "mrp": 300,
+    "grossWeight": 330,
+    "netWeight": 220,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 60,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 17,
+      "fabric": 15,
+      "zariLace": 10,
+      "netCover": 10,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "PINK_SQ_SMALL_4_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (6x6\", Rani Pink Brocade, Pack of 4)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 4,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 400,
+    "mrp": 500,
+    "grossWeight": 590,
+    "netWeight": 440,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 120,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 33,
+      "fabric": 30,
+      "zariLace": 20,
+      "netCover": 20,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "PINK_SQ_SMALL_6_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (6x6\", Rani Pink Brocade, Pack of 6)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 6,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 470,
+    "mrp": 600,
+    "grossWeight": 800,
+    "netWeight": 660,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 180,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 50,
+      "fabric": 45,
+      "zariLace": 30,
+      "netCover": 30,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "PINK_SQ_MEDIUM_2_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (8x8\", Rani Pink Brocade, Pack of 2)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 2,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 300,
+    "mrp": 400,
+    "grossWeight": 380,
+    "netWeight": 280,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 86,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 24,
+      "fabric": 22,
+      "zariLace": 14,
+      "netCover": 14,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "PINK_SQ_MEDIUM_4_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (8x8\", Rani Pink Brocade, Pack of 4)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 4,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 530,
+    "mrp": 700,
+    "grossWeight": 700,
+    "netWeight": 560,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 172,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 48,
+      "fabric": 43,
+      "zariLace": 29,
+      "netCover": 29,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "PINK_SQ_MEDIUM_6_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (8x8\", Rani Pink Brocade, Pack of 6)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 6,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 730,
+    "mrp": 900,
+    "grossWeight": 1050,
+    "netWeight": 840,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 258,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 72,
+      "fabric": 65,
+      "zariLace": 43,
+      "netCover": 43,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "PINK_SQ_LARGE_2_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (10x10\", Rani Pink Brocade, Pack of 2)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 2,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 400,
+    "mrp": 500,
+    "grossWeight": 520,
+    "netWeight": 400,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 116,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 32,
+      "fabric": 29,
+      "zariLace": 19,
+      "netCover": 19,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "PINK_SQ_LARGE_4_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (10x10\", Rani Pink Brocade, Pack of 4)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 4,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 649,
+    "mrp": 800,
+    "grossWeight": 960,
+    "netWeight": 800,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 232,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 64,
+      "fabric": 58,
+      "zariLace": 39,
+      "netCover": 39,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "PINK_SQ_LARGE_6_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (10x10\", Rani Pink Brocade, Pack of 6)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 6,
+    "design": "Rani Pink Brocade",
+    "color": "Rani Pink Brocade",
+    "price": 949,
+    "mrp": 1200,
+    "grossWeight": 1440,
+    "netWeight": 1200,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 348,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 97,
+      "fabric": 87,
+      "zariLace": 58,
+      "netCover": 58,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "RED_SQ_SMALL_2_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (6x6\", Royal Red Shagun, Pack of 2)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 2,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 225,
+    "mrp": 300,
+    "grossWeight": 330,
+    "netWeight": 220,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 60,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 17,
+      "fabric": 15,
+      "zariLace": 10,
+      "netCover": 10,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "RED_SQ_SMALL_4_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (6x6\", Royal Red Shagun, Pack of 4)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 4,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 400,
+    "mrp": 500,
+    "grossWeight": 590,
+    "netWeight": 440,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 120,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 33,
+      "fabric": 30,
+      "zariLace": 20,
+      "netCover": 20,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "RED_SQ_SMALL_6_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (6x6\", Royal Red Shagun, Pack of 6)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 6,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 470,
+    "mrp": 600,
+    "grossWeight": 800,
+    "netWeight": 660,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 180,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 50,
+      "fabric": 45,
+      "zariLace": 30,
+      "netCover": 30,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "RED_SQ_MEDIUM_2_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (8x8\", Royal Red Shagun, Pack of 2)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 2,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 300,
+    "mrp": 400,
+    "grossWeight": 380,
+    "netWeight": 280,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 86,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 24,
+      "fabric": 22,
+      "zariLace": 14,
+      "netCover": 14,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "RED_SQ_MEDIUM_4_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (8x8\", Royal Red Shagun, Pack of 4)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 4,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 530,
+    "mrp": 700,
+    "grossWeight": 700,
+    "netWeight": 560,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 172,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 48,
+      "fabric": 43,
+      "zariLace": 29,
+      "netCover": 29,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "RED_SQ_MEDIUM_6_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (8x8\", Royal Red Shagun, Pack of 6)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 6,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 730,
+    "mrp": 900,
+    "grossWeight": 1050,
+    "netWeight": 840,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 258,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 72,
+      "fabric": 65,
+      "zariLace": 43,
+      "netCover": 43,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "RED_SQ_LARGE_2_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (10x10\", Royal Red Shagun, Pack of 2)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 2,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 400,
+    "mrp": 500,
+    "grossWeight": 520,
+    "netWeight": 400,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 116,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 32,
+      "fabric": 29,
+      "zariLace": 19,
+      "netCover": 19,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "RED_SQ_LARGE_4_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (10x10\", Royal Red Shagun, Pack of 4)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 4,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 649,
+    "mrp": 800,
+    "grossWeight": 960,
+    "netWeight": 800,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 232,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 64,
+      "fabric": 58,
+      "zariLace": 39,
+      "netCover": 39,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "RED_SQ_LARGE_6_Basket",
+    "title": "Taarmi Festive Net Hamper Basket (10x10\", Royal Red Shagun, Pack of 6)",
+    "size": "10x10\"",
+    "sizeCategory": "10x10",
+    "pack": 6,
+    "design": "Royal Red Shagun",
+    "color": "Royal Red Shagun",
+    "price": 949,
+    "mrp": 1200,
+    "grossWeight": 1440,
+    "netWeight": 1200,
+    "dimensions": "10\" × 10\" × 4\"",
+    "catalogFamily": "Festive Net Multipacks",
+    "cogs": 348,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 97,
+      "fabric": 87,
+      "zariLace": 58,
+      "netCover": 58,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "Basket_Rectangle_Small_2",
+    "title": "Gift Basket Hamper Basket Set of 2 with Net Cover (Rectangle)",
+    "size": "8x6\"",
+    "sizeCategory": "8x6",
+    "pack": 2,
+    "design": "Golden Wire Peacock",
+    "color": "Golden Wire Peacock",
+    "price": 198,
+    "mrp": 1200,
+    "grossWeight": 380,
+    "netWeight": 285,
+    "dimensions": "8\" × 6\" × 3\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 72,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 20,
+      "fabric": 18,
+      "zariLace": 12,
+      "netCover": 12,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "Basket_Rectangle_Small_4",
+    "title": "Decorative Gift Hamper Basket Set of 4 with Net Cover (Rectangle)",
+    "size": "8x6\"",
+    "sizeCategory": "8x6",
+    "pack": 4,
+    "design": "Golden Wire Peacock",
+    "color": "Golden Wire Peacock",
+    "price": 380,
+    "mrp": 1200,
+    "grossWeight": 680,
+    "netWeight": 510,
+    "dimensions": "8\" × 6\" × 3\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 144,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 40,
+      "fabric": 36,
+      "zariLace": 24,
+      "netCover": 24,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "Basket_Rectangle_Small_6",
+    "title": "Wedding Return Gift Basket Set of 6 with Net Cover (Rectangle)",
+    "size": "8x6\"",
+    "sizeCategory": "8x6",
+    "pack": 6,
+    "design": "Golden Wire Peacock",
+    "color": "Golden Wire Peacock",
+    "price": 499,
+    "mrp": 1200,
+    "grossWeight": 980,
+    "netWeight": 735,
+    "dimensions": "8\" × 6\" × 3\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 216,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 60,
+      "fabric": 54,
+      "zariLace": 36,
+      "netCover": 36,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "Basket_Square_Medium_2",
+    "title": "Gift Basket Hamper Basket Set of 2 with Net Cover (Medium 8x8)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 2,
+    "design": "Golden Wire Peacock",
+    "color": "Golden Wire Peacock",
+    "price": 243,
+    "mrp": 1200,
+    "grossWeight": 380,
+    "netWeight": 285,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 86,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 24,
+      "fabric": 22,
+      "zariLace": 14,
+      "netCover": 14,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "Basket_Square_Medium_4",
+    "title": "Decorative Gift Hamper Basket Set of 4 with Net Cover (Medium 8x8)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 4,
+    "design": "Golden Wire Peacock",
+    "color": "Golden Wire Peacock",
+    "price": 495,
+    "mrp": 1200,
+    "grossWeight": 700,
+    "netWeight": 525,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 172,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 48,
+      "fabric": 43,
+      "zariLace": 29,
+      "netCover": 29,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "Basket_Square_Medium_6",
+    "title": "Wedding Return Gift Basket Set of 6 with Net Cover (Medium 8x8)",
+    "size": "8x8\"",
+    "sizeCategory": "8x8",
+    "pack": 6,
+    "design": "Golden Wire Peacock",
+    "color": "Golden Wire Peacock",
+    "price": 710,
+    "mrp": 1200,
+    "grossWeight": 1050,
+    "netWeight": 788,
+    "dimensions": "8\" × 8\" × 3.5\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 258,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 72,
+      "fabric": 65,
+      "zariLace": 43,
+      "netCover": 43,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "Basket_Square_Small_4",
+    "title": "Fancy Baskets 4 Small Square Dry Fruit Gifting Basket (6x6)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 4,
+    "design": "Golden Wire Peacock",
+    "color": "Golden Wire Peacock",
+    "price": 357,
+    "mrp": 1200,
+    "grossWeight": 590,
+    "netWeight": 443,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 120,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 33,
+      "fabric": 30,
+      "zariLace": 20,
+      "netCover": 20,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "Basket_Square_Small_6",
+    "title": "Wedding Return Gift Basket Set of 6 with Net Cover (Small 6x6)",
+    "size": "6x6\"",
+    "sizeCategory": "6x6",
+    "pack": 6,
+    "design": "Golden Wire Peacock",
+    "color": "Golden Wire Peacock",
+    "price": 449,
+    "mrp": 1200,
+    "grossWeight": 800,
+    "netWeight": 600,
+    "dimensions": "6\" × 6\" × 3.5\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 180,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 50,
+      "fabric": 45,
+      "zariLace": 30,
+      "netCover": 30,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "Mix-set-2_Basket",
+    "title": "Taarmi Golden Wire Basket Combo Set with Net Cover (Pack of 2)",
+    "size": "Combo",
+    "sizeCategory": "Combos",
+    "pack": 2,
+    "design": "Golden Wire Mixed",
+    "color": "Golden Wire Mixed",
+    "price": 198,
+    "mrp": 299,
+    "grossWeight": 380,
+    "netWeight": 285,
+    "dimensions": "Mixed Dimensions",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 72,
+    "packaging": 20,
+    "cogsBreakdown": {
+      "rigidBoard": 20,
+      "fabric": 18,
+      "zariLace": 12,
+      "netCover": 12,
+      "artisanLabor": 20,
+      "polybag": 4,
+      "bubbleWrap": 6,
+      "cartonBox": 10
+    }
+  },
+  {
+    "sku": "Mix-set-4_Basket",
+    "title": "Taarmi Golden Wire Basket Combo Set with Net Cover (Pack of 4)",
+    "size": "Combo",
+    "sizeCategory": "Combos",
+    "pack": 4,
+    "design": "Golden Wire Mixed",
+    "color": "Golden Wire Mixed",
+    "price": 399,
+    "mrp": 499,
+    "grossWeight": 680,
+    "netWeight": 510,
+    "dimensions": "Mixed Dimensions",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 144,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 40,
+      "fabric": 36,
+      "zariLace": 24,
+      "netCover": 24,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  },
+  {
+    "sku": "Mix-set-6_Basket",
+    "title": "Taarmi Golden Wire Basket Combo Set with Net Cover (Pack of 6)",
+    "size": "Combo",
+    "sizeCategory": "Combos",
+    "pack": 6,
+    "design": "Golden Wire Mixed",
+    "color": "Golden Wire Mixed",
+    "price": 449,
+    "mrp": 599,
+    "grossWeight": 980,
+    "netWeight": 735,
+    "dimensions": "Mixed Dimensions",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 216,
+    "packaging": 32,
+    "cogsBreakdown": {
+      "rigidBoard": 60,
+      "fabric": 54,
+      "zariLace": 36,
+      "netCover": 36,
+      "artisanLabor": 60,
+      "polybag": 6,
+      "bubbleWrap": 11,
+      "cartonBox": 15
+    }
+  },
+  {
+    "sku": "2 Small Square 2 Small Ractangle Baskets",
+    "title": "Fancy Baskets Dry Fruit Gifting Basket, Golden (2 Small Square + 2 Small Rectangle)",
+    "size": "Combo (6x6 + 8x6)",
+    "sizeCategory": "Combos",
+    "pack": 4,
+    "design": "Golden Wire Mixed",
+    "color": "Golden Wire Mixed",
+    "price": 359,
+    "mrp": 1299,
+    "grossWeight": 680,
+    "netWeight": 510,
+    "dimensions": "8\" × 6\" × 3\"",
+    "catalogFamily": "Amazon Active Live Listings",
+    "cogs": 144,
+    "packaging": 26,
+    "cogsBreakdown": {
+      "rigidBoard": 40,
+      "fabric": 36,
+      "zariLace": 24,
+      "netCover": 24,
+      "artisanLabor": 40,
+      "polybag": 5,
+      "bubbleWrap": 9,
+      "cartonBox": 12
+    }
+  }
+];
+
+    // Application Global State
+    let state = {
+      targetAcos: 8.77,
+      cogsAdj: 0,
+      priceMult: 1.00,
+      mode: 'EASY_SHIP', // 'EASY_SHIP', 'FBA', 'SELF_SHIP'
+      searchTerm: '',
+      sizeFilter: 'all',
+      packFilter: 'all',
+      healthFilter: 'all',
+      sortBy: 'netProfit',
+      sortDir: 'desc',
+      page: 1,
+      pageSize: 30,
+      activeModalSku: null,
+      customSkuCosts: {} // Per-SKU overrides
+    };
+
+    // Financial Calculation Core
+    function calculateUnitEconomics(sku, priceMult, cogsAdj, targetAcos, mode, customCost) {
+      let basePrice = sku.price;
+      let effectivePrice = customCost && customCost.price ? customCost.price : Math.round(basePrice * priceMult);
+      
+      // Referral Fee (Amazon Category: Home & Kitchen / Gifting & Storage Baskets)
+      let refRate = 0.09;
+      if (effectivePrice > 1000) refRate = 0.135;
+      else if (effectivePrice > 500) refRate = 0.11;
+      const referralFee = effectivePrice * refRate * 1.18; // +18% GST
+
+      // Closing Fee
+      let closingBase = 5;
+      if (mode === 'EASY_SHIP') {
+        if (effectivePrice <= 250) closingBase = 5;
+        else if (effectivePrice <= 500) closingBase = 13;
+        else if (effectivePrice <= 1000) closingBase = 25;
+        else closingBase = 61;
+      } else if (mode === 'FBA') {
+        if (effectivePrice <= 250) closingBase = 25;
+        else if (effectivePrice <= 500) closingBase = 25;
+        else if (effectivePrice <= 1000) closingBase = 25;
+        else closingBase = 50;
+      } else if (mode === 'SELF_SHIP') {
+        if (effectivePrice <= 250) closingBase = 7;
+        else if (effectivePrice <= 500) closingBase = 20;
+        else if (effectivePrice <= 1000) closingBase = 40;
+        else closingBase = 60;
+      }
+      const closingFee = closingBase * 1.18; // +18% GST
+
+      // Shipping / Weight Handling Fee
+      const gw = sku.grossWeight || 500;
+      let shippingBase = 65;
+      if (mode === 'EASY_SHIP') {
+        if (gw <= 500) shippingBase = 65;
+        else if (gw <= 1000) shippingBase = 93;
+        else if (gw <= 1500) shippingBase = 121;
+        else shippingBase = 149;
+      } else if (mode === 'FBA') {
+        // FBA weight handling + Pick & pack fee (~15 base)
+        if (gw <= 500) shippingBase = 38 + 15;
+        else if (gw <= 1000) shippingBase = 56 + 15;
+        else if (gw <= 1500) shippingBase = 74 + 15;
+        else shippingBase = 92 + 15;
+      } else if (mode === 'SELF_SHIP') {
+        if (gw <= 500) shippingBase = 55;
+        else if (gw <= 1000) shippingBase = 85;
+        else if (gw <= 1500) shippingBase = 115;
+        else shippingBase = 140;
+      }
+      const shippingFee = mode === 'SELF_SHIP' ? shippingBase : (shippingBase * 1.18);
+
+      // COGS & Packaging
+      let cogs = 0;
+      let packaging = 0;
+      if (customCost) {
+        cogs = customCost.board + customCost.fabric + customCost.zari + customCost.net + customCost.labor;
+        packaging = customCost.packaging;
+      } else {
+        cogs = sku.cogs * (1 + (cogsAdj / 100));
+        packaging = sku.packaging;
+      }
+
+      // Target Ad Spend
+      const adSpend = effectivePrice * (targetAcos / 100);
+
+      // Landed Operating Cost (pre-ad spend)
+      const amazonFees = referralFee + closingFee;
+      const landedOperatingCost = cogs + packaging + amazonFees + shippingFee;
+
+      // Net Profit & Margins
+      const netProfit = effectivePrice - landedOperatingCost - adSpend;
+      const netMargin = (netProfit / effectivePrice) * 100;
+      const breakEvenAcos = ((effectivePrice - landedOperatingCost) / effectivePrice) * 100;
+
+      return {
+        sku: sku.sku,
+        title: sku.title,
+        size: sku.size,
+        sizeCategory: sku.sizeCategory,
+        pack: sku.pack,
+        design: sku.design,
+        dimensions: sku.dimensions,
+        grossWeight: gw,
+        price: effectivePrice,
+        mrp: sku.mrp,
+        cogs: Math.round(cogs * 10) / 10,
+        packaging: Math.round(packaging * 10) / 10,
+        referralFee: Math.round(referralFee * 10) / 10,
+        closingFee: Math.round(closingFee * 10) / 10,
+        shippingFee: Math.round(shippingFee * 10) / 10,
+        amazonFees: Math.round((referralFee + closingFee) * 10) / 10,
+        adSpend: Math.round(adSpend * 10) / 10,
+        landedOperatingCost: Math.round(landedOperatingCost * 10) / 10,
+        netProfit: Math.round(netProfit * 10) / 10,
+        netMargin: Math.round(netMargin * 10) / 10,
+        breakEvenAcos: Math.round(breakEvenAcos * 10) / 10,
+        rawSku: sku
+      };
+    }
+
+    // Compute all SKUs with current global levers
+    function getComputedData() {
+      return MASTER_SKUS.map(sku => {
+        const custom = state.customSkuCosts[sku.sku];
+        return calculateUnitEconomics(sku, state.priceMult, state.cogsAdj, state.targetAcos, state.mode, custom);
+      });
+    }
+
+    // Filter and Sort Data
+    function getFilteredAndSortedData() {
+      const all = getComputedData();
+      
+      const filtered = all.filter(item => {
+        // Search term filter
+        if (state.searchTerm) {
+          const q = state.searchTerm.toLowerCase();
+          const matchSku = item.sku.toLowerCase().includes(q);
+          const matchTitle = (item.title || '').toLowerCase().includes(q);
+          const matchDesign = (item.design || '').toLowerCase().includes(q);
+          const matchSize = (item.size || '').toLowerCase().includes(q);
+          if (!matchSku && !matchTitle && !matchDesign && !matchSize) return false;
+        }
+
+        // Size filter
+        if (state.sizeFilter !== 'all') {
+          if (state.sizeFilter === 'Trays' && item.sizeCategory !== 'Trays') return false;
+          else if (state.sizeFilter === 'Combos' && item.sizeCategory !== 'Combos') return false;
+          else if (state.sizeFilter !== 'Trays' && state.sizeFilter !== 'Combos') {
+            if (item.sizeCategory !== state.sizeFilter && !item.size.includes(state.sizeFilter)) return false;
+          }
+        }
+
+        // Pack filter
+        if (state.packFilter !== 'all') {
+          if (item.pack !== parseInt(state.packFilter)) return false;
+        }
+
+        // Health filter
+        if (state.healthFilter === 'healthy' && item.netMargin < 25) return false;
+        if (state.healthFilter === 'moderate' && (item.netMargin < 15 || item.netMargin >= 25)) return false;
+        if (state.healthFilter === 'risk' && item.netMargin >= 15) return false;
+
+        return true;
+      });
+
+      // Sort
+      filtered.sort((a, b) => {
+        let valA = a[state.sortBy];
+        let valB = b[state.sortBy];
+        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valB === 'string') valB = valB.toLowerCase();
+
+        if (valA < valB) return state.sortDir === 'asc' ? -1 : 1;
+        if (valA > valB) return state.sortDir === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      return filtered;
+    }
+
+    // Charts instances
+    let marginChartInstance = null;
+    let costStackChartInstance = null;
+    let sensitivityChartInstance = null;
+
+    // Render Executive KPI Cards & Summary
+    function renderExecutiveKPIs(data) {
+      if (!data || data.length === 0) return;
+
+      const totalProfit = data.reduce((acc, it) => acc + it.netProfit, 0);
+      const avgMargin = data.reduce((acc, it) => acc + it.netMargin, 0) / data.length;
+      const avgBE = data.reduce((acc, it) => acc + it.breakEvenAcos, 0) / data.length;
+      const totalRev = data.reduce((acc, it) => acc + it.price, 0);
+      const totalAmz = data.reduce((acc, it) => acc + (it.referralFee + it.closingFee + it.shippingFee), 0);
+      const takeRate = (totalAmz / totalRev) * 100;
+
+      // Sorted by profit
+      const sortedByProfit = [...data].sort((a, b) => b.netProfit - a.netProfit);
+      const topSku = sortedByProfit[0];
+      const lowSku = sortedByProfit[sortedByProfit.length - 1];
+
+      // Projected monthly volume (estimated avg 35 units per SKU per month in active season)
+      const monthlyRunRateProfit = Math.round(data.reduce((acc, it) => acc + (it.netProfit * 35), 0));
+      const monthlyLakhs = (monthlyRunRateProfit / 100000).toFixed(2);
+
+      // DOM Updates
+      document.getElementById('kpiAvgMargin').innerText = avgMargin.toFixed(1) + '%';
+      const badge = document.getElementById('kpiAvgMarginBadge');
+      if (avgMargin >= 25) {
+        badge.className = 'inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold badge-healthy';
+        badge.innerText = '🟢 Optimal Portfolio Health';
+      } else if (avgMargin >= 15) {
+        badge.className = 'inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold badge-moderate';
+        badge.innerText = '🟡 Moderate Margin Zone';
+      } else {
+        badge.className = 'inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold badge-risk';
+        badge.innerText = '🔴 Low Margin / Compression';
+      }
+
+      if (topSku) {
+        document.getElementById('kpiTopSkuProfit').innerText = '₹' + topSku.netProfit.toFixed(1);
+        document.getElementById('kpiTopSkuCode').innerText = topSku.sku;
+        document.getElementById('kpiTopSkuCode').onclick = () => openDeepDiveBySku(topSku.sku);
+        document.getElementById('kpiTopSkuSub').innerText = topSku.netMargin.toFixed(1) + '% Margin (Pack of ' + topSku.pack + ')';
+      }
+
+      if (lowSku) {
+        document.getElementById('kpiLowSkuProfit').innerText = (lowSku.netProfit < 0 ? '-' : '') + '₹' + Math.abs(lowSku.netProfit).toFixed(1);
+        document.getElementById('kpiLowSkuCode').innerText = lowSku.sku;
+        document.getElementById('kpiLowSkuCode').onclick = () => openDeepDiveBySku(lowSku.sku);
+        document.getElementById('kpiLowSkuSub').innerText = lowSku.netMargin < 0 ? 'Negative Margin Leader' : lowSku.netMargin.toFixed(1) + '% Margin';
+      }
+
+      document.getElementById('kpiMonthlyProfit').innerText = '₹' + monthlyLakhs + 'L';
+      document.getElementById('kpiAvgBreakEven').innerText = avgBE.toFixed(1) + '%';
+      document.getElementById('kpiAmazonTakeRate').innerText = takeRate.toFixed(1) + '%';
+    }
+
+    // Render Master Data Table
+    function renderTable() {
+      const filtered = getFilteredAndSortedData();
+      const total = filtered.length;
+      document.getElementById('showingTotal').innerText = total;
+
+      const pageSize = parseInt(state.pageSize);
+      const totalPages = Math.ceil(total / pageSize) || 1;
+      if (state.page > totalPages) state.page = totalPages;
+      if (state.page < 1) state.page = 1;
+
+      const start = (state.page - 1) * pageSize;
+      const end = Math.min(start + pageSize, total);
+      document.getElementById('showingStart').innerText = total === 0 ? 0 : start + 1;
+      document.getElementById('showingEnd').innerText = end;
+      document.getElementById('paginationPages').innerText = 'Page ' + state.page + ' of ' + totalPages;
+
+      document.getElementById('btnPrevPage').disabled = state.page <= 1;
+      document.getElementById('btnNextPage').disabled = state.page >= totalPages;
+
+      // Update Counts
+      const healthyCount = filtered.filter(i => i.netMargin >= 25).length;
+      const modCount = filtered.filter(i => i.netMargin >= 15 && i.netMargin < 25).length;
+      const riskCount = filtered.filter(i => i.netMargin < 15).length;
+      document.getElementById('filteredHealthStats').innerHTML = `🟢 ${healthyCount} Healthy &bull; 🟡 ${modCount} Moderate &bull; 🔴 ${riskCount} At Risk`;
+
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      if (total === 0) {
+        tbody.innerHTML = `<tr><td colspan="14" class="text-center py-12 text-slate-500 font-mono">No matching SKU combinations found. Try clearing filters or search term.</td></tr>`;
+        return;
+      }
+
+      const pageRows = filtered.slice(start, end);
+      pageRows.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-800/40 transition group cursor-pointer';
+        tr.onclick = (e) => {
+          if (!e.target.closest('button') && !e.target.closest('.no-row-click')) {
+            openDeepDiveModal(item);
+          }
+        };
+
+        // Health Badge
+        let healthClass = 'badge-healthy';
+        let healthIcon = '🟢';
+        if (item.netMargin < 15) {
+          healthClass = 'badge-risk';
+          healthIcon = '🔴';
+        } else if (item.netMargin < 25) {
+          healthClass = 'badge-moderate';
+          healthIcon = '🟡';
+        }
+
+        tr.innerHTML = `
+          <td class="py-3 px-3.5">
+            <div class="flex items-center gap-2">
+              <span class="font-mono font-bold text-white group-hover:text-amber-400 transition">${item.sku}</span>
+              <button onclick="copyToClipboard('${item.sku}', 'SKU Copied!')" title="Copy SKU" class="text-slate-500 hover:text-white p-1 rounded transition no-row-click">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+              </button>
+            </div>
+            <div class="text-[10px] text-slate-400 truncate max-w-xs mt-0.5" title="${item.title}">${item.design}</div>
+          </td>
+          <td class="py-3 px-3">
+            <span class="font-semibold text-slate-200">${item.size}</span>
+            <span class="text-[10px] font-mono text-slate-400 block">${item.grossWeight}g</span>
+          </td>
+          <td class="py-3 px-2.5 text-center">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300">P${item.pack}</span>
+          </td>
+          <td class="py-3 px-3 text-right">
+            <div class="font-mono font-bold text-amber-400 text-sm">₹${item.price}</div>
+            <div class="text-[10px] font-mono text-slate-500 line-through">₹${item.mrp}</div>
+          </td>
+          <td class="py-3 px-3 text-right font-mono text-slate-300">₹${item.cogs}</td>
+          <td class="py-3 px-2.5 text-right font-mono text-slate-400">₹${item.packaging}</td>
+          <td class="py-3 px-3 text-right font-mono text-slate-300">₹${item.referralFee}</td>
+          <td class="py-3 px-2.5 text-right font-mono text-slate-400">₹${item.closingFee}</td>
+          <td class="py-3 px-3 text-right font-mono text-slate-300">₹${item.shippingFee}</td>
+          <td class="py-3 px-3 text-right font-mono text-amber-300">₹${item.adSpend}</td>
+          <td class="py-3 px-3.5 text-right font-mono font-bold ${item.netProfit >= 0 ? 'text-emerald-400' : 'text-rose-400'}">
+            ₹${item.netProfit}
+          </td>
+          <td class="py-3 px-3.5 text-right">
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold ${healthClass}">
+              ${healthIcon} ${item.netMargin}%
+            </span>
+          </td>
+          <td class="py-3 px-3 text-right font-mono text-purple-400 font-semibold">${item.breakEvenAcos}%</td>
+          <td class="py-3 px-3 text-center">
+            <button onclick="openDeepDiveBySku('${item.sku}')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-300 font-bold text-[10px] transition no-row-click">
+              Simulate
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Render Charts
+    function renderCharts() {
+      const computed = getComputedData();
+      
+      // 1. Profit Margin by Size
+      const sizeCategories = ['10x10', '8x8', '6x6', '8x6', 'Trays', 'Combos'];
+      const marginMeans = sizeCategories.map(cat => {
+        const matches = computed.filter(c => c.sizeCategory === cat);
+        if (matches.length === 0) return 0;
+        const sum = matches.reduce((acc, m) => acc + m.netMargin, 0);
+        return Math.round((sum / matches.length) * 10) / 10;
+      });
+
+      const ctxMargin = document.getElementById('marginBySizeChart').getContext('2d');
+      if (marginChartInstance) marginChartInstance.destroy();
+      marginChartInstance = new Chart(ctxMargin, {
+        type: 'bar',
+        data: {
+          labels: ['10x10" Large', '8x8" Medium', '6x6" Small', '8x6" Rect', 'Trays / Platters', 'Combos'],
+          datasets: [{
+            label: 'Net Margin (%)',
+            data: marginMeans,
+            backgroundColor: marginMeans.map(m => m >= 25 ? 'rgba(16, 185, 129, 0.7)' : m >= 15 ? 'rgba(245, 158, 11, 0.7)' : 'rgba(239, 68, 68, 0.7)'),
+            borderColor: marginMeans.map(m => m >= 25 ? '#10B981' : m >= 15 ? '#F59E0B' : '#EF4444'),
+            borderWidth: 1.5,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` Average Net Margin: ${ctx.raw}%`
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono' }, callback: v => v + '%' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#CBD5E1', font: { family: 'Plus Jakarta Sans', size: 11 } }
+            }
+          }
+        }
+      });
+
+      // 2. Cost Waterfall Decomposition Stack (Average Portfolio Order)
+      const avgPrice = computed.reduce((a, b) => a + b.price, 0) / computed.length;
+      const avgCogs = computed.reduce((a, b) => a + b.cogs, 0) / computed.length;
+      const avgPack = computed.reduce((a, b) => a + b.packaging, 0) / computed.length;
+      const avgRef = computed.reduce((a, b) => a + b.referralFee, 0) / computed.length;
+      const avgClose = computed.reduce((a, b) => a + b.closingFee, 0) / computed.length;
+      const avgShip = computed.reduce((a, b) => a + b.shippingFee, 0) / computed.length;
+      const avgAds = computed.reduce((a, b) => a + b.adSpend, 0) / computed.length;
+      const avgProfit = Math.max(0, computed.reduce((a, b) => a + b.netProfit, 0) / computed.length);
+
+      const ctxStack = document.getElementById('costStackChart').getContext('2d');
+      if (costStackChartInstance) costStackChartInstance.destroy();
+      costStackChartInstance = new Chart(ctxStack, {
+        type: 'doughnut',
+        data: {
+          labels: ['COGS (Factory)', 'Packaging', 'Amazon Referral', 'Amazon Closing', 'Easy Ship Logistics', 'PPC Ad Spend', 'Net Profit'],
+          datasets: [{
+            data: [
+              Math.round(avgCogs),
+              Math.round(avgPack),
+              Math.round(avgRef),
+              Math.round(avgClose),
+              Math.round(avgShip),
+              Math.round(avgAds),
+              Math.round(avgProfit)
+            ],
+            backgroundColor: [
+              '#3B82F6', // Blue (COGS)
+              '#64748B', // Slate (Packaging)
+              '#F59E0B', // Amber (Referral)
+              '#D97706', // Dark Amber (Closing)
+              '#8B5CF6', // Purple (Shipping)
+              '#06B6D4', // Cyan (Ad Spend)
+              '#10B981'  // Emerald (Net Profit)
+            ],
+            borderWidth: 2,
+            borderColor: '#0F172A'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                color: '#CBD5E1',
+                boxWidth: 12,
+                font: { family: 'Plus Jakarta Sans', size: 10 }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const val = ctx.raw;
+                  const pct = ((val / avgPrice) * 100).toFixed(1);
+                  return ` ${ctx.label}: ₹${val} (${pct}% of ASP)`;
+                }
+              }
+            }
+          },
+          cutout: '62%'
+        }
+      });
+    }
+
+    // Refresh entire view
+    function refreshView() {
+      const computed = getComputedData();
+      renderExecutiveKPIs(computed);
+      renderTable();
+      renderCharts();
+    }
+
+    // Handlers for Global Controls
+    function handleAcosChange(val) {
+      state.targetAcos = parseFloat(val);
+      document.getElementById('targetAcosDisplay').innerText = state.targetAcos.toFixed(1) + '%';
+      refreshView();
+    }
+    function setAcos(val) {
+      document.getElementById('targetAcosSlider').value = val;
+      handleAcosChange(val);
+    }
+
+    function handleCogsChange(val) {
+      state.cogsAdj = parseInt(val);
+      document.getElementById('cogsAdjDisplay').innerText = (state.cogsAdj > 0 ? '+' : '') + state.cogsAdj + '%';
+      refreshView();
+    }
+    function setCogs(val) {
+      document.getElementById('cogsAdjSlider').value = val;
+      handleCogsChange(val);
+    }
+
+    function handlePriceChange(val) {
+      state.priceMult = parseFloat(val);
+      document.getElementById('priceMultDisplay').innerText = state.priceMult.toFixed(2) + 'x';
+      refreshView();
+    }
+    function setPrice(val) {
+      document.getElementById('priceMultSlider').value = val;
+      handlePriceChange(val);
+    }
+
+    function setFulfillmentMode(mode) {
+      state.mode = mode;
+      
+      const btnEasy = document.getElementById('btnModeEasyShip');
+      const btnFBA = document.getElementById('btnModeFBA');
+      const btnSelf = document.getElementById('btnModeSelfShip');
+      const badge = document.getElementById('modeBadge');
+      const desc = document.getElementById('modeDescription');
+
+      [btnEasy, btnFBA, btnSelf].forEach(b => {
+        b.className = 'py-1.5 px-1 rounded text-center transition text-slate-400 hover:text-white';
+      });
+
+      if (mode === 'EASY_SHIP') {
+        btnEasy.className = 'py-1.5 px-1 rounded text-center transition bg-amber-500 text-slate-950 font-bold shadow';
+        badge.innerText = 'Easy Ship Standard';
+        badge.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold';
+        desc.innerText = 'Standard Amazon Easy Ship National rate: ₹65 / 500g, slab-based closing fees (₹5/₹13/₹25/₹61) + 18% GST.';
+      } else if (mode === 'FBA') {
+        btnFBA.className = 'py-1.5 px-1 rounded text-center transition bg-cyan-500 text-slate-950 font-bold shadow';
+        badge.innerText = 'Fulfillment by Amazon';
+        badge.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 font-bold';
+        desc.innerText = 'Amazon FBA Pick & Pack (₹15) + Weight Handling (₹38/500g) + Flat Closing (₹25/₹50) + 18% GST.';
+      } else if (mode === 'SELF_SHIP') {
+        btnSelf.className = 'py-1.5 px-1 rounded text-center transition bg-purple-500 text-slate-950 font-bold shadow';
+        badge.innerText = 'Merchant Self-Ship';
+        badge.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30 font-bold';
+        desc.innerText = 'Direct merchant courier (Delhivery / Bluedart avg: ₹55/500g, ₹85/1kg) + Amazon Closing Fee (₹7/₹20/₹40/₹60).';
+      }
+
+      refreshView();
+    }
+
+    function resetGlobalControls() {
+      state.targetAcos = 8.77;
+      state.cogsAdj = 0;
+      state.priceMult = 1.00;
+      state.customSkuCosts = {};
+      
+      document.getElementById('targetAcosSlider').value = 8.8;
+      document.getElementById('targetAcosDisplay').innerText = '8.8%';
+
+      document.getElementById('cogsAdjSlider').value = 0;
+      document.getElementById('cogsAdjDisplay').innerText = '0%';
+
+      document.getElementById('priceMultSlider').value = 1.00;
+      document.getElementById('priceMultDisplay').innerText = '1.00x';
+
+      setFulfillmentMode('EASY_SHIP');
+      showToast('Global financial levers reset to catalog defaults');
+    }
+
+    // Search and Table Filters
+    function handleSearch(val) {
+      state.searchTerm = val.trim();
+      state.page = 1;
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (state.searchTerm) clearBtn.classList.remove('hidden');
+      else clearBtn.classList.add('hidden');
+      renderTable();
+    }
+
+    function clearSearch() {
+      document.getElementById('tableSearchInput').value = '';
+      handleSearch('');
+    }
+
+    function filterSize(size) {
+      state.sizeFilter = size;
+      state.page = 1;
+      const sizeBtns = ['btnSizeAll', 'btnSize10x10', 'btnSize8x8', 'btnSize6x6', 'btnSize8x6', 'btnSizeTrays', 'btnSizeCombos'];
+      sizeBtns.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.className = 'px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition';
+      });
+
+      const activeBtnId = size === 'all' ? 'btnSizeAll' :
+                          size === '10x10' ? 'btnSize10x10' :
+                          size === '8x8' ? 'btnSize8x8' :
+                          size === '6x6' ? 'btnSize6x6' :
+                          size === '8x6' ? 'btnSize8x6' :
+                          size === 'Trays' ? 'btnSizeTrays' : 'btnSizeCombos';
+      const activeEl = document.getElementById(activeBtnId);
+      if (activeEl) activeEl.className = 'px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-bold';
+
+      renderTable();
+    }
+
+    function filterPack(pack) {
+      state.packFilter = pack;
+      state.page = 1;
+      renderTable();
+    }
+
+    function filterHealth(health) {
+      state.healthFilter = health;
+      state.page = 1;
+      renderTable();
+    }
+
+    function setPageSize(sz) {
+      state.pageSize = parseInt(sz);
+      state.page = 1;
+      renderTable();
+    }
+
+    function changePage(delta) {
+      state.page += delta;
+      renderTable();
+    }
+
+    function sortTable(column) {
+      if (state.sortBy === column) {
+        state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        state.sortBy = column;
+        state.sortDir = (column === 'netProfit' || column === 'netMargin' || column === 'breakEvenAcos' || column === 'price') ? 'desc' : 'asc';
+      }
+
+      // Update sort indicators
+      const sortColumns = ['sku', 'size', 'pack', 'price', 'cogs', 'packaging', 'referralFee', 'closingFee', 'shippingFee', 'adSpend', 'netProfit', 'netMargin', 'breakEvenAcos'];
+      sortColumns.forEach(c => {
+        const el = document.getElementById('sort_' + c);
+        if (el) el.innerText = '';
+      });
+      const activeSortEl = document.getElementById('sort_' + column);
+      if (activeSortEl) activeSortEl.innerText = state.sortDir === 'asc' ? '▲' : '▼';
+
+      renderTable();
+    }
+
+    // Modal / Deep-Dive Simulator
+    function openDeepDiveBySku(skuCode) {
+      const found = MASTER_SKUS.find(s => s.sku === skuCode);
+      if (found) {
+        const currentEconomics = calculateUnitEconomics(found, state.priceMult, state.cogsAdj, state.targetAcos, state.mode, state.customSkuCosts[found.sku]);
+        openDeepDiveModal(currentEconomics);
+      }
+    }
+
+    function openDeepDiveModal(item) {
+      state.activeModalSku = item.rawSku;
+      const sku = item.rawSku;
+      const b = sku.cogsBreakdown || {};
+
+      document.getElementById('modalSkuBadge').innerText = sku.sku;
+      document.getElementById('modalFamilyBadge').innerText = sku.catalogFamily || 'Catalog Item';
+      document.getElementById('modalTitle').innerText = sku.title || sku.sku;
+      document.getElementById('modalDim').innerText = sku.dimensions || 'Standard Dimensions';
+      document.getElementById('modalWeight').innerText = (sku.grossWeight || 500) + ' g';
+      document.getElementById('modalPack').innerText = 'Pack of ' + sku.pack;
+      document.getElementById('modalMrp').innerText = '₹' + sku.mrp;
+
+      // Set sliders
+      const effectivePrice = Math.round(sku.price * state.priceMult);
+      const custom = state.customSkuCosts[sku.sku];
+      
+      const priceSlider = document.getElementById('modalPriceSlider');
+      priceSlider.max = Math.max(sku.mrp, Math.round(sku.price * 2));
+      priceSlider.value = custom ? custom.price : effectivePrice;
+
+      document.getElementById('modalBoardSlider').value = custom ? custom.board : b.rigidBoard || 25;
+      document.getElementById('modalFabricSlider').value = custom ? custom.fabric : b.fabric || 20;
+      document.getElementById('modalZariSlider').value = custom ? custom.zari : b.zariLace || 15;
+      document.getElementById('modalNetSlider').value = custom ? custom.net : b.netCover || 15;
+      document.getElementById('modalLaborSlider').value = custom ? custom.labor : b.artisanLabor || 20;
+      document.getElementById('modalPackagingSlider').value = custom ? custom.packaging : sku.packaging || 20;
+
+      updateModalCalculations();
+
+      const modal = document.getElementById('skuModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDeepDiveModal() {
+      const modal = document.getElementById('skuModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      state.activeModalSku = null;
+    }
+
+    function resetSkuSliders() {
+      if (!state.activeModalSku) return;
+      delete state.customSkuCosts[state.activeModalSku.sku];
+      openDeepDiveModal({ rawSku: state.activeModalSku });
+      showToast('SKU components reset to factory baseline');
+      refreshView();
+    }
+
+    function updateModalCalculations() {
+      if (!state.activeModalSku) return;
+      const sku = state.activeModalSku;
+
+      const price = parseInt(document.getElementById('modalPriceSlider').value);
+      const board = parseInt(document.getElementById('modalBoardSlider').value);
+      const fabric = parseInt(document.getElementById('modalFabricSlider').value);
+      const zari = parseInt(document.getElementById('modalZariSlider').value);
+      const net = parseInt(document.getElementById('modalNetSlider').value);
+      const labor = parseInt(document.getElementById('modalLaborSlider').value);
+      const packaging = parseInt(document.getElementById('modalPackagingSlider').value);
+
+      document.getElementById('modalPriceVal').innerText = '₹' + price;
+      document.getElementById('modalBoardVal').innerText = '₹' + board;
+      document.getElementById('modalFabricVal').innerText = '₹' + fabric;
+      document.getElementById('modalZariVal').innerText = '₹' + zari;
+      document.getElementById('modalNetVal').innerText = '₹' + net;
+      document.getElementById('modalLaborVal').innerText = '₹' + labor;
+      document.getElementById('modalPackagingVal').innerText = '₹' + packaging;
+
+      // Save custom cost in state
+      state.customSkuCosts[sku.sku] = { price, board, fabric, zari, net, labor, packaging };
+
+      // Calculate
+      const eco = calculateUnitEconomics(sku, 1.0, 0, state.targetAcos, state.mode, state.customSkuCosts[sku.sku]);
+
+      document.getElementById('modalTotalCost').innerText = '₹' + eco.landedOperatingCost.toFixed(1);
+      document.getElementById('modalAcosPct').innerText = state.targetAcos.toFixed(1) + '%';
+      document.getElementById('modalAdSpend').innerText = '₹' + eco.adSpend.toFixed(1);
+      document.getElementById('modalNetProfit').innerText = '₹' + eco.netProfit.toFixed(1);
+      document.getElementById('modalNetMargin').innerText = eco.netMargin.toFixed(1) + '%';
+      document.getElementById('modalBreakEven').innerText = eco.breakEvenAcos.toFixed(1) + '%';
+
+      const healthBadge = document.getElementById('modalHealthBadge');
+      if (eco.netMargin >= 25) {
+        healthBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold badge-healthy';
+        healthBadge.innerText = '🟢 ' + eco.netMargin.toFixed(1) + '% Net Margin (Healthy)';
+      } else if (eco.netMargin >= 15) {
+        healthBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold badge-moderate';
+        healthBadge.innerText = '🟡 ' + eco.netMargin.toFixed(1) + '% Net Margin (Moderate)';
+      } else {
+        healthBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold badge-risk';
+        healthBadge.innerText = '🔴 ' + eco.netMargin.toFixed(1) + '% Net Margin (At Risk)';
+      }
+
+      renderSensitivityChart(sku, price, eco.landedOperatingCost);
+      renderTable();
+    }
+
+    function renderSensitivityChart(sku, price, landedCost) {
+      const acosPoints = [0, 5, 8.8, 12, 15, 20, 25, 30, 35, 40, 50];
+      const profits = acosPoints.map(acos => {
+        const adSpend = price * (acos / 100);
+        return Math.round((price - landedCost - adSpend) * 10) / 10;
+      });
+
+      const ctx = document.getElementById('skuSensitivityChart').getContext('2d');
+      if (sensitivityChartInstance) sensitivityChartInstance.destroy();
+      sensitivityChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: acosPoints.map(p => p + '%'),
+          datasets: [{
+            label: 'Net Profit (₹)',
+            data: profits,
+            borderColor: '#10B981',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointBackgroundColor: profits.map(p => p >= 0 ? '#10B981' : '#EF4444'),
+            pointBorderColor: '#0F172A',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (c) => ` Profit: ₹${c.raw}`
+              }
+            }
+          },
+          scales: {
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono' }, callback: v => '₹' + v }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } }
+            }
+          }
+        }
+      });
+    }
+
+    function copyCurrentSkuSpec() {
+      if (!state.activeModalSku) return;
+      const sku = state.activeModalSku;
+      const eco = calculateUnitEconomics(sku, state.priceMult, state.cogsAdj, state.targetAcos, state.mode, state.customSkuCosts[sku.sku]);
+      const text = `Taarmi Unit Economics Spec:
+SKU: ${eco.sku}
+Selling Price: ₹${eco.price} (MRP: ₹${eco.mrp})
+Dimensions: ${eco.dimensions} | Weight: ${eco.grossWeight}g
+COGS: ₹${eco.cogs} | Packaging: ₹${eco.packaging}
+Amazon Referral Fee (+18% GST): ₹${eco.referralFee}
+Amazon Closing Fee (+18% GST): ₹${eco.closingFee}
+Shipping / Weight Handling Fee: ₹${eco.shippingFee}
+Target ACoS (${state.targetAcos}%): ₹${eco.adSpend}
+Net Profit: ₹${eco.netProfit} | Net Margin: ${eco.netMargin}%
+Break-Even ACoS Ceiling: ${eco.breakEvenAcos}%`;
+
+      copyToClipboard(text, 'SKU Financial Spec Copied!');
+    }
+
+    // CSV Export Engine
+    function exportToCSV() {
+      const data = getFilteredAndSortedData();
+      if (!data || data.length === 0) {
+        showToast('No data to export!');
+        return;
+      }
+
+      const headers = [
+        'SKU Code',
+        'Item Title',
+        'Size Category',
+        'Dimensions',
+        'Pack Count',
+        'Gross Weight (g)',
+        'Selling Price (₹)',
+        'MRP (₹)',
+        'COGS Factory (₹)',
+        'Packaging Materials (₹)',
+        'Amazon Referral Fee incl GST (₹)',
+        'Amazon Closing Fee incl GST (₹)',
+        'Shipping Fee incl GST (₹)',
+        'Target Ad Spend (₹)',
+        'Target ACoS (%)',
+        'Net Profit (₹)',
+        'Net Margin (%)',
+        'Break-Even ACoS (%)',
+        'Fulfillment Mode'
+      ];
+
+      const rows = data.map(it => [
+        `"${it.sku}"`,
+        `"${(it.title || '').replace(/"/g, '""')}"`,
+        `"${it.sizeCategory}"`,
+        `"${it.dimensions}"`,
+        it.pack,
+        it.grossWeight,
+        it.price,
+        it.mrp,
+        it.cogs,
+        it.packaging,
+        it.referralFee,
+        it.closingFee,
+        it.shippingFee,
+        it.adSpend,
+        state.targetAcos,
+        it.netProfit,
+        it.netMargin,
+        it.breakEvenAcos,
+        `"${state.mode}"`
+      ]);
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `Taarmi_Amazon_Unit_Economics_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Unit Economics CSV Exported!');
+    }
+
+    // Toast Utility
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    function copyToClipboard(text, successMsg) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMsg || 'Copied to clipboard');
+      }).catch(() => {
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast(successMsg || 'Copied to clipboard');
+      });
+    }
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDeepDiveModal();
+      }
+      if (e.key === '/' && document.activeElement !== document.getElementById('tableSearchInput')) {
+        e.preventDefault();
+        const searchInput = document.getElementById('tableSearchInput');
+        if (searchInput) searchInput.focus();
+      }
+    });
+
+    // Initial Boot
+    window.addEventListener('DOMContentLoaded', () => {
+      refreshView();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Reddit Growth Command Center | Snoo Community Strategist</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            rdorange: '#FF4500',
+            rdhover: '#FF5722',
+            rddark: '#070A12',
+            rdcard: '#0C1017',
+            rdborder: '#1F2937',
+            rdmuted: '#94A3B8'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-base: #070A12;
+      --bg-card: #0C1017;
+      --border: rgba(255, 255, 255, 0.08);
+      --reddit-orange: #FF4500;
+      --reddit-glow: rgba(255, 69, 0, 0.25);
+    }
+    body {
+      background-color: var(--bg-base);
+      color: #F8FAFC;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .rd-panel {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      transition: all 0.2s ease;
+    }
+    .rd-panel:hover {
+      border-color: rgba(255, 69, 0, 0.3);
+    }
+    .tab-btn-active {
+      background: linear-gradient(135deg, #FF4500, #E03D00);
+      color: #FFFFFF;
+      font-weight: 700;
+      box-shadow: 0 4px 14px var(--reddit-glow);
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070A12; }
+    ::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
+  </style>
+</head>
+<body class="selection:bg-orange-500 selection:text-white">
+
+  <!-- MASTER OS TOP EXECUTIVE BAR -->
+  <header style="background: rgba(11, 17, 32, 0.95); border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 24px; position: sticky; top: 0; z-index: 9999; backdrop-filter: blur(12px); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;">
+    <div style="max-width: 1750px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="00_DASHBOARD_PORTAL.html" style="width: 36px; height: 36px; background: linear-gradient(135deg, #FF4500, #D93800); color: #fff; font-weight: 900; font-size: 18px; display: flex; align-items: center; justify-content: center; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 12px rgba(255, 69, 0, 0.35);">R</a>
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #FF4500; text-transform: uppercase; letter-spacing: 0.08em;">
+            <a href="00_DASHBOARD_PORTAL.html" style="color: #94A3B8; text-decoration: none;">Taarmi Executive Suite</a>
+            <span style="color: #64748B;">/</span>
+            <span>COMMUNITY INTELLIGENCE</span>
+          </div>
+          <div style="font-size: 15px; font-weight: 800; color: #F8FAFC; letter-spacing: -0.01em;">Reddit Organic Growth & Community Command Center</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 9999px; font-size: 11px; font-weight: 700; color: #10B981;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+          HEADLESS AUTONOMOUS
+        </div>
+        <div id="master-os-ist-clock" style="padding: 4px 10px; background: #0F172A; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94A3B8;">IST --:--:--</div>
+        <a href="00_DASHBOARD_PORTAL.html" style="padding: 5px 12px; background: #1E293B; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #F8FAFC; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.15s ease;">&larr; Master Portal</a>
+        <a href="X_ACCOUNT_COMMAND_CENTER.html" style="padding: 5px 12px; background: #1E293B; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 6px; color: #38bdf8; font-size: 12px; font-weight: 600; text-decoration: none;">𝕏 Command Center &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Header Banner -->
+  <header class="sticky top-0 z-40 border-b border-zinc-800 bg-black/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="00_DASHBOARD_PORTAL.html" class="p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition" title="Back to Master Portal">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        </a>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center font-black text-white text-xl shadow-lg shadow-orange-500/20">
+          🤖
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-base sm:text-lg text-white tracking-tight">SNOO // REDDIT STRATEGIST</h1>
+            <span class="px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-orange-500/20 text-orange-400 border border-orange-500/30 rounded-full">Community Agent</span>
+          </div>
+          <p class="text-xs text-zinc-400 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Assigned to Hive Fleet (worker-reddit-growth-manager) • 100% Headless Browser Automation
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="REDDIT_LOGIN.html" class="px-3.5 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition flex items-center gap-1.5 shadow-md shadow-orange-600/30 text-decoration-none">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+          Sign In to Reddit
+        </a>
+        <button onclick="launchBrowserLogin()" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          1-Click Desktop Window
+        </button>
+        <button onclick="switchTab('settings')" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          Config
+        </button>
+        <button onclick="refreshData()" class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white transition" title="Refresh Telemetry">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Account Overview & Status Card -->
+    <div class="rd-panel p-6 relative overflow-hidden bg-gradient-to-r from-orange-950/20 via-zinc-900/60 to-black">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30">
+              AGENT ID: worker-reddit-growth-manager
+            </span>
+            <span id="connBadge" class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              Headless Browser Engine
+            </span>
+            <span id="profileBadge" class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+              data/reddit_browser_profile
+            </span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Reddit Account: <span id="handleDisplay" class="text-orange-400">Loading...</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-zinc-400 max-w-2xl leading-relaxed">
+            Autonomous Reddit growth & community listening. Engages authentically across high-intent communities (<code class="text-orange-300">r/AmazonSeller</code>, <code class="text-orange-300">r/packaging</code>, <code class="text-orange-300">r/IndianWeddings</code>, <code class="text-orange-300">r/eCommerce</code>) sharing value-first packaging case studies, listing teardowns, and festive gifting insights without spam flags.
+          </p>
+          <div class="flex flex-wrap items-center gap-2 pt-1">
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              24/7 Daemon: <strong id="daemonStatusText">ACTIVE</strong> (Headless Chrome)
+            </span>
+            <span id="daemonNextSlotBadge" class="px-2.5 py-1 rounded-lg bg-purple-500/10 text-purple-300 border border-purple-500/20 text-xs font-mono flex items-center gap-1.5">
+              ⏳ Next Slot: <strong id="nextSlotText" class="text-purple-200">Loading...</strong>
+            </span>
+            <button onclick="triggerAutonomousPost()" class="px-3 py-1 rounded-lg bg-orange-500 hover:bg-orange-400 text-black text-xs font-bold transition flex items-center gap-1 shadow-md shadow-orange-500/20" title="Immediately publish next queued or rotating topic post">
+              📝 Post Now
+            </button>
+            <button onclick="triggerAutonomousInteraction()" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1 shadow-md shadow-emerald-600/20" title="Immediately scan communities and submit an organic builder reply">
+              💬 Reply Now
+            </button>
+            <button onclick="toggleDaemonState()" id="daemonToggleBtn" class="px-3 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-medium transition">
+              ⏸️ Pause Daemon
+            </button>
+            <button onclick="launchBrowserLogin()" class="px-3 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition flex items-center gap-1">
+              🖥️ Browser Login
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Badges -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full md:w-auto">
+          <div class="p-3.5 rounded-xl bg-black/50 border border-zinc-800 flex flex-col">
+            <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">Queue Drafts</span>
+            <span id="statDrafts" class="text-2xl font-black text-white mt-1">2</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-black/50 border border-zinc-800 flex flex-col">
+            <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">Published</span>
+            <span id="statPublished" class="text-2xl font-black text-orange-400 mt-1">0</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-black/50 border border-zinc-800 flex flex-col">
+            <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">Interactions</span>
+            <span id="statInteractions" class="text-2xl font-black text-emerald-400 mt-1">0</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-black/50 border border-zinc-800 flex flex-col">
+            <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">Slots Done</span>
+            <span id="statSlots" class="text-2xl font-black text-purple-400 mt-1">0/6</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex items-center gap-2 border-b border-zinc-800 pb-3 overflow-x-auto">
+      <button onclick="switchTab('daemon')" id="tabBtn-daemon" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 tab-btn-active">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        24/7 Autonomous Daemon
+      </button>
+      <button onclick="switchTab('queue')" id="tabBtn-queue" class="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        Post Queue (<span id="tabCountQueue">2</span>)
+      </button>
+      <button onclick="switchTab('compose')" id="tabBtn-compose" class="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+        Compose Post
+      </button>
+      <button onclick="switchTab('listening')" id="tabBtn-listening" class="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        Subreddit Listening
+      </button>
+      <button onclick="switchTab('settings')" id="tabBtn-settings" class="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+        Account & Login
+      </button>
+    </div>
+
+    <!-- TAB 0: 24/7 AUTONOMOUS DAEMON & SCHEDULE -->
+    <div id="tabContent-daemon" class="space-y-6">
+      <!-- Daemon Live Executive Status -->
+      <div class="rd-panel p-6 bg-gradient-to-br from-zinc-900 via-black to-orange-950/20 border-orange-500/20">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <h3 class="text-base font-bold text-white tracking-tight">Autonomous 24/7 Growth Daemon</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">RUNNING (30s POLLING LOOP)</span>
+            </div>
+            <p class="text-xs text-zinc-400 max-w-2xl leading-relaxed">
+              Self-healing headless browser agent. Maintains persistent Reddit cookies, automatically evaluates organic daily posting and commenting slots anchored to Indian Standard Time (IST), applies anti-ban human keystroke jitter, and listens to target packaging & e-commerce communities 24 hours a day without external API tokens.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="triggerAutonomousPost()" class="px-3.5 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition flex items-center gap-2 shadow-lg shadow-orange-600/30">
+              <span>📝 Trigger Next Post</span>
+            </button>
+            <button onclick="triggerAutonomousInteraction()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition flex items-center gap-2 shadow-lg shadow-emerald-600/30">
+              <span>💬 Trigger Next Reply</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- System Architecture Pill Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mt-6 pt-5 border-t border-zinc-800/80">
+          <div class="p-3 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-[10px] font-mono text-zinc-500 uppercase">Engine Architecture</div>
+            <div class="text-xs font-bold text-zinc-200 mt-0.5">Headless Chrome / Edge</div>
+            <div class="text-[10px] text-zinc-400">Zero API Key / Pure Browser</div>
+          </div>
+          <div class="p-3 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-[10px] font-mono text-zinc-500 uppercase">Profile Persistence</div>
+            <div class="text-xs font-bold text-zinc-200 mt-0.5 font-mono">data/reddit_browser_profile</div>
+            <div class="text-[10px] text-zinc-400">Preserves Reddit cookies</div>
+          </div>
+          <div class="p-3 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-[10px] font-mono text-zinc-500 uppercase">Anti-Bot Resistance</div>
+            <div class="text-xs font-bold text-emerald-400 mt-0.5">45-120ms Keystroke Jitter</div>
+            <div class="text-[10px] text-zinc-400">Bypasses DOM & 403 filters</div>
+          </div>
+          <div class="p-3 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-[10px] font-mono text-zinc-500 uppercase">Persona / Guardrails</div>
+            <div class="text-xs font-bold text-orange-400 mt-0.5">Zero-Link Builder Voice</div>
+            <div class="text-[10px] text-zinc-400">Kartikey (Value-first help)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's IST Organic Schedule Checklist -->
+      <div class="rd-panel p-6 space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <h4 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+              Today's Organic Execution Schedule (IST)
+            </h4>
+            <p class="text-xs text-zinc-400 mt-0.5">Anchored to peak community active windows with randomized drift to emulate natural human behavior.</p>
+          </div>
+          <div id="scheduleProgressBadge" class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+            0 of 6 Slots Completed
+          </div>
+        </div>
+
+        <div id="daemonScheduleGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-2">
+          <!-- Rendered dynamically via loadDaemonStatus() -->
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 animate-pulse text-xs text-zinc-500">
+            Loading today's schedule...
+          </div>
+        </div>
+      </div>
+
+      <!-- Autonomous Guardrails & Target Communities -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="rd-panel p-6 space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span>🛡️</span> Anti-AI-Slop & Anti-Ban Rules
+          </h4>
+          <ul class="text-xs text-zinc-300 space-y-2.5 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Zero Unsolicited Links:</strong> Never dump product links or affiliate tags. Only provide real engineering answers (packaging tare weight, Amazon mobile title truncations, return rates).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Natural Human Typing Delay:</strong> Random keystroke latency (45ms to 120ms per char) ensures Reddit spam heuristics treat inputs as native keyboard entries.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Strict Deduplication Guard:</strong> Never comment on the same thread twice; persists post URLs in <code class="text-orange-300">reddit_interactions_history.json</code>.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-emerald-400 font-bold">✓</span>
+              <span><strong>Paced Frequency:</strong> Maximum 2 original posts and 4 targeted community replies per 24 hours to stay well within Reddit rate limit thresholds.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rd-panel p-6 space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span>🎯</span> Active Subreddit Listening Channels
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+            <div class="p-3 rounded-xl bg-black/40 border border-zinc-800">
+              <div class="text-xs font-bold text-orange-400">r/packaging</div>
+              <div class="text-[11px] text-zinc-400 mt-0.5">Box strength, corrugation, rigid luxury hamper design, shipping damage.</div>
+            </div>
+            <div class="p-3 rounded-xl bg-black/40 border border-zinc-800">
+              <div class="text-xs font-bold text-orange-400">r/AmazonSeller</div>
+              <div class="text-[11px] text-zinc-400 mt-0.5">FBA weight tiers, listing variations, image compliance, packaging guidelines.</div>
+            </div>
+            <div class="p-3 rounded-xl bg-black/40 border border-zinc-800">
+              <div class="text-xs font-bold text-orange-400">r/eCommerce</div>
+              <div class="text-[11px] text-zinc-400 mt-0.5">Unboxing experience, reducing return rates, shipping unit economics.</div>
+            </div>
+            <div class="p-3 rounded-xl bg-black/40 border border-zinc-800">
+              <div class="text-xs font-bold text-orange-400">r/SideProject & r/webdev</div>
+              <div class="text-[11px] text-zinc-400 mt-0.5">Builder insights, clean modern UI tokens, headless tools and automation.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: QUEUE -->
+    <div id="tabContent-queue" class="hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-bold text-zinc-300 uppercase tracking-wider flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+          Scheduled & Active Queue
+        </h3>
+        <button onclick="switchTab('compose')" class="text-xs text-orange-400 hover:text-orange-300 font-semibold flex items-center gap-1">
+          + Add New Subreddit Post
+        </button>
+      </div>
+
+      <div id="queueList" class="space-y-4">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- TAB 2: COMPOSE POST -->
+    <div id="tabContent-compose" class="hidden space-y-6">
+      <div class="rd-panel p-6 space-y-5">
+        <div>
+          <h3 class="text-base font-bold text-white tracking-tight">Draft Reddit Community Post</h3>
+          <p class="text-xs text-zinc-400 mt-1">High-value, non-promotional technical & case study content. Markdown supported.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-mono font-bold text-zinc-300 uppercase mb-1">Target Subreddit</label>
+            <select id="composerSubreddit" class="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-orange-500">
+              <option value="r/packaging">r/packaging (Luxury, Gifting, Materials)</option>
+              <option value="r/AmazonSeller">r/AmazonSeller (Listing Optimization, FBA, PPC)</option>
+              <option value="r/eCommerce">r/eCommerce (Growth, Unit Economics, Conversion)</option>
+              <option value="r/IndianWeddings">r/IndianWeddings (Trousseau, Sagan, Festive Baskets)</option>
+              <option value="r/DIY">r/DIY (Crafting, Hamper Assembling)</option>
+              <option value="r/gifting">r/gifting (Curated Gifting)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-mono font-bold text-zinc-300 uppercase mb-1">Tags / Topic Keywords</label>
+            <input type="text" id="composerTags" placeholder="Packaging, AmazonFBA, Gifting" class="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-orange-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono font-bold text-zinc-300 uppercase mb-1">Post Title</label>
+          <input type="text" id="composerTitle" placeholder="e.g. How we eliminated keyword cannibalization across 22 variation SKUs..." class="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-orange-500 font-semibold">
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono font-bold text-zinc-300 uppercase mb-1">Post Body (Markdown)</label>
+          <textarea id="composerContent" rows="8" placeholder="Share findings, numbers, before/after results, and genuine discussion questions..." class="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-zinc-200 focus:outline-none focus:border-orange-500 font-mono"></textarea>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <button onclick="saveNewDraft()" class="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition shadow-md shadow-orange-600/20">
+            Save Draft to Queue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SUBREDDIT LISTENING -->
+    <div id="tabContent-listening" class="hidden space-y-6">
+      <div class="rd-panel p-6 space-y-4">
+        <div>
+          <h3 class="text-base font-bold text-white tracking-tight">Real-Time Subreddit Intelligence & Listening</h3>
+          <p class="text-xs text-zinc-400 mt-1">Scan live subreddit discussions for high-intent queries, competitor mentions, and packaging questions.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-mono font-bold text-zinc-400 uppercase mb-1">Subreddit</label>
+            <input type="text" id="scanSubInput" value="r/packaging" class="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-orange-500">
+          </div>
+          <div>
+            <label class="block text-xs font-mono font-bold text-zinc-400 uppercase mb-1">Filter Word (Optional)</label>
+            <input type="text" id="scanQueryInput" placeholder="hamper, box, luxury" class="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-orange-500">
+          </div>
+          <div class="flex items-end">
+            <button onclick="triggerScan()" id="scanBtn" class="w-full py-2 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-orange-400 border border-zinc-700 font-bold text-xs transition flex items-center justify-center gap-1.5">
+              <span>📡 Run Scanner</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="scanResults" class="space-y-3 pt-3">
+          <div class="p-8 text-center text-zinc-500 text-xs border border-dashed border-zinc-800 rounded-xl">
+            Click "Run Scanner" to fetch the latest discussions from the selected subreddit.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: ACCOUNT SETTINGS & LOGIN -->
+    <div id="tabContent-settings" class="hidden space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- 1-Click Browser Connector Card -->
+        <div class="rd-panel p-6 space-y-4 border-orange-500/30">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🖥️</span>
+            <div>
+              <h3 class="text-base font-bold text-white tracking-tight">1-Click Desktop Browser Login</h3>
+              <p class="text-xs text-zinc-400">Recommended • Zero API keys or tokens required</p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs text-zinc-300 space-y-2 leading-relaxed">
+            <p>1. Click the button below to launch a visible Edge/Chrome browser window directly on your desktop.</p>
+            <p>2. Log into your Reddit account in that window.</p>
+            <p>3. The engine automatically captures your session cookies (<code class="text-orange-400">reddit_session</code>, <code class="text-orange-400">token_v2</code>) into the persistent profile directory.</p>
+            <p>4. The window auto-closes and activates 100% autonomous headless posting.</p>
+          </div>
+
+          <button onclick="launchBrowserLogin()" id="bigLoginBtn" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-extrabold text-sm transition shadow-lg shadow-orange-600/30 flex items-center justify-center gap-2">
+            <span>🚀 Launch Reddit Login Window</span>
+          </button>
+
+          <div id="loginStatusFeedback" class="hidden p-3 rounded-lg bg-zinc-900 border border-orange-500/40 text-xs text-orange-300">
+            ⏳ Browser window opened on desktop. Please log in! Checking for session...
+          </div>
+        </div>
+
+        <!-- Manual Cookie Fallback -->
+        <div class="rd-panel p-6 space-y-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🔑</span>
+            <div>
+              <h3 class="text-base font-bold text-white tracking-tight">Direct Cookie / Token Fallback</h3>
+              <p class="text-xs text-zinc-400">Paste cookie if already logged in on Arc/Chrome</p>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-mono font-bold text-zinc-400 uppercase mb-1">Reddit Username</label>
+              <input type="text" id="settingsHandle" placeholder="u/YourUsername" class="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-orange-500">
+            </div>
+            <div>
+              <label class="block text-xs font-mono font-bold text-zinc-400 uppercase mb-1">Session Cookie (reddit_session)</label>
+              <input type="password" id="settingsSessionCookie" placeholder="e.g. 12345678,2026-10-22..." class="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-orange-500 font-mono">
+            </div>
+            <div>
+              <label class="block text-xs font-mono font-bold text-zinc-400 uppercase mb-1">Token V2 (token_v2)</label>
+              <input type="password" id="settingsTokenV2" placeholder="eyJhbGciOi..." class="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-orange-500 font-mono">
+            </div>
+          </div>
+
+          <button onclick="saveManualCredentials()" class="w-full py-2.5 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs transition border border-zinc-700">
+            Save Credentials Locally
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none px-4 py-3 rounded-xl bg-zinc-900 border border-orange-500 text-xs font-semibold text-white shadow-2xl flex items-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+    <span id="toastMsg">Notification message</span>
+  </div>
+
+  <script>
+    // Live IST Clock
+    function updateISTClock() {
+      const now = new Date();
+      const istOptions = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+      const istTime = now.toLocaleTimeString('en-US', istOptions);
+      const el = document.getElementById('master-os-ist-clock');
+      if (el) el.innerText = `IST ${istTime}`;
+    }
+    setInterval(updateISTClock, 1000);
+    updateISTClock();
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const text = document.getElementById('toastMsg');
+      text.innerText = msg;
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    function switchTab(tabId) {
+      ['daemon', 'queue', 'compose', 'listening', 'settings'].forEach(t => {
+        const contentEl = document.getElementById(`tabContent-${t}`);
+        const btnEl = document.getElementById(`tabBtn-${t}`);
+        if (contentEl) contentEl.classList.add('hidden');
+        if (btnEl) btnEl.className = 'px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition flex items-center gap-2';
+      });
+      const activeContent = document.getElementById(`tabContent-${tabId}`);
+      const activeBtn = document.getElementById(`tabBtn-${tabId}`);
+      if (activeContent) activeContent.classList.remove('hidden');
+      if (activeBtn) activeBtn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 tab-btn-active';
+    }
+
+    let isDaemonRunning = true;
+
+    async function loadDaemonStatus() {
+      try {
+        const res = await fetch('/api/reddit/daemon/status');
+        const data = await res.json();
+        if (!data.success || !data.status) return;
+
+        const status = data.status;
+        isDaemonRunning = status.isRunning;
+
+        // Header status badges
+        const daemonStatusText = document.getElementById('daemonStatusText');
+        const daemonToggleBtn = document.getElementById('daemonToggleBtn');
+        const nextSlotText = document.getElementById('nextSlotText');
+        const statSlots = document.getElementById('statSlots');
+        const statInteractions = document.getElementById('statInteractions');
+        const statPublished = document.getElementById('statPublished');
+        const scheduleProgressBadge = document.getElementById('scheduleProgressBadge');
+
+        if (daemonStatusText) {
+          daemonStatusText.innerText = status.isRunning ? 'ACTIVE' : 'PAUSED';
+          daemonStatusText.className = status.isRunning ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold';
+        }
+
+        if (daemonToggleBtn) {
+          daemonToggleBtn.innerText = status.isRunning ? '⏸️ Pause Daemon' : '▶️ Resume Daemon';
+        }
+
+        const state = status.state || {};
+        if (statSlots) statSlots.innerText = `${state.executedSlotsToday || 0}/${state.totalSlotsToday || 6}`;
+        if (statInteractions) statInteractions.innerText = state.totalAutomatedInteractions || 0;
+        if (statPublished) statPublished.innerText = state.totalAutomatedPosts || 0;
+        if (scheduleProgressBadge) {
+          scheduleProgressBadge.innerText = `${state.executedSlotsToday || 0} of ${state.totalSlotsToday || 6} Slots Completed`;
+        }
+
+        // Determine next slot
+        const schedule = status.todaySchedule || [];
+        const nextPendingSlot = schedule.find(s => !s.executed);
+        if (nextSlotText) {
+          if (nextPendingSlot) {
+            nextSlotText.innerText = `${nextPendingSlot.timeStr} (${nextPendingSlot.type === 'post' ? '📝 Post' : '💬 Reply'})`;
+          } else {
+            nextSlotText.innerText = 'All 6 slots done for today';
+          }
+        }
+
+        // Render schedule grid
+        const grid = document.getElementById('daemonScheduleGrid');
+        if (grid && schedule.length > 0) {
+          grid.innerHTML = schedule.map(slot => {
+            const isDone = slot.executed;
+            const isNext = !isDone && nextPendingSlot && nextPendingSlot.id === slot.id;
+            const icon = slot.type === 'post' ? '📝' : '💬';
+
+            let statusBadge = '';
+            let cardBorder = 'border-zinc-800 bg-zinc-900/40';
+
+            if (isDone) {
+              statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">✅ EXECUTED</span>';
+              cardBorder = 'border-emerald-500/20 bg-emerald-950/10';
+            } else if (isNext) {
+              statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 animate-pulse">⏳ NEXT UP</span>';
+              cardBorder = 'border-orange-500/40 bg-orange-950/20';
+            } else {
+              statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-mono text-zinc-500 bg-zinc-800">PENDING</span>';
+            }
+
+            return `
+              <div class="p-4 rounded-xl border ${cardBorder} transition space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold text-orange-400">${slot.timeStr}</span>
+                  ${statusBadge}
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-base">${icon}</span>
+                  <div class="font-bold text-xs text-white">${slot.label}</div>
+                </div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-zinc-500 pt-1 border-t border-zinc-800/60">
+                  <span class="uppercase tracking-wider">Type: ${slot.type}</span>
+                  <span>ID: ${slot.id.split('_').slice(1,3).join('_')}</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (e) {
+        console.warn('Failed to load daemon status:', e);
+      }
+    }
+
+    async function toggleDaemonState() {
+      const endpoint = isDaemonRunning ? '/api/reddit/daemon/stop' : '/api/reddit/daemon/start';
+      showToast(isDaemonRunning ? 'Pausing 24/7 Daemon...' : 'Resuming 24/7 Daemon...');
+      try {
+        const res = await fetch(endpoint);
+        const data = await res.json();
+        if (data.success) {
+          showToast(isDaemonRunning ? '⏸️ Reddit Daemon Paused.' : '▶️ Reddit Daemon Resumed!');
+          loadDaemonStatus();
+        }
+      } catch (e) {
+        showToast('Error toggling daemon: ' + e.message);
+      }
+    }
+
+    async function triggerAutonomousPost() {
+      showToast('⏳ Triggering Autonomous Reddit Post...');
+      try {
+        const res = await fetch('/api/reddit/daemon/trigger-post', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`🚀 Posted to ${data.subreddit || 'Reddit'}: "${(data.title || '').slice(0, 30)}..."`);
+          refreshData();
+        } else {
+          showToast(`Notice: ${data.error || 'Post skipped or delayed'}`);
+        }
+      } catch (e) {
+        showToast('Error triggering post: ' + e.message);
+      }
+    }
+
+    async function triggerAutonomousInteraction() {
+      showToast('⏳ Scanning communities & generating builder reply...');
+      try {
+        const res = await fetch('/api/reddit/daemon/trigger-interaction', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`💬 Replied on ${data.subreddit || 'Reddit'}: "${(data.commentSnippet || '').slice(0, 35)}..."`);
+          refreshData();
+        } else {
+          showToast(`Notice: ${data.message || data.error || 'No target thread found'}`);
+        }
+      } catch (e) {
+        showToast('Error triggering reply: ' + e.message);
+      }
+    }
+
+    async function loadStatus() {
+      try {
+        const res = await fetch('/api/reddit/status');
+        const data = await res.json();
+        
+        const handleEl = document.getElementById('handleDisplay');
+        const connBadge = document.getElementById('connBadge');
+        const statDrafts = document.getElementById('statDrafts');
+        const statPublished = document.getElementById('statPublished');
+        const settingsHandle = document.getElementById('settingsHandle');
+
+        if (handleEl) handleEl.innerText = data.handle || 'Not Connected';
+        if (settingsHandle && data.handle && data.handle !== 'Unconnected') settingsHandle.value = data.handle;
+        
+        if (connBadge) {
+          if (data.connected) {
+            connBadge.innerText = 'Connected • Headless Browser Active';
+            connBadge.className = 'px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+          } else {
+            connBadge.innerText = 'Click 1-Click Login to Connect';
+            connBadge.className = 'px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30';
+          }
+        }
+
+        if (statDrafts && data.stats) statDrafts.innerText = data.stats.pendingDrafts;
+        if (statPublished && data.stats) statPublished.innerText = data.stats.publishedTotal;
+      } catch (e) {
+        console.warn('Status load error:', e);
+      }
+    }
+
+    async function loadQueue() {
+      try {
+        const res = await fetch('/api/reddit/queue');
+        const data = await res.json();
+        const drafts = data.drafts || [];
+        const published = data.published || [];
+        const totalItems = [...drafts, ...published];
+
+        const countEl = document.getElementById('tabCountQueue');
+        if (countEl) countEl.innerText = drafts.length;
+
+        const container = document.getElementById('queueList');
+        if (!container) return;
+
+        if (totalItems.length === 0) {
+          container.innerHTML = `
+            <div class="p-8 text-center text-zinc-500 text-xs border border-dashed border-zinc-800 rounded-xl">
+              Queue is empty. Click "+ Add New Subreddit Post" above to compose a draft.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = totalItems.map(item => {
+          const isPublished = item.status === 'published';
+          return `
+            <div class="rd-panel p-5 space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30">
+                    ${item.subreddit || 'r/packaging'}
+                  </span>
+                  <span class="px-2 py-0.5 rounded text-[11px] font-mono ${isPublished ? 'bg-emerald-500/20 text-emerald-400' : 'bg-zinc-800 text-zinc-400'}">
+                    ${isPublished ? 'PUBLISHED' : 'DRAFT'}
+                  </span>
+                </div>
+                <span class="text-[11px] font-mono text-zinc-500">
+                  ${new Date(item.createdAt).toLocaleDateString()}
+                </span>
+              </div>
+
+              <h4 class="text-base font-bold text-white">${item.title}</h4>
+              <p class="text-xs text-zinc-300 font-mono whitespace-pre-line leading-relaxed max-h-36 overflow-y-auto bg-black/40 p-3 rounded-lg border border-zinc-800/80">
+                ${item.content}
+              </p>
+
+              <div class="flex items-center justify-between pt-2 border-t border-zinc-800/60">
+                <div class="flex items-center gap-2">
+                  ${(item.tags || []).map(t => `<span class="text-[10px] text-zinc-500">#${t}</span>`).join(' ')}
+                </div>
+                <div class="flex items-center gap-2">
+                  ${!isPublished ? `
+                    <button onclick="publishPost('${item.id}')" class="px-3.5 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition shadow-md shadow-orange-600/20">
+                      🚀 Post via Headless Browser
+                    </button>
+                    <button onclick="deletePost('${item.id}')" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-rose-400 text-xs font-semibold transition">
+                      Delete
+                    </button>
+                  ` : `
+                    <span class="text-xs text-emerald-400 font-mono">✅ Posted Autonomously</span>
+                  `}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (e) {
+        console.warn('Queue load error:', e);
+      }
+    }
+
+    async function saveNewDraft() {
+      const subreddit = document.getElementById('composerSubreddit').value.trim();
+      const title = document.getElementById('composerTitle').value.trim();
+      const content = document.getElementById('composerContent').value.trim();
+      const tags = document.getElementById('composerTags').value.split(',').map(t => t.trim()).filter(Boolean);
+
+      if (!title || !content) {
+        alert('Please enter both title and content.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/reddit/create-draft', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subreddit, title, content, tags })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Draft added to Reddit queue!');
+          document.getElementById('composerTitle').value = '';
+          document.getElementById('composerContent').value = '';
+          switchTab('queue');
+          refreshData();
+        }
+      } catch (e) {
+        showToast('Error saving draft: ' + e.message);
+      }
+    }
+
+    async function publishPost(id) {
+      showToast('Launching headless poster on Reddit...');
+      try {
+        const res = await fetch('/api/reddit/publish', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Successfully published post to Reddit!');
+          refreshData();
+        } else {
+          showToast('Publish notice: ' + (data.error || 'Check login session'));
+        }
+      } catch (e) {
+        showToast('Error: ' + e.message);
+      }
+    }
+
+    async function deletePost(id) {
+      if (!confirm('Delete this draft from Reddit queue?')) return;
+      try {
+        await fetch('/api/reddit/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        showToast('Draft deleted.');
+        refreshData();
+      } catch (e) {
+        showToast('Error: ' + e.message);
+      }
+    }
+
+    async function launchBrowserLogin() {
+      showToast('Opening visible browser on your desktop...');
+      const feedback = document.getElementById('loginStatusFeedback');
+      if (feedback) feedback.classList.remove('hidden');
+
+      try {
+        const res = await fetch('/api/reddit/launch-login');
+        const data = await res.json();
+        if (data.success) {
+          // Poll for login success every 2.5 seconds
+          const pollTimer = setInterval(async () => {
+            try {
+              const check = await fetch('/api/reddit/status');
+              const cdata = await check.json();
+              if (cdata.connected && cdata.handle && cdata.handle !== 'Unconnected') {
+                clearInterval(pollTimer);
+                if (feedback) feedback.innerHTML = `🎉 <strong>Connected as ${cdata.handle}!</strong> Session active.`;
+                showToast(`🎉 Connected as ${cdata.handle}!`);
+                refreshData();
+              }
+            } catch (_) {}
+          }, 2500);
+
+          setTimeout(() => clearInterval(pollTimer), 180000); // 3m safety
+        }
+      } catch (e) {
+        showToast('Error launching browser: ' + e.message);
+      }
+    }
+
+    async function checkSessionStatus() {
+      showToast('Verifying Reddit session...');
+      await loadStatus();
+      showToast('Session status updated.');
+    }
+
+    async function saveManualCredentials() {
+      const handle = document.getElementById('settingsHandle').value.trim();
+      const sessionCookie = document.getElementById('settingsSessionCookie').value.trim();
+      const tokenV2 = document.getElementById('settingsTokenV2').value.trim();
+
+      const payload = { handle, mode: 'headless_browser' };
+      if (sessionCookie) payload.sessionCookie = sessionCookie;
+      if (tokenV2) payload.tokenV2 = tokenV2;
+
+      try {
+        const res = await fetch('/api/reddit/save-credentials', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Credentials saved locally!');
+          loadStatus();
+        }
+      } catch (e) {
+        showToast('Error saving: ' + e.message);
+      }
+    }
+
+    async function triggerScan() {
+      const sub = document.getElementById('scanSubInput').value.trim() || 'r/packaging';
+      const q = document.getElementById('scanQueryInput').value.trim();
+      const resultsDiv = document.getElementById('scanResults');
+      const scanBtn = document.getElementById('scanBtn');
+
+      scanBtn.disabled = true;
+      scanBtn.innerHTML = '<span>⏳ Scanning...</span>';
+      resultsDiv.innerHTML = '<div class="p-6 text-center text-xs text-orange-400 font-mono animate-pulse">Scanning subreddit discussions via headless browser...</div>';
+
+      try {
+        const words = q ? [q] : [];
+        const res = await fetch('/api/reddit/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subreddit: sub, queryWords: words, limit: 12 })
+        });
+        const data = await res.json();
+        const posts = data.posts || [];
+
+        if (posts.length === 0) {
+          resultsDiv.innerHTML = `
+            <div class="p-6 text-center text-zinc-500 text-xs border border-zinc-800 rounded-xl">
+              No matching posts found in ${sub}. Try a broader query or different subreddit.
+            </div>
+          `;
+        } else {
+          resultsDiv.innerHTML = posts.map(p => `
+            <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-orange-500/30 transition space-y-2">
+              <div class="flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                <span>u/${p.author} • ⬆️ ${p.ups} upvotes • 💬 ${p.num_comments} comments</span>
+                <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:text-orange-300">View on Reddit &rarr;</a>
+              </div>
+              <h5 class="text-sm font-semibold text-white">${p.title}</h5>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        resultsDiv.innerHTML = `<div class="p-4 text-xs text-rose-400">Error: ${e.message}</div>`;
+      } finally {
+        scanBtn.disabled = false;
+        scanBtn.innerHTML = '<span>📡 Run Scanner</span>';
+      }
+    }
+
+    function refreshData() {
+      loadStatus();
+      loadQueue();
+      loadDaemonStatus();
+    }
+
+    // Initial load
+    refreshData();
+    setInterval(loadDaemonStatus, 15000);
+  </script>
+</body>
+</html>

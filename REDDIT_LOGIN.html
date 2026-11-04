@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Connect Reddit Account // Autonomous 24/7 Agent</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #070A12;
+    --rd-orange: #FF4500;
+    --rd-glow: rgba(255, 69, 0, 0.35);
+    --panel-bg: rgba(12, 16, 23, 0.95);
+    --panel-border: rgba(255, 69, 0, 0.25);
+    --text-primary: #F8FAFC;
+    --text-dim: #94A3B8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-dark);
+    background-image: radial-gradient(circle at 50% 20%, rgba(50, 15, 5, 0.5) 0%, rgba(7, 10, 18, 0.98) 75%);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+  }
+  .login-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    max-width: 560px;
+    width: 100%;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .logo-box {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #FF4500, #D93800);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 14px var(--rd-glow);
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  p.subtitle {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .status-badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+  }
+  .tab-buttons {
+    display: flex;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, #FF4500, #E03D00);
+    color: #fff;
+    box-shadow: 0 4px 12px var(--rd-glow);
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+  input:focus {
+    border-color: var(--rd-orange);
+    box-shadow: 0 0 12px var(--rd-glow);
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #FF4500, #E03D00);
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 8px 24px var(--rd-glow);
+    transition: all 0.2s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 69, 0, 0.5);
+  }
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .secondary-btn {
+    width: 100%;
+    padding: 13px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #f1f5f9;
+    font-weight: 700;
+    font-size: 0.88rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+  }
+  .secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  .instructions-box {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 16px;
+    font-size: 0.82rem;
+    color: #cbd5e1;
+    line-height: 1.6;
+  }
+  .instructions-box ol {
+    margin-left: 18px;
+    margin-top: 6px;
+  }
+  .instructions-box code {
+    background: rgba(255, 69, 0, 0.15);
+    color: #FF8A65;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .security-note {
+    margin-top: 20px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.75rem;
+    color: #94a3b8;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .status-msg {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    text-align: center;
+    display: none;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+  }
+</style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="header-logo">
+    <div class="logo-box">🤖</div>
+    <div>
+      <h1>Connect Reddit Account</h1>
+      <div style="font-size:0.75rem; color:#FF4500; font-weight:700; font-family:'JetBrains Mono',monospace;">AUTONOMOUS GROWTH DAEMON</div>
+    </div>
+  </div>
+  <p class="subtitle">
+    Sign in once. Your autonomous growth daemon runs 24/7 headlessly in the background with zero external API fees.
+  </p>
+
+  <div class="status-badge">
+    <span style="color:var(--text-dim);">Live Account Status:</span>
+    <span id="headerAccountStatus" style="font-weight:700; color:#F59E0B; font-family:'JetBrains Mono',monospace;">Checking...</span>
+  </div>
+
+  <div class="tab-buttons">
+    <button class="tab-btn active" onclick="switchTab('tab-sync')">⚡ 1-Click Sync</button>
+    <button class="tab-btn" onclick="switchTab('tab-token')">🔑 Paste Cookie</button>
+    <button class="tab-btn" onclick="switchTab('tab-launcher')">🖥️ Desktop File</button>
+    <button class="tab-btn" onclick="switchTab('tab-form')">📝 Password</button>
+  </div>
+
+  <!-- TAB 1: 1-CLICK SYNC FROM BROWSER (RECOMMENDED) -->
+  <div id="tab-sync" class="tab-content active">
+    <div class="instructions-box">
+      <strong>100% Guaranteed &amp; Captcha-Free:</strong>
+      <ol>
+        <li>Click <strong>Step 1</strong> to open Reddit in your normal browser (Brave or Edge).</li>
+        <li>Log in using <strong>Google, Apple, or Password</strong>.</li>
+        <li>Click <strong>Step 2</strong> — our local engine extracts your session automatically!</li>
+      </ol>
+    </div>
+
+    <a href="https://www.reddit.com/login" target="_blank" class="secondary-btn" style="background:rgba(255,69,0,0.15); border-color:#FF4500; color:#fff; font-weight:800; margin-bottom:10px;">
+      🌐 Step 1: Open Reddit Login in Browser &rarr;
+    </a>
+
+    <button onclick="handleAutoSync()" id="syncBtn" class="submit-btn">
+      <span>⚡ Step 2: Sync Reddit Session from Browser Now</span>
+    </button>
+  </div>
+
+  <!-- TAB 2: PASTE SESSION TOKEN -->
+  <div id="tab-token" class="tab-content">
+    <div class="instructions-box">
+      <strong>Manual Cookie Input:</strong>
+      <ol>
+        <li>In your browser on Reddit, press <code>F12</code> (Developer Tools).</li>
+        <li>Navigate to <strong>Application</strong> &rarr; <strong>Cookies</strong> &rarr; <code>https://www.reddit.com</code>.</li>
+        <li>Copy the value of <code>reddit_session</code> and paste below:</li>
+      </ol>
+    </div>
+
+    <form onsubmit="handleTokenSubmit(event)">
+      <div class="form-group">
+        <label>Reddit Username</label>
+        <input type="text" id="tokenHandle" value="chillkirdaar" placeholder="u/YourUsername" required>
+      </div>
+
+      <div class="form-group">
+        <label>Session Cookie (reddit_session)</label>
+        <input type="password" id="sessionCookieInput" placeholder="Paste reddit_session value here..." required>
+      </div>
+
+      <button type="submit" id="tokenSubmitBtn" class="submit-btn">
+        <span>🚀 Save Session Cookie</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- TAB 3: DESKTOP FILE LAUNCHER -->
+  <div id="tab-launcher" class="tab-content">
+    <div class="instructions-box">
+      <strong>Double-Click Desktop Connector:</strong>
+      <p style="margin-top:6px;">We created a dedicated 1-click launcher in your project folder:</p>
+      <p style="margin-top:8px;"><code>F:\ai office\Amazon office\LOGIN_REDDIT.bat</code></p>
+      <p style="margin-top:8px;">Double-clicking this file opens your browser directly, waits for your login, and pairs your account automatically without touching anything else!</p>
+    </div>
+  </div>
+
+  <!-- TAB 4: DIRECT USERNAME & PASSWORD -->
+  <div id="tab-form" class="tab-content">
+    <div class="instructions-box">
+      <strong>Sign In with Username &amp; Password:</strong>
+      <p style="margin-top:4px; color:#f87171; font-weight:600;">⚠️ Note: If you registered your Reddit account using "Continue with Google" or "Continue with Apple", Reddit does not have a standalone password! Please use Tab 1 (1-Click Sync) instead.</p>
+    </div>
+
+    <form onsubmit="handleFormLogin(event)">
+      <div class="form-group">
+        <label>Reddit Username</label>
+        <input type="text" id="formUsername" value="chillkirdaar" placeholder="YourUsername" required>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="formPassword" placeholder="••••••••••••" required>
+      </div>
+
+      <button type="submit" id="formSubmitBtn" class="submit-btn">
+        <span>🚀 Log In Automatically</span>
+      </button>
+    </form>
+  </div>
+
+  <div id="statusMsg" class="status-msg"></div>
+
+  <div class="security-note">
+    🔒 <strong>100% Localhost Privacy:</strong> Credentials and cookies are stored solely on your machine in <code>reddit_credentials.json</code>. No third-party servers ever touch your session.
+  </div>
+
+  <div style="margin-top:16px; text-align:center;">
+    <a href="/reddit" style="color:#FF4500; font-size:0.8rem; font-weight:700; text-decoration:none;">&larr; Return to Reddit Command Center</a>
+  </div>
+</div>
+
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+    const msg = document.getElementById('statusMsg');
+    msg.style.display = 'none';
+  }
+
+  async function checkInitialStatus() {
+    try {
+      const res = await fetch('/api/reddit/status');
+      const data = await res.json();
+      const el = document.getElementById('headerAccountStatus');
+      const tokenHandle = document.getElementById('tokenHandle');
+      if (data.connected && data.handle && data.handle !== 'Unconnected') {
+        el.innerText = `Connected (${data.handle})`;
+        el.style.color = '#10B981';
+        if (tokenHandle) tokenHandle.value = data.handle;
+      } else {
+        el.innerText = 'Not Connected';
+        el.style.color = '#F59E0B';
+      }
+    } catch (_) {}
+  }
+  checkInitialStatus();
+
+  async function handleAutoSync() {
+    const btn = document.getElementById('syncBtn');
+    const msg = document.getElementById('statusMsg');
+    btn.disabled = true;
+    btn.innerText = '🔍 Checking Brave, Edge & Chrome...';
+    msg.style.display = 'block';
+    msg.style.color = '#FF4500';
+    msg.innerText = 'Looking for active Reddit session in your desktop browsers...';
+
+    try {
+      const res = await fetch('/api/reddit/auto-detect');
+      const data = await res.json();
+      if (data.success) {
+        msg.style.color = '#10B981';
+        msg.innerHTML = `🎉 <strong>Successfully connected via ${data.browser}!</strong> Logged in as ${data.creds.handle || 'chillkirdaar'}. 24/7 Autonomous Daemon is ACTIVE.`;
+        btn.innerText = '✅ Connected!';
+        checkInitialStatus();
+        setTimeout(() => { window.location.href = '/reddit'; }, 2000);
+      } else {
+        msg.style.color = '#f43f5e';
+        msg.innerHTML = `⚠️ <strong>No active Reddit login found yet in Brave or Edge.</strong><br><br>Please click <em>"Step 1: Open Reddit Login in Browser"</em> above, sign in to Reddit on that page, and then click this button again!`;
+        btn.disabled = false;
+        btn.innerText = '⚡ Step 2: Sync Reddit Session from Browser Now';
+      }
+    } catch(err) {
+      msg.style.color = '#f43f5e';
+      msg.innerText = `❌ Error: ${err.message}`;
+      btn.disabled = false;
+      btn.innerText = '⚡ Step 2: Sync Reddit Session from Browser Now';
+    }
+  }
+
+  async function handleTokenSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('tokenSubmitBtn');
+    const msg = document.getElementById('statusMsg');
+    const handle = document.getElementById('tokenHandle').value.trim();
+    const sessionCookie = document.getElementById('sessionCookieInput').value.trim();
+
+    btn.disabled = true;
+    btn.innerText = '⏳ Verifying & saving...';
+    msg.style.display = 'block';
+    msg.style.color = '#FF4500';
+    msg.innerText = 'Saving session credentials locally...';
+
+    try {
+      const res = await fetch('/api/reddit/save-credentials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionCookie, handle, mode: 'headless_browser' })
+      });
+      const data = await res.json();
+      if (data.success) {
+        msg.style.color = '#10B981';
+        msg.innerHTML = `🎉 <strong>Successfully connected as ${handle}!</strong> 24/7 Autonomous Daemon is ACTIVE.`;
+        btn.innerText = '✅ Activated!';
+        checkInitialStatus();
+        setTimeout(() => { window.location.href = '/reddit'; }, 1500);
+      } else {
+        msg.style.color = '#f43f5e';
+        msg.innerText = `❌ Error saving session: ${data.error || 'Check cookie format'}`;
+        btn.disabled = false;
+        btn.innerText = '🚀 Save Session Cookie';
+      }
+    } catch(err) {
+      msg.style.color = '#f43f5e';
+      msg.innerText = `❌ Connection error: ${err.message}`;
+      btn.disabled = false;
+      btn.innerText = '🚀 Save Session Cookie';
+    }
+  }
+
+  async function handleFormLogin(e) {
+    e.preventDefault();
+    const btn = document.getElementById('formSubmitBtn');
+    const msg = document.getElementById('statusMsg');
+    const u = document.getElementById('formUsername').value.trim();
+    const p = document.getElementById('formPassword').value.trim();
+
+    btn.disabled = true;
+    btn.innerText = '⏳ Logging in headlessly...';
+    msg.style.display = 'block';
+    msg.style.color = '#FF4500';
+    msg.innerText = 'Attempting login... This takes ~15 seconds.';
+
+    try {
+      const res = await fetch('/api/reddit/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+      const data = await res.json();
+      if (data.success) {
+        msg.style.color = '#10B981';
+        msg.innerHTML = `🎉 <strong>Successfully connected as ${data.handle}!</strong> 24/7 Autonomous Daemon is ACTIVE.`;
+        btn.innerText = '✅ Connected!';
+        checkInitialStatus();
+        setTimeout(() => { window.location.href = '/reddit'; }, 1500);
+      } else {
+        msg.style.color = '#f43f5e';
+        msg.innerHTML = `❌ ${data.error || 'Login failed. If Reddit prompted a CAPTCHA or your account uses Google/Apple sign-in, please use Tab 1 above!'}`;
+        btn.disabled = false;
+        btn.innerText = '🚀 Try Again';
+      }
+    } catch(err) {
+      msg.style.color = '#f43f5e';
+      msg.innerText = `❌ Error: ${err.message}`;
+      btn.disabled = false;
+      btn.innerText = '🚀 Try Again';
+    }
+  }
+</script>
+
+</body>
+</html>
